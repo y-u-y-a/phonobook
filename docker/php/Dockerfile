@@ -15,4 +15,4 @@ RUN apt-get update \
     libpq-dev \
     && docker-php-ext-install pdo_pgsql pdo_mysql mysqli mbstring
 
-RUN mkdir /code
+RUN mkdir /project

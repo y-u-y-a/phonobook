@@ -1,10 +1,39 @@
-<!-- # 起動
-→ php artisan serve
-# コンパイル
-→ npm run watch -->
+# git cloneした後にやること(ローカルの構築)
+
+# 1. Laravel内に.envを作成
+    $ touch ./code/.env
+まずはlaravelインストール時のデフォルトをコピペする
+
+下記を変更
+```:
+DB_CONNECTION=mysql
+DB_HOST=mysql
+DB_PORT=3306
+DB_DATABASE=phonoBook
+DB_USERNAME=root
+DB_PASSWORD=root
+```
+
+# 2. コンテナを作成・起動
+    $ docker-compose up -d
+
+## コンテナが起動しているか確認
+    $ docker ps
+phonoBook.php、phonoBook.mysqlが起動していることを確認
+
+## ブラウザで起動しているか確認
+localhost:8000にアクセス
+
+# Vue.jsを編集する場合コンパイルを実行して反映
+    $ npm run watch
+
+# エラーが出た場合
+    $ docker logs [コンテナID or コンテナ名]
+
+================================================================
 
 # このアプリについて
-→ ６割完成
+
 # きっかけ
 インターン先では書籍の貸し出しを行っていたのですが、管理を手書きで行っていたのをITの力で便利に出来ないかと考えたのがきっかけ。
 

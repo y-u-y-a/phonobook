@@ -20,16 +20,15 @@ services:
         build: ./docker/php
         image: php:phonoBook
         volumes:
-            - ./code:/code
+            - .:/project
         ports:
             - 8000:8000
-        working_dir: /code
+        working_dir: /project/code
         command: >
             bash -c
             "composer install
             && php artisan migrate
-            && php artisan serve --host=0.0.0.0 --port=8000
-            && npm run watch"
+            && php artisan serve --host=0.0.0.0 --port=8000"
         depends_on:
             - mysql
         networks:

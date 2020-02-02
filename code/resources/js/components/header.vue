@@ -6,7 +6,7 @@
             </div>
             <nav>
                 <ul>
-                    <li><a v-if="currentURL != HOST + '/user/top'" href="/user/top" title="UserTop">ユーザートップへ</a></li>
+                    <li><a v-if="currentURL != HOST + '/user/top'" href="/user/top" title="UserTop">ユーザートップ</a></li>
                     <li><a v-if="currentURL != HOST + '/admin/top'" href="/admin/top" title="AdminTop">管理トップへ</a></li>
                 </ul>
             </nav>
