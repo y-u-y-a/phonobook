@@ -1,0 +1,43 @@
+version: "3"
+services:
+    mysql:
+        container_name: phonoBook.mysql
+        image: mysql:5.7
+        environment:
+            MYSQL_DATABASE: phonoBook
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - "4306:3306"
+        volumes:
+            - mysql-data:/var/lib/mysql
+        networks:
+            - mysql-php
+
+    php:
+        container_name: phonoBook.php
+        build: ./docker/php
+        image: php:phonoBook
+        volumes:
+            - ./code:/code
+        ports:
+            - 8000:8000
+        working_dir: /code
+        command: >
+            bash -c
+            "composer install
+            && php artisan migrate
+            && php artisan serve --host=0.0.0.0 --port=8000
+            && npm run watch"
+        depends_on:
+            - mysql
+        networks:
+            - mysql-php
+
+networks:
+    mysql-php:
+        driver: bridge
+
+volumes:
+  mysql-data:
