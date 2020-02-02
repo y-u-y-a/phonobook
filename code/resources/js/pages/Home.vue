@@ -4,16 +4,3 @@
         <p>管理者としてログインする</p>
     </div>
 </template>
-
-<script>
-export default{
-    data(){
-        return{
-        }
-    },
-    created(){
-    },
-    methods:{
-    }
-};
-</script>
