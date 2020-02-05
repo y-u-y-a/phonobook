@@ -9,33 +9,44 @@ services:
             MYSQL_PASSWORD: root
             MYSQL_ROOT_PASSWORD: root
         ports:
-            - "4306:3306"
+            - 4306:3306
         volumes:
             - mysql-data:/var/lib/mysql
         networks:
-            - mysql-php
+            - network
 
     php:
         container_name: phonoBook.php
         build: ./docker/php
         image: php:phonoBook
         volumes:
-            - .:/project
-        ports:
-            - 8000:8000
-        working_dir: /project/code
-        command: >
-            bash -c
-            "composer install
-            && php artisan migrate
-            && php artisan serve --host=0.0.0.0 --port=8000"
+            - ./code:/var/www/html
+        # working_dir: /var/www/html
+        # command: >
+        #     bash -c
+        #     "composer install
+        #     && php artisan migrate
+        #     && npm install"
         depends_on:
             - mysql
         networks:
-            - mysql-php
+            - network
+
+    nginx:
+        container_name: phonoBook.nginx
+        image: nginx:1.15.6
+        volumes:
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - ./code:/var/www/html
+        depends_on:
+            - php
+        ports:
+            - 8000:80
+        networks:
+            - network
 
 networks:
-    mysql-php:
+    network:
         driver: bridge
 
 volumes:
