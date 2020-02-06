@@ -21,12 +21,6 @@ services:
         image: php:phonoBook
         volumes:
             - ./code:/var/www/html
-        # working_dir: /var/www/html
-        # command: >
-        #     bash -c
-        #     "composer install
-        #     && php artisan migrate
-        #     && npm install"
         depends_on:
             - mysql
         networks:
@@ -41,7 +35,7 @@ services:
         depends_on:
             - php
         ports:
-            - 8000:80
+            - 8001:80
         networks:
             - phonoBook-net
 
