@@ -5,12 +5,10 @@ import VueRouter from "vue-router"
 
 import Home from "./pages/Home"
 // Admin関係
-import AdminTop from "./pages/admin/Top"
 import AdminUser from "./pages/admin/User"
 import AdminBook from "./pages/admin/Book"
 import AdminBookEdit from "./pages/admin/Edit"
 // User関係
-import UserTop from "./pages/user/Top"
 import UserLogin from "./pages/user/Login"
 import UserArrival from "./pages/user/Arrival"
 import UserShow from "./pages/user/Show"
@@ -25,16 +23,14 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: "/", component: Home },
-  { path: "/home", component: Home },
+  { path: "/Home", component: Home },
 
   // admin関連
-  { path: "/admin/top", component: AdminTop, name: "admin" },
-  { path: "/admin/user", component: AdminUser },
-  { path: "/admin/book", component: AdminBook },
-  { path: "/admin/edit", component: AdminBookEdit },
+  { path: "/user/register", component: AdminUser },
+  { path: "/book/new", component: AdminBook },
+  { path: "/book/edit", component: AdminBookEdit },
 
   // user関連
-  { path: "/user/top", component: UserTop, name: "user" },
   { path: "/user/login", component: UserLogin },
   { path: "/user/show/:id", component: UserShow },
   { path: "/user/arrival", component: UserArrival },

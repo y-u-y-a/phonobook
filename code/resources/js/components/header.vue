@@ -6,10 +6,10 @@
             </div>
             <nav>
                 <ul>
-                    <li v-if="currentURL != HOST + '/admin/top'">
+                    <li v-if="currentURL != HOST + '/admin'">
                         <router-link :to="{name: 'admin'}">管理トップへ</router-link>
                     </li>
-                    <li v-if="currentURL != HOST + '/user/top'">
+                    <li v-if="currentURL != HOST + '/user'">
                         <router-link :to="{name: 'user'}">ユーザートップへ</router-link>
                     </li>
                 </ul>
@@ -25,19 +25,20 @@ export default {
         return {
             currentURL: "",
             HOST: ""
-        };
+        }
     },
     created() {
-        this.currentURL = location.href;
-        this.HOST       = location.origin;
+        this.currentURL = location.href
+        this.HOST       = location.origin
     }
-};
+}
 </script>
 
 
 <style lang="scss" scoped>
-$black: #2e2e2e;
-$white: white;
+
+@import "../../sass/app.scss";
+
 // PC
 @media screen and (min-width: 640px) {
     header {
