@@ -13,7 +13,7 @@ services:
         volumes:
             - mysql-data:/var/lib/mysql
         networks:
-            - network
+            - phonoBook-net
 
     php:
         container_name: phonoBook.php
@@ -30,7 +30,7 @@ services:
         depends_on:
             - mysql
         networks:
-            - network
+            - phonoBook-net
 
     nginx:
         container_name: phonoBook.nginx
@@ -43,10 +43,10 @@ services:
         ports:
             - 8000:80
         networks:
-            - network
+            - phonoBook-net
 
 networks:
-    network:
+    phonoBook-net:
         driver: bridge
 
 volumes:
