@@ -2,17 +2,21 @@
     <header>
         <div class="header-wrapper">
             <div class="title">
-                <a href="/" title="Home">phonoBook</a>
+                <router-link to="/" title="Home">phonoBook</router-link>
             </div>
             <nav>
                 <ul>
+                    <li><router-link to="/">管理トップへ</router-link></li>
+                    <li><router-link to="/">ユーザートップへ</router-link></li>
+                </ul>
+                <!-- <ul>
                     <li v-if="currentURL != HOST + '/admin'">
                         <router-link :to="{name: 'admin'}">管理トップへ</router-link>
                     </li>
                     <li v-if="currentURL != HOST + '/user'">
                         <router-link :to="{name: 'user'}">ユーザートップへ</router-link>
                     </li>
-                </ul>
+                </ul> -->
             </nav>
         </div>
     </header>

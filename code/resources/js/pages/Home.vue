@@ -1,20 +1,20 @@
 <template>
     <div>
         <!-- <ul class="button-list">
-            <UserButton button_name="出勤する or 退勤する" path="/user/arrival" />
-            <UserButton button_name="本を借りる" path="/book/borrow" />
-            <UserButton button_name="本の一覧をみる" path="/book/index" />
+            <UserButton button_name="出勤する or 退勤する" path="/user/Arrival" />
+            <UserButton button_name="本を借りる" path="/book/Borrow" />
+            <UserButton button_name="本の一覧をみる" path="/book/Index" />
             <template v-if="user_id == undefined">
-                <UserButton button_name="ログインする" path="/user/login" />
+                <UserButton button_name="ログインする" path="/user/Login" />
             </template>
             <template v-else-if="user_id != undefined">
-                <UserButton button_name="マイページ" :path="'/user/show/' + user_id" />
+                <UserButton button_name="マイページ" :path="'/user/Show/' + user_id" />
             </template>
         </ul> -->
         <ul class="button-list">
-            <AdminButton button_name="ユーザーを登録する" path="/user/register" />
-            <AdminButton button_name="本を登録する" path="/book/new" />
-            <AdminButton button_name="本を更新・削除する" path="/book/edit" />
+            <AdminButton button_name="ユーザーを登録する" path="/user/Register" />
+            <AdminButton button_name="本を登録する" path="/book/New" />
+            <AdminButton button_name="本を更新・削除する" path="/book/Edit" />
         </ul>
     </div>
 </template>

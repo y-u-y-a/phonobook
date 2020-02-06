@@ -1,6 +1,6 @@
 <template>
     <li>
-        <a :href=path >{{ button_name }}</a>
+        <router-link :to="`${path}`" >{{ button_name }}</router-link>
     </li>
 </template>
 
