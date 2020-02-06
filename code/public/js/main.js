@@ -1867,6 +1867,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1876,7 +1878,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      user_id: ""
+      user_id: "",
+      is_active: false
     };
   },
   created: function created() {
@@ -40567,24 +40570,67 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "ul",
-      { staticClass: "button-list" },
-      [
-        _c("AdminButton", {
-          attrs: { button_name: "ユーザーを登録する", path: "/user/Register" }
-        }),
-        _vm._v(" "),
-        _c("AdminButton", {
-          attrs: { button_name: "本を登録する", path: "/book/New" }
-        }),
-        _vm._v(" "),
-        _c("AdminButton", {
-          attrs: { button_name: "本を更新・削除する", path: "/book/Edit" }
-        })
-      ],
-      1
-    )
+    _vm.is_active
+      ? _c(
+          "ul",
+          { staticClass: "button-list" },
+          [
+            _c("UserButton", {
+              attrs: {
+                button_name: "出勤する or 退勤する",
+                path: "/user/Arrival"
+              }
+            }),
+            _vm._v(" "),
+            _c("UserButton", {
+              attrs: { button_name: "本を借りる", path: "/book/Borrow" }
+            }),
+            _vm._v(" "),
+            _c("UserButton", {
+              attrs: { button_name: "本の一覧をみる", path: "/book/Index" }
+            }),
+            _vm._v(" "),
+            _c("button", {
+              attrs: { button_name: "切り替え" },
+              on: {
+                click: function($event) {
+                  _vm.is_active = !_vm.is_active
+                }
+              }
+            })
+          ],
+          1
+        )
+      : _c(
+          "ul",
+          { staticClass: "button-list" },
+          [
+            _c("AdminButton", {
+              attrs: {
+                button_name: "ユーザーを登録する",
+                path: "/user/Register"
+              }
+            }),
+            _vm._v(" "),
+            _c("AdminButton", {
+              attrs: { button_name: "本を登録する", path: "/book/New" }
+            }),
+            _vm._v(" "),
+            _c("AdminButton", {
+              attrs: { button_name: "本を更新・削除する", path: "/book/Edit" }
+            }),
+            _vm._v(" "),
+            _c("button", {
+              attrs: { button_name: "切り替え" },
+              on: {
+                click: function($event) {
+                  _vm.is_active = !_vm.is_active
+                }
+              }
+            })
+          ],
+          1
+        )
   ])
 }
 var staticRenderFns = []

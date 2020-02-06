@@ -1,20 +1,22 @@
 <template>
     <div>
-        <!-- <ul class="button-list">
+        <ul v-if="is_active" class="button-list">
             <UserButton button_name="出勤する or 退勤する" path="/user/Arrival" />
             <UserButton button_name="本を借りる" path="/book/Borrow" />
             <UserButton button_name="本の一覧をみる" path="/book/Index" />
-            <template v-if="user_id == undefined">
+            <button @click="is_active=!is_active" button_name="切り替え" ></button>
+            <!-- <template v-if="user_id == undefined">
                 <UserButton button_name="ログインする" path="/user/Login" />
             </template>
             <template v-else-if="user_id != undefined">
                 <UserButton button_name="マイページ" :path="'/user/Show/' + user_id" />
-            </template>
-        </ul> -->
-        <ul class="button-list">
+            </template> -->
+        </ul>
+        <ul v-else class="button-list">
             <AdminButton button_name="ユーザーを登録する" path="/user/Register" />
             <AdminButton button_name="本を登録する" path="/book/New" />
             <AdminButton button_name="本を更新・削除する" path="/book/Edit" />
+            <button @click="is_active=!is_active" button_name="切り替え" ></button>
         </ul>
     </div>
 </template>
@@ -33,7 +35,8 @@ export default {
 
     data() {
         return {
-            user_id: ""
+            user_id: "",
+            is_active: false
         }
     },
 
