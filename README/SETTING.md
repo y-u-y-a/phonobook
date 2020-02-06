@@ -45,7 +45,6 @@ PUSHER_APP_CLUSTER=mt1
 
 MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
 MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
-
 ```
 
 # 2. コンテナを作成・起動
@@ -55,15 +54,9 @@ MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
     $ docker ps
 phonoBook.php、phonoBook.mysqlが起動していることを確認
 
-# 3. phpコンテナに入って、コマンドを実行
-```
-$ docker exec -it phonoBook.php bash
-```
-```
-$ composer install
-$ php artisan migrate
-$ npm install"
-```
+# 3. シェルスクリプトを実行(settings.sh)
+    $ docker/php/settings.sh
+composer install、npm installをコンテナ内で実行します。
 
 ## ブラウザで起動しているか確認
 localhost:8000にアクセス
@@ -73,31 +66,6 @@ localhost:8000にアクセス
 
 # エラーが出た場合
     $ docker logs [コンテナID or コンテナ名]
-
-================================================================
-
-# このアプリについて
-
-# きっかけ
-インターン先では書籍の貸し出しを行っていたのですが、管理を手書きで行っていたのをITの力で便利に出来ないかと考えたのがきっかけ。
-
-# 主な実装機能
-
-1. 顔認証による出勤管理<br>
-→顔の撮影をするだけで、出勤・退勤記録ができる
-
-2. 本のISBNの撮影による貸出し管理<br>
-→本のバーコード下にあるISBNを撮影するだけで、本の貸出し記録ができる
-
-3. ログイン機能<br>
-→スマホではログインすることができ、スマホで現在借りている本の確認ができる
-
-
-# 追加予定の機能
-
-1. 各企業・各団体で利用できるようにデータベースを整地する
-2. 他の認証APIも検討をし、より良いものにしていく
-3. 認証をバーコードにする
 
 
 
