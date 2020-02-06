@@ -28,13 +28,13 @@ const routes = [
   { path: "/home", component: Home },
 
   // admin関連
-  { path: "/admin/top", component: AdminTop },
+  { path: "/admin/top", component: AdminTop, name: "admin" },
   { path: "/admin/user", component: AdminUser },
   { path: "/admin/book", component: AdminBook },
   { path: "/admin/edit", component: AdminBookEdit },
 
   // user関連
-  { path: "/user/top", component: UserTop },
+  { path: "/user/top", component: UserTop, name: "user" },
   { path: "/user/login", component: UserLogin },
   { path: "/user/show/:id", component: UserShow },
   { path: "/user/arrival", component: UserArrival },

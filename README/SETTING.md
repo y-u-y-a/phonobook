@@ -62,7 +62,8 @@ composer install、npm installをコンテナ内で実行します。
 ## ブラウザで起動しているか確認
 localhost:8001にアクセス
 
-# 4. アセットを編集する場合コンパイルを実行して反映
+# 4. アセットを編集する場合、コンテナでコンパイルを実行
+    $ docker exec -it phonoBook.php bash
     $ npm run watch
 
 # エラーが出た場合

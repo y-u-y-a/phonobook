@@ -1759,6 +1759,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -40310,21 +40314,29 @@ var render = function() {
       _vm._v(" "),
       _c("nav", [
         _c("ul", [
-          _c("li", [
-            _vm.currentURL != _vm.HOST + "/user/top"
-              ? _c("a", { attrs: { href: "/user/top", title: "UserTop" } }, [
-                  _vm._v("ユーザートップ")
-                ])
-              : _vm._e()
-          ]),
+          _vm.currentURL != _vm.HOST + "/admin/top"
+            ? _c(
+                "li",
+                [
+                  _c("router-link", { attrs: { to: { name: "admin" } } }, [
+                    _vm._v("管理トップへ")
+                  ])
+                ],
+                1
+              )
+            : _vm._e(),
           _vm._v(" "),
-          _c("li", [
-            _vm.currentURL != _vm.HOST + "/admin/top"
-              ? _c("a", { attrs: { href: "/admin/top", title: "AdminTop" } }, [
-                  _vm._v("管理トップへ")
-                ])
-              : _vm._e()
-          ])
+          _vm.currentURL != _vm.HOST + "/user/top"
+            ? _c(
+                "li",
+                [
+                  _c("router-link", { attrs: { to: { name: "user" } } }, [
+                    _vm._v("ユーザートップへ")
+                  ])
+                ],
+                1
+              )
+            : _vm._e()
         ])
       ])
     ])
@@ -40336,7 +40348,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "title" }, [
-      _c("a", { attrs: { href: "/", title: "Home" } }, [_vm._v("phonobook")])
+      _c("a", { attrs: { href: "/", title: "Home" } }, [_vm._v("phonoBook")])
     ])
   }
 ]
@@ -58933,7 +58945,8 @@ var routes = [{
 }, // admin関連
 {
   path: "/admin/top",
-  component: _pages_admin_Top__WEBPACK_IMPORTED_MODULE_3__["default"]
+  component: _pages_admin_Top__WEBPACK_IMPORTED_MODULE_3__["default"],
+  name: "admin"
 }, {
   path: "/admin/user",
   component: _pages_admin_User__WEBPACK_IMPORTED_MODULE_4__["default"]
@@ -58946,7 +58959,8 @@ var routes = [{
 }, // user関連
 {
   path: "/user/top",
-  component: _pages_user_Top__WEBPACK_IMPORTED_MODULE_7__["default"]
+  component: _pages_user_Top__WEBPACK_IMPORTED_MODULE_7__["default"],
+  name: "user"
 }, {
   path: "/user/login",
   component: _pages_user_Login__WEBPACK_IMPORTED_MODULE_8__["default"]
@@ -59210,8 +59224,8 @@ function getCookieValue(searchKey) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/yuya/projects/web/phonoBook/code/resources/js/main.js */"./resources/js/main.js");
-module.exports = __webpack_require__(/*! /Users/yuya/projects/web/phonoBook/code/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/html/resources/js/main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! /var/www/html/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -2,12 +2,16 @@
     <header>
         <div class="header-wrapper">
             <div class="title">
-                <a href="/" title="Home">phonobook</a>
+                <a href="/" title="Home">phonoBook</a>
             </div>
             <nav>
                 <ul>
-                    <li><a v-if="currentURL != HOST + '/user/top'" href="/user/top" title="UserTop">ユーザートップ</a></li>
-                    <li><a v-if="currentURL != HOST + '/admin/top'" href="/admin/top" title="AdminTop">管理トップへ</a></li>
+                    <li v-if="currentURL != HOST + '/admin/top'">
+                        <router-link :to="{name: 'admin'}">管理トップへ</router-link>
+                    </li>
+                    <li v-if="currentURL != HOST + '/user/top'">
+                        <router-link :to="{name: 'user'}">ユーザートップへ</router-link>
+                    </li>
                 </ul>
             </nav>
         </div>
@@ -25,7 +29,7 @@ export default {
     },
     created() {
         this.currentURL = location.href;
-        this.HOST = location.origin;
+        this.HOST       = location.origin;
     }
 };
 </script>
