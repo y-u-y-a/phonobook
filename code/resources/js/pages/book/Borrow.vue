@@ -11,7 +11,7 @@
         </div>
 
         <div class="half-box">
-            <div id="borrow">
+            <div id="auth-result">
                 <div class="borrower">
                     <span v-if="user.name == null" class="disable">貸出し不可：カメラ撮影が必要です</span>
                     <span v-if="user.name != null" class="able">貸出し可能：{{user.name}}</span>
@@ -204,7 +204,7 @@ export default {
 
 @import "../../../sass/app.scss";
 
-#borrow{
+#auth-result{
     width: 90%;
     margin: 2rem auto 0;
     padding: 2rem 0;
