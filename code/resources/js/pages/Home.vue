@@ -1,10 +1,12 @@
 <template>
     <div>
         <ul v-if="is_active" class="button-list">
+            <button @click="is_active=!is_active" button_name="切り替え" ></button>
             <UserButton button_name="出勤する or 退勤する" path="/user/Arrival" />
             <UserButton button_name="本を借りる" path="/book/Borrow" />
             <UserButton button_name="本の一覧をみる" path="/book/Index" />
-            <button @click="is_active=!is_active" button_name="切り替え" ></button>
+            <UserButton button_name="ログインする" path="/user/Login" />
+            <UserButton button_name="マイページ" :path="'/user/Show/'+user_id" />
             <!-- <template v-if="user_id == undefined">
                 <UserButton button_name="ログインする" path="/user/Login" />
             </template>
@@ -13,10 +15,10 @@
             </template> -->
         </ul>
         <ul v-else class="button-list">
+            <button @click="is_active=!is_active" button_name="切り替え" ></button>
             <AdminButton button_name="ユーザーを登録する" path="/user/Register" />
             <AdminButton button_name="本を登録する" path="/book/New" />
             <AdminButton button_name="本を更新・削除する" path="/book/Edit" />
-            <button @click="is_active=!is_active" button_name="切り替え" ></button>
         </ul>
     </div>
 </template>

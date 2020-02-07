@@ -1,150 +1,172 @@
 <template>
-  <div id="userLogin">
-    <div class="leftArea">
-      <div class="capture-wrapper">
-        <!-- カメラによる動画の挿入 -->
-        <video autoplay ref="video" width="300" height="200"></video>
-        <!-- 切り取った画像を表示 -->
-        <canvas ref="canvas" width="300" height="200"></canvas>
-        <ul>
-          <li>
-            <button @click="takeFaceImage()">撮影する</button>
-          </li>
-          <li>
-            <button @click="authWithFaceImage()">認証する</button>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <div>
+        <div class="half-box">
+            <Camera></Camera>
+            <FormButton @click="takeFaceImage" button_name="撮影する"></FormButton>
+            <FormButton @click="authWithFaceImage" button_name="認証する"></FormButton>
+        </div>
 
-    <div class="rightArea">
-      <div class="login-wrapper">
-        <form class="form" @submit.prevent="loginUser">
-          <p>ログインする</p>
-          <div class="form-wrapper">
-            <input type="hidden" name="_token" :value="csrf" />
-            <div class="email form-input">
-              <label>メールアドレス：</label>
-              <input type="text" v-model="email" placeholder="メールアドレス" autocomplete="off" />
+        <div class="half-box">
+            <div id="login">
+                <form @submit.prevent="login">
+                    <div class="title">ログインする</div>
+                    <div class="form-container">
+                        <input type="hidden" name="_token" :value="csrf" />
+                        <FormInput label="メールアドレス" placeholder="8文字以上の半角英数字" ></FormInput>
+                        <FormInput label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
+                        <FormButton @click="login" button_name="ログインする"></FormButton>
+                    </div>
+                </form>
             </div>
-            <div class="password form-input">
-              <label>パスワード：</label>
-              <input type="password" v-model="password" placeholder="パスワード" autocomplete="off" />
-            </div>
-            <div class="loginButton">
-              <button type="submit">ログインする</button>
-            </div>
-          </div>
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
 </template>
 
+
 <script>
+
+import Camera    from "../../components/Camera.vue"
+import FormInput from "../../components/form/Input.vue"
+import FormButton from "../../components/form/Button.vue"
+
 export default {
-  data() {
-    return {
-      video: {},
-      canvas: {},
-      capture: "",
-      csrf: document
-        .querySelector("meta[name='csrf-token']")
-        .getAttribute("content"),
-      email: "",
-      password: ""
-    };
-  },
+    components: {
+        Camera,
+        FormInput,
+        FormButton
+    },
 
-  mounted() {
-    //HTML要素から取得→dataに代入
-    this.video = this.$refs.video;
-    this.canvas = this.$refs.canvas;
-
-    //カメラ設定
-    var constraints = {
-      audio: false,
-      video: {
-        width: 300,
-        height: 200,
-        facingMode: "user" // フロントカメラを利用する
-        // facingMode: { exact: "environment" }  // リアカメラを利用する場合
-      }
-    };
-    // カメラの起動
-    navigator.mediaDevices
-      .getUserMedia(constraints)
-      // 成功した場合
-      .then(stream => {
-        this.video.srcObject = stream;
-        this.video.onloadedmetadata = e => {
-          this.video.play();
+    data() {
+        return {
+            video: {},
+            canvas: {},
+            capture: "",
+            csrf: document
+                .querySelector("meta[name='csrf-token']")
+                .getAttribute("content"),
+            email: "",
+            password: ""
         };
-      })
-      // 失敗した場合
-      .catch(error => {
-        console.log(error.name + ": " + error.message);
-      });
-  },
-
-  methods: {
-    takeFaceImage() {
-      // 動画から画像の切り取り(2Dで)
-      var ctx = this.canvas.getContext("2d");
-      // カメラ→画像に変換
-      ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
-
-      // 撮影した画像の処理 ===========================
-      var type = "image/jpeg";
-      // base64として取得する
-      var base64 = this.canvas.toDataURL(type);
-      // // base64の接頭部分を削除して設置
-      this.faceImage = base64.replace(/^.*,/, "");
     },
 
-    // VRで本人データの取得・stateの変更
-    authWithFaceImage() {
-      var params = {
-        faceImage: this.faceImage
-      };
-      var axios = require("axios");
-      axios
-        .post("/api/users/authFace", params)
-        .then(response => {
-          var user = response.data;
-          if (!user) {
-            alert("社員データが存在しません");
-          } else {
-            // 本人データの取得(arrival.vueと異なる部分)
-            this.email = user.email;
-            this.password = "";
-          }
-        })
-        .catch(error => {
-          alert("顔の撮影が必要です");
-          console.log(error.name + ": " + error.message);
-        });
+    mounted() {
+        //HTML要素から取得→dataに代入
+        this.video = this.$refs.video;
+        this.canvas = this.$refs.canvas;
+
+        //カメラ設定
+        var constraints = {
+            audio: false,
+            video: {
+                width: 300,
+                height: 200,
+                facingMode: "user" // フロントカメラを利用する
+                // facingMode: { exact: "environment" }    // リアカメラを利用する場合
+            }
+        };
+        // カメラの起動
+        navigator.mediaDevices
+            .getUserMedia(constraints)
+            // 成功した場合
+            .then(stream => {
+                this.video.srcObject = stream;
+                this.video.onloadedmetadata = e => {
+                    this.video.play();
+                };
+            })
+            // 失敗した場合
+            .catch(error => {
+                console.log(error.name + ": " + error.message);
+            });
     },
 
-    // ユーザーのログイン
-    async loginUser() {
-      var params = {
-        email: this.email,
-        password: this.password
-      };
-      await this.$store
-        .dispatch("Auth/login", params)
-        // 成功した場合
-        .then(response => {
-          alert("ログインしました");
-          this.$router.push("/");
-        })
-        // 失敗した場合
-        .catch(error => {
-          console.log(error.name + ": " + error.message);
-          alert("ログインに失敗しました");
-        });
+    methods: {
+        takeFaceImage() {
+            // 動画から画像の切り取り(2Dで)
+            var ctx = this.canvas.getContext("2d");
+            // カメラ→画像に変換
+            ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
+
+            // 撮影した画像の処理 ===========================
+            var type = "image/jpeg";
+            // base64として取得する
+            var base64 = this.canvas.toDataURL(type);
+            // // base64の接頭部分を削除して設置
+            this.faceImage = base64.replace(/^.*,/, "");
+        },
+
+        // VRで本人データの取得・stateの変更
+        authWithFaceImage() {
+            var params = {
+                faceImage: this.faceImage
+            };
+            var axios = require("axios");
+            axios
+                .post("/api/users/authFace", params)
+                .then(response => {
+                    var user = response.data;
+                    if (!user) {
+                        alert("社員データが存在しません");
+                    } else {
+                        // 本人データの取得(arrival.vueと異なる部分)
+                        this.email = user.email;
+                        this.password = "";
+                    }
+                })
+                .catch(error => {
+                    alert("顔の撮影が必要です");
+                    console.log(error.name + ": " + error.message);
+                });
+        },
+
+        // ユーザーのログイン
+        async login() {
+            var params = {
+                email: this.email,
+                password: this.password
+            };
+            await this.$store
+                .dispatch("Auth/login", params)
+                // 成功した場合
+                .then(response => {
+                    alert("ログインしました");
+                    this.$router.push("/");
+                })
+                // 失敗した場合
+                .catch(error => {
+                    console.log(error.name + ": " + error.message);
+                    alert("ログインに失敗しました");
+                });
+        }
     }
-  }
 };
 </script>
+
+
+<style lang="scss" scoped>
+
+@import "../../../sass/app.scss";
+
+#login{
+    width: 90%;
+    margin: 0 auto;
+}
+form{
+    margin: 2rem 0;
+    padding-bottom: 2rem;
+    background: $white;
+    .title{
+        padding: 2rem 0;
+        font-size: 20px;
+        font-weight: bold;
+        letter-spacing: 2px;
+        border-bottom: 1px solid $silver;
+        text-align: center;
+    }
+    .form-container{
+        width: 90%;
+        margin: 0 auto;
+        padding-top: 2rem;
+    }
+}
+</style>

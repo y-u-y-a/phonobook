@@ -1,6 +1,6 @@
 <template>
     <header>
-        <div class="header-wrapper">
+        <div class="wrapper">
             <div class="title">
                 <router-link to="/" title="Home">phonoBook</router-link>
             </div>
@@ -47,7 +47,7 @@ export default {
 @media screen and (min-width: 640px) {
     header {
         background-color: $black;
-        .header-wrapper {
+        .wrapper {
             position: relative;
             width: 90%;
             margin: 0 auto;

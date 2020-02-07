@@ -2,7 +2,7 @@
   <div id="bookShow">
     <div id="title">{{book.title}}</div>
     <div class="bookInfo">
-      <div class="leftArea">
+      <div class="half-box">
         <ul class="bookContents">
           <li v-if="book.author    != undefined">著者 ：{{book.author}}</li>
           <li v-if="book.volume    != undefined">巻 ：{{book.volume}}</li>
@@ -12,7 +12,7 @@
           <li v-if="book.detail    != undefined" id="detail">{{book.detail}}</li>
         </ul>
       </div>
-      <div class="rightArea">
+      <div class="half-box">
         <img :src="book.cover" alt="No Image" />
         <div>
           <button class="lendButton" v-if="book.state == 0" @click="lendBook()">この本を借りる</button>
