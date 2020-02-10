@@ -12,8 +12,8 @@
                     <div class="title">ログインする</div>
                     <div class="form-container">
                         <input type="hidden" name="_token" :value="csrf" />
-                        <FormInput label="メールアドレス" placeholder="8文字以上の半角英数字" ></FormInput>
-                        <FormInput label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
+                        <FormInput @onInput="getEmail" label="メールアドレス" placeholder="8文字以上の半角英数字" ></FormInput>
+                        <FormInput @onInput="getPass" label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
                         <FormButton @click="login" button_name="ログインする"></FormButton>
                     </div>
                 </form>
@@ -41,9 +41,7 @@ export default {
             video: {},
             canvas: {},
             capture: "",
-            csrf: document
-                .querySelector("meta[name='csrf-token']")
-                .getAttribute("content"),
+            csrf: document.querySelector("meta[name='csrf-token']").getAttribute("content"),
             email: "",
             password: ""
         };
@@ -51,8 +49,8 @@ export default {
 
     mounted() {
         //HTML要素から取得→dataに代入
-        this.video = this.$refs.video;
-        this.canvas = this.$refs.canvas;
+        this.video = this.$refs.video
+        this.canvas = this.$refs.canvas
 
         //カメラ設定
         var constraints = {
@@ -63,83 +61,81 @@ export default {
                 facingMode: "user" // フロントカメラを利用する
                 // facingMode: { exact: "environment" }    // リアカメラを利用する場合
             }
-        };
+        }
         // カメラの起動
-        navigator.mediaDevices
-            .getUserMedia(constraints)
-            // 成功した場合
-            .then(stream => {
-                this.video.srcObject = stream;
-                this.video.onloadedmetadata = e => {
-                    this.video.play();
-                };
-            })
-            // 失敗した場合
-            .catch(error => {
-                console.log(error.name + ": " + error.message);
-            });
+        navigator.mediaDevices.getUserMedia(constraints)
+        .then(stream => {
+            this.video.srcObject = stream
+            this.video.onloadedmetadata = e => {
+                this.video.play()
+            }
+        })
+        .catch(error => {
+            console.log(error.name + ": " + error.message)
+        })
     },
 
     methods: {
         takeFaceImage() {
             // 動画から画像の切り取り(2Dで)
-            var ctx = this.canvas.getContext("2d");
+            var ctx = this.canvas.getContext("2d")
             // カメラ→画像に変換
-            ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
+            ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height)
 
             // 撮影した画像の処理 ===========================
-            var type = "image/jpeg";
+            var type = "image/jpeg"
             // base64として取得する
-            var base64 = this.canvas.toDataURL(type);
+            var base64 = this.canvas.toDataURL(type)
             // // base64の接頭部分を削除して設置
-            this.faceImage = base64.replace(/^.*,/, "");
+            this.faceImage = base64.replace(/^.*,/, "")
         },
 
         // VRで本人データの取得・stateの変更
         authWithFaceImage() {
             var params = {
                 faceImage: this.faceImage
-            };
-            var axios = require("axios");
-            axios
-                .post("/api/users/authFace", params)
-                .then(response => {
-                    var user = response.data;
-                    if (!user) {
-                        alert("社員データが存在しません");
-                    } else {
-                        // 本人データの取得(arrival.vueと異なる部分)
-                        this.email = user.email;
-                        this.password = "";
-                    }
-                })
-                .catch(error => {
-                    alert("顔の撮影が必要です");
-                    console.log(error.name + ": " + error.message);
-                });
+            }
+            axios.post("/api/users/authFace", params)
+            .then(response => {
+                var user = response.data
+                if (!user) {
+                    alert("社員データが存在しません")
+                } else {
+                    // 本人データの取得(arrival.vueと異なる部分)
+                    this.email = user.email
+                    this.password = ""
+                }
+            })
+            .catch(error => {
+                alert("顔の撮影が必要です")
+                console.log(error.name + ": " + error.message)
+            })
         },
 
-        // ユーザーのログイン
+        getEmail(value){
+            this.email = value
+        },
+        getPass(value){
+            this.password = value
+        },
+
         async login() {
             var params = {
                 email: this.email,
                 password: this.password
-            };
-            await this.$store
-                .dispatch("Auth/login", params)
-                // 成功した場合
-                .then(response => {
-                    alert("ログインしました");
-                    this.$router.push("/");
-                })
-                // 失敗した場合
-                .catch(error => {
-                    console.log(error.name + ": " + error.message);
-                    alert("ログインに失敗しました");
-                });
+            }
+            await this.$store.dispatch("User/login", params)
+            .then(response => {
+                alert("ログインしました")
+                this.$router.push("/")
+            })
+            .catch(error => {
+                console.log(error.name + ": " + error.message)
+                alert("ログインに失敗しました")
+            })
         }
     }
-};
+}
 </script>
 
 

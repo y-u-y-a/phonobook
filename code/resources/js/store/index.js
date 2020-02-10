@@ -1,14 +1,14 @@
 
 import Vue  from "vue"
 import Vuex from "vuex"
-// auth.jsの読み込み
-import Auth from "./auth"
+
+import User from "./user/user.js"
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    Auth
+    User
   }
 })
 

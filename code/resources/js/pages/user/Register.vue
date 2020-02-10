@@ -4,10 +4,12 @@
             <div class="title">ユーザーを登録する</div>
             <div class="form-container">
                 <input type="hidden" name="_token" :value="csrf" />
-                <FormInput label="名前" placeholder="8文字以上" ></FormInput>
-                <FormInput label="メールアドレス" placeholder="" ></FormInput>
-                <FormInput label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
-                <FormInput label="パスワード確認" placeholder="8文字以上の半角英数字" ></FormInput>
+                <!-- 子へバインディングされた空の値を渡す -->
+                <!-- onInputを検知する度にgetValueを実行 -->
+                <FormInput @onInput="getName" label="名前" placeholder="8文字以上" ></FormInput>
+                <FormInput @onInput="getEmail" label="メールアドレス" placeholder="" ></FormInput>
+                <FormInput @onInput="getPass" label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
+                <FormInput @onInput="getPassConf" label="パスワード確認" placeholder="8文字以上の半角英数字" ></FormInput>
                 <FormButton button_name="新規登録する"></FormButton>
             </div>
         </form>
@@ -27,39 +29,47 @@ export default {
 
     data() {
         return {
-            csrf: document
-                .querySelector("meta[name='csrf-token']")
-                .getAttribute("content"),
+            csrf: document.querySelector("meta[name='csrf-token']").getAttribute("content"),
             name: "",
             email: "",
             password: "",
             password_confirmation: ""
-        };
+        }
     },
+
     methods: {
-        // async="非同期"
+        getName(value){
+            this.name = value
+        },
+        getEmail(value){
+            this.email = value
+        },
+        getPass(value){
+            this.password = value
+        },
+        getPassConf(value){
+            this.password_confirmation = value
+        },
+
         async register() {
             var params = {
                 name: this.name,
                 email: this.email,
                 password: this.password,
                 password_confirmation: this.password_confirmation
-            };
-            // dispatchでAuthストアモジュールのresigterアクションを呼出す
-            // await="待つ"
-            await this.$store
-                .dispatch("Auth/register", params)
-                .then(response => {
-                    alert("登録が完了しました");
-                    this.$router.push("/");
-                })
-                .catch(error => {
-                    console.log(error.name + ": " + error.message);
-                    alert("失敗しました");
-                });
+            }
+            await this.$store.dispatch("User/register", params)
+            .then(res => {
+                alert("登録が完了しました")
+                this.$router.push("/")
+            })
+            .catch(err => {
+                console.log(err.name + ": " + err.message)
+                alert("失敗しました")
+            })
         }
     }
-};
+}
 </script>
 
 

@@ -1,18 +1,16 @@
 <template>
     <div>
-        <ul v-if="is_active" class="button-list">
+        <ul v-if="!is_active" class="button-list">
             <button @click="is_active=!is_active" button_name="切り替え" ></button>
             <UserButton button_name="出勤する or 退勤する" path="/user/Arrival" />
             <UserButton button_name="本を借りる" path="/book/Borrow" />
             <UserButton button_name="本の一覧をみる" path="/book/Index" />
-            <UserButton button_name="ログインする" path="/user/Login" />
-            <UserButton button_name="マイページ" :path="'/user/Show/'+user_id" />
-            <!-- <template v-if="user_id == undefined">
+            <template v-if="login_user === ''">
                 <UserButton button_name="ログインする" path="/user/Login" />
             </template>
-            <template v-else-if="user_id != undefined">
-                <UserButton button_name="マイページ" :path="'/user/Show/' + user_id" />
-            </template> -->
+            <template v-else>
+                <UserButton button_name="マイページ" :path="'/user/Show/'+login_user.id" />
+            </template>
         </ul>
         <ul v-else class="button-list">
             <button @click="is_active=!is_active" button_name="切り替え" ></button>
@@ -29,33 +27,22 @@
 import UserButton from "../components/top/UserButton"
 import AdminButton from "../components/top/AdminButton"
 
+import { mapState, mapGetters, mapActions } from "vuex"
+
 export default {
     components: {
         UserButton,
         AdminButton
     },
 
+    computed: {
+        // スプレッド演算子(this.$store.stateの代替)
+        ...mapState("User", ["login_user"]),
+    },
+
     data() {
         return {
-            user_id: "",
-            is_active: false
-        }
-    },
-
-    created() {
-        this.getLoginUser()
-    },
-
-    methods: {
-        async getLoginUser() {
-
-            await this.$axios.get("/api/users/logined")
-                .then(response => {
-                    this.user_id = response.data.id
-                })
-                .catch(error => {
-                    console.log(error.name + ": " + error.message)
-                })
+            is_active: false,
         }
     }
 }
