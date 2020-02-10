@@ -1,6 +1,6 @@
 <template>
     <div id="users-books">
-        <button type="submit" @click="logout">ログアウトする</button>
+        <FormButton @signalEvent="logout" button_name="ログアウトする"></FormButton>
         <BooksList :page_title="`${login_user.name}さんが読んだ本の一覧`" :books_data=booksBorrowed></BooksList>
     </div>
 </template>
@@ -8,13 +8,15 @@
 <script>
 
 import BooksList from "../../components/BooksList.vue"
+import FormButton from "../../components/form/Button.vue"
 
 import { mapState, mapGetters, mapActions } from "vuex"
 
 export default {
 
     components: {
-        BooksList
+        BooksList,
+        FormButton
     },
 
     data() {
@@ -32,9 +34,9 @@ export default {
     },
 
     methods: {
-        async logout() {
-            await this.$store.dispatch("User/logout")
-            await this.$router.push("/")
+        logout() {
+            this.$store.dispatch("User/logout")
+            location.href = "/"
         },
 
         // 借りている本を取得

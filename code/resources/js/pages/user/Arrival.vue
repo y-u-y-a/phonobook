@@ -2,8 +2,6 @@
     <div>
         <div class="half-box">
             <Camera></Camera>
-            <FormButton @click="takeFaceImage" button_name="撮影する"></FormButton>
-            <FormButton @click="authWithFaceImage" button_name="認証する"></FormButton>
         </div>
 
         <div class="half-box">
@@ -49,53 +47,15 @@ export default {
 
     data() {
         return {
-            video: {},
-            canvas: {},
-            faceImage: "",
             users: []
         };
     },
 
-    mounted() {
-        this.setUpCamera();
-    },
     created() {
         this.getAllUsers();
     },
 
     methods: {
-
-        setUpCamera() {
-            //HTML要素から取得→dataに代入
-            this.video = this.$refs.video;
-            this.canvas = this.$refs.canvas;
-            //カメラ設定
-            var constraints = {
-                audio: false,
-                video: {
-                    width: 300,
-                    height: 200,
-                    facingMode: "user" // フロントカメラを利用する
-                    // facingMode: { exact: "environment" }    // リアカメラを利用する場合
-                }
-            };
-            // カメラの起動(JSでの撮影許可を求める)
-            navigator.mediaDevices
-                .getUserMedia(constraints)
-                // 成功した場合
-                .then(stream => {
-                    this.video.srcObject = stream;
-                    this.video.onloadedmetadata = e => {
-                        this.video.play();
-                    };
-                })
-                // 失敗した場合
-                .catch(error => {
-                    console.log(error.name + ": " + error.message);
-                });
-        },
-
-
         // 全てのユーザー取得
         getAllUsers() {
             var axios = require("axios");
@@ -117,54 +77,6 @@ export default {
                     console.log(error.name + ": " + error.message);
                 });
         },
-
-
-        // 動画から画像を取得
-        takeFaceImage() {
-            // 動画から画像の切り取り(2Dで)
-            var ctx = this.canvas.getContext("2d");
-            // カメラ→画像に変換
-            ctx.drawImage(
-                this.video, // 描画されるイメージ
-                0, // dx
-                0, // dy
-                this.canvas.width, // dw(解像度)
-                this.canvas.height // dh(解像度)
-            );
-
-            // 撮影した画像の処理 ===========================
-            var type = "image/jpeg";
-            // base64に変換して取得する
-            var base64 = this.canvas.toDataURL(type);
-            // // base64の接頭部分を削除して設置
-            this.faceImage = base64.replace(/^.*,/, "");
-        },
-
-
-        // VRで本人データの取得・stateの変更
-        authWithFaceImage() {
-            var params = {
-                faceImage: this.faceImage
-            };
-            var axios = require("axios");
-            axios.post("/api/users/authFace", params)
-                .then(response => {
-                    var user = response.data;
-                    // DB内に存在 & スコア0.92以上の場合
-                    if (user) {
-                        this.changeState(user);
-                    }
-                    // nullだった場合
-                    else {
-                        alert("社員データが存在しません");
-                    }
-                })
-                .catch(error => {
-                    alert("顔の撮影が必要です");
-                    console.log(error.name + ": " + error.message);
-                });
-        },
-
 
         // 出退勤処理と表示データの更新
         changeState(user) {

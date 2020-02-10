@@ -1,11 +1,19 @@
 <template>
-    <button type="submit">{{ button_name }}</button>
+    <!-- buttonクリックで親側のsignalEventを発火させ、親で定義した関数を実行する -->
+    <button @click="issueEvent" type="submit">{{ button_name }}</button>
 </template>
 
 
 <script>
 export default {
-    props: ["button_name"]
+    props: ["button_name"],
+
+    methods: {
+        issueEvent(){
+            // $emitでイベントを発行
+            this.$emit("signalEvent")
+        }
+    }
 }
 </script>
 

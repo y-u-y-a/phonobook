@@ -3,10 +3,6 @@ import { OK, CREATED, UNPROCESSABLE_ENTITY } from "../../util.js"
 
 // CSR内でのデータの状態管理
 const state = {
-    name: null,
-    email: null,
-    password: null,
-    password_confirmation: null,
     login_user: ''
 }
 

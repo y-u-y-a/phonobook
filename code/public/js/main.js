@@ -1790,6 +1790,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
 //
 //
 //
@@ -1800,8 +1801,91 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: [""]
+  props: [""],
+  components: {
+    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      video: {},
+      canvas: {},
+      capture: ""
+    };
+  },
+  mounted: function mounted() {
+    this.setCamera();
+  },
+  methods: {
+    setCamera: function setCamera() {
+      var _this = this;
+
+      //HTML要素から取得→dataに代入
+      this.video = this.$refs.video;
+      this.canvas = this.$refs.canvas; //カメラ設定
+
+      var constraints = {
+        audio: false,
+        video: {
+          width: 300,
+          height: 200,
+          facingMode: "user" // フロントカメラを利用する
+          // facingMode: { exact: "environment" }    // リアカメラを利用する場合
+
+        } // カメラの起動
+
+      };
+      navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+        _this.video.srcObject = stream;
+
+        _this.video.onloadedmetadata = function (e) {
+          _this.video.play();
+        };
+      })["catch"](function (error) {
+        console.log(error.name + ": " + error.message);
+      });
+    },
+    takeFaceImage: function takeFaceImage() {
+      console.log("aaa"); // 動画から2Dを取得
+
+      var ctx = this.canvas.getContext("2d"); // カメラ→画像に変換
+
+      ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height); // 画像に対する処理開始
+
+      var type = "image/jpeg"; // base64として取得
+
+      var base64 = this.canvas.toDataURL(type); // // base64の接頭部分を削除して設置
+
+      this.faceImage = base64.replace(/^.*,/, "");
+    },
+    // VRで本人データの取得・stateの変更
+    authWithFaceImage: function authWithFaceImage() {
+      var _this2 = this;
+
+      var params = {
+        faceImage: this.faceImage
+      };
+      axios.post("/api/users/authFace", params).then(function (response) {
+        var user = response.data;
+
+        if (!user) {
+          alert("社員データが存在しません");
+        } else {
+          // 本人データの取得(arrival.vueと異なる部分)
+          _this2.email = user.email;
+          _this2.password = "";
+        }
+      })["catch"](function (error) {
+        alert("顔の撮影が必要です");
+        console.log(error.name + ": " + error.message);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -1869,8 +1953,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["button_name"]
+  props: ["button_name"],
+  methods: {
+    issueEvent: function issueEvent() {
+      // $emitでイベントを発行
+      this.$emit("signalEvent");
+    }
+  }
 });
 
 /***/ }),
@@ -1902,8 +1993,8 @@ __webpack_require__.r(__webpack_exports__);
   props: ["label", "placeholder"],
   methods: {
     // 親へのイベントを発行し、データ譲渡
-    issue: function issue() {
-      this.$emit("onInput", this.value);
+    issueEvent: function issueEvent() {
+      this.$emit("signalEvent", this.value);
     }
   }
 });
@@ -2075,7 +2166,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2085,89 +2175,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      video: {},
-      canvas: {},
-      faceImage: "",
       isbn: "9784798038094",
       image: "/no_image.png",
       book: {},
       user: {}
     };
   },
-  mounted: function mounted() {
-    this.setUpCamera();
-  },
   methods: {
-    // カメラの起動
-    setUpCamera: function setUpCamera() {
-      var _this = this;
-
-      //HTML要素から取得→dataに代入
-      this.video = this.$refs.video;
-      this.canvas = this.$refs.canvas; //カメラ設定
-
-      var constraints = {
-        audio: false,
-        video: {
-          width: 300,
-          height: 200,
-          facingMode: "user" // フロントカメラを利用する
-          // facingMode: { exact: "environment" }    // リアカメラを利用する場合
-
-        }
-      }; // カメラの起動(JSでの撮影許可を求める)
-
-      navigator.mediaDevices.getUserMedia(constraints) // 成功した場合
-      .then(function (stream) {
-        _this.video.srcObject = stream;
-
-        _this.video.onloadedmetadata = function (e) {
-          _this.video.play();
-        };
-      }) // 失敗した場合
-      ["catch"](function (error) {
-        console.log(error.name + ": " + error.message);
-      });
-    },
-    // 撮影してデータを取得
-    takeFaceImage: function takeFaceImage() {
-      // 動画から画像の切り取り(2Dで)
-      var ctx = this.canvas.getContext("2d"); // カメラ→画像に変換
-
-      ctx.drawImage(this.video, // 描画されるイメージ
-      0, // dx
-      0, // dy
-      this.canvas.width, // dw(解像度)
-      this.canvas.height // dh(解像度)
-      ); // 撮影した画像の処理 ↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-
-      var type = "image/jpeg"; // base64に変換して取得する
-
-      var base64 = this.canvas.toDataURL(type); // // base64の接頭部分を削除して設置
-
-      this.faceImage = base64.replace(/^.*,/, "");
-    },
-    // VRで本人データの取得・stateの変更
-    authWithFaceImage: function authWithFaceImage() {
-      var _this2 = this;
-
-      var params = {
-        faceImage: this.faceImage
-      };
-
-      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
-      axios.post("/api/users/authFace", params).then(function (response) {
-        _this2.user = response.data; // nullだった場合
-
-        if (!_this2.user) {
-          alert("社員データが存在しません");
-        }
-      })["catch"](function (error) {
-        alert("顔の撮影が必要です");
-        console.log(error.name + ": " + error.message);
-      });
-    },
     // // 画像からISBNを取得する(searchBookWithISBN()内で使う関数)
     // bostBookBarcodeImage(){
     //     var params = {
@@ -2214,9 +2228,6 @@ __webpack_require__.r(__webpack_exports__);
     // 貸出処理(顔認証)
     borrowBook: function borrowBook() {
       var path = "/api/books/" + this.isbn + "/borrow/" + this.user.id;
-
-      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
       axios.get(path).then(function (response) {
         // 返却日の取得
         var today = new Date();
@@ -2688,8 +2699,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2699,61 +2708,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      video: {},
-      canvas: {},
-      faceImage: "",
       users: []
     };
-  },
-  mounted: function mounted() {
-    this.setUpCamera();
   },
   created: function created() {
     this.getAllUsers();
   },
   methods: {
-    setUpCamera: function setUpCamera() {
-      var _this = this;
-
-      //HTML要素から取得→dataに代入
-      this.video = this.$refs.video;
-      this.canvas = this.$refs.canvas; //カメラ設定
-
-      var constraints = {
-        audio: false,
-        video: {
-          width: 300,
-          height: 200,
-          facingMode: "user" // フロントカメラを利用する
-          // facingMode: { exact: "environment" }    // リアカメラを利用する場合
-
-        }
-      }; // カメラの起動(JSでの撮影許可を求める)
-
-      navigator.mediaDevices.getUserMedia(constraints) // 成功した場合
-      .then(function (stream) {
-        _this.video.srcObject = stream;
-
-        _this.video.onloadedmetadata = function (e) {
-          _this.video.play();
-        };
-      }) // 失敗した場合
-      ["catch"](function (error) {
-        console.log(error.name + ": " + error.message);
-      });
-    },
     // 全てのユーザー取得
     getAllUsers: function getAllUsers() {
-      var _this2 = this;
+      var _this = this;
 
       var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
       axios.get("/api/users/all").then(function (response) {
         // 出勤状態を記号に変換
-        _this2.users = response.data;
+        _this.users = response.data;
 
-        for (var i = 0; i < _this2.users.length; i++) {
-          var user = _this2.users[i];
+        for (var i = 0; i < _this.users.length; i++) {
+          var user = _this.users[i];
 
           if (user.state == 0) {
             user.state = "×";
@@ -2766,51 +2739,9 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error.name + ": " + error.message);
       });
     },
-    // 動画から画像を取得
-    takeFaceImage: function takeFaceImage() {
-      // 動画から画像の切り取り(2Dで)
-      var ctx = this.canvas.getContext("2d"); // カメラ→画像に変換
-
-      ctx.drawImage(this.video, // 描画されるイメージ
-      0, // dx
-      0, // dy
-      this.canvas.width, // dw(解像度)
-      this.canvas.height // dh(解像度)
-      ); // 撮影した画像の処理 ===========================
-
-      var type = "image/jpeg"; // base64に変換して取得する
-
-      var base64 = this.canvas.toDataURL(type); // // base64の接頭部分を削除して設置
-
-      this.faceImage = base64.replace(/^.*,/, "");
-    },
-    // VRで本人データの取得・stateの変更
-    authWithFaceImage: function authWithFaceImage() {
-      var _this3 = this;
-
-      var params = {
-        faceImage: this.faceImage
-      };
-
-      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
-      axios.post("/api/users/authFace", params).then(function (response) {
-        var user = response.data; // DB内に存在 & スコア0.92以上の場合
-
-        if (user) {
-          _this3.changeState(user);
-        } // nullだった場合
-        else {
-            alert("社員データが存在しません");
-          }
-      })["catch"](function (error) {
-        alert("顔の撮影が必要です");
-        console.log(error.name + ": " + error.message);
-      });
-    },
     // 出退勤処理と表示データの更新
     changeState: function changeState(user) {
-      var _this4 = this;
+      var _this2 = this;
 
       var params = {
         user_id: user.id
@@ -2820,7 +2751,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post("/api/users/state", params).then(function (response) {
         // 表示データの更新
-        _this4.getAllUsers();
+        _this2.getAllUsers();
 
         var element = document.getElementById(user.id);
         element.style.backgroundColor = "#F6CECE";
@@ -2879,8 +2810,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 
@@ -2892,77 +2821,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      video: {},
-      canvas: {},
-      capture: "",
       csrf: document.querySelector("meta[name='csrf-token']").getAttribute("content"),
       email: "",
       password: ""
     };
   },
-  mounted: function mounted() {
-    var _this = this;
-
-    //HTML要素から取得→dataに代入
-    this.video = this.$refs.video;
-    this.canvas = this.$refs.canvas; //カメラ設定
-
-    var constraints = {
-      audio: false,
-      video: {
-        width: 300,
-        height: 200,
-        facingMode: "user" // フロントカメラを利用する
-        // facingMode: { exact: "environment" }    // リアカメラを利用する場合
-
-      } // カメラの起動
-
-    };
-    navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
-      _this.video.srcObject = stream;
-
-      _this.video.onloadedmetadata = function (e) {
-        _this.video.play();
-      };
-    })["catch"](function (error) {
-      console.log(error.name + ": " + error.message);
-    });
-  },
   methods: {
-    takeFaceImage: function takeFaceImage() {
-      // 動画から画像の切り取り(2Dで)
-      var ctx = this.canvas.getContext("2d"); // カメラ→画像に変換
-
-      ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height); // 撮影した画像の処理 ===========================
-
-      var type = "image/jpeg"; // base64として取得する
-
-      var base64 = this.canvas.toDataURL(type); // // base64の接頭部分を削除して設置
-
-      this.faceImage = base64.replace(/^.*,/, "");
-    },
-    // VRで本人データの取得・stateの変更
-    authWithFaceImage: function authWithFaceImage() {
-      var _this2 = this;
-
-      var params = {
-        faceImage: this.faceImage
-      };
-      axios.post("/api/users/authFace", params).then(function (response) {
-        var user = response.data;
-
-        if (!user) {
-          alert("社員データが存在しません");
-        } else {
-          // 本人データの取得(arrival.vueと異なる部分)
-          _this2.email = user.email;
-          _this2.password = "";
-        }
-      })["catch"](function (error) {
-        alert("顔の撮影が必要です");
-        console.log(error.name + ": " + error.message);
-      });
-    },
     getEmail: function getEmail(value) {
       this.email = value;
     },
@@ -2973,7 +2837,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _login = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this3 = this;
+        var _this = this;
 
         var params;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
@@ -2988,7 +2852,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return this.$store.dispatch("User/login", params).then(function (response) {
                   alert("ログインしました");
 
-                  _this3.$router.push("/");
+                  _this.$router.push("/");
                 })["catch"](function (error) {
                   console.log(error.name + ": " + error.message);
                   alert("ログインに失敗しました");
@@ -3134,16 +2998,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/BooksList.vue */ "./resources/js/components/BooksList.vue");
+/* harmony import */ var _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/BooksList.vue */ "./resources/js/components/BooksList.vue");
+/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3159,9 +3016,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    BooksList: _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    BooksList: _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -3173,35 +3032,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getBooksBorrowed();
   },
   methods: {
-    logout: function () {
-      var _logout = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return this.$store.dispatch("User/logout");
-
-              case 2:
-                _context.next = 4;
-                return this.$router.push("/");
-
-              case 4:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function logout() {
-        return _logout.apply(this, arguments);
-      }
-
-      return logout;
-    }(),
+    logout: function logout() {
+      this.$store.dispatch("User/logout");
+      location.href = "/";
+    },
     // 借りている本を取得
     getBooksBorrowed: function getBooksBorrowed() {
       var _this = this;
@@ -7952,7 +7786,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
 
 // module
-exports.push([module.i, "html[data-v-0471e7ae], body[data-v-0471e7ae], div[data-v-0471e7ae], span[data-v-0471e7ae], applet[data-v-0471e7ae], object[data-v-0471e7ae], iframe[data-v-0471e7ae],\nh1[data-v-0471e7ae], h2[data-v-0471e7ae], h3[data-v-0471e7ae], h4[data-v-0471e7ae], h5[data-v-0471e7ae], h6[data-v-0471e7ae], p[data-v-0471e7ae],\nblockquote[data-v-0471e7ae], pre[data-v-0471e7ae],\na[data-v-0471e7ae], abbr[data-v-0471e7ae], acronym[data-v-0471e7ae], address[data-v-0471e7ae], big[data-v-0471e7ae], cite[data-v-0471e7ae], code[data-v-0471e7ae],\ndel[data-v-0471e7ae], dfn[data-v-0471e7ae], em[data-v-0471e7ae], img[data-v-0471e7ae], ins[data-v-0471e7ae], kbd[data-v-0471e7ae], q[data-v-0471e7ae], s[data-v-0471e7ae], samp[data-v-0471e7ae],\nsmall[data-v-0471e7ae], strike[data-v-0471e7ae], strong[data-v-0471e7ae], sub[data-v-0471e7ae], sup[data-v-0471e7ae], tt[data-v-0471e7ae], var[data-v-0471e7ae],\nb[data-v-0471e7ae], u[data-v-0471e7ae], i[data-v-0471e7ae], center[data-v-0471e7ae],\ndl[data-v-0471e7ae], dt[data-v-0471e7ae], dd[data-v-0471e7ae], ol[data-v-0471e7ae], ul[data-v-0471e7ae], li[data-v-0471e7ae],\nfieldset[data-v-0471e7ae], form[data-v-0471e7ae], label[data-v-0471e7ae], legend[data-v-0471e7ae],\ntable[data-v-0471e7ae], caption[data-v-0471e7ae], tbody[data-v-0471e7ae], tfoot[data-v-0471e7ae], thead[data-v-0471e7ae], tr[data-v-0471e7ae], th[data-v-0471e7ae], td[data-v-0471e7ae],\narticle[data-v-0471e7ae], aside[data-v-0471e7ae], canvas[data-v-0471e7ae], details[data-v-0471e7ae], embed[data-v-0471e7ae],\nfigure[data-v-0471e7ae], figcaption[data-v-0471e7ae], footer[data-v-0471e7ae], header[data-v-0471e7ae], hgroup[data-v-0471e7ae],\nmenu[data-v-0471e7ae], nav[data-v-0471e7ae], output[data-v-0471e7ae], ruby[data-v-0471e7ae], section[data-v-0471e7ae], summary[data-v-0471e7ae],\ntime[data-v-0471e7ae], mark[data-v-0471e7ae], audio[data-v-0471e7ae], video[data-v-0471e7ae] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-0471e7ae], aside[data-v-0471e7ae], details[data-v-0471e7ae], figcaption[data-v-0471e7ae], figure[data-v-0471e7ae],\nfooter[data-v-0471e7ae], header[data-v-0471e7ae], hgroup[data-v-0471e7ae], menu[data-v-0471e7ae], nav[data-v-0471e7ae], section[data-v-0471e7ae] {\n  display: block;\n}\nbody[data-v-0471e7ae] {\n  line-height: 1;\n}\nol[data-v-0471e7ae], ul[data-v-0471e7ae] {\n  list-style: none;\n}\nblockquote[data-v-0471e7ae], q[data-v-0471e7ae] {\n  quotes: none;\n}\nblockquote[data-v-0471e7ae]:before, blockquote[data-v-0471e7ae]:after,\nq[data-v-0471e7ae]:before, q[data-v-0471e7ae]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-0471e7ae] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-0471e7ae] {\n  text-decoration: none;\n}\n.clearfix[data-v-0471e7ae]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-0471e7ae] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-0471e7ae] {\n  height: 1%;\n}\n.clearfix[data-v-0471e7ae] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-0471e7ae] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-0471e7ae] {\n  background-color: #F2F2F2;\n}\n#login[data-v-0471e7ae] {\n  width: 90%;\n  margin: 0 auto;\n}\nform[data-v-0471e7ae] {\n  margin: 2rem 0;\n  padding-bottom: 2rem;\n  background: white;\n}\nform .title[data-v-0471e7ae] {\n  padding: 2rem 0;\n  font-size: 20px;\n  font-weight: bold;\n  letter-spacing: 2px;\n  border-bottom: 1px solid silver;\n  text-align: center;\n}\nform .form-container[data-v-0471e7ae] {\n  width: 90%;\n  margin: 0 auto;\n  padding-top: 2rem;\n}", ""]);
+exports.push([module.i, "html[data-v-0471e7ae], body[data-v-0471e7ae], div[data-v-0471e7ae], span[data-v-0471e7ae], applet[data-v-0471e7ae], object[data-v-0471e7ae], iframe[data-v-0471e7ae],\nh1[data-v-0471e7ae], h2[data-v-0471e7ae], h3[data-v-0471e7ae], h4[data-v-0471e7ae], h5[data-v-0471e7ae], h6[data-v-0471e7ae], p[data-v-0471e7ae],\nblockquote[data-v-0471e7ae], pre[data-v-0471e7ae],\na[data-v-0471e7ae], abbr[data-v-0471e7ae], acronym[data-v-0471e7ae], address[data-v-0471e7ae], big[data-v-0471e7ae], cite[data-v-0471e7ae], code[data-v-0471e7ae],\ndel[data-v-0471e7ae], dfn[data-v-0471e7ae], em[data-v-0471e7ae], img[data-v-0471e7ae], ins[data-v-0471e7ae], kbd[data-v-0471e7ae], q[data-v-0471e7ae], s[data-v-0471e7ae], samp[data-v-0471e7ae],\nsmall[data-v-0471e7ae], strike[data-v-0471e7ae], strong[data-v-0471e7ae], sub[data-v-0471e7ae], sup[data-v-0471e7ae], tt[data-v-0471e7ae], var[data-v-0471e7ae],\nb[data-v-0471e7ae], u[data-v-0471e7ae], i[data-v-0471e7ae], center[data-v-0471e7ae],\ndl[data-v-0471e7ae], dt[data-v-0471e7ae], dd[data-v-0471e7ae], ol[data-v-0471e7ae], ul[data-v-0471e7ae], li[data-v-0471e7ae],\nfieldset[data-v-0471e7ae], form[data-v-0471e7ae], label[data-v-0471e7ae], legend[data-v-0471e7ae],\ntable[data-v-0471e7ae], caption[data-v-0471e7ae], tbody[data-v-0471e7ae], tfoot[data-v-0471e7ae], thead[data-v-0471e7ae], tr[data-v-0471e7ae], th[data-v-0471e7ae], td[data-v-0471e7ae],\narticle[data-v-0471e7ae], aside[data-v-0471e7ae], canvas[data-v-0471e7ae], details[data-v-0471e7ae], embed[data-v-0471e7ae],\nfigure[data-v-0471e7ae], figcaption[data-v-0471e7ae], footer[data-v-0471e7ae], header[data-v-0471e7ae], hgroup[data-v-0471e7ae],\nmenu[data-v-0471e7ae], nav[data-v-0471e7ae], output[data-v-0471e7ae], ruby[data-v-0471e7ae], section[data-v-0471e7ae], summary[data-v-0471e7ae],\ntime[data-v-0471e7ae], mark[data-v-0471e7ae], audio[data-v-0471e7ae], video[data-v-0471e7ae] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-0471e7ae], aside[data-v-0471e7ae], details[data-v-0471e7ae], figcaption[data-v-0471e7ae], figure[data-v-0471e7ae],\nfooter[data-v-0471e7ae], header[data-v-0471e7ae], hgroup[data-v-0471e7ae], menu[data-v-0471e7ae], nav[data-v-0471e7ae], section[data-v-0471e7ae] {\n  display: block;\n}\nbody[data-v-0471e7ae] {\n  line-height: 1;\n}\nol[data-v-0471e7ae], ul[data-v-0471e7ae] {\n  list-style: none;\n}\nblockquote[data-v-0471e7ae], q[data-v-0471e7ae] {\n  quotes: none;\n}\nblockquote[data-v-0471e7ae]:before, blockquote[data-v-0471e7ae]:after,\nq[data-v-0471e7ae]:before, q[data-v-0471e7ae]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-0471e7ae] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-0471e7ae] {\n  text-decoration: none;\n}\n.clearfix[data-v-0471e7ae]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-0471e7ae] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-0471e7ae] {\n  height: 1%;\n}\n.clearfix[data-v-0471e7ae] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-0471e7ae] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-0471e7ae] {\n  background-color: #F2F2F2;\n}\n#login[data-v-0471e7ae] {\n  width: 90%;\n  margin: 0 auto;\n}\n.form[data-v-0471e7ae] {\n  margin: 2rem 0;\n  padding-bottom: 2rem;\n  background: white;\n}\n.form .title[data-v-0471e7ae] {\n  padding: 2rem 0;\n  font-size: 20px;\n  font-weight: bold;\n  letter-spacing: 2px;\n  border-bottom: 1px solid silver;\n  text-align: center;\n}\n.form .form-container[data-v-0471e7ae] {\n  width: 90%;\n  margin: 0 auto;\n  padding-top: 2rem;\n}", ""]);
 
 // exports
 
@@ -7971,7 +7805,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
 
 // module
-exports.push([module.i, "html[data-v-0190ea6e], body[data-v-0190ea6e], div[data-v-0190ea6e], span[data-v-0190ea6e], applet[data-v-0190ea6e], object[data-v-0190ea6e], iframe[data-v-0190ea6e],\nh1[data-v-0190ea6e], h2[data-v-0190ea6e], h3[data-v-0190ea6e], h4[data-v-0190ea6e], h5[data-v-0190ea6e], h6[data-v-0190ea6e], p[data-v-0190ea6e],\nblockquote[data-v-0190ea6e], pre[data-v-0190ea6e],\na[data-v-0190ea6e], abbr[data-v-0190ea6e], acronym[data-v-0190ea6e], address[data-v-0190ea6e], big[data-v-0190ea6e], cite[data-v-0190ea6e], code[data-v-0190ea6e],\ndel[data-v-0190ea6e], dfn[data-v-0190ea6e], em[data-v-0190ea6e], img[data-v-0190ea6e], ins[data-v-0190ea6e], kbd[data-v-0190ea6e], q[data-v-0190ea6e], s[data-v-0190ea6e], samp[data-v-0190ea6e],\nsmall[data-v-0190ea6e], strike[data-v-0190ea6e], strong[data-v-0190ea6e], sub[data-v-0190ea6e], sup[data-v-0190ea6e], tt[data-v-0190ea6e], var[data-v-0190ea6e],\nb[data-v-0190ea6e], u[data-v-0190ea6e], i[data-v-0190ea6e], center[data-v-0190ea6e],\ndl[data-v-0190ea6e], dt[data-v-0190ea6e], dd[data-v-0190ea6e], ol[data-v-0190ea6e], ul[data-v-0190ea6e], li[data-v-0190ea6e],\nfieldset[data-v-0190ea6e], form[data-v-0190ea6e], label[data-v-0190ea6e], legend[data-v-0190ea6e],\ntable[data-v-0190ea6e], caption[data-v-0190ea6e], tbody[data-v-0190ea6e], tfoot[data-v-0190ea6e], thead[data-v-0190ea6e], tr[data-v-0190ea6e], th[data-v-0190ea6e], td[data-v-0190ea6e],\narticle[data-v-0190ea6e], aside[data-v-0190ea6e], canvas[data-v-0190ea6e], details[data-v-0190ea6e], embed[data-v-0190ea6e],\nfigure[data-v-0190ea6e], figcaption[data-v-0190ea6e], footer[data-v-0190ea6e], header[data-v-0190ea6e], hgroup[data-v-0190ea6e],\nmenu[data-v-0190ea6e], nav[data-v-0190ea6e], output[data-v-0190ea6e], ruby[data-v-0190ea6e], section[data-v-0190ea6e], summary[data-v-0190ea6e],\ntime[data-v-0190ea6e], mark[data-v-0190ea6e], audio[data-v-0190ea6e], video[data-v-0190ea6e] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-0190ea6e], aside[data-v-0190ea6e], details[data-v-0190ea6e], figcaption[data-v-0190ea6e], figure[data-v-0190ea6e],\nfooter[data-v-0190ea6e], header[data-v-0190ea6e], hgroup[data-v-0190ea6e], menu[data-v-0190ea6e], nav[data-v-0190ea6e], section[data-v-0190ea6e] {\n  display: block;\n}\nbody[data-v-0190ea6e] {\n  line-height: 1;\n}\nol[data-v-0190ea6e], ul[data-v-0190ea6e] {\n  list-style: none;\n}\nblockquote[data-v-0190ea6e], q[data-v-0190ea6e] {\n  quotes: none;\n}\nblockquote[data-v-0190ea6e]:before, blockquote[data-v-0190ea6e]:after,\nq[data-v-0190ea6e]:before, q[data-v-0190ea6e]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-0190ea6e] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-0190ea6e] {\n  text-decoration: none;\n}\n.clearfix[data-v-0190ea6e]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-0190ea6e] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-0190ea6e] {\n  height: 1%;\n}\n.clearfix[data-v-0190ea6e] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-0190ea6e] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-0190ea6e] {\n  background-color: #F2F2F2;\n}\n@media screen and (min-width: 640px) {\n#register[data-v-0190ea6e] {\n    width: 50%;\n    margin: 0 auto;\n}\nform[data-v-0190ea6e] {\n    margin: 2rem 0;\n    padding-bottom: 2rem;\n    background: white;\n}\nform .title[data-v-0190ea6e] {\n    padding: 2rem 0;\n    font-size: 20px;\n    font-weight: bold;\n    letter-spacing: 2px;\n    border-bottom: 1px solid silver;\n    text-align: center;\n}\nform .form-container[data-v-0190ea6e] {\n    width: 90%;\n    margin: 0 auto;\n    padding-top: 2rem;\n}\n}", ""]);
+exports.push([module.i, "html[data-v-0190ea6e], body[data-v-0190ea6e], div[data-v-0190ea6e], span[data-v-0190ea6e], applet[data-v-0190ea6e], object[data-v-0190ea6e], iframe[data-v-0190ea6e],\nh1[data-v-0190ea6e], h2[data-v-0190ea6e], h3[data-v-0190ea6e], h4[data-v-0190ea6e], h5[data-v-0190ea6e], h6[data-v-0190ea6e], p[data-v-0190ea6e],\nblockquote[data-v-0190ea6e], pre[data-v-0190ea6e],\na[data-v-0190ea6e], abbr[data-v-0190ea6e], acronym[data-v-0190ea6e], address[data-v-0190ea6e], big[data-v-0190ea6e], cite[data-v-0190ea6e], code[data-v-0190ea6e],\ndel[data-v-0190ea6e], dfn[data-v-0190ea6e], em[data-v-0190ea6e], img[data-v-0190ea6e], ins[data-v-0190ea6e], kbd[data-v-0190ea6e], q[data-v-0190ea6e], s[data-v-0190ea6e], samp[data-v-0190ea6e],\nsmall[data-v-0190ea6e], strike[data-v-0190ea6e], strong[data-v-0190ea6e], sub[data-v-0190ea6e], sup[data-v-0190ea6e], tt[data-v-0190ea6e], var[data-v-0190ea6e],\nb[data-v-0190ea6e], u[data-v-0190ea6e], i[data-v-0190ea6e], center[data-v-0190ea6e],\ndl[data-v-0190ea6e], dt[data-v-0190ea6e], dd[data-v-0190ea6e], ol[data-v-0190ea6e], ul[data-v-0190ea6e], li[data-v-0190ea6e],\nfieldset[data-v-0190ea6e], form[data-v-0190ea6e], label[data-v-0190ea6e], legend[data-v-0190ea6e],\ntable[data-v-0190ea6e], caption[data-v-0190ea6e], tbody[data-v-0190ea6e], tfoot[data-v-0190ea6e], thead[data-v-0190ea6e], tr[data-v-0190ea6e], th[data-v-0190ea6e], td[data-v-0190ea6e],\narticle[data-v-0190ea6e], aside[data-v-0190ea6e], canvas[data-v-0190ea6e], details[data-v-0190ea6e], embed[data-v-0190ea6e],\nfigure[data-v-0190ea6e], figcaption[data-v-0190ea6e], footer[data-v-0190ea6e], header[data-v-0190ea6e], hgroup[data-v-0190ea6e],\nmenu[data-v-0190ea6e], nav[data-v-0190ea6e], output[data-v-0190ea6e], ruby[data-v-0190ea6e], section[data-v-0190ea6e], summary[data-v-0190ea6e],\ntime[data-v-0190ea6e], mark[data-v-0190ea6e], audio[data-v-0190ea6e], video[data-v-0190ea6e] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-0190ea6e], aside[data-v-0190ea6e], details[data-v-0190ea6e], figcaption[data-v-0190ea6e], figure[data-v-0190ea6e],\nfooter[data-v-0190ea6e], header[data-v-0190ea6e], hgroup[data-v-0190ea6e], menu[data-v-0190ea6e], nav[data-v-0190ea6e], section[data-v-0190ea6e] {\n  display: block;\n}\nbody[data-v-0190ea6e] {\n  line-height: 1;\n}\nol[data-v-0190ea6e], ul[data-v-0190ea6e] {\n  list-style: none;\n}\nblockquote[data-v-0190ea6e], q[data-v-0190ea6e] {\n  quotes: none;\n}\nblockquote[data-v-0190ea6e]:before, blockquote[data-v-0190ea6e]:after,\nq[data-v-0190ea6e]:before, q[data-v-0190ea6e]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-0190ea6e] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-0190ea6e] {\n  text-decoration: none;\n}\n.clearfix[data-v-0190ea6e]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-0190ea6e] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-0190ea6e] {\n  height: 1%;\n}\n.clearfix[data-v-0190ea6e] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-0190ea6e] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-0190ea6e] {\n  background-color: #F2F2F2;\n}\n@media screen and (min-width: 640px) {\n#register[data-v-0190ea6e] {\n    width: 50%;\n    margin: 0 auto;\n}\n.form[data-v-0190ea6e] {\n    margin: 2rem 0;\n    padding-bottom: 2rem;\n    background: white;\n}\n.form .title[data-v-0190ea6e] {\n    padding: 2rem 0;\n    font-size: 20px;\n    font-weight: bold;\n    letter-spacing: 2px;\n    border-bottom: 1px solid silver;\n    text-align: center;\n}\n.form .form-container[data-v-0190ea6e] {\n    width: 90%;\n    margin: 0 auto;\n    padding-top: 2rem;\n}\n}", ""]);
 
 // exports
 
@@ -40726,14 +40560,30 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "camera" } }, [
-    _c("video", {
-      ref: "video",
-      attrs: { autoplay: "", width: "300", height: "200" }
-    }),
-    _vm._v(" "),
-    _c("canvas", { ref: "canvas", attrs: { width: "300", height: "200" } })
-  ])
+  return _c(
+    "div",
+    [
+      _c("div", { attrs: { id: "camera" } }, [
+        _c("video", {
+          ref: "video",
+          attrs: { autoplay: "", width: "300", height: "200" }
+        }),
+        _vm._v(" "),
+        _c("canvas", { ref: "canvas", attrs: { width: "300", height: "200" } })
+      ]),
+      _vm._v(" "),
+      _c("FormButton", {
+        attrs: { button_name: "撮影する" },
+        on: { signalEvent: _vm.takeFaceImage }
+      }),
+      _vm._v(" "),
+      _c("FormButton", {
+        attrs: { button_name: "認証する" },
+        on: { signalEvent: _vm.authWithFaceImage }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -40818,9 +40668,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("button", { attrs: { type: "submit" } }, [
-    _vm._v(_vm._s(_vm.button_name))
-  ])
+  return _c(
+    "button",
+    { attrs: { type: "submit" }, on: { click: _vm.issueEvent } },
+    [_vm._v(_vm._s(_vm.button_name))]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -40866,7 +40718,7 @@ var render = function() {
             }
             _vm.value = $event.target.value
           },
-          _vm.issue
+          _vm.issueEvent
         ]
       }
     })
@@ -41095,18 +40947,8 @@ var render = function() {
         _c("Camera"),
         _vm._v(" "),
         _c("FormButton", {
-          attrs: { button_name: "撮影する" },
-          on: { click: _vm.takeFaceImage }
-        }),
-        _vm._v(" "),
-        _c("FormButton", {
-          attrs: { button_name: "認証する" },
-          on: { click: _vm.authWithFaceImage }
-        }),
-        _vm._v(" "),
-        _c("FormButton", {
           attrs: { button_name: "本を取得する" },
-          on: { click: _vm.searchBookWithISBN }
+          on: { signalEvent: _vm.searchBookWithISBN }
         }),
         _vm._v(" "),
         _c("div", { staticClass: "inputISBN" }, [
@@ -41173,7 +41015,7 @@ var render = function() {
           _c("FormButton", {
             staticClass: "button",
             attrs: { button_name: "この本を借りる" },
-            on: { click: _vm.borrowBook }
+            on: { signalEvent: _vm.borrowBook }
           })
         ],
         1
@@ -41401,7 +41243,7 @@ var render = function() {
         _vm._v(" "),
         _c("FormButton", {
           attrs: { button_name: "取得する" },
-          on: { click: _vm.getISBN }
+          on: { signalEvent: _vm.getISBN }
         })
       ],
       1
@@ -41491,7 +41333,7 @@ var render = function() {
         _c("FormButton", {
           staticClass: "button",
           attrs: { button_name: "登録する" },
-          on: { click: _vm.registerBook }
+          on: { signalEvent: _vm.registerBook }
         })
       ],
       1
@@ -41613,24 +41455,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      { staticClass: "half-box" },
-      [
-        _c("Camera"),
-        _vm._v(" "),
-        _c("FormButton", {
-          attrs: { button_name: "撮影する" },
-          on: { click: _vm.takeFaceImage }
-        }),
-        _vm._v(" "),
-        _c("FormButton", {
-          attrs: { button_name: "認証する" },
-          on: { click: _vm.authWithFaceImage }
-        })
-      ],
-      1
-    ),
+    _c("div", { staticClass: "half-box" }, [_c("Camera")], 1),
     _vm._v(" "),
     _c("div", { staticClass: "half-box" }, [
       _c("div", { attrs: { id: "officers" } }, [
@@ -41697,37 +41522,13 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      { staticClass: "half-box" },
-      [
-        _c("Camera"),
-        _vm._v(" "),
-        _c("FormButton", {
-          attrs: { button_name: "撮影する" },
-          on: { click: _vm.takeFaceImage }
-        }),
-        _vm._v(" "),
-        _c("FormButton", {
-          attrs: { button_name: "認証する" },
-          on: { click: _vm.authWithFaceImage }
-        })
-      ],
-      1
-    ),
+    _c("div", { staticClass: "half-box" }, [_c("Camera")], 1),
     _vm._v(" "),
     _c("div", { staticClass: "half-box" }, [
       _c("div", { attrs: { id: "login" } }, [
         _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.login($event)
-              }
-            }
-          },
+          "div",
+          { staticClass: "form" },
           [
             _c("div", { staticClass: "title" }, [_vm._v("ログインする")]),
             _vm._v(" "),
@@ -41745,7 +41546,7 @@ var render = function() {
                     label: "メールアドレス",
                     placeholder: "8文字以上の半角英数字"
                   },
-                  on: { onInput: _vm.getEmail }
+                  on: { signalEvent: _vm.getEmail }
                 }),
                 _vm._v(" "),
                 _c("FormInput", {
@@ -41753,17 +41554,18 @@ var render = function() {
                     label: "パスワード",
                     placeholder: "8文字以上の半角英数字"
                   },
-                  on: { onInput: _vm.getPass }
-                }),
-                _vm._v(" "),
-                _c("FormButton", {
-                  attrs: { button_name: "ログインする" },
-                  on: { click: _vm.login }
+                  on: { signalEvent: _vm.getPass }
                 })
               ],
               1
-            )
-          ]
+            ),
+            _vm._v(" "),
+            _c("FormButton", {
+              attrs: { button_name: "ログインする" },
+              on: { signalEvent: _vm.login }
+            })
+          ],
+          1
         )
       ])
     ])
@@ -41793,15 +41595,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "register" } }, [
     _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.register($event)
-          }
-        }
-      },
+      "div",
+      { staticClass: "form" },
       [
         _c("div", { staticClass: "title" }, [_vm._v("ユーザーを登録する")]),
         _vm._v(" "),
@@ -41816,12 +41611,12 @@ var render = function() {
             _vm._v(" "),
             _c("FormInput", {
               attrs: { label: "名前", placeholder: "8文字以上" },
-              on: { onInput: _vm.getName }
+              on: { signalEvent: _vm.getName }
             }),
             _vm._v(" "),
             _c("FormInput", {
               attrs: { label: "メールアドレス", placeholder: "" },
-              on: { onInput: _vm.getEmail }
+              on: { signalEvent: _vm.getEmail }
             }),
             _vm._v(" "),
             _c("FormInput", {
@@ -41829,7 +41624,7 @@ var render = function() {
                 label: "パスワード",
                 placeholder: "8文字以上の半角英数字"
               },
-              on: { onInput: _vm.getPass }
+              on: { signalEvent: _vm.getPass }
             }),
             _vm._v(" "),
             _c("FormInput", {
@@ -41837,14 +41632,18 @@ var render = function() {
                 label: "パスワード確認",
                 placeholder: "8文字以上の半角英数字"
               },
-              on: { onInput: _vm.getPassConf }
-            }),
-            _vm._v(" "),
-            _c("FormButton", { attrs: { button_name: "新規登録する" } })
+              on: { signalEvent: _vm.getPassConf }
+            })
           ],
           1
-        )
-      ]
+        ),
+        _vm._v(" "),
+        _c("FormButton", {
+          attrs: { button_name: "新規登録する" },
+          on: { signalEvent: _vm.register }
+        })
+      ],
+      1
     )
   ])
 }
@@ -41874,9 +41673,10 @@ var render = function() {
     "div",
     { attrs: { id: "users-books" } },
     [
-      _c("button", { attrs: { type: "submit" }, on: { click: _vm.logout } }, [
-        _vm._v("ログアウトする")
-      ]),
+      _c("FormButton", {
+        attrs: { button_name: "ログアウトする" },
+        on: { signalEvent: _vm.logout }
+      }),
       _vm._v(" "),
       _c("BooksList", {
         attrs: {
@@ -59625,10 +59425,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  // CSR内でのデータの状態管理
 
 var state = {
-  name: null,
-  email: null,
-  password: null,
-  password_confirmation: null,
   login_user: '' // stateの直接参照は非推奨なのでgettersに定義してコール
 
 };

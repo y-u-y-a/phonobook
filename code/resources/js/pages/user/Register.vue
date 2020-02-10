@@ -1,18 +1,18 @@
 <template>
     <div id="register">
-        <form @submit.prevent="register">
+        <div class="form">
             <div class="title">ユーザーを登録する</div>
             <div class="form-container">
                 <input type="hidden" name="_token" :value="csrf" />
                 <!-- 子へバインディングされた空の値を渡す -->
-                <!-- onInputを検知する度にgetValueを実行 -->
-                <FormInput @onInput="getName" label="名前" placeholder="8文字以上" ></FormInput>
-                <FormInput @onInput="getEmail" label="メールアドレス" placeholder="" ></FormInput>
-                <FormInput @onInput="getPass" label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
-                <FormInput @onInput="getPassConf" label="パスワード確認" placeholder="8文字以上の半角英数字" ></FormInput>
-                <FormButton button_name="新規登録する"></FormButton>
+                <!-- signalEventを検知する度にgetValueを実行 -->
+                <FormInput @signalEvent="getName" label="名前" placeholder="8文字以上" ></FormInput>
+                <FormInput @signalEvent="getEmail" label="メールアドレス" placeholder="" ></FormInput>
+                <FormInput @signalEvent="getPass" label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
+                <FormInput @signalEvent="getPassConf" label="パスワード確認" placeholder="8文字以上の半角英数字" ></FormInput>
             </div>
-        </form>
+            <FormButton @signalEvent="register" button_name="新規登録する"></FormButton>
+        </div>
     </div>
 </template>
 
@@ -83,7 +83,7 @@ export default {
         width: 50%;
         margin: 0 auto;
     }
-    form{
+    .form{
         margin: 2rem 0;
         padding-bottom: 2rem;
         background: $white;

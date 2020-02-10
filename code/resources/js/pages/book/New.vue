@@ -3,7 +3,7 @@
         <div class="half-box">
             <Camera></Camera>
             <FormInput v-model="isbn" label="番号入力またはバーコードを撮影してください" placeholder="8文字以上" ></FormInput>
-            <FormButton @click="getISBN" button_name="取得する"></FormButton>
+            <FormButton @signalEvent="getISBN" button_name="取得する"></FormButton>
         </div>
 
         <div class="half-box wrapper">
@@ -24,7 +24,7 @@
                     <img :src="cover" alt="No Image">
                 </div>
             </div>
-            <FormButton @click="registerBook" button_name="登録する" class="button"></FormButton>
+            <FormButton @signalEvent="registerBook" button_name="登録する" class="button"></FormButton>
         </div>
     </div>
 </template>
