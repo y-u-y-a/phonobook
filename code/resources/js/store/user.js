@@ -1,9 +1,7 @@
-// csrfが送信される？
-import { OK, CREATED, UNPROCESSABLE_ENTITY } from "../../util.js"
 
 // CSR内でのデータの状態管理
 const state = {
-    login_user: ''
+    login_user: null
 }
 
 // stateの直接参照は非推奨なのでgettersに定義してコール
@@ -27,9 +25,10 @@ const actions = {
         })
     },
 
-    async register(params) {
+    async register(context, params) {
         await axios.post("/api/auth/register", params)
         .then(response => {
+            console.log(params)
         })
         .catch(err => {
             console.log(err.name + ": " + err.message)
@@ -37,6 +36,7 @@ const actions = {
     },
 
     async login(context, params){
+        console.log(params)
         await axios.post("/api/login", params)
         .then(response => {
             context.commit("set", response.data)
@@ -48,12 +48,12 @@ const actions = {
 
     async logout(context){
         await axios.post("/api/logout")
-        context.commit("set", '')
+        context.commit("set", null)
     }
 }
 
 export default {
-    namespaced: true,
+    namespaced: true, // 追加
     state,
     getters,
     mutations,

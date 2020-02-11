@@ -1,9 +1,8 @@
 <template>
     <div id="register">
-        <div class="form">
+        <form @submit.prevent="register"><!-- 送信時のリロードをキャンセル -->
             <div class="title">ユーザーを登録する</div>
             <div class="form-container">
-                <input type="hidden" name="_token" :value="csrf" />
                 <!-- 子へバインディングされた空の値を渡す -->
                 <!-- signalEventを検知する度にgetValueを実行 -->
                 <FormInput @signalEvent="getName" label="名前" placeholder="8文字以上" ></FormInput>
@@ -11,8 +10,8 @@
                 <FormInput @signalEvent="getPass" label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
                 <FormInput @signalEvent="getPassConf" label="パスワード確認" placeholder="8文字以上の半角英数字" ></FormInput>
             </div>
-            <FormButton @signalEvent="register" button_name="新規登録する"></FormButton>
-        </div>
+            <FormButton button_name="新規登録する"></FormButton>
+        </form>
     </div>
 </template>
 
@@ -29,11 +28,10 @@ export default {
 
     data() {
         return {
-            csrf: document.querySelector("meta[name='csrf-token']").getAttribute("content"),
-            name: "",
-            email: "",
-            password: "",
-            password_confirmation: ""
+            name: null,
+            email: null,
+            password: null,
+            password_confirmation: null
         }
     },
 
@@ -59,11 +57,11 @@ export default {
                 password_confirmation: this.password_confirmation
             }
             await this.$store.dispatch("User/register", params)
-            .then(res => {
+            .then(response => {
                 alert("登録が完了しました")
                 this.$router.push("/")
             })
-            .catch(err => {
+            .catch(error => {
                 console.log(err.name + ": " + err.message)
                 alert("失敗しました")
             })
@@ -83,7 +81,7 @@ export default {
         width: 50%;
         margin: 0 auto;
     }
-    .form{
+    form{
         margin: 2rem 0;
         padding-bottom: 2rem;
         background: $white;

@@ -6,15 +6,14 @@
 
         <div class="half-box">
             <div id="login">
-                <div class="form">
+                <form @submit.prevent="login">
                     <div class="title">ログインする</div>
                     <div class="form-container">
-                        <input type="hidden" name="_token" :value="csrf" />
                         <FormInput @signalEvent="getEmail" label="メールアドレス" placeholder="8文字以上の半角英数字" ></FormInput>
                         <FormInput @signalEvent="getPass" label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
                     </div>
-                    <FormButton @signalEvent="login" button_name="ログインする"></FormButton>
-                </div>
+                    <FormButton button_name="ログインする"></FormButton>
+                </form>
             </div>
         </div>
     </div>
@@ -36,7 +35,6 @@ export default {
 
     data() {
         return {
-            csrf: document.querySelector("meta[name='csrf-token']").getAttribute("content"),
             email: "",
             password: ""
         };
@@ -59,7 +57,7 @@ export default {
             await this.$store.dispatch("User/login", params)
             .then(response => {
                 alert("ログインしました")
-                this.$router.push("/")
+                location.href = "/"
             })
             .catch(error => {
                 console.log(error.name + ": " + error.message)
@@ -79,7 +77,7 @@ export default {
     width: 90%;
     margin: 0 auto;
 }
-.form{
+form{
     margin: 2rem 0;
     padding-bottom: 2rem;
     background: $white;

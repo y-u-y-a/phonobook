@@ -5,7 +5,7 @@
             <UserButton button_name="出勤する or 退勤する" path="/user/Arrival" />
             <UserButton button_name="本を借りる" path="/book/Borrow" />
             <UserButton button_name="本の一覧をみる" path="/book/Index" />
-            <template v-if="login_user === ''">
+            <template v-if="login_user == ''">
                 <UserButton button_name="ログインする" path="/user/Login" />
             </template>
             <template v-else>

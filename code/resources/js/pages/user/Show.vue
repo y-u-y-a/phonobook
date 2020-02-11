@@ -36,6 +36,7 @@ export default {
     methods: {
         logout() {
             this.$store.dispatch("User/logout")
+            console.log(this.login_user)
             location.href = "/"
         },
 

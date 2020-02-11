@@ -1,10 +1,11 @@
+/* < bladeのscriptで読み込まれるファイル > */
 
-import "./bootstrap"
 import Vue from "vue"
 
+import App from "./App.vue"
+import "./bootstrap.js"
 import router from "./router.js"
 import store from "./store/index.js"
-import App from "./App.vue"
 
 const createApp = async () => {
     // SSRごとにログインユーザーの取得を行う
