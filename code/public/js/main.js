@@ -1773,12 +1773,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     FormButton: _form_Button_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ["page_title", "books_data"]
+  props: ["page_title", "books"]
 });
 
 /***/ }),
@@ -1987,12 +2000,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      value: null
-    };
-  },
-  props: ["label", "placeholder"],
+  props: ["label", "placeholder", "value"],
   methods: {
     // 親へのイベントを発行し、データ譲渡
     issueEvent: function issueEvent() {
@@ -2021,7 +2029,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["label"]
+  props: ["label", "placeholder", "value"],
+  methods: {
+    // 親へのイベントを発行し、データ譲渡
+    issueEvent: function issueEvent() {
+      this.$emit("signalEvent", this.value);
+    }
+  }
 });
 
 /***/ }),
@@ -2257,6 +2271,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/BooksList.vue */ "./resources/js/components/BooksList.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2264,90 +2294,98 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      books: []
-    };
+  components: {
+    BooksList: _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   created: function created() {
-    this.getBooks();
+    this.getAllBooks();
   },
-  methods: {
-    getBooks: function getBooks() {
-      var _this = this;
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("Book", ["all_books"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])("Book", ["getAllBooks"]), {
+    updateBook: function () {
+      var _updateBook = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(book_id, book_title, book_author, book_status) {
+        var _this = this;
 
-      var path = "/api/books";
-      axios.get(path).then(function (response) {
-        _this.books = response.data;
-      })["catch"](function (error) {
-        console.log(error.name + ": " + error.message);
-      });
-    },
-    updateBook: function updateBook(book_id, book_title, book_author, book_status) {
-      var _this2 = this;
+        var params;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                params = {
+                  id: book_id,
+                  title: book_title,
+                  author: book_author,
+                  status: book_status
+                };
+                _context.next = 3;
+                return axios.patch("/api/books", params).then(function (response) {
+                  alert("更新が成功しました");
 
-      var path = "/api/books";
-      var params = {
-        id: book_id,
-        title: book_title,
-        author: book_author,
-        status: book_status
-      };
-      axios.patch(path, params).then(function (response) {
-        alert("更新が成功しました");
+                  _this.getBooks(); // データの再取得
 
-        _this2.getBooks(); // データの再取得
+                })["catch"](function (error) {
+                  console.log(error.name + ": " + error.message);
+                });
 
-      })["catch"](function (error) {
-        console.log(error.name + ": " + error.message);
-      });
-    },
-    destroyBook: function destroyBook(book_id) {
-      var _this3 = this;
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
 
-      var path = "/api/books";
-      axios["delete"](path, {
-        data: {
-          id: book_id // deleteメソッドを使う場合はdataキーが必要！
+      function updateBook(_x, _x2, _x3, _x4) {
+        return _updateBook.apply(this, arguments);
+      }
 
-        }
-      }).then(function (response) {
-        alert("削除しました");
+      return updateBook;
+    }(),
+    destroyBook: function () {
+      var _destroyBook = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(book_id) {
+        var _this2 = this;
 
-        _this3.getBooks(); // データの再取得
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios["delete"]("/api/books", {
+                  data: {
+                    id: book_id // deleteメソッドを使う場合はdataキーが必要！
 
-      })["catch"](function (error) {
-        console.log(error.name + ": " + error.message);
-      });
-    }
-  }
+                  }
+                }).then(function (response) {
+                  alert("削除しました");
+
+                  _this2.getBooks(); // データの再取得
+
+                })["catch"](function (error) {
+                  console.log(error.name + ": " + error.message);
+                });
+
+              case 2:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function destroyBook(_x5) {
+        return _destroyBook.apply(this, arguments);
+      }
+
+      return destroyBook;
+    }()
+  })
 });
 
 /***/ }),
@@ -2362,44 +2400,29 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/BooksList.vue */ "./resources/js/components/BooksList.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     BooksList: _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  data: function data() {
-    return {
-      books: []
-    };
-  },
   created: function created() {
-    this.getBooks();
+    this.getAllBooks();
   },
-  methods: {
-    getBooks: function getBooks() {
-      var _this = this;
-
-      axios.get("/api/books/all") // 戻り値をJSONで取得
-      .then(function (response) {
-        _this.books = response.data; // stateを文字列に変換
-
-        _this.books.forEach(function (book) {
-          if (book.state == 0) {
-            book.state = "貸出し可能";
-          } else {
-            book.state = "貸出し中";
-          }
-        });
-      })["catch"](function (error) {
-        console.log(error.name + ": " + error.message);
-      });
-    }
-  }
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])("Book", ["all_books"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])("Book", ["getAllBooks"]))
 });
 
 /***/ }),
@@ -2417,6 +2440,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form/Input.vue */ "./resources/js/components/form/Input.vue");
 /* harmony import */ var _components_form_Textarea_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/form/Textarea.vue */ "./resources/js/components/form/Textarea.vue");
 /* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2472,12 +2509,39 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getISBN: function getISBN() {
+    getISBN: function getISBN(value) {
+      this.isbn = value;
+    },
+    getTitle: function getTitle(value) {
+      this.title = value;
+    },
+    getAuthor: function getAuthor(value) {
+      this.author = value;
+    },
+    getVolume: function getVolume(value) {
+      this.volume = value;
+    },
+    getSeries: function getSeries(value) {
+      this.series = value;
+    },
+    getPublisher: function getPublisher(value) {
+      this.publisher = value;
+    },
+    getPubdate: function getPubdate(value) {
+      this.pubdate = value;
+    },
+    getDetail: function getDetail(value) {
+      this.detail = value;
+    },
+    getCover: function getCover(value) {
+      this.cover = value;
+    },
+    getBookData: function getBookData() {
+      var _this = this;
+
       // openBDに送信するデータを定義
       var isbn = this.isbn;
-      var url = "https://api.openbd.jp/v1/get?isbn=" + isbn; // 関数内ではthisが他を指すことがあるので、予め変数に代入しておく
-
-      var vm = this;
+      var url = "https://api.openbd.jp/v1/get?isbn=" + isbn;
 
       if (isbn == "") {
         alert("ISBNを入力してください");
@@ -2485,31 +2549,28 @@ __webpack_require__.r(__webpack_exports__);
         alert("ISBNは13桁で入力してください");
       } else {
         // アクセス開始
-        $.getJSON(url, function (data) {
-          // dataは,APIからの返り値
-          if (data[0] != null) {
+        $.getJSON(url, function (response) {
+          if (response[0] != null) {
             // 本データの取得
-            var book = data[0].summary; // dataの更新
-
-            vm.title = book.title;
-            vm.author = book.author;
-            vm.volume = book.volume;
-            vm.series = book.series;
-            vm.publisher = book.publisher;
-            vm.pubdate = book.pubdate;
-            vm.detail = data[0].onix.CollateralDetail.TextContent[0].Text; // 画像が存在すれば更新する
+            var book = response[0].summary;
+            _this.title = book.title;
+            _this.author = book.author;
+            _this.volume = book.volume;
+            _this.series = book.series;
+            _this.publisher = book.publisher;
+            _this.pubdate = book.pubdate;
+            _this.detail = response[0].onix.CollateralDetail.TextContent[0].Text; // 画像が存在すれば更新
 
             if (book.cover != "") {
-              vm.cover = book.cover;
+              _this.cover = book.cover;
             }
           } else {
-            alert("データが見つかりません");
+            alert("本データが見つかりません");
           }
         });
       }
     },
     registerBook: function registerBook() {
-      var path = "/api/books";
       var params = {
         isbn: this.isbn,
         title: this.title,
@@ -2521,12 +2582,10 @@ __webpack_require__.r(__webpack_exports__);
         detail: this.detail,
         cover: this.cover
       };
-      axios.post(path, params) // 成功した場合
-      .then(function (response) {
+      axios.post("/api/books", params).then(function (response) {
         alert("登録が完了しました");
-        location.href = "/admin/book";
-      }) // 失敗した場合
-      ["catch"](function (error, response) {
+        location.href = "/book/New"; // this.$router.push("/book/New")
+      })["catch"](function (error, response) {
         console.log(error.name + ": " + error.message);
         alert("失敗しました");
       });
@@ -2545,6 +2604,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2571,39 +2646,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      // パラメータで渡されたデータの取得
-      book_id: this.$route.params.id,
-      book: {}
-    };
+  components: {
+    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  created: function created() {
-    this.getBook();
-  },
-  methods: {
-    getBook: function getBook() {
-      var _this = this;
+  created: function () {
+    var _created = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return this.getAllBooks();
 
-      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+            case 2:
+              _context.next = 4;
+              return this.getBookById(this.$route.params.id);
 
-      axios.get("/api/books/" + this.book_id) // 成功した場合
-      .then(function (response) {
-        _this.book = response.data;
-      }) // 失敗した場合
-      ["catch"](function (error) {
-        console.log(error.name + ": " + error.message);
-      });
-    },
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    function created() {
+      return _created.apply(this, arguments);
+    }
+
+    return created;
+  }(),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("Book", ["book"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])("Book", ["getAllBooks", "getBookById"]), {
     // 本を貸出す処理
     lendBook: function lendBook() {
-      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
-      axios.get("/api/books/lend/" + this.book_id) // 成功した場合
-      .then(function (response) {
+      axios.get("/api/books/lend/" + this.book.id).then(function (response) {
         if (response.data != "") {
           alert("".concat(response.data, "\n\u8FD4\u5374\u65E5\u306F\u301C\u3067\u3059\u3002"));
           location.href = "/list";
@@ -2611,12 +2693,11 @@ __webpack_require__.r(__webpack_exports__);
           alert("ログインしてください");
           location.href = "/login";
         }
-      }) // 失敗した場合
-      ["catch"](function (error) {
+      })["catch"](function (error) {
         console.log(error.name + ": " + error.message);
       });
     }
-  }
+  })
 });
 
 /***/ }),
@@ -7461,7 +7542,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
 
 // module
-exports.push([module.i, "@charset \"UTF-8\";\nhtml[data-v-6a93188d], body[data-v-6a93188d], div[data-v-6a93188d], span[data-v-6a93188d], applet[data-v-6a93188d], object[data-v-6a93188d], iframe[data-v-6a93188d],\nh1[data-v-6a93188d], h2[data-v-6a93188d], h3[data-v-6a93188d], h4[data-v-6a93188d], h5[data-v-6a93188d], h6[data-v-6a93188d], p[data-v-6a93188d],\nblockquote[data-v-6a93188d], pre[data-v-6a93188d],\na[data-v-6a93188d], abbr[data-v-6a93188d], acronym[data-v-6a93188d], address[data-v-6a93188d], big[data-v-6a93188d], cite[data-v-6a93188d], code[data-v-6a93188d],\ndel[data-v-6a93188d], dfn[data-v-6a93188d], em[data-v-6a93188d], img[data-v-6a93188d], ins[data-v-6a93188d], kbd[data-v-6a93188d], q[data-v-6a93188d], s[data-v-6a93188d], samp[data-v-6a93188d],\nsmall[data-v-6a93188d], strike[data-v-6a93188d], strong[data-v-6a93188d], sub[data-v-6a93188d], sup[data-v-6a93188d], tt[data-v-6a93188d], var[data-v-6a93188d],\nb[data-v-6a93188d], u[data-v-6a93188d], i[data-v-6a93188d], center[data-v-6a93188d],\ndl[data-v-6a93188d], dt[data-v-6a93188d], dd[data-v-6a93188d], ol[data-v-6a93188d], ul[data-v-6a93188d], li[data-v-6a93188d],\nfieldset[data-v-6a93188d], form[data-v-6a93188d], label[data-v-6a93188d], legend[data-v-6a93188d],\ntable[data-v-6a93188d], caption[data-v-6a93188d], tbody[data-v-6a93188d], tfoot[data-v-6a93188d], thead[data-v-6a93188d], tr[data-v-6a93188d], th[data-v-6a93188d], td[data-v-6a93188d],\narticle[data-v-6a93188d], aside[data-v-6a93188d], canvas[data-v-6a93188d], details[data-v-6a93188d], embed[data-v-6a93188d],\nfigure[data-v-6a93188d], figcaption[data-v-6a93188d], footer[data-v-6a93188d], header[data-v-6a93188d], hgroup[data-v-6a93188d],\nmenu[data-v-6a93188d], nav[data-v-6a93188d], output[data-v-6a93188d], ruby[data-v-6a93188d], section[data-v-6a93188d], summary[data-v-6a93188d],\ntime[data-v-6a93188d], mark[data-v-6a93188d], audio[data-v-6a93188d], video[data-v-6a93188d] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-6a93188d], aside[data-v-6a93188d], details[data-v-6a93188d], figcaption[data-v-6a93188d], figure[data-v-6a93188d],\nfooter[data-v-6a93188d], header[data-v-6a93188d], hgroup[data-v-6a93188d], menu[data-v-6a93188d], nav[data-v-6a93188d], section[data-v-6a93188d] {\n  display: block;\n}\nbody[data-v-6a93188d] {\n  line-height: 1;\n}\nol[data-v-6a93188d], ul[data-v-6a93188d] {\n  list-style: none;\n}\nblockquote[data-v-6a93188d], q[data-v-6a93188d] {\n  quotes: none;\n}\nblockquote[data-v-6a93188d]:before, blockquote[data-v-6a93188d]:after,\nq[data-v-6a93188d]:before, q[data-v-6a93188d]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-6a93188d] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-6a93188d] {\n  text-decoration: none;\n}\n.clearfix[data-v-6a93188d]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-6a93188d] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-6a93188d] {\n  height: 1%;\n}\n.clearfix[data-v-6a93188d] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-6a93188d] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-6a93188d] {\n  background-color: #F2F2F2;\n}\n@media screen and (min-width: 640px) {\n#books-list[data-v-6a93188d] {\n    width: 90%;\n    margin: 0 auto;\n}\n.page-title[data-v-6a93188d] {\n    padding: 2rem 0;\n    font-size: 24px;\n    font-weight: bold;\n}\nli[data-v-6a93188d] {\n    display: inline-block;\n    width: 25%;\n    margin-bottom: 3rem;\n    box-sizing: border-box;\n    padding: 0 10px;\n    text-align: center;\n}\nli .book[data-v-6a93188d] {\n    padding: 1rem 0;\n    background-color: white;\n}\nli .book a[data-v-6a93188d]:hover {\n    opacity: 0.7;\n    cursor: pointer;\n}\nli .book img[data-v-6a93188d] {\n    width: 200px;\n    height: 290px;\n    margin-bottom: 1rem;\n}\nli .book .state[data-v-6a93188d] {\n    font-size: 18px;\n    font-weight: bold;\n    letter-spacing: 2px;\n}\nli .book .貸出し可能[data-v-6a93188d] {\n    color: #04B431;\n}\nli .book .貸出し中[data-v-6a93188d] {\n    color: #FE2E64;\n}\n}", ""]);
+exports.push([module.i, "html[data-v-6a93188d], body[data-v-6a93188d], div[data-v-6a93188d], span[data-v-6a93188d], applet[data-v-6a93188d], object[data-v-6a93188d], iframe[data-v-6a93188d],\nh1[data-v-6a93188d], h2[data-v-6a93188d], h3[data-v-6a93188d], h4[data-v-6a93188d], h5[data-v-6a93188d], h6[data-v-6a93188d], p[data-v-6a93188d],\nblockquote[data-v-6a93188d], pre[data-v-6a93188d],\na[data-v-6a93188d], abbr[data-v-6a93188d], acronym[data-v-6a93188d], address[data-v-6a93188d], big[data-v-6a93188d], cite[data-v-6a93188d], code[data-v-6a93188d],\ndel[data-v-6a93188d], dfn[data-v-6a93188d], em[data-v-6a93188d], img[data-v-6a93188d], ins[data-v-6a93188d], kbd[data-v-6a93188d], q[data-v-6a93188d], s[data-v-6a93188d], samp[data-v-6a93188d],\nsmall[data-v-6a93188d], strike[data-v-6a93188d], strong[data-v-6a93188d], sub[data-v-6a93188d], sup[data-v-6a93188d], tt[data-v-6a93188d], var[data-v-6a93188d],\nb[data-v-6a93188d], u[data-v-6a93188d], i[data-v-6a93188d], center[data-v-6a93188d],\ndl[data-v-6a93188d], dt[data-v-6a93188d], dd[data-v-6a93188d], ol[data-v-6a93188d], ul[data-v-6a93188d], li[data-v-6a93188d],\nfieldset[data-v-6a93188d], form[data-v-6a93188d], label[data-v-6a93188d], legend[data-v-6a93188d],\ntable[data-v-6a93188d], caption[data-v-6a93188d], tbody[data-v-6a93188d], tfoot[data-v-6a93188d], thead[data-v-6a93188d], tr[data-v-6a93188d], th[data-v-6a93188d], td[data-v-6a93188d],\narticle[data-v-6a93188d], aside[data-v-6a93188d], canvas[data-v-6a93188d], details[data-v-6a93188d], embed[data-v-6a93188d],\nfigure[data-v-6a93188d], figcaption[data-v-6a93188d], footer[data-v-6a93188d], header[data-v-6a93188d], hgroup[data-v-6a93188d],\nmenu[data-v-6a93188d], nav[data-v-6a93188d], output[data-v-6a93188d], ruby[data-v-6a93188d], section[data-v-6a93188d], summary[data-v-6a93188d],\ntime[data-v-6a93188d], mark[data-v-6a93188d], audio[data-v-6a93188d], video[data-v-6a93188d] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-6a93188d], aside[data-v-6a93188d], details[data-v-6a93188d], figcaption[data-v-6a93188d], figure[data-v-6a93188d],\nfooter[data-v-6a93188d], header[data-v-6a93188d], hgroup[data-v-6a93188d], menu[data-v-6a93188d], nav[data-v-6a93188d], section[data-v-6a93188d] {\n  display: block;\n}\nbody[data-v-6a93188d] {\n  line-height: 1;\n}\nol[data-v-6a93188d], ul[data-v-6a93188d] {\n  list-style: none;\n}\nblockquote[data-v-6a93188d], q[data-v-6a93188d] {\n  quotes: none;\n}\nblockquote[data-v-6a93188d]:before, blockquote[data-v-6a93188d]:after,\nq[data-v-6a93188d]:before, q[data-v-6a93188d]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-6a93188d] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-6a93188d] {\n  text-decoration: none;\n}\n.clearfix[data-v-6a93188d]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-6a93188d] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-6a93188d] {\n  height: 1%;\n}\n.clearfix[data-v-6a93188d] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-6a93188d] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-6a93188d] {\n  background-color: #F2F2F2;\n}\n@media screen and (min-width: 640px) {\n#books-list[data-v-6a93188d] {\n    width: 90%;\n    margin: 0 auto;\n}\n.page-title[data-v-6a93188d] {\n    padding: 2rem 0;\n    font-size: 24px;\n    font-weight: bold;\n}\nli[data-v-6a93188d] {\n    display: inline-block;\n    width: 25%;\n    margin-bottom: 3rem;\n    box-sizing: border-box;\n    padding: 0 10px;\n    text-align: center;\n}\nli .book[data-v-6a93188d] {\n    padding: 1rem 0;\n    background-color: white;\n}\nli .book a[data-v-6a93188d]:hover {\n    opacity: 0.7;\n    cursor: pointer;\n}\nli .book img[data-v-6a93188d] {\n    width: 200px;\n    height: 290px;\n    margin-bottom: 1rem;\n}\nli .book .state[data-v-6a93188d] {\n    font-size: 18px;\n    font-weight: bold;\n    letter-spacing: 2px;\n}\nli .book .ok[data-v-6a93188d] {\n    color: #04B431;\n}\nli .book .ng[data-v-6a93188d] {\n    color: #FE2E64;\n}\n}", ""]);
 
 // exports
 
@@ -7667,10 +7748,10 @@ exports.push([module.i, "html[data-v-491cb27a], body[data-v-491cb27a], div[data-
 
 exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
-
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
 
 // module
-exports.push([module.i, "@media screen and (min-width: 640px) {\n#bookShow #title[data-v-2f18fdea] {\n    width: 90%;\n    margin: 0 auto;\n    padding: 30px 0;\n    font-size: 24px;\n    font-weight: bold;\n}\n#bookShow .bookInfo[data-v-2f18fdea] {\n    width: 90%;\n    margin: 0 auto;\n    font-size: 0;\n    background-color: white;\n}\n#bookShow .bookInfo .leftArea[data-v-2f18fdea],\n#bookShow .bookInfo .rightArea[data-v-2f18fdea] {\n    padding-top: 40px;\n    display: inline-block;\n    vertical-align: top;\n    font-size: 16px;\n    text-align: center;\n}\n#bookShow .bookInfo .leftArea[data-v-2f18fdea] {\n    width: 60%;\n}\n#bookShow .bookInfo .leftArea .bookContents[data-v-2f18fdea] {\n    width: 90%;\n    margin: 0 auto;\n}\n#bookShow .bookInfo .leftArea .bookContents li[data-v-2f18fdea] {\n    margin-bottom: 50px;\n    text-align: left;\n}\n#bookShow .bookInfo .leftArea .bookContents #bookShow[data-v-2f18fdea] {\n    padding-top: 20px;\n    margin: 0;\n    font-size: 18px;\n    letter-spacing: 2px;\n}\n#bookShow .bookInfo .rightArea[data-v-2f18fdea] {\n    width: 39%;\n    padding: 40px 0;\n}\n#bookShow .bookInfo .rightArea img[data-v-2f18fdea] {\n    width: 200px;\n    height: 300px;\n    margin-bottom: 40px;\n}\n#bookShow .bookReview[data-v-2f18fdea] {\n    width: 90%;\n    margin: 20px auto 0;\n    font-size: 16px;\n    font-weight: bold;\n    text-align: center;\n    background-color: white;\n}\n}", ""]);
+exports.push([module.i, "html[data-v-2f18fdea], body[data-v-2f18fdea], div[data-v-2f18fdea], span[data-v-2f18fdea], applet[data-v-2f18fdea], object[data-v-2f18fdea], iframe[data-v-2f18fdea],\nh1[data-v-2f18fdea], h2[data-v-2f18fdea], h3[data-v-2f18fdea], h4[data-v-2f18fdea], h5[data-v-2f18fdea], h6[data-v-2f18fdea], p[data-v-2f18fdea],\nblockquote[data-v-2f18fdea], pre[data-v-2f18fdea],\na[data-v-2f18fdea], abbr[data-v-2f18fdea], acronym[data-v-2f18fdea], address[data-v-2f18fdea], big[data-v-2f18fdea], cite[data-v-2f18fdea], code[data-v-2f18fdea],\ndel[data-v-2f18fdea], dfn[data-v-2f18fdea], em[data-v-2f18fdea], img[data-v-2f18fdea], ins[data-v-2f18fdea], kbd[data-v-2f18fdea], q[data-v-2f18fdea], s[data-v-2f18fdea], samp[data-v-2f18fdea],\nsmall[data-v-2f18fdea], strike[data-v-2f18fdea], strong[data-v-2f18fdea], sub[data-v-2f18fdea], sup[data-v-2f18fdea], tt[data-v-2f18fdea], var[data-v-2f18fdea],\nb[data-v-2f18fdea], u[data-v-2f18fdea], i[data-v-2f18fdea], center[data-v-2f18fdea],\ndl[data-v-2f18fdea], dt[data-v-2f18fdea], dd[data-v-2f18fdea], ol[data-v-2f18fdea], ul[data-v-2f18fdea], li[data-v-2f18fdea],\nfieldset[data-v-2f18fdea], form[data-v-2f18fdea], label[data-v-2f18fdea], legend[data-v-2f18fdea],\ntable[data-v-2f18fdea], caption[data-v-2f18fdea], tbody[data-v-2f18fdea], tfoot[data-v-2f18fdea], thead[data-v-2f18fdea], tr[data-v-2f18fdea], th[data-v-2f18fdea], td[data-v-2f18fdea],\narticle[data-v-2f18fdea], aside[data-v-2f18fdea], canvas[data-v-2f18fdea], details[data-v-2f18fdea], embed[data-v-2f18fdea],\nfigure[data-v-2f18fdea], figcaption[data-v-2f18fdea], footer[data-v-2f18fdea], header[data-v-2f18fdea], hgroup[data-v-2f18fdea],\nmenu[data-v-2f18fdea], nav[data-v-2f18fdea], output[data-v-2f18fdea], ruby[data-v-2f18fdea], section[data-v-2f18fdea], summary[data-v-2f18fdea],\ntime[data-v-2f18fdea], mark[data-v-2f18fdea], audio[data-v-2f18fdea], video[data-v-2f18fdea] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-2f18fdea], aside[data-v-2f18fdea], details[data-v-2f18fdea], figcaption[data-v-2f18fdea], figure[data-v-2f18fdea],\nfooter[data-v-2f18fdea], header[data-v-2f18fdea], hgroup[data-v-2f18fdea], menu[data-v-2f18fdea], nav[data-v-2f18fdea], section[data-v-2f18fdea] {\n  display: block;\n}\nbody[data-v-2f18fdea] {\n  line-height: 1;\n}\nol[data-v-2f18fdea], ul[data-v-2f18fdea] {\n  list-style: none;\n}\nblockquote[data-v-2f18fdea], q[data-v-2f18fdea] {\n  quotes: none;\n}\nblockquote[data-v-2f18fdea]:before, blockquote[data-v-2f18fdea]:after,\nq[data-v-2f18fdea]:before, q[data-v-2f18fdea]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-2f18fdea] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-2f18fdea] {\n  text-decoration: none;\n}\n.clearfix[data-v-2f18fdea]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-2f18fdea] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-2f18fdea] {\n  height: 1%;\n}\n.clearfix[data-v-2f18fdea] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-2f18fdea] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-2f18fdea] {\n  background-color: #F2F2F2;\n}\n@media screen and (min-width: 640px) {\n#book-show[data-v-2f18fdea] {\n    background: white;\n}\n.book-info[data-v-2f18fdea] {\n    padding-bottom: 2rem;\n    border-bottom: 1px dashed silver;\n}\n.book-info .title[data-v-2f18fdea] {\n    width: 90%;\n    margin: 0 auto;\n    padding: 30px 0;\n    font-size: 24px;\n    font-weight: bold;\n}\n.book-info ul[data-v-2f18fdea] {\n    width: 80%;\n    margin: 0 auto;\n    font-size: 16px;\n}\n.book-info ul li[data-v-2f18fdea] {\n    margin-bottom: 2rem;\n}\n.book-info .image-box[data-v-2f18fdea] {\n    text-align: center;\n}\n.book-info .button[data-v-2f18fdea] {\n    margin-top: 2rem;\n}\n.book-review[data-v-2f18fdea] {\n    text-align: center;\n}\n}", ""]);
 
 // exports
 
@@ -40429,16 +40510,36 @@ var render = function() {
     _vm._v(" "),
     _c(
       "ul",
-      _vm._l(50, function(n) {
+      _vm._l(_vm.books, function(book) {
         return _c("li", [
           _c(
             "div",
             { staticClass: "book" },
             [
-              _vm._m(0, true),
+              _c("router-link", { attrs: { to: "/book/Show/" + book.id } }, [
+                _c("img", { attrs: { src: book.cover, alt: "No Image" } })
+              ]),
               _vm._v(" "),
               _vm.page_title == "本の一覧"
-                ? _c("div", { staticClass: "state" }, [_vm._v("貸し出し可能")])
+                ? _c("div", { staticClass: "state" }, [
+                    book.state == 0
+                      ? _c("div", { staticClass: "ok" }, [_vm._v("貸出し可能")])
+                      : _c("div", { staticClass: "ng" }, [_vm._v("貸出し中")])
+                  ])
+                : _vm.page_title == "本を更新・削除する"
+                ? _c(
+                    "div",
+                    [
+                      _c("FormButton", {
+                        attrs: { type: "submit", button_name: "更新する" }
+                      }),
+                      _vm._v(" "),
+                      _c("FormButton", {
+                        attrs: { type: "submit", button_name: "削除する" }
+                      })
+                    ],
+                    1
+                  )
                 : _c("FormButton", {
                     attrs: { type: "submit", button_name: "返却する" }
                   })
@@ -40451,16 +40552,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { attrs: { href: "#" } }, [
-      _c("img", { attrs: { src: "/no_image.png", alt: "No Image" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -40671,7 +40763,29 @@ var render = function() {
   return _c("div", { staticClass: "form-textarea" }, [
     _c("label", [_vm._v(_vm._s(_vm.label) + "：")]),
     _vm._v(" "),
-    _c("textarea")
+    _c("textarea", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.value,
+          expression: "value"
+        }
+      ],
+      attrs: { placeholder: _vm.placeholder },
+      domProps: { value: _vm.value },
+      on: {
+        input: [
+          function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.value = $event.target.value
+          },
+          _vm.issueEvent
+        ]
+      }
+    })
   ])
 }
 var staticRenderFns = []
@@ -40970,123 +41084,11 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h1", [_vm._v("本の更新・削除")]),
-      _vm._v(" "),
-      _vm._l(_vm.books, function(book) {
-        return _c("ul", [
-          _c("li", [
-            _c("p", [_vm._v("id：" + _vm._s(book.id))]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("作品名：\n                "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: book.title,
-                    expression: "book.title"
-                  }
-                ],
-                domProps: { value: book.title },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(book, "title", $event.target.value)
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("\n                著者名：\n                "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: book.author,
-                    expression: "book.author"
-                  }
-                ],
-                domProps: { value: book.author },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(book, "author", $event.target.value)
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v("\n                貸出し：\n                "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: book.status,
-                    expression: "book.status"
-                  }
-                ],
-                domProps: { value: book.status },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(book, "status", $event.target.value)
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("ul", [
-              _c("li", [
-                _c(
-                  "button",
-                  {
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.updateBook(
-                          book.id,
-                          book.title,
-                          book.author,
-                          book.status
-                        )
-                      }
-                    }
-                  },
-                  [_vm._v("更新する")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c(
-                  "button",
-                  {
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.destroyBook(book.id)
-                      }
-                    }
-                  },
-                  [_vm._v("削除する")]
-                )
-              ])
-            ])
-          ])
-        ])
+      _c("BooksList", {
+        attrs: { page_title: "本を更新・削除する", books: _vm.all_books }
       })
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
@@ -41112,7 +41114,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("BooksList", {
-    attrs: { page_title: "本の一覧", books_data: _vm.books }
+    attrs: { page_title: "本の一覧", books: _vm.all_books }
   })
 }
 var staticRenderFns = []
@@ -41145,22 +41147,13 @@ var render = function() {
         _c("Camera"),
         _vm._v(" "),
         _c("FormInput", {
-          attrs: {
-            label: "番号入力またはバーコードを撮影してください",
-            placeholder: "8文字以上"
-          },
-          model: {
-            value: _vm.isbn,
-            callback: function($$v) {
-              _vm.isbn = $$v
-            },
-            expression: "isbn"
-          }
+          attrs: { value: _vm.isbn, label: "ISBN", placeholder: "" },
+          on: { signalEvent: _vm.getISBN }
         }),
         _vm._v(" "),
         _c("FormButton", {
           attrs: { button_name: "取得する" },
-          on: { signalEvent: _vm.getISBN }
+          on: { signalEvent: _vm.getBookData }
         })
       ],
       1
@@ -41177,7 +41170,12 @@ var render = function() {
                 "li",
                 [
                   _c("FormInput", {
-                    attrs: { label: "書籍名", placeholder: "8文字以上" }
+                    attrs: {
+                      value: _vm.title,
+                      label: "書籍名",
+                      placeholder: "8文字以上"
+                    },
+                    on: { signalEvent: _vm.getTitle }
                   })
                 ],
                 1
@@ -41187,7 +41185,12 @@ var render = function() {
                 "li",
                 [
                   _c("FormInput", {
-                    attrs: { label: "著者", placeholder: "8文字以上" }
+                    attrs: {
+                      value: _vm.author,
+                      label: "著者",
+                      placeholder: "8文字以上"
+                    },
+                    on: { signalEvent: _vm.getAuthor }
                   })
                 ],
                 1
@@ -41197,7 +41200,12 @@ var render = function() {
                 "li",
                 [
                   _c("FormInput", {
-                    attrs: { label: "巻", placeholder: "8文字以上" }
+                    attrs: {
+                      value: _vm.volume,
+                      label: "巻",
+                      placeholder: "8文字以上"
+                    },
+                    on: { signalEvent: _vm.getVolume }
                   })
                 ],
                 1
@@ -41207,7 +41215,12 @@ var render = function() {
                 "li",
                 [
                   _c("FormInput", {
-                    attrs: { label: "シリーズ", placeholder: "8文字以上" }
+                    attrs: {
+                      value: _vm.series,
+                      label: "シリーズ",
+                      placeholder: "8文字以上"
+                    },
+                    on: { signalEvent: _vm.getSeries }
                   })
                 ],
                 1
@@ -41217,7 +41230,12 @@ var render = function() {
                 "li",
                 [
                   _c("FormInput", {
-                    attrs: { label: "出版", placeholder: "8文字以上" }
+                    attrs: {
+                      value: _vm.publisher,
+                      label: "出版",
+                      placeholder: "8文字以上"
+                    },
+                    on: { signalEvent: _vm.getPublisher }
                   })
                 ],
                 1
@@ -41227,13 +41245,27 @@ var render = function() {
                 "li",
                 [
                   _c("FormInput", {
-                    attrs: { label: "出版日", placeholder: "8文字以上" }
+                    attrs: {
+                      value: _vm.pubdate,
+                      label: "出版日",
+                      placeholder: "8文字以上"
+                    },
+                    on: { signalEvent: _vm.getPubdate }
                   })
                 ],
                 1
               ),
               _vm._v(" "),
-              _c("li", [_c("FormTextarea", { attrs: { label: "詳細" } })], 1)
+              _c(
+                "li",
+                [
+                  _c("FormTextarea", {
+                    attrs: { value: _vm.detail, label: "詳細" },
+                    on: { signalEvent: _vm.getDetail }
+                  })
+                ],
+                1
+              )
             ])
           ]),
           _vm._v(" "),
@@ -41274,12 +41306,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "bookShow" } }, [
-    _c("div", { attrs: { id: "title" } }, [_vm._v(_vm._s(_vm.book.title))]),
-    _vm._v(" "),
-    _c("div", { staticClass: "bookInfo" }, [
+  return _c("div", { attrs: { id: "book-show" } }, [
+    _c("div", { staticClass: "book-info clearfix" }, [
+      _c("div", { staticClass: "title" }, [_vm._v(_vm._s(_vm.book.title))]),
+      _vm._v(" "),
       _c("div", { staticClass: "half-box" }, [
-        _c("ul", { staticClass: "bookContents" }, [
+        _c("ul", [
           _vm.book.author != undefined
             ? _c("li", [_vm._v("著者 ：" + _vm._s(_vm.book.author))])
             : _vm._e(),
@@ -41301,50 +41333,35 @@ var render = function() {
             : _vm._e(),
           _vm._v(" "),
           _vm.book.detail != undefined
-            ? _c("li", { attrs: { id: "detail" } }, [
-                _vm._v(_vm._s(_vm.book.detail))
-              ])
+            ? _c("li", [_vm._v(_vm._s(_vm.book.detail))])
             : _vm._e()
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "half-box" }, [
-        _c("img", { attrs: { src: _vm.book.cover, alt: "No Image" } }),
-        _vm._v(" "),
-        _c("div", [
-          _vm.book.state == 0
-            ? _c(
-                "button",
-                {
-                  staticClass: "lendButton",
-                  on: {
-                    click: function($event) {
-                      return _vm.lendBook()
-                    }
-                  }
-                },
-                [_vm._v("この本を借りる")]
-              )
-            : _vm._e(),
+      _c(
+        "div",
+        { staticClass: "half-box image-box" },
+        [
+          _c("img", { attrs: { src: _vm.book.cover, alt: "No Image" } }),
           _vm._v(" "),
-          _c("button", [_vm._v("レビューする")])
-        ])
-      ])
+          _vm.book.state == 0
+            ? _c("FormButton", {
+                staticClass: "button",
+                attrs: { button_name: "この本を借りる" },
+                on: { signalEvent: _vm.lendBook }
+              })
+            : _vm._e()
+        ],
+        1
+      )
     ]),
     _vm._v(" "),
-    _vm._m(0)
+    _c("div", { staticClass: "book-review" }, [
+      _vm._v("↓ ============　この本の評価　============ ↓")
+    ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "bookReview" }, [
-      _c("p", [_vm._v("↓====== この本の評価 ======↓")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -59359,10 +59376,83 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 /*!************************************!*\
   !*** ./resources/js/store/book.js ***!
   \************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 
 
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var state = {
+  all_books: [],
+  book: {} // stateの直接参照は非推奨なのでgettersに定義してコール
+
+};
+var getters = {}; // commit("呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期のみ)
+
+var mutations = {
+  setAll: function setAll(state, books) {
+    state.all_books = books;
+  },
+  set: function set(state, book) {
+    state.book = book;
+  }
+}; // dispatch("モジュール名/呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期/非同期)
+
+var actions = {
+  getAllBooks: function () {
+    var _getAllBooks = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(context) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return axios.get("/api/books/all") // 戻り値をJSONで取得
+              .then(function (response) {
+                context.commit("setAll", response.data);
+              })["catch"](function (error) {
+                console.log(error.name + ": " + error.message);
+              });
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    function getAllBooks(_x) {
+      return _getAllBooks.apply(this, arguments);
+    }
+
+    return getAllBooks;
+  }(),
+  getBookById: function getBookById(context, book_id) {
+    var books = context.state.all_books;
+    books.forEach(function (book) {
+      if (book.id == book_id) {
+        context.commit("set", book);
+        return;
+      }
+    });
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
+});
 
 /***/ }),
 
@@ -59380,7 +59470,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _user_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user.js */ "./resources/js/store/user.js");
 /* harmony import */ var _book_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./book.js */ "./resources/js/store/book.js");
-/* harmony import */ var _book_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_book_js__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
@@ -59390,7 +59479,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
     User: _user_js__WEBPACK_IMPORTED_MODULE_2__["default"],
     // mapStateで呼出すnamespaceに対応
-    Book: _book_js__WEBPACK_IMPORTED_MODULE_3___default.a
+    Book: _book_js__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (store);

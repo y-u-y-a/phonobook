@@ -8,14 +8,10 @@
 
 
 <script>
-export default {
-    data(){
-        return {
-            value: null
-        }
-    },
 
-    props: ["label", "placeholder"],
+export default {
+
+    props: ["label", "placeholder", "value"],
 
     methods: {
         // 親へのイベントを発行し、データ譲渡

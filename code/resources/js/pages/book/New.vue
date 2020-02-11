@@ -2,21 +2,35 @@
     <div id="book-new">
         <div class="half-box">
             <Camera></Camera>
-            <FormInput v-model="isbn" label="番号入力またはバーコードを撮影してください" placeholder="8文字以上" ></FormInput>
-            <FormButton @signalEvent="getISBN" button_name="取得する"></FormButton>
+            <FormInput :value="isbn" @signalEvent="getISBN" label="ISBN" placeholder="" ></FormInput>
+            <FormButton @signalEvent="getBookData" button_name="取得する"></FormButton>
         </div>
 
         <div class="half-box wrapper">
             <div class="container clearfix">
                 <div class="half-box">
                     <ul>
-                        <li><FormInput label="書籍名" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput label="著者" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput label="巻" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput label="シリーズ" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput label="出版" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput label="出版日" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormTextarea label="詳細"></FormTextarea></li>
+                        <li>
+                            <FormInput :value="title" @signalEvent="getTitle" label="書籍名" placeholder="8文字以上" ></FormInput>
+                        </li>
+                        <li>
+                            <FormInput :value="author" @signalEvent="getAuthor" label="著者" placeholder="8文字以上" ></FormInput>
+                        </li>
+                        <li>
+                            <FormInput :value="volume" @signalEvent="getVolume" label="巻" placeholder="8文字以上" ></FormInput>
+                        </li>
+                        <li>
+                            <FormInput :value="series" @signalEvent="getSeries" label="シリーズ" placeholder="8文字以上" ></FormInput>
+                        </li>
+                        <li>
+                            <FormInput :value="publisher" @signalEvent="getPublisher" label="出版" placeholder="8文字以上" ></FormInput>
+                        </li>
+                        <li>
+                            <FormInput :value="pubdate" @signalEvent="getPubdate" label="出版日" placeholder="8文字以上" ></FormInput>
+                        </li>
+                        <li>
+                            <FormTextarea :value="detail" @signalEvent="getDetail" label="詳細"></FormTextarea>
+                        </li>
                     </ul>
                 </div>
                 <div class="half-box">
@@ -58,13 +72,38 @@ export default{
     },
 
     methods:{
+        getISBN(value){
+            this.isbn = value
+        },
+        getTitle(value){
+            this.title = value
+        },
+        getAuthor(value){
+            this.author = value
+        },
+        getVolume(value){
+            this.volume = value
+        },
+        getSeries(value){
+            this.series = value
+        },
+        getPublisher(value){
+            this.publisher = value
+        },
+        getPubdate(value){
+            this.pubdate = value
+        },
+        getDetail(value){
+            this.detail = value
+        },
+        getCover(value){
+            this.cover = value
+        },
 
-        getISBN(){
+        getBookData(){
             // openBDに送信するデータを定義
             const isbn = this.isbn
             const url  = "https://api.openbd.jp/v1/get?isbn=" + isbn
-            // 関数内ではthisが他を指すことがあるので、予め変数に代入しておく
-            var vm = this
 
             if(isbn == ""){
                 alert("ISBNを入力してください")
@@ -72,31 +111,29 @@ export default{
                 alert("ISBNは13桁で入力してください")
             }else{
                 // アクセス開始
-                $.getJSON(url, function(data){ // dataは,APIからの返り値
-                    if(data[0] != null){
+                $.getJSON(url, response => {
+                    if(response[0] != null){
                         // 本データの取得
-                        var book = data[0].summary
-                        // dataの更新
-                        vm.title = book.title
-                        vm.author = book.author
-                        vm.volume = book.volume
-                        vm.series = book.series
-                        vm.publisher = book.publisher
-                        vm.pubdate = book.pubdate
-                        vm.detail = data[0].onix.CollateralDetail.TextContent[0].Text
-                        // 画像が存在すれば更新する
+                        var book = response[0].summary
+                        this.title = book.title
+                        this.author = book.author
+                        this.volume = book.volume
+                        this.series = book.series
+                        this.publisher = book.publisher
+                        this.pubdate = book.pubdate
+                        this.detail = response[0].onix.CollateralDetail.TextContent[0].Text
+                        // 画像が存在すれば更新
                         if(book.cover != ""){
-                            vm.cover = book.cover
+                            this.cover = book.cover
                         }
                     }else{
-                        alert("データが見つかりません")
+                        alert("本データが見つかりません")
                     }
                 })
             }
         },
 
         registerBook(){
-            var path   = "/api/books"
             var params = {
                 isbn : this.isbn,
                 title : this.title,
@@ -108,13 +145,12 @@ export default{
                 detail : this.detail,
                 cover : this.cover
             }
-            axios.post(path, params)
-            // 成功した場合
+            axios.post("/api/books", params)
             .then((response)=>{
                 alert("登録が完了しました")
-                location.href = "/admin/book"
+                location.href = "/book/New"
+                // this.$router.push("/book/New")
             })
-            // 失敗した場合
             .catch((error, response)=>{
                 console.log(error.name + ": " + error.message)
                 alert("失敗しました")

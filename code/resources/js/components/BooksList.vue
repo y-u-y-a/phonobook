@@ -2,10 +2,23 @@
     <div id="books-list">
         <div class="page-title">{{ page_title }}</div>
         <ul>
-            <li v-for="n in 50">
+            <li v-for="book in books">
                 <div class="book">
-                    <a href="#"><img src="/no_image.png" alt="No Image" /></a>
-                    <div v-if="page_title=='本の一覧'" class="state">貸し出し可能</div>
+                    <router-link :to="'/book/Show/' + book.id">
+                        <img :src="book.cover" alt="No Image" />
+                    </router-link>
+
+                    <!-- /book/Index -->
+                    <div v-if="page_title=='本の一覧'" class="state">
+                        <div v-if="book.state==0" class="ok">貸出し可能</div>
+                        <div v-else class="ng">貸出し中</div>
+                    </div>
+                    <!-- /book/Edit -->
+                    <div v-else-if="page_title=='本を更新・削除する'">
+                        <FormButton type="submit" button_name="更新する"></FormButton>
+                        <FormButton type="submit" button_name="削除する"></FormButton>
+                    </div>
+                    <!-- /user/Show -->
                     <FormButton v-else type="submit" button_name="返却する"></FormButton>
                 </div>
             </li>
@@ -42,7 +55,7 @@ export default {
         FormButton
     },
 
-    props: ["page_title", "books_data"]
+    props: ["page_title", "books"]
 }
 </script>
 
@@ -86,10 +99,10 @@ export default {
                 font-weight: bold;
                 letter-spacing: 2px;
             }
-            .貸出し可能 {
+            .ok {
                 color: $green;
             }
-            .貸出し中 {
+            .ng {
                 color: $red;
             }
         }
