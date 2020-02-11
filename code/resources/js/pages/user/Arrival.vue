@@ -16,6 +16,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr v-for="user in all_users">
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.name }}</td>
+                            <td>{{ user.updated_at }}</td>
+                            <td>{{ user.state }}</td>
+                        </tr>
                         <tr v-for="n in 50">
                             <td>{{ n }}</td>
                             <td>ジョンソン</td>
@@ -23,11 +29,6 @@
                             <td>◯</td>
                         </tr>
                     </tbody>
-                    <!-- <tr v-for="user in users" :id="user.id">
-                        <td>{{user.name}}</td>
-                        <td>{{user.updated_at}}</td>
-                        <td>{{user.state}}</td>
-                    </tr> -->
                 </table>
             </div>
         </div>
@@ -36,8 +37,10 @@
 
 <script>
 
-import Camera    from "../../components/Camera.vue"
+import Camera from "../../components/Camera.vue"
 import FormButton from "../../components/form/Button.vue"
+
+import { mapState, mapGetters, mapActions } from "vuex"
 
 export default {
     components: {
@@ -45,62 +48,39 @@ export default {
         FormButton
     },
 
-    data() {
-        return {
-            users: []
-        };
+    created() {
+        this.getAllUsers()
     },
 
-    created() {
-        this.getAllUsers();
+    computed: {
+        ...mapState("User", ["all_users"]),
     },
 
     methods: {
-        // 全てのユーザー取得
-        getAllUsers() {
-            var axios = require("axios");
-            axios.get("/api/users/all")
-                .then(response => {
-                    // 出勤状態を記号に変換
-                    this.users = response.data;
-                    for (var i = 0; i < this.users.length; i++) {
-                        var user = this.users[i];
-                        if (user.state == 0) {
-                            user.state = "×";
-                        } else {
-                            user.state = "◯";
-                        }
-                    }
-                })
-                // 失敗した場合
-                .catch(error => {
-                    console.log(error.name + ": " + error.message);
-                });
-        },
+        ...mapActions("User", ["getAllUsers"]),
 
-        // 出退勤処理と表示データの更新
-        changeState(user) {
-            var params = {
-                user_id: user.id
-            };
-            // 出退勤処理
-            var axios = require("axios");
-            axios.post("/api/users/state", params)
-                .then(response => {
-                    // 表示データの更新
-                    this.getAllUsers();
-                    var element = document.getElementById(user.id);
-                    element.style.backgroundColor = "#F6CECE";
-                    element.scrollIntoView({
-                        behavor: "smooth"
-                    });
-                })
-                .catch(error => {
-                    console.log(error.name + ": " + error.message);
-                });
-        }
+        // // 出退勤処理と表示データの更新
+        // async changeState(user) {
+        //     var params = {
+        //         user_id: user.id
+        //     }
+        //     // 出退勤処理
+        //     await axios.post("/api/users/state", params)
+        //     .then(response => {
+        //         // 表示データの更新
+        //         this.getAllUsers()
+        //         var el = document.getElementById(user.id)
+        //         el.style.backgroundColor = "#F6CECE"
+        //         el.scrollIntoView({
+        //             behavor: "smooth"
+        //         })
+        //     })
+        //     .catch(error => {
+        //         console.log(error.name + ": " + error.message)
+        //     })
+        // }
     }
-};
+}
 </script>
 
 

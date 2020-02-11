@@ -2290,41 +2290,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      csrf: document.querySelector("meta[name='csrf-token']").getAttribute("content"),
       books: []
     };
   },
-  // DOM生成前に本データを取得
   created: function created() {
     this.getBooks();
   },
   methods: {
-    // 本データの取得 ==========================================================
     getBooks: function getBooks() {
       var _this = this;
 
-      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
       var path = "/api/books";
-      axios.get(path) // 成功した場合
-      .then(function (response) {
+      axios.get(path).then(function (response) {
         _this.books = response.data;
-      }) // 失敗した場合
-      ["catch"](function (error) {
+      })["catch"](function (error) {
         console.log(error.name + ": " + error.message);
       });
     },
-    // 本データの更新 ==========================================================
     updateBook: function updateBook(book_id, book_title, book_author, book_status) {
       var _this2 = this;
-
-      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
       var path = "/api/books";
       var params = {
@@ -2333,22 +2320,17 @@ __webpack_require__.r(__webpack_exports__);
         author: book_author,
         status: book_status
       };
-      axios.patch(path, params) // 成功した場合
-      .then(function (response) {
+      axios.patch(path, params).then(function (response) {
         alert("更新が成功しました");
 
         _this2.getBooks(); // データの再取得
 
-      }) // 失敗した場合
-      ["catch"](function (error) {
+      })["catch"](function (error) {
         console.log(error.name + ": " + error.message);
       });
     },
-    // 本データの削除 ==========================================================
     destroyBook: function destroyBook(book_id) {
       var _this3 = this;
-
-      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
       var path = "/api/books";
       axios["delete"](path, {
@@ -2356,14 +2338,12 @@ __webpack_require__.r(__webpack_exports__);
           id: book_id // deleteメソッドを使う場合はdataキーが必要！
 
         }
-      }) // 成功した場合
-      .then(function (response) {
+      }).then(function (response) {
         alert("削除しました");
 
         _this3.getBooks(); // データの再取得
 
-      }) // 失敗した場合
-      ["catch"](function (error) {
+      })["catch"](function (error) {
         console.log(error.name + ": " + error.message);
       });
     }
@@ -2404,25 +2384,18 @@ __webpack_require__.r(__webpack_exports__);
     getBooks: function getBooks() {
       var _this = this;
 
-      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
-      axios.get("/api/books/all") // 作ったapi(Laravel側)の処理を実行し、戻り値をJSONで取得？
-      // 成功した場合
+      axios.get("/api/books/all") // 戻り値をJSONで取得
       .then(function (response) {
-        // responseを配列booksに代入する
         _this.books = response.data; // stateを文字列に変換
 
-        for (var i = 0; i < _this.books.length; i++) {
-          var book = _this.books[i];
-
+        _this.books.forEach(function (book) {
           if (book.state == 0) {
             book.state = "貸出し可能";
           } else {
             book.state = "貸出し中";
           }
-        }
-      }) // 失敗した場合
-      ["catch"](function (error) {
+        });
+      })["catch"](function (error) {
         console.log(error.name + ": " + error.message);
       });
     }
@@ -2474,7 +2447,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -2488,7 +2460,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      csrf: document.querySelector("meta[name='csrf-token']").getAttribute("content"),
       isbn: "9784798038094",
       title: "",
       author: "",
@@ -2501,7 +2472,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    // ISBNの取得 =============================================================
     getISBN: function getISBN() {
       // openBDに送信するデータを定義
       var isbn = this.isbn;
@@ -2538,10 +2508,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    // 本の登録 ===============================================================
     registerBook: function registerBook() {
-      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
       var path = "/api/books";
       var params = {
         isbn: this.isbn,
@@ -2665,6 +2632,13 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Camera_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Camera.vue */ "./resources/js/components/Camera.vue");
 /* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2701,6 +2675,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2708,63 +2684,11 @@ __webpack_require__.r(__webpack_exports__);
     Camera: _components_Camera_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  data: function data() {
-    return {
-      users: []
-    };
-  },
   created: function created() {
     this.getAllUsers();
   },
-  methods: {
-    // 全てのユーザー取得
-    getAllUsers: function getAllUsers() {
-      var _this = this;
-
-      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
-      axios.get("/api/users/all").then(function (response) {
-        // 出勤状態を記号に変換
-        _this.users = response.data;
-
-        for (var i = 0; i < _this.users.length; i++) {
-          var user = _this.users[i];
-
-          if (user.state == 0) {
-            user.state = "×";
-          } else {
-            user.state = "◯";
-          }
-        }
-      }) // 失敗した場合
-      ["catch"](function (error) {
-        console.log(error.name + ": " + error.message);
-      });
-    },
-    // 出退勤処理と表示データの更新
-    changeState: function changeState(user) {
-      var _this2 = this;
-
-      var params = {
-        user_id: user.id
-      }; // 出退勤処理
-
-      var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-
-      axios.post("/api/users/state", params).then(function (response) {
-        // 表示データの更新
-        _this2.getAllUsers();
-
-        var element = document.getElementById(user.id);
-        element.style.backgroundColor = "#F6CECE";
-        element.scrollIntoView({
-          behavor: "smooth"
-        });
-      })["catch"](function (error) {
-        console.log(error.name + ": " + error.message);
-      });
-    }
-  }
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("User", ["all_users"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])("User", ["getAllUsers"]))
 });
 
 /***/ }),
@@ -41046,12 +40970,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h1", [_vm._v("本の更新・削除をする")]),
-      _vm._v(" "),
-      _c("input", {
-        attrs: { type: "hidden", name: "_token" },
-        domProps: { value: _vm.csrf }
-      }),
+      _c("h1", [_vm._v("本の更新・削除")]),
       _vm._v(" "),
       _vm._l(_vm.books, function(book) {
         return _c("ul", [
@@ -41059,7 +40978,7 @@ var render = function() {
             _c("p", [_vm._v("id：" + _vm._s(book.id))]),
             _vm._v(" "),
             _c("p", [
-              _vm._v("\n        作品名：\n        "),
+              _vm._v("作品名：\n                "),
               _c("input", {
                 directives: [
                   {
@@ -41082,7 +41001,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("p", [
-              _vm._v("\n        著者名：\n        "),
+              _vm._v("\n                著者名：\n                "),
               _c("input", {
                 directives: [
                   {
@@ -41105,7 +41024,7 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("p", [
-              _vm._v("\n        貸出し：\n        "),
+              _vm._v("\n                貸出し：\n                "),
               _c("input", {
                 directives: [
                   {
@@ -41319,11 +41238,6 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "half-box" }, [
-            _c("input", {
-              attrs: { type: "hidden", name: "_token" },
-              domProps: { value: _vm.csrf }
-            }),
-            _vm._v(" "),
             _c("img", { attrs: { src: _vm.cover, alt: "No Image" } })
           ])
         ]),
@@ -41462,18 +41376,32 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(50, function(n) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(n))]),
-                _vm._v(" "),
-                _c("td", [_vm._v("ジョンソン")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("12:22")]),
-                _vm._v(" "),
-                _c("td", [_vm._v("◯")])
-              ])
-            }),
-            0
+            [
+              _vm._l(_vm.all_users, function(user) {
+                return _c("tr", [
+                  _c("td", [_vm._v(_vm._s(user.id))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(user.name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(user.updated_at))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(user.state))])
+                ])
+              }),
+              _vm._v(" "),
+              _vm._l(50, function(n) {
+                return _c("tr", [
+                  _c("td", [_vm._v(_vm._s(n))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("ジョンソン")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("12:22")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("◯")])
+                ])
+              })
+            ],
+            2
           )
         ])
       ])
@@ -59488,20 +59416,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 // CSR内でのデータの状態管理
 var state = {
-  login_user: null // stateの直接参照は非推奨なのでgettersに定義してコール
+  login_user: null,
+  all_users: [] // stateの直接参照は非推奨なのでgettersに定義してコール
 
 };
 var getters = {}; // commit("呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期のみ)
 
 var mutations = {
+  setAll: function setAll(state, users) {
+    state.all_users = users;
+  },
   set: function set(state, user) {
     state.login_user = user;
   }
 }; // dispatch("モジュール名/呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期/非同期)
 
 var actions = {
-  getLoginUser: function () {
-    var _getLoginUser = _asyncToGenerator(
+  getAllUsers: function () {
+    var _getAllUsers = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(context) {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
@@ -59509,8 +59441,21 @@ var actions = {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return axios.get("/api/users/logined").then(function (response) {
-                context.commit("set", response.data);
+              return axios.get("/api/users/all").then(function (response) {
+                // 出勤状態を記号に変換
+                var users = response.data;
+                console.log(users); // 表示には◯×を使用
+
+                users.forEach(function (user) {
+                  if (user.state == 0) {
+                    user.state = "×";
+                  } else {
+                    user.state = "◯";
+                  }
+                });
+                context.commit("setAll", users);
+              })["catch"](function (error) {
+                console.log(error.name + ": " + error.message);
               });
 
             case 2:
@@ -59521,25 +59466,23 @@ var actions = {
       }, _callee);
     }));
 
-    function getLoginUser(_x) {
-      return _getLoginUser.apply(this, arguments);
+    function getAllUsers(_x) {
+      return _getAllUsers.apply(this, arguments);
     }
 
-    return getLoginUser;
+    return getAllUsers;
   }(),
-  register: function () {
-    var _register = _asyncToGenerator(
+  getLoginUser: function () {
+    var _getLoginUser = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(context, params) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(context) {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
               _context2.next = 2;
-              return axios.post("/api/auth/register", params).then(function (response) {
-                console.log(params);
-              })["catch"](function (err) {
-                console.log(err.name + ": " + err.message);
+              return axios.get("/api/users/logined").then(function (response) {
+                context.commit("set", response.data);
               });
 
             case 2:
@@ -59550,7 +59493,36 @@ var actions = {
       }, _callee2);
     }));
 
-    function register(_x2, _x3) {
+    function getLoginUser(_x2) {
+      return _getLoginUser.apply(this, arguments);
+    }
+
+    return getLoginUser;
+  }(),
+  register: function () {
+    var _register = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(context, params) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return axios.post("/api/auth/register", params).then(function (response) {
+                console.log(params);
+              })["catch"](function (err) {
+                console.log(err.name + ": " + err.message);
+              });
+
+            case 2:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    function register(_x3, _x4) {
       return _register.apply(this, arguments);
     }
 
@@ -59559,46 +59531,18 @@ var actions = {
   login: function () {
     var _login = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(context, params) {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(context, params) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
               console.log(params);
-              _context3.next = 3;
+              _context4.next = 3;
               return axios.post("/api/login", params).then(function (response) {
                 context.commit("set", response.data);
               })["catch"](function (err) {
                 console.log(err.name + ": " + err.message);
               });
-
-            case 3:
-            case "end":
-              return _context3.stop();
-          }
-        }
-      }, _callee3);
-    }));
-
-    function login(_x4, _x5) {
-      return _login.apply(this, arguments);
-    }
-
-    return login;
-  }(),
-  logout: function () {
-    var _logout = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(context) {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-        while (1) {
-          switch (_context4.prev = _context4.next) {
-            case 0:
-              _context4.next = 2;
-              return axios.post("/api/logout");
-
-            case 2:
-              context.commit("set", null);
 
             case 3:
             case "end":
@@ -59608,7 +59552,35 @@ var actions = {
       }, _callee4);
     }));
 
-    function logout(_x6) {
+    function login(_x5, _x6) {
+      return _login.apply(this, arguments);
+    }
+
+    return login;
+  }(),
+  logout: function () {
+    var _logout = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(context) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.next = 2;
+              return axios.post("/api/logout");
+
+            case 2:
+              context.commit("set", null);
+
+            case 3:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+
+    function logout(_x7) {
       return _logout.apply(this, arguments);
     }
 

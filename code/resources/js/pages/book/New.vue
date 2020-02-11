@@ -20,7 +20,6 @@
                     </ul>
                 </div>
                 <div class="half-box">
-                    <input type="hidden" name="_token" :value="csrf">
                     <img :src="cover" alt="No Image">
                 </div>
             </div>
@@ -31,7 +30,7 @@
 
 <script>
 
-import Camera    from "../../components/Camera.vue"
+import Camera       from "../../components/Camera.vue"
 import FormInput    from "../../components/form/Input.vue"
 import FormTextarea from "../../components/form/Textarea.vue"
 import FormButton   from "../../components/form/Button.vue"
@@ -46,7 +45,6 @@ export default{
 
     data(){
         return{
-            csrf      : document.querySelector("meta[name='csrf-token']").getAttribute("content"),
             isbn      : "9784798038094",
             title     : "",
             author    : "",
@@ -60,72 +58,70 @@ export default{
     },
 
     methods:{
-        // ISBNの取得 =============================================================
+
         getISBN(){
             // openBDに送信するデータを定義
-            const isbn = this.isbn;
-            const url  = "https://api.openbd.jp/v1/get?isbn=" + isbn;
+            const isbn = this.isbn
+            const url  = "https://api.openbd.jp/v1/get?isbn=" + isbn
             // 関数内ではthisが他を指すことがあるので、予め変数に代入しておく
-            var vm = this;
+            var vm = this
 
             if(isbn == ""){
-                alert("ISBNを入力してください");
+                alert("ISBNを入力してください")
             }else if(isbn.length != 13){
-                alert("ISBNは13桁で入力してください");
+                alert("ISBNは13桁で入力してください")
             }else{
                 // アクセス開始
                 $.getJSON(url, function(data){ // dataは,APIからの返り値
                     if(data[0] != null){
                         // 本データの取得
-                        var book = data[0].summary;
+                        var book = data[0].summary
                         // dataの更新
-                        vm.title = book.title;
-                        vm.author = book.author;
-                        vm.volume = book.volume;
-                        vm.series = book.series;
-                        vm.publisher = book.publisher;
-                        vm.pubdate = book.pubdate;
-                        vm.detail = data[0].onix.CollateralDetail.TextContent[0].Text;
+                        vm.title = book.title
+                        vm.author = book.author
+                        vm.volume = book.volume
+                        vm.series = book.series
+                        vm.publisher = book.publisher
+                        vm.pubdate = book.pubdate
+                        vm.detail = data[0].onix.CollateralDetail.TextContent[0].Text
                         // 画像が存在すれば更新する
                         if(book.cover != ""){
-                            vm.cover = book.cover;
+                            vm.cover = book.cover
                         }
                     }else{
-                        alert("データが見つかりません");
+                        alert("データが見つかりません")
                     }
-                });
+                })
             }
         },
-        // 本の登録 ===============================================================
-        registerBook(){
 
-            var axios  = require("axios");
-            var path   = "/api/books";
+        registerBook(){
+            var path   = "/api/books"
             var params = {
                 isbn : this.isbn,
                 title : this.title,
                 author : this.author,
-                volum  : this.volume,
+                volum : this.volume,
                 series : this.series,
                 publisher: this.publisher,
                 pubdate : this.pubdate,
                 detail : this.detail,
                 cover : this.cover
-            };
+            }
             axios.post(path, params)
             // 成功した場合
             .then((response)=>{
-                alert("登録が完了しました");
-                location.href = "/admin/book";
+                alert("登録が完了しました")
+                location.href = "/admin/book"
             })
             // 失敗した場合
             .catch((error, response)=>{
-                console.log(error.name + ": " + error.message);
-                alert("失敗しました");
+                console.log(error.name + ": " + error.message)
+                alert("失敗しました")
             })
         }
     }
-};
+}
 </script>
 
 

@@ -97,19 +97,19 @@ export default {
         borrowBook() {
             var path = "/api/books/" + this.isbn + "/borrow/" + this.user.id
             axios.get(path)
-                .then(response => {
-                    // 返却日の取得
-                    var today = new Date()
-                    today.setDate(today.getDate() + 14)
-                    var returnDate = today.toLocaleDateString()
-                    // アラートで表示
-                    alert(`${response.data}\n返却日は${returnDate}です。`)
-                    location.href = "/user/top"
-                })
-                .catch(error => {
-                    alert("本データを取得してください")
-                    console.log(error.name + ": " + error.message)
-                })
+            .then(response => {
+                // 返却日の取得
+                var today = new Date()
+                today.setDate(today.getDate() + 14)
+                var returnDate = today.toLocaleDateString()
+                // アラートで表示
+                alert(`${response.data}\n返却日は${returnDate}です。`)
+                location.href = "/user/top"
+            })
+            .catch(error => {
+                alert("本データを取得してください")
+                console.log(error.name + ": " + error.message)
+            })
         }
     }
 }
