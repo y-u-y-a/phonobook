@@ -1,6 +1,8 @@
 <template>
     <div id="users-books">
-        <FormButton @signalEvent="logout" button_name="ログアウトする"></FormButton>
+        <form @submit.prevent="logout">
+            <FormButton button_name="ログアウトする"></FormButton>
+        </form>
         <BooksList :page_title="`${login_user.name}さんが読んだ本の一覧`" :books_data=booksBorrowed></BooksList>
     </div>
 </template>

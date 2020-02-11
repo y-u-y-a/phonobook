@@ -3009,6 +3009,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -41667,10 +41669,19 @@ var render = function() {
     "div",
     { attrs: { id: "users-books" } },
     [
-      _c("FormButton", {
-        attrs: { button_name: "ログアウトする" },
-        on: { signalEvent: _vm.logout }
-      }),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.logout($event)
+            }
+          }
+        },
+        [_c("FormButton", { attrs: { button_name: "ログアウトする" } })],
+        1
+      ),
       _vm._v(" "),
       _c("BooksList", {
         attrs: {
