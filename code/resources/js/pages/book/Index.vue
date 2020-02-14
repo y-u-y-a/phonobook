@@ -6,7 +6,6 @@
 <script>
 
 import BooksList from "../../components/BooksList.vue"
-
 import { mapState, mapGetters, mapActions } from "vuex"
 
 export default {

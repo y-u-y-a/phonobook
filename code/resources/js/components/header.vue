@@ -2,21 +2,13 @@
     <header>
         <div class="wrapper">
             <div class="title">
-                <router-link to="/" title="Home">phonoBook</router-link>
+                <router-link to="/">phonoBook</router-link>
             </div>
             <nav>
                 <ul>
-                    <li><router-link to="/">管理トップへ</router-link></li>
-                    <li><router-link to="/">ユーザートップへ</router-link></li>
+                    <li v-if="!is_admin" @click="switch_admin"><router-link to="/">管理トップへ</router-link></li>
+                    <li v-else-if="is_admin" @click="switch_admin"><router-link to="/">ユーザートップへ</router-link></li>
                 </ul>
-                <!-- <ul>
-                    <li v-if="currentURL != HOST + '/admin'">
-                        <router-link :to="{name: 'admin'}">管理トップへ</router-link>
-                    </li>
-                    <li v-if="currentURL != HOST + '/user'">
-                        <router-link :to="{name: 'user'}">ユーザートップへ</router-link>
-                    </li>
-                </ul> -->
             </nav>
         </div>
     </header>
@@ -24,16 +16,17 @@
 
 
 <script>
+
+import { mapState, mapMutations } from "vuex"
+
 export default {
-    data() {
-        return {
-            currentURL: "",
-            HOST: ""
-        }
+
+    computed: {
+        ...mapState("User", ["is_admin"])
     },
-    created() {
-        this.currentURL = location.href
-        this.HOST       = location.origin
+
+    methods: {
+        ...mapMutations("User", ["switch_admin"])
     }
 }
 </script>

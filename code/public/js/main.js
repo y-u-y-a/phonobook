@@ -1768,24 +1768,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1914,6 +1896,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1931,25 +1920,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      currentURL: "",
-      HOST: ""
-    };
-  },
-  created: function created() {
-    this.currentURL = location.href;
-    this.HOST = location.origin;
-  }
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])("User", ["is_admin"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])("User", ["switch_admin"]))
 });
 
 /***/ }),
@@ -2124,8 +2098,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -2134,12 +2106,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     UserButton: _components_top_UserButton__WEBPACK_IMPORTED_MODULE_0__["default"],
     AdminButton: _components_top_AdminButton__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("User", ["login_user"])),
-  data: function data() {
-    return {
-      is_active: false
-    };
-  }
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("User", ["login_user", "is_admin"]))
 });
 
 /***/ }),
@@ -7675,7 +7642,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "@media screen and (min-width: 640px) {\n.button-list[data-v-b3c5cf30] {\n    width: 40%;\n    margin: 0 auto;\n    padding-top: 100px;\n}\n}", ""]);
+exports.push([module.i, "@media screen and (min-width: 640px) {\nul[data-v-b3c5cf30] {\n    width: 40%;\n    margin: 0 auto;\n    padding-top: 100px;\n}\n}", ""]);
 
 // exports
 
@@ -40530,19 +40497,13 @@ var render = function() {
                 ? _c(
                     "div",
                     [
-                      _c("FormButton", {
-                        attrs: { type: "submit", button_name: "更新する" }
-                      }),
+                      _c("FormButton", { attrs: { button_name: "更新する" } }),
                       _vm._v(" "),
-                      _c("FormButton", {
-                        attrs: { type: "submit", button_name: "削除する" }
-                      })
+                      _c("FormButton", { attrs: { button_name: "削除する" } })
                     ],
                     1
                   )
-                : _c("FormButton", {
-                    attrs: { type: "submit", button_name: "返却する" }
-                  })
+                : _c("FormButton", { attrs: { button_name: "返却する" } })
             ],
             1
           )
@@ -40626,35 +40587,35 @@ var render = function() {
       _c(
         "div",
         { staticClass: "title" },
-        [
-          _c("router-link", { attrs: { to: "/", title: "Home" } }, [
-            _vm._v("phonoBook")
-          ])
-        ],
+        [_c("router-link", { attrs: { to: "/" } }, [_vm._v("phonoBook")])],
         1
       ),
       _vm._v(" "),
       _c("nav", [
         _c("ul", [
-          _c(
-            "li",
-            [
-              _c("router-link", { attrs: { to: "/" } }, [
-                _vm._v("管理トップへ")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "li",
-            [
-              _c("router-link", { attrs: { to: "/" } }, [
-                _vm._v("ユーザートップへ")
-              ])
-            ],
-            1
-          )
+          !_vm.is_admin
+            ? _c(
+                "li",
+                { on: { click: _vm.switch_admin } },
+                [
+                  _c("router-link", { attrs: { to: "/" } }, [
+                    _vm._v("管理トップへ")
+                  ])
+                ],
+                1
+              )
+            : _vm.is_admin
+            ? _c(
+                "li",
+                { on: { click: _vm.switch_admin } },
+                [
+                  _c("router-link", { attrs: { to: "/" } }, [
+                    _vm._v("ユーザートップへ")
+                  ])
+                ],
+                1
+              )
+            : _vm._e()
         ])
       ])
     ])
@@ -40875,20 +40836,31 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    !_vm.is_active
+    _vm.is_admin
       ? _c(
           "ul",
-          { staticClass: "button-list" },
           [
-            _c("button", {
-              attrs: { button_name: "切り替え" },
-              on: {
-                click: function($event) {
-                  _vm.is_active = !_vm.is_active
-                }
+            _c("AdminButton", {
+              attrs: {
+                button_name: "ユーザーを登録する",
+                path: "/user/Register"
               }
             }),
             _vm._v(" "),
+            _c("AdminButton", {
+              attrs: { button_name: "本を登録する", path: "/book/New" }
+            }),
+            _vm._v(" "),
+            _c("AdminButton", {
+              attrs: { button_name: "本を更新・削除する", path: "/book/Edit" }
+            })
+          ],
+          1
+        )
+      : !_vm.is_admin
+      ? _c(
+          "ul",
+          [
             _c("UserButton", {
               attrs: {
                 button_name: "出勤する or 退勤する",
@@ -40921,36 +40893,7 @@ var render = function() {
           ],
           2
         )
-      : _c(
-          "ul",
-          { staticClass: "button-list" },
-          [
-            _c("button", {
-              attrs: { button_name: "切り替え" },
-              on: {
-                click: function($event) {
-                  _vm.is_active = !_vm.is_active
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("AdminButton", {
-              attrs: {
-                button_name: "ユーザーを登録する",
-                path: "/user/Register"
-              }
-            }),
-            _vm._v(" "),
-            _c("AdminButton", {
-              attrs: { button_name: "本を登録する", path: "/book/New" }
-            }),
-            _vm._v(" "),
-            _c("AdminButton", {
-              attrs: { button_name: "本を更新・削除する", path: "/book/Edit" }
-            })
-          ],
-          1
-        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -59505,6 +59448,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 // CSR内でのデータの状態管理
 var state = {
+  is_admin: false,
   login_user: null,
   all_users: [] // stateの直接参照は非推奨なのでgettersに定義してコール
 
@@ -59517,6 +59461,9 @@ var mutations = {
   },
   set: function set(state, user) {
     state.login_user = user;
+  },
+  switch_admin: function switch_admin(state) {
+    state.is_admin = !state.is_admin;
   }
 }; // dispatch("モジュール名/呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期/非同期)
 

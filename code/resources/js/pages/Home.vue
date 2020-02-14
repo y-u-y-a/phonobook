@@ -1,7 +1,11 @@
 <template>
     <div>
-        <ul v-if="!is_active" class="button-list">
-            <button @click="is_active=!is_active" button_name="切り替え" ></button>
+        <ul v-if="is_admin">
+            <AdminButton button_name="ユーザーを登録する" path="/user/Register" />
+            <AdminButton button_name="本を登録する" path="/book/New" />
+            <AdminButton button_name="本を更新・削除する" path="/book/Edit" />
+        </ul>
+        <ul v-else-if="!is_admin">
             <UserButton button_name="出勤する or 退勤する" path="/user/Arrival" />
             <UserButton button_name="本を借りる" path="/book/Borrow" />
             <UserButton button_name="本の一覧をみる" path="/book/Index" />
@@ -11,12 +15,6 @@
             <template v-else>
                 <UserButton button_name="マイページ" :path="'/user/Show/'+login_user.id" />
             </template>
-        </ul>
-        <ul v-else class="button-list">
-            <button @click="is_active=!is_active" button_name="切り替え" ></button>
-            <AdminButton button_name="ユーザーを登録する" path="/user/Register" />
-            <AdminButton button_name="本を登録する" path="/book/New" />
-            <AdminButton button_name="本を更新・削除する" path="/book/Edit" />
         </ul>
     </div>
 </template>
@@ -37,14 +35,9 @@ export default {
 
     computed: {
         // スプレッド演算子(this.$store.stateの代替)
-        ...mapState("User", ["login_user"]),
+        ...mapState("User", ["login_user", "is_admin"]),
     },
 
-    data() {
-        return {
-            is_active: false,
-        }
-    }
 }
 </script>
 
@@ -53,7 +46,7 @@ export default {
 
 // PC
 @media screen and (min-width: 640px) {
-    .button-list {
+    ul {
         width: 40%;
         margin: 0 auto;
         padding-top: 100px;

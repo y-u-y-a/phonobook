@@ -1,6 +1,7 @@
 
 // CSR内でのデータの状態管理
 const state = {
+    is_admin: false,
     login_user: null,
     all_users: []
 }
@@ -18,6 +19,10 @@ const mutations = {
 
     set(state, user){
         state.login_user = user
+    },
+
+    switch_admin(state){
+        state.is_admin = !state.is_admin
     }
 }
 

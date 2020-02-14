@@ -15,31 +15,13 @@
                     </div>
                     <!-- /book/Edit -->
                     <div v-else-if="page_title=='本を更新・削除する'">
-                        <FormButton type="submit" button_name="更新する"></FormButton>
-                        <FormButton type="submit" button_name="削除する"></FormButton>
+                        <FormButton button_name="更新する"></FormButton>
+                        <FormButton button_name="削除する"></FormButton>
                     </div>
                     <!-- /user/Show -->
-                    <FormButton v-else type="submit" button_name="返却する"></FormButton>
+                    <FormButton v-else button_name="返却する"></FormButton>
                 </div>
             </li>
-            <!-- index <li class="book-wrapper" v-for="book in books">
-                <div class="book">
-                    <a :href="'/book/show/' + book.id">
-                        <img :src="book.cover" alt="No Image" />
-                    </a>
-                    <p :class="book.state" class="state">{{book.state}}</p>
-                </div>
-            </li> -->
-            <!-- show <li class="book-wrapper" v-for="book in booksBorrowed">
-                <div class="book">
-                    <a :href="'/book/show/' + book.id">
-                        <img :src="book.cover" alt="No Image" />
-                    </a>
-                    <div class="returnButton">
-                        <button :id="book.id" type="submit" @click="returnBook">返却する</button>
-                    </div>
-                </div>
-            </li> -->
         </ul>
     </div>
 </template>
