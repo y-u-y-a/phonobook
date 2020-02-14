@@ -3,7 +3,12 @@
         <form @submit.prevent="logout">
             <FormButton button_name="ログアウトする"></FormButton>
         </form>
-        <BooksList :page_title="`${login_user.name}さんが読んだ本の一覧`" :books_data=booksBorrowed></BooksList>
+        <BooksList :page_title="`${login_user.name}さんが読んだ本の一覧`" :books=booksBorrowed>
+            <!-- slot要素でnameを指定 -->
+            <slot name="user-show">
+                <FormButton button_name="返却する"></FormButton>
+            </slot>
+        </BooksList>
     </div>
 </template>
 

@@ -5,21 +5,15 @@
             <li v-for="book in books">
                 <div class="book">
                     <router-link :to="'/book/Show/' + book.id">
-                        <img :src="book.cover" alt="No Image" />
+                        <img :src="book.cover" :alt="book.title" />
                     </router-link>
-
+                    <!-- 画像の下のボタンなど・v-bindで親に変数を渡す -->
                     <!-- /book/Index -->
-                    <div v-if="page_title=='本の一覧'" class="state">
-                        <div v-if="book.state==0" class="ok">貸出し可能</div>
-                        <div v-else class="ng">貸出し中</div>
-                    </div>
+                    <slot name="book-index" :book="book"></slot>
                     <!-- /book/Edit -->
-                    <div v-else-if="page_title=='本を更新・削除する'">
-                        <FormButton button_name="更新する"></FormButton>
-                        <FormButton button_name="削除する"></FormButton>
-                    </div>
+                    <slot name="book-edit" :book="book"></slot>
                     <!-- /user/Show -->
-                    <FormButton v-else button_name="返却する"></FormButton>
+                    <slot name="user-show"></slot>
                 </div>
             </li>
         </ul>
@@ -75,17 +69,6 @@ export default {
                 width: 200px;
                 height: 290px;
                 margin-bottom: 1rem;
-            }
-            .state {
-                font-size: 18px;
-                font-weight: bold;
-                letter-spacing: 2px;
-            }
-            .ok {
-                color: $green;
-            }
-            .ng {
-                color: $red;
             }
         }
     }

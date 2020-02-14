@@ -11,7 +11,7 @@
                 <div class="half-box">
                     <ul>
                         <li>
-                            <FormInput :value="title" @signalEvent="getTitle" label="書籍名" placeholder="8文字以上" ></FormInput>
+                            <FormInput :value="title" @signalEvent="getTitle" label="タイトル" placeholder="8文字以上" ></FormInput>
                         </li>
                         <li>
                             <FormInput :value="author" @signalEvent="getAuthor" label="著者" placeholder="8文字以上" ></FormInput>
@@ -72,6 +72,7 @@ export default{
     },
 
     methods:{
+        // 子コンポーネントでの変化を取得
         getISBN(value){
             this.isbn = value
         },
