@@ -1738,7 +1738,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _form_Button_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./form/Button.vue */ "./resources/js/components/form/Button.vue");
 //
 //
 //
@@ -1762,11 +1761,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    FormButton: _form_Button_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
   props: ["page_title", "books"]
 });
 
@@ -2232,19 +2227,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/BooksList.vue */ "./resources/js/components/BooksList.vue");
-/* harmony import */ var _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/form/Input.vue */ "./resources/js/components/form/Input.vue");
-/* harmony import */ var _components_form_Textarea_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/form/Textarea.vue */ "./resources/js/components/form/Textarea.vue");
-/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+/* harmony import */ var _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/BooksList.vue */ "./resources/js/components/BooksList.vue");
+/* harmony import */ var _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form/Input.vue */ "./resources/js/components/form/Input.vue");
+/* harmony import */ var _components_form_Textarea_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/form/Textarea.vue */ "./resources/js/components/form/Textarea.vue");
+/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2278,16 +2265,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    BooksList: _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    FormInput: _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    FormTextarea: _components_form_Textarea_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    BooksList: _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    FormInput: _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    FormTextarea: _components_form_Textarea_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   created: function created() {
     this.getAllBooks();
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapState"])("Book", ["all_books"])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapActions"])("Book", ["getAllBooks"]), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])("Book", ["all_books"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapActions"])("Book", ["getAllBooks"]), {
     // 子コンポーネントでの変化を取得
     getISBN: function getISBN(value, book_id) {
       var book = this.books.find(book_id);
@@ -2324,87 +2311,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     getCover: function getCover(value, book_id) {
       var book = this.books.find(book_id);
       book.cover = value;
-    },
-    updateBook: function () {
-      var _updateBook = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(book_id, book_title, book_author, book_status) {
-        var _this = this;
-
-        var params;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                params = {
-                  id: book_id,
-                  title: book_title,
-                  author: book_author,
-                  status: book_status
-                };
-                _context.next = 3;
-                return axios.patch("/api/books", params).then(function (response) {
-                  alert("更新が成功しました");
-
-                  _this.getBooks(); // データの再取得
-
-                })["catch"](function (error) {
-                  console.log(error.name + ": " + error.message);
-                });
-
-              case 3:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      function updateBook(_x, _x2, _x3, _x4) {
-        return _updateBook.apply(this, arguments);
-      }
-
-      return updateBook;
-    }(),
-    destroyBook: function () {
-      var _destroyBook = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(book_id) {
-        var _this2 = this;
-
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _context2.next = 2;
-                return axios["delete"]("/api/books", {
-                  data: {
-                    id: book_id // deleteメソッドを使う場合はdataキーが必要！
-
-                  }
-                }).then(function (response) {
-                  alert("削除しました");
-
-                  _this2.getBooks(); // データの再取得
-
-                })["catch"](function (error) {
-                  console.log(error.name + ": " + error.message);
-                });
-
-              case 2:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }));
-
-      function destroyBook(_x5) {
-        return _destroyBook.apply(this, arguments);
-      }
-
-      return destroyBook;
-    }()
+    }
   })
 });
 
@@ -41134,106 +41041,115 @@ var render = function() {
         scopedSlots: _vm._u([
           {
             key: "book-edit",
-            fn: function(slotProps) {
+            fn: function(ref) {
+              var book = ref.book
               return _c(
                 "div",
                 {},
                 [
                   _c("FormInput", {
                     attrs: {
-                      value: slotProps.book.title,
+                      value: book.title,
                       label: "タイトル",
                       placeholder: "8文字以上"
                     },
                     on: {
                       signalEvent: function($event) {
-                        return _vm.getTitle(slotProps.book.id)
+                        return _vm.getTitle(book.id)
                       }
                     }
                   }),
                   _vm._v(" "),
                   _c("FormInput", {
                     attrs: {
-                      value: slotProps.book.author,
+                      value: book.author,
                       label: "著者",
                       placeholder: "8文字以上"
                     },
                     on: {
                       signalEvent: function($event) {
-                        return _vm.getAuthor(slotProps.book.id)
+                        return _vm.getAuthor(book.id)
                       }
                     }
                   }),
                   _vm._v(" "),
                   _c("FormInput", {
                     attrs: {
-                      value: slotProps.book.volume,
+                      value: book.volume,
                       label: "巻",
                       placeholder: "8文字以上"
                     },
                     on: {
                       signalEvent: function($event) {
-                        return _vm.getVolume(slotProps.book.id)
+                        return _vm.getVolume(book.id)
                       }
                     }
                   }),
                   _vm._v(" "),
                   _c("FormInput", {
                     attrs: {
-                      value: slotProps.book.series,
+                      value: book.series,
                       label: "シリーズ",
                       placeholder: "8文字以上"
                     },
                     on: {
                       signalEvent: function($event) {
-                        return _vm.getSeries(slotProps.book.id)
+                        return _vm.getSeries(book.id)
                       }
                     }
                   }),
                   _vm._v(" "),
                   _c("FormInput", {
                     attrs: {
-                      value: slotProps.book.publisher,
+                      value: book.publisher,
                       label: "出版",
                       placeholder: "8文字以上"
                     },
                     on: {
                       signalEvent: function($event) {
-                        return _vm.getPublisher(slotProps.book.id)
+                        return _vm.getPublisher(book.id)
                       }
                     }
                   }),
                   _vm._v(" "),
                   _c("FormInput", {
                     attrs: {
-                      value: slotProps.book.pubdate,
+                      value: book.pubdate,
                       label: "出版日",
                       placeholder: "8文字以上"
                     },
                     on: {
                       signalEvent: function($event) {
-                        return _vm.getPubdate(slotProps.book.id)
+                        return _vm.getPubdate(book.id)
                       }
                     }
                   }),
                   _vm._v(" "),
                   _c("FormTextarea", {
-                    attrs: { value: slotProps.book.detail, label: "詳細" },
+                    attrs: { value: book.detail, label: "詳細" },
                     on: {
                       signalEvent: function($event) {
-                        return _vm.getDetail(slotProps.book.id)
+                        return _vm.getDetail(book.id)
                       }
                     }
                   }),
                   _vm._v(" "),
                   _c("FormButton", {
                     attrs: { button_name: "更新する" },
-                    on: { signalEvent: _vm.updateBook }
+                    on: {
+                      signalEvent: function($event) {
+                        return _vm.updateBook(book)
+                      }
+                    }
                   }),
                   _vm._v(" "),
                   _c("FormButton", {
                     attrs: { button_name: "削除する" },
-                    on: { signalEvent: _vm.destroyBook }
+                    on: {
+                      signalEvent: function($event) {
+                        return _vm.destroyBook(book)
+                      }
+                    }
                   })
                 ],
                 1

@@ -23,13 +23,7 @@
 
 <script>
 
-import FormButton from "./form/Button.vue"
-
 export default {
-
-    components: {
-        FormButton
-    },
 
     props: ["page_title", "books"]
 }
