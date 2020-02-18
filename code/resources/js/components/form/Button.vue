@@ -10,7 +10,7 @@ export default {
 
     methods: {
         issueEvent(){
-            // $emitでイベントを発行
+            // $emitで親に対してイベントを発行
             this.$emit("signalEvent")
         }
     }
