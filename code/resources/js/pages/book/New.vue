@@ -10,27 +10,13 @@
             <div class="container clearfix">
                 <div class="half-box">
                     <ul>
-                        <li>
-                            <FormInput :value="title" @signalEvent="getTitle" label="タイトル" placeholder="8文字以上" ></FormInput>
-                        </li>
-                        <li>
-                            <FormInput :value="author" @signalEvent="getAuthor" label="著者" placeholder="8文字以上" ></FormInput>
-                        </li>
-                        <li>
-                            <FormInput :value="volume" @signalEvent="getVolume" label="巻" placeholder="8文字以上" ></FormInput>
-                        </li>
-                        <li>
-                            <FormInput :value="series" @signalEvent="getSeries" label="シリーズ" placeholder="8文字以上" ></FormInput>
-                        </li>
-                        <li>
-                            <FormInput :value="publisher" @signalEvent="getPublisher" label="出版" placeholder="8文字以上" ></FormInput>
-                        </li>
-                        <li>
-                            <FormInput :value="pubdate" @signalEvent="getPubdate" label="出版日" placeholder="8文字以上" ></FormInput>
-                        </li>
-                        <li>
-                            <FormTextarea :value="detail" @signalEvent="getDetail" label="詳細"></FormTextarea>
-                        </li>
+                        <li><FormInput :value="title" @signalEvent="getTitle" label="タイトル" placeholder="8文字以上" ></FormInput></li>
+                        <li><FormInput :value="author" @signalEvent="getAuthor" label="著者" placeholder="8文字以上" ></FormInput></li>
+                        <li><FormInput :value="volume" @signalEvent="getVolume" label="巻" placeholder="8文字以上" ></FormInput></li>
+                        <li><FormInput :value="series" @signalEvent="getSeries" label="シリーズ" placeholder="8文字以上" ></FormInput></li>
+                        <li><FormInput :value="publisher" @signalEvent="getPublisher" label="出版" placeholder="8文字以上" ></FormInput></li>
+                        <li><FormInput :value="pubdate" @signalEvent="getPubdate" label="出版日" placeholder="8文字以上" ></FormInput></li>
+                        <li><FormTextarea :value="detail" @signalEvent="getDetail" label="詳細"></FormTextarea></li>
                     </ul>
                 </div>
                 <div class="half-box">

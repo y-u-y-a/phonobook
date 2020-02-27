@@ -24,18 +24,22 @@ const mutations = {
 const actions = {
 
     async getAllBooks(context) {
+
         await axios.get("/api/books/all") // 戻り値をJSONで取得
-        .then(response => {
+        .then((response) => {
             context.commit("setAll", response.data)
         })
-        .catch(error => {
+        .catch((error) => {
             console.log(error.name + ": " + error.message);
         })
     },
 
     getBookById(context, book_id){
+
         const books = context.state.all_books
-        books.forEach(function(book){
+
+        books.forEach((book) => {
+
             if(book.id == book_id){
                 context.commit("set", book)
                 return

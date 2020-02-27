@@ -1,5 +1,4 @@
 
-// CSR内でのデータの状態管理
 const state = {
     is_admin: false,
     login_user: null,
@@ -30,13 +29,13 @@ const mutations = {
 const actions = {
 
     async getAllUsers(context) {
+
         await axios.get("/api/users/all")
-        .then(response => {
+        .then((response) => {
             // 出勤状態を記号に変換
             var users = response.data
-            console.log(users)
             // 表示には◯×を使用
-            users.forEach(function(user){
+            users.forEach((user) => {
                 if (user.state == 0) {
                     user.state = "×"
                 }else{
@@ -45,36 +44,29 @@ const actions = {
             })
             context.commit("setAll", users)
         })
-        .catch(error => {
-            console.log(error.name + ": " + error.message)
-        })
     },
 
     async getLoginUser(context) {
+
         await axios.get("/api/users/logined")
-        .then(response => {
+        .then((response) => {
             context.commit("set", response.data)
         })
     },
 
     async register(context, params) {
+
         await axios.post("/api/auth/register", params)
-        .then(response => {
+        .then((response) => {
             console.log(params)
-        })
-        .catch(err => {
-            console.log(err.name + ": " + err.message)
         })
     },
 
     async login(context, params){
-        console.log(params)
+
         await axios.post("/api/login", params)
-        .then(response => {
+        .then((response) => {
             context.commit("set", response.data)
-        })
-        .catch(err => {
-            console.log(err.name + ": " + err.message)
         })
     },
 
@@ -85,7 +77,7 @@ const actions = {
 }
 
 export default {
-    namespaced: true, // 追加
+    namespaced: true,
     state,
     getters,
     mutations,

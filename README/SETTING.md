@@ -50,17 +50,16 @@ MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
 # 2. コンテナを作成・起動
     $ docker-compose up -d
 
-## コンテナが起動しているか確認
-    $ docker ps
-phonoBook.php、phonoBook.mysqlが起動していることを確認
 
 # 3. シェルスクリプトを実行(settings.sh)
     $ chmod 755 docker/php/settings.sh
     $ docker/php/settings.sh
 composer install、npm installをコンテナ内で実行します。
 
+
 ## ブラウザで起動しているか確認
 localhost:8001にアクセス
+
 
 # 4. アセットを編集する場合、コンテナでコンパイルを実行
     $ docker exec -it phonoBook.php bash

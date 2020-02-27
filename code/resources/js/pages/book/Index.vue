@@ -1,6 +1,6 @@
 <template>
     <BooksList page_title="本の一覧" :books=all_books>
-        <!-- slot要素でnameを指定・slot-scopeで子コンポーネントから受け取る -->
+        <!-- 子要素において、slot要素でnameを指定・slot-scopeでbindしたデータを取得する -->
         <div slot="book-index" slot-scope="slotPlops" class="state">
             <div v-if="slotPlops.book.state==0" class="ok">貸出し可能</div>
             <div v-else class="ng">貸出し中</div>

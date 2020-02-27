@@ -8,8 +8,10 @@ import Book from "./book.js"
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
+
+  // mapStateで呼出すnamespaceに対応
   modules: {
-    User, // mapStateで呼出すnamespaceに対応
+    User,
     Book
   }
 })

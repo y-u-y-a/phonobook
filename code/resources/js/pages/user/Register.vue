@@ -3,14 +3,13 @@
         <form @submit.prevent="register"><!-- 送信時のリロードをキャンセル -->
             <div class="title">ユーザーを登録する</div>
             <div class="form-container">
-                <!-- 子へバインディングされた空の値を渡す -->
-                <!-- signalEventを検知する度にgetValueを実行 -->
-                <FormInput @signalEvent="getName" label="名前" placeholder="8文字以上" ></FormInput>
-                <FormInput @signalEvent="getEmail" label="メールアドレス" placeholder="" ></FormInput>
-                <FormInput @signalEvent="getPass" label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
-                <FormInput @signalEvent="getPassConf" label="パスワード確認" placeholder="8文字以上の半角英数字" ></FormInput>
+                <!-- signalEvent(入力)を検知する度にgetValueを実行 -->
+                <FormInput @signalEvent="getName" label="名前" placeholder="8文字以上" />
+                <FormInput @signalEvent="getEmail" label="メールアドレス" placeholder="" />
+                <FormInput @signalEvent="getPass" label="パスワード" placeholder="8文字以上の半角英数字" />
+                <FormInput @signalEvent="getPassConf" label="パスワード確認" placeholder="8文字以上の半角英数字" />
             </div>
-            <FormButton button_name="新規登録する"></FormButton>
+            <FormButton button_name="新規登録する" />
         </form>
     </div>
 </template>
