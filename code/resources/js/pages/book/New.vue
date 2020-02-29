@@ -2,7 +2,7 @@
     <div id="book-new">
         <div class="half-box">
             <Camera></Camera>
-            <FormInput :value="isbn" @signalEvent="getISBN" label="ISBN" placeholder="" ></FormInput>
+            <FormInput v-model="isbn" label="ISBN" placeholder="" ></FormInput>
             <FormButton @signalEvent="getBookData" button_name="取得する"></FormButton>
         </div>
 
@@ -10,13 +10,13 @@
             <div class="container clearfix">
                 <div class="half-box">
                     <ul>
-                        <li><FormInput :value="title" @signalEvent="getTitle" label="タイトル" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput :value="author" @signalEvent="getAuthor" label="著者" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput :value="volume" @signalEvent="getVolume" label="巻" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput :value="series" @signalEvent="getSeries" label="シリーズ" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput :value="publisher" @signalEvent="getPublisher" label="出版" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput :value="pubdate" @signalEvent="getPubdate" label="出版日" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormTextarea :value="detail" @signalEvent="getDetail" label="詳細"></FormTextarea></li>
+                        <li><FormInput v-model="title" label="タイトル" placeholder="8文字以上" ></FormInput></li>
+                        <li><FormInput v-model="author" label="著者" placeholder="8文字以上" ></FormInput></li>
+                        <li><FormInput v-model="volume" label="巻" placeholder="8文字以上" ></FormInput></li>
+                        <li><FormInput v-model="series" label="シリーズ" placeholder="8文字以上" ></FormInput></li>
+                        <li><FormInput v-model="publisher" label="出版" placeholder="8文字以上" ></FormInput></li>
+                        <li><FormInput v-model="pubdate" label="出版日" placeholder="8文字以上" ></FormInput></li>
+                        <li><FormTextarea v-model="detail" label="詳細"></FormTextarea></li>
                     </ul>
                 </div>
                 <div class="half-box">
@@ -58,34 +58,6 @@ export default{
     },
 
     methods:{
-        // 子コンポーネントでの変化を取得
-        getISBN(value){
-            this.isbn = value
-        },
-        getTitle(value){
-            this.title = value
-        },
-        getAuthor(value){
-            this.author = value
-        },
-        getVolume(value){
-            this.volume = value
-        },
-        getSeries(value){
-            this.series = value
-        },
-        getPublisher(value){
-            this.publisher = value
-        },
-        getPubdate(value){
-            this.pubdate = value
-        },
-        getDetail(value){
-            this.detail = value
-        },
-        getCover(value){
-            this.cover = value
-        },
 
         getBookData(){
             // openBDに送信するデータを定義

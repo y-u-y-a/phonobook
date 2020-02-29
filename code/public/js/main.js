@@ -1936,7 +1936,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ["button_name"],
   methods: {
     issueEvent: function issueEvent() {
-      // $emitでイベントを発行
+      // $emitで親に対してイベントを発行
       this.$emit("signalEvent");
     }
   }
@@ -1966,8 +1966,8 @@ __webpack_require__.r(__webpack_exports__);
   props: ["label", "placeholder", "value"],
   methods: {
     // 親へのイベントを発行し、データ譲渡
-    issueEvent: function issueEvent() {
-      this.$emit("signalEvent", this.value);
+    issueEvent: function issueEvent(e) {
+      this.$emit("input", e.target.value);
     }
   }
 });
@@ -1994,9 +1994,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["label", "placeholder", "value"],
   methods: {
-    // 親へのイベントを発行し、データ譲渡
-    issueEvent: function issueEvent() {
-      this.$emit("signalEvent", this.value);
+    issueEvent: function issueEvent(e) {
+      this.$emit("input", e.target.value);
     }
   }
 });
@@ -2274,45 +2273,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.getAllBooks();
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])("Book", ["all_books"])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapActions"])("Book", ["getAllBooks"]), {
-    // 子コンポーネントでの変化を取得
-    getISBN: function getISBN(value, book_id) {
-      var book = this.books.find(book_id);
-      book.isbn = value;
-    },
-    getTitle: function getTitle(value, book_id) {
-      var book = this.books.find(book_id);
-      book.title = value;
-    },
-    getAuthor: function getAuthor(value, book_id) {
-      var book = this.books.find(book_id);
-      book.author = value;
-    },
-    getVolume: function getVolume(value, book_id) {
-      var book = this.books.find(book_id);
-      book.volume = value;
-    },
-    getSeries: function getSeries(value, book_id) {
-      var book = this.books.find(book_id);
-      book.series = value;
-    },
-    getPublisher: function getPublisher(value, book_id) {
-      var book = this.books.find(book_id);
-      book.publisher = value;
-    },
-    getPubdate: function getPubdate(value, book_id) {
-      var book = this.books.find(book_id);
-      book.pubdate = value;
-    },
-    getDetail: function getDetail(value, book_id) {
-      var book = this.books.find(book_id);
-      book.detail = value;
-    },
-    getCover: function getCover(value, book_id) {
-      var book = this.books.find(book_id);
-      book.cover = value;
-    }
-  })
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapActions"])("Book", ["getAllBooks", "updateBook", "destroyBook"]))
 });
 
 /***/ }),
@@ -2403,20 +2364,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -2442,34 +2389,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    // 子コンポーネントでの変化を取得
-    getISBN: function getISBN(value) {
-      this.isbn = value;
-    },
-    getTitle: function getTitle(value) {
-      this.title = value;
-    },
-    getAuthor: function getAuthor(value) {
-      this.author = value;
-    },
-    getVolume: function getVolume(value) {
-      this.volume = value;
-    },
-    getSeries: function getSeries(value) {
-      this.series = value;
-    },
-    getPublisher: function getPublisher(value) {
-      this.publisher = value;
-    },
-    getPubdate: function getPubdate(value) {
-      this.pubdate = value;
-    },
-    getDetail: function getDetail(value) {
-      this.detail = value;
-    },
-    getCover: function getCover(value) {
-      this.cover = value;
-    },
     getBookData: function getBookData() {
       var _this = this;
 
@@ -2766,12 +2685,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    getEmail: function getEmail(value) {
-      this.email = value;
-    },
-    getPass: function getPass(value) {
-      this.password = value;
-    },
     login: function () {
       var _login = _asyncToGenerator(
       /*#__PURE__*/
@@ -2847,8 +2760,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2865,18 +2776,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    getName: function getName(value) {
-      this.name = value;
-    },
-    getEmail: function getEmail(value) {
-      this.email = value;
-    },
-    getPass: function getPass(value) {
-      this.password = value;
-    },
-    getPassConf: function getPassConf(value) {
-      this.password_confirmation = value;
-    },
     register: function () {
       var _register = _asyncToGenerator(
       /*#__PURE__*/
@@ -40498,8 +40397,8 @@ var render = function() {
     _vm._v(" "),
     _c(
       "ul",
-      _vm._l(_vm.books, function(book) {
-        return _c("li", [
+      _vm._l(_vm.books, function(book, index) {
+        return _c("li", { key: index }, [
           _c(
             "div",
             { staticClass: "book" },
@@ -40684,27 +40583,9 @@ var render = function() {
     _c("label", [_vm._v(_vm._s(_vm.label) + "：")]),
     _vm._v(" "),
     _c("input", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.value,
-          expression: "value"
-        }
-      ],
-      attrs: { type: "text", placeholder: _vm.placeholder, required: "" },
+      attrs: { placeholder: _vm.placeholder, type: "text", required: "" },
       domProps: { value: _vm.value },
-      on: {
-        input: [
-          function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.value = $event.target.value
-          },
-          _vm.issueEvent
-        ]
-      }
+      on: { input: _vm.issueEvent }
     })
   ])
 }
@@ -40734,27 +40615,9 @@ var render = function() {
     _c("label", [_vm._v(_vm._s(_vm.label) + "：")]),
     _vm._v(" "),
     _c("textarea", {
-      directives: [
-        {
-          name: "model",
-          rawName: "v-model",
-          value: _vm.value,
-          expression: "value"
-        }
-      ],
       attrs: { placeholder: _vm.placeholder },
       domProps: { value: _vm.value },
-      on: {
-        input: [
-          function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.value = $event.target.value
-          },
-          _vm.issueEvent
-        ]
-      }
+      on: { input: _vm.issueEvent }
     })
   ])
 }
@@ -41037,7 +40900,7 @@ var render = function() {
     "div",
     [
       _c("BooksList", {
-        attrs: { page_title: "本を更新・削除する", books: _vm.all_books },
+        attrs: { books: _vm.all_books, page_title: "本を更新・削除する" },
         scopedSlots: _vm._u([
           {
             key: "book-edit",
@@ -41048,89 +40911,79 @@ var render = function() {
                 {},
                 [
                   _c("FormInput", {
-                    attrs: {
+                    attrs: { label: "タイトル", placeholder: "8文字以上" },
+                    model: {
                       value: book.title,
-                      label: "タイトル",
-                      placeholder: "8文字以上"
-                    },
-                    on: {
-                      signalEvent: function($event) {
-                        return _vm.getTitle(book.id)
-                      }
+                      callback: function($$v) {
+                        _vm.$set(book, "title", $$v)
+                      },
+                      expression: "book.title"
                     }
                   }),
                   _vm._v(" "),
                   _c("FormInput", {
-                    attrs: {
+                    attrs: { label: "著者", placeholder: "8文字以上" },
+                    model: {
                       value: book.author,
-                      label: "著者",
-                      placeholder: "8文字以上"
-                    },
-                    on: {
-                      signalEvent: function($event) {
-                        return _vm.getAuthor(book.id)
-                      }
+                      callback: function($$v) {
+                        _vm.$set(book, "author", $$v)
+                      },
+                      expression: "book.author"
                     }
                   }),
                   _vm._v(" "),
                   _c("FormInput", {
-                    attrs: {
+                    attrs: { label: "巻", placeholder: "8文字以上" },
+                    model: {
                       value: book.volume,
-                      label: "巻",
-                      placeholder: "8文字以上"
-                    },
-                    on: {
-                      signalEvent: function($event) {
-                        return _vm.getVolume(book.id)
-                      }
+                      callback: function($$v) {
+                        _vm.$set(book, "volume", $$v)
+                      },
+                      expression: "book.volume"
                     }
                   }),
                   _vm._v(" "),
                   _c("FormInput", {
-                    attrs: {
+                    attrs: { label: "シリーズ", placeholder: "8文字以上" },
+                    model: {
                       value: book.series,
-                      label: "シリーズ",
-                      placeholder: "8文字以上"
-                    },
-                    on: {
-                      signalEvent: function($event) {
-                        return _vm.getSeries(book.id)
-                      }
+                      callback: function($$v) {
+                        _vm.$set(book, "series", $$v)
+                      },
+                      expression: "book.series"
                     }
                   }),
                   _vm._v(" "),
                   _c("FormInput", {
-                    attrs: {
+                    attrs: { label: "出版", placeholder: "8文字以上" },
+                    model: {
                       value: book.publisher,
-                      label: "出版",
-                      placeholder: "8文字以上"
-                    },
-                    on: {
-                      signalEvent: function($event) {
-                        return _vm.getPublisher(book.id)
-                      }
+                      callback: function($$v) {
+                        _vm.$set(book, "publisher", $$v)
+                      },
+                      expression: "book.publisher"
                     }
                   }),
                   _vm._v(" "),
                   _c("FormInput", {
-                    attrs: {
+                    attrs: { label: "出版日", placeholder: "8文字以上" },
+                    model: {
                       value: book.pubdate,
-                      label: "出版日",
-                      placeholder: "8文字以上"
-                    },
-                    on: {
-                      signalEvent: function($event) {
-                        return _vm.getPubdate(book.id)
-                      }
+                      callback: function($$v) {
+                        _vm.$set(book, "pubdate", $$v)
+                      },
+                      expression: "book.pubdate"
                     }
                   }),
                   _vm._v(" "),
                   _c("FormTextarea", {
-                    attrs: { value: book.detail, label: "詳細" },
-                    on: {
-                      signalEvent: function($event) {
-                        return _vm.getDetail(book.id)
-                      }
+                    attrs: { label: "詳細" },
+                    model: {
+                      value: book.detail,
+                      callback: function($$v) {
+                        _vm.$set(book, "detail", $$v)
+                      },
+                      expression: "book.detail"
                     }
                   }),
                   _vm._v(" "),
@@ -41230,8 +41083,14 @@ var render = function() {
         _c("Camera"),
         _vm._v(" "),
         _c("FormInput", {
-          attrs: { value: _vm.isbn, label: "ISBN", placeholder: "" },
-          on: { signalEvent: _vm.getISBN }
+          attrs: { label: "ISBN", placeholder: "" },
+          model: {
+            value: _vm.isbn,
+            callback: function($$v) {
+              _vm.isbn = $$v
+            },
+            expression: "isbn"
+          }
         }),
         _vm._v(" "),
         _c("FormButton", {
@@ -41253,12 +41112,14 @@ var render = function() {
                 "li",
                 [
                   _c("FormInput", {
-                    attrs: {
+                    attrs: { label: "タイトル", placeholder: "8文字以上" },
+                    model: {
                       value: _vm.title,
-                      label: "タイトル",
-                      placeholder: "8文字以上"
-                    },
-                    on: { signalEvent: _vm.getTitle }
+                      callback: function($$v) {
+                        _vm.title = $$v
+                      },
+                      expression: "title"
+                    }
                   })
                 ],
                 1
@@ -41268,12 +41129,14 @@ var render = function() {
                 "li",
                 [
                   _c("FormInput", {
-                    attrs: {
+                    attrs: { label: "著者", placeholder: "8文字以上" },
+                    model: {
                       value: _vm.author,
-                      label: "著者",
-                      placeholder: "8文字以上"
-                    },
-                    on: { signalEvent: _vm.getAuthor }
+                      callback: function($$v) {
+                        _vm.author = $$v
+                      },
+                      expression: "author"
+                    }
                   })
                 ],
                 1
@@ -41283,12 +41146,14 @@ var render = function() {
                 "li",
                 [
                   _c("FormInput", {
-                    attrs: {
+                    attrs: { label: "巻", placeholder: "8文字以上" },
+                    model: {
                       value: _vm.volume,
-                      label: "巻",
-                      placeholder: "8文字以上"
-                    },
-                    on: { signalEvent: _vm.getVolume }
+                      callback: function($$v) {
+                        _vm.volume = $$v
+                      },
+                      expression: "volume"
+                    }
                   })
                 ],
                 1
@@ -41298,12 +41163,14 @@ var render = function() {
                 "li",
                 [
                   _c("FormInput", {
-                    attrs: {
+                    attrs: { label: "シリーズ", placeholder: "8文字以上" },
+                    model: {
                       value: _vm.series,
-                      label: "シリーズ",
-                      placeholder: "8文字以上"
-                    },
-                    on: { signalEvent: _vm.getSeries }
+                      callback: function($$v) {
+                        _vm.series = $$v
+                      },
+                      expression: "series"
+                    }
                   })
                 ],
                 1
@@ -41313,12 +41180,14 @@ var render = function() {
                 "li",
                 [
                   _c("FormInput", {
-                    attrs: {
+                    attrs: { label: "出版", placeholder: "8文字以上" },
+                    model: {
                       value: _vm.publisher,
-                      label: "出版",
-                      placeholder: "8文字以上"
-                    },
-                    on: { signalEvent: _vm.getPublisher }
+                      callback: function($$v) {
+                        _vm.publisher = $$v
+                      },
+                      expression: "publisher"
+                    }
                   })
                 ],
                 1
@@ -41328,12 +41197,14 @@ var render = function() {
                 "li",
                 [
                   _c("FormInput", {
-                    attrs: {
+                    attrs: { label: "出版日", placeholder: "8文字以上" },
+                    model: {
                       value: _vm.pubdate,
-                      label: "出版日",
-                      placeholder: "8文字以上"
-                    },
-                    on: { signalEvent: _vm.getPubdate }
+                      callback: function($$v) {
+                        _vm.pubdate = $$v
+                      },
+                      expression: "pubdate"
+                    }
                   })
                 ],
                 1
@@ -41343,8 +41214,14 @@ var render = function() {
                 "li",
                 [
                   _c("FormTextarea", {
-                    attrs: { value: _vm.detail, label: "詳細" },
-                    on: { signalEvent: _vm.getDetail }
+                    attrs: { label: "詳細" },
+                    model: {
+                      value: _vm.detail,
+                      callback: function($$v) {
+                        _vm.detail = $$v
+                      },
+                      expression: "detail"
+                    }
                   })
                 ],
                 1
@@ -41574,7 +41451,13 @@ var render = function() {
                     label: "メールアドレス",
                     placeholder: "8文字以上の半角英数字"
                   },
-                  on: { signalEvent: _vm.getEmail }
+                  model: {
+                    value: _vm.email,
+                    callback: function($$v) {
+                      _vm.email = $$v
+                    },
+                    expression: "email"
+                  }
                 }),
                 _vm._v(" "),
                 _c("FormInput", {
@@ -41582,7 +41465,13 @@ var render = function() {
                     label: "パスワード",
                     placeholder: "8文字以上の半角英数字"
                   },
-                  on: { signalEvent: _vm.getPass }
+                  model: {
+                    value: _vm.password,
+                    callback: function($$v) {
+                      _vm.password = $$v
+                    },
+                    expression: "password"
+                  }
                 })
               ],
               1
@@ -41638,12 +41527,24 @@ var render = function() {
           [
             _c("FormInput", {
               attrs: { label: "名前", placeholder: "8文字以上" },
-              on: { signalEvent: _vm.getName }
+              model: {
+                value: _vm.name,
+                callback: function($$v) {
+                  _vm.name = $$v
+                },
+                expression: "name"
+              }
             }),
             _vm._v(" "),
             _c("FormInput", {
               attrs: { label: "メールアドレス", placeholder: "" },
-              on: { signalEvent: _vm.getEmail }
+              model: {
+                value: _vm.email,
+                callback: function($$v) {
+                  _vm.email = $$v
+                },
+                expression: "email"
+              }
             }),
             _vm._v(" "),
             _c("FormInput", {
@@ -41651,7 +41552,13 @@ var render = function() {
                 label: "パスワード",
                 placeholder: "8文字以上の半角英数字"
               },
-              on: { signalEvent: _vm.getPass }
+              model: {
+                value: _vm.password,
+                callback: function($$v) {
+                  _vm.password = $$v
+                },
+                expression: "password"
+              }
             }),
             _vm._v(" "),
             _c("FormInput", {
@@ -41659,7 +41566,13 @@ var render = function() {
                 label: "パスワード確認",
                 placeholder: "8文字以上の半角英数字"
               },
-              on: { signalEvent: _vm.getPassConf }
+              model: {
+                value: _vm.password_confirmation,
+                callback: function($$v) {
+                  _vm.password_confirmation = $$v
+                },
+                expression: "password_confirmation"
+              }
             })
           ],
           1
@@ -58452,7 +58365,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
+ // SSRごとにログインユーザーを取得
 
 var createApp =
 /*#__PURE__*/
@@ -59554,7 +59467,69 @@ var actions = {
         return;
       }
     });
-  }
+  },
+  updateBook: function () {
+    var _updateBook = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(context, book) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return axios.patch("/api/books", book).then(function () {
+                confirm("更新してもよろしいですか？");
+                location.reload();
+                return;
+              });
+
+            case 2:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }));
+
+    function updateBook(_x2, _x3) {
+      return _updateBook.apply(this, arguments);
+    }
+
+    return updateBook;
+  }(),
+  destroyBook: function () {
+    var _destroyBook = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(context, book) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return axios["delete"]("/api/books", {
+                data: {
+                  id: book.id
+                }
+              }).then(function () {
+                confirm("削除してもよろしいですか？");
+                location.reload();
+                return;
+              });
+
+            case 2:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    function destroyBook(_x4, _x5) {
+      return _destroyBook.apply(this, arguments);
+    }
+
+    return destroyBook;
+  }()
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
@@ -59586,9 +59561,9 @@ __webpack_require__.r(__webpack_exports__);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+  // mapStateで呼出すnamespaceに対応
   modules: {
     User: _user_js__WEBPACK_IMPORTED_MODULE_2__["default"],
-    // mapStateで呼出すnamespaceに対応
     Book: _book_js__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
@@ -59613,7 +59588,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-// CSR内でのデータの状態管理
 var state = {
   is_admin: false,
   login_user: null,
@@ -59646,8 +59620,7 @@ var actions = {
               _context.next = 2;
               return axios.get("/api/users/all").then(function (response) {
                 // 出勤状態を記号に変換
-                var users = response.data;
-                console.log(users); // 表示には◯×を使用
+                var users = response.data; // 表示には◯×を使用
 
                 users.forEach(function (user) {
                   if (user.state == 0) {
@@ -59657,8 +59630,6 @@ var actions = {
                   }
                 });
                 context.commit("setAll", users);
-              })["catch"](function (error) {
-                console.log(error.name + ": " + error.message);
               });
 
             case 2:
@@ -59713,8 +59684,6 @@ var actions = {
               _context3.next = 2;
               return axios.post("/api/auth/register", params).then(function (response) {
                 console.log(params);
-              })["catch"](function (err) {
-                console.log(err.name + ": " + err.message);
               });
 
             case 2:
@@ -59739,15 +59708,12 @@ var actions = {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              console.log(params);
-              _context4.next = 3;
+              _context4.next = 2;
               return axios.post("/api/login", params).then(function (response) {
                 context.commit("set", response.data);
-              })["catch"](function (err) {
-                console.log(err.name + ": " + err.message);
               });
 
-            case 3:
+            case 2:
             case "end":
               return _context4.stop();
           }
@@ -59792,7 +59758,6 @@ var actions = {
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
-  // 追加
   state: state,
   getters: getters,
   mutations: mutations,

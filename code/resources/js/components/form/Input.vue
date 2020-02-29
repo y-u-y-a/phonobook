@@ -1,8 +1,8 @@
 <template>
     <div class="form-input">
         <label>{{ label }}：</label>
-        <!-- inputされる度に親側のsignalEventを発火させ、親で定義した関数を実行する -->
-        <input @input="issueEvent" v-model="value" type="text" :placeholder=placeholder required />
+        <!-- inputされる度に親側の@inputを発火(v-modelのデフォルトイベント) -->
+        <input @input="issueEvent" :value="value" :placeholder=placeholder type="text" required />
     </div>
 </template>
 
@@ -15,8 +15,8 @@ export default {
 
     methods: {
         // 親へのイベントを発行し、データ譲渡
-        issueEvent(){
-            this.$emit("signalEvent", this.value)
+        issueEvent(e){
+            this.$emit("input", e.target.value)
         }
     }
 }

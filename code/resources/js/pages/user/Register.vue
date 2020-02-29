@@ -3,11 +3,10 @@
         <form @submit.prevent="register"><!-- 送信時のリロードをキャンセル -->
             <div class="title">ユーザーを登録する</div>
             <div class="form-container">
-                <!-- signalEvent(入力)を検知する度にgetValueを実行 -->
-                <FormInput @signalEvent="getName" label="名前" placeholder="8文字以上" />
-                <FormInput @signalEvent="getEmail" label="メールアドレス" placeholder="" />
-                <FormInput @signalEvent="getPass" label="パスワード" placeholder="8文字以上の半角英数字" />
-                <FormInput @signalEvent="getPassConf" label="パスワード確認" placeholder="8文字以上の半角英数字" />
+                <FormInput v-model="name" label="名前" placeholder="8文字以上" />
+                <FormInput v-model="email" label="メールアドレス" placeholder="" />
+                <FormInput v-model="password" label="パスワード" placeholder="8文字以上の半角英数字" />
+                <FormInput v-model="password_confirmation" label="パスワード確認" placeholder="8文字以上の半角英数字" />
             </div>
             <FormButton button_name="新規登録する" />
         </form>
@@ -35,18 +34,6 @@ export default {
     },
 
     methods: {
-        getName(value){
-            this.name = value
-        },
-        getEmail(value){
-            this.email = value
-        },
-        getPass(value){
-            this.password = value
-        },
-        getPassConf(value){
-            this.password_confirmation = value
-        },
 
         async register() {
             var params = {
@@ -56,11 +43,11 @@ export default {
                 password_confirmation: this.password_confirmation
             }
             await this.$store.dispatch("User/register", params)
-            .then(response => {
+            .then((response) => {
                 alert("登録が完了しました")
                 this.$router.push("/")
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(err.name + ": " + err.message)
                 alert("失敗しました")
             })

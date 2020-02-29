@@ -14,7 +14,7 @@
             </div>
             <div class="half-box image-box">
                 <img :src="book.cover" alt="No Image" />
-                <FormButton v-if="book.state == 0" @signalEvent="lendBook" button_name="この本を借りる" class=
+                <FormButton v-if="book.state==0" @signalEvent="lendBook" button_name="この本を借りる" class=
                 "button"></FormButton>
                 <!-- <FormButton button_name="レビューする"></FormButton> -->
             </div>

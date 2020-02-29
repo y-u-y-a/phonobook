@@ -45,6 +45,29 @@ const actions = {
                 return
             }
         })
+    },
+
+    async updateBook(context, book){
+
+        await axios.patch("/api/books", book)
+        .then(() => {
+            confirm("更新してもよろしいですか？")
+            location.reload()
+            return
+        })
+    },
+
+    async destroyBook(context, book){
+
+        // deleteメソッドではdataキーが必要！
+        await axios.delete("/api/books", {
+            data: { id: book.id }
+        })
+        .then(() => {
+            confirm("削除してもよろしいですか？")
+            location.reload()
+            return
+        })
     }
 }
 

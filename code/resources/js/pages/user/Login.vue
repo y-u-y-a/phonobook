@@ -9,8 +9,8 @@
                 <form @submit.prevent="login">
                     <div class="title">ログインする</div>
                     <div class="form-container">
-                        <FormInput @signalEvent="getEmail" label="メールアドレス" placeholder="8文字以上の半角英数字" ></FormInput>
-                        <FormInput @signalEvent="getPass" label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
+                        <FormInput v-model="email" label="メールアドレス" placeholder="8文字以上の半角英数字" ></FormInput>
+                        <FormInput v-model="password" label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
                     </div>
                     <FormButton button_name="ログインする"></FormButton>
                 </form>
@@ -42,24 +42,17 @@ export default {
 
     methods: {
 
-        getEmail(value){
-            this.email = value
-        },
-        getPass(value){
-            this.password = value
-        },
-
         async login() {
             var params = {
                 email: this.email,
                 password: this.password
             }
             await this.$store.dispatch("User/login", params)
-            .then(response => {
+            .then((response) => {
                 alert("ログインしました")
                 location.href = "/"
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error.name + ": " + error.message)
                 alert("ログインに失敗しました")
             })

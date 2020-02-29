@@ -2,12 +2,12 @@
     <div id="books-list">
         <div class="page-title">{{ page_title }}</div>
         <ul>
-            <li v-for="book in books">
+            <li v-for="(book, index) in books" :key="index">
                 <div class="book">
                     <router-link :to="'/book/Show/' + book.id">
                         <img :src="book.cover" :alt="book.title" />
                     </router-link>
-                    <!-- slotで使う要素を指定できる、bindで親に変数を渡す(画像の下のボタンなど) -->
+                    <!-- slotで　使う要素を指定できる、bindで親に変数を渡す(画像の下のボタンなど) -->
                     <!-- /book/Index -->
                     <slot name="book-index" :book="book"></slot>
                     <!-- /book/Edit -->
