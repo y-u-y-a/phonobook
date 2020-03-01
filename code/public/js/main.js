@@ -2255,8 +2255,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -40896,124 +40894,118 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("BooksList", {
-        attrs: { books: _vm.all_books, page_title: "本を更新・削除する" },
-        scopedSlots: _vm._u([
-          {
-            key: "book-edit",
-            fn: function(ref) {
-              var book = ref.book
-              return _c(
-                "div",
-                {},
-                [
-                  _c("FormInput", {
-                    attrs: { label: "タイトル", placeholder: "8文字以上" },
-                    model: {
-                      value: book.title,
-                      callback: function($$v) {
-                        _vm.$set(book, "title", $$v)
-                      },
-                      expression: "book.title"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("FormInput", {
-                    attrs: { label: "著者", placeholder: "8文字以上" },
-                    model: {
-                      value: book.author,
-                      callback: function($$v) {
-                        _vm.$set(book, "author", $$v)
-                      },
-                      expression: "book.author"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("FormInput", {
-                    attrs: { label: "巻", placeholder: "8文字以上" },
-                    model: {
-                      value: book.volume,
-                      callback: function($$v) {
-                        _vm.$set(book, "volume", $$v)
-                      },
-                      expression: "book.volume"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("FormInput", {
-                    attrs: { label: "シリーズ", placeholder: "8文字以上" },
-                    model: {
-                      value: book.series,
-                      callback: function($$v) {
-                        _vm.$set(book, "series", $$v)
-                      },
-                      expression: "book.series"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("FormInput", {
-                    attrs: { label: "出版", placeholder: "8文字以上" },
-                    model: {
-                      value: book.publisher,
-                      callback: function($$v) {
-                        _vm.$set(book, "publisher", $$v)
-                      },
-                      expression: "book.publisher"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("FormInput", {
-                    attrs: { label: "出版日", placeholder: "8文字以上" },
-                    model: {
-                      value: book.pubdate,
-                      callback: function($$v) {
-                        _vm.$set(book, "pubdate", $$v)
-                      },
-                      expression: "book.pubdate"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("FormTextarea", {
-                    attrs: { label: "詳細" },
-                    model: {
-                      value: book.detail,
-                      callback: function($$v) {
-                        _vm.$set(book, "detail", $$v)
-                      },
-                      expression: "book.detail"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("FormButton", {
-                    attrs: { button_name: "更新する" },
-                    on: {
-                      signalEvent: function($event) {
-                        return _vm.updateBook(book)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("FormButton", {
-                    attrs: { button_name: "削除する" },
-                    on: {
-                      signalEvent: function($event) {
-                        return _vm.destroyBook(book)
-                      }
-                    }
-                  })
-                ],
-                1
-              )
-            }
-          }
-        ])
-      })
-    ],
-    1
-  )
+  return _c("BooksList", {
+    attrs: { books: _vm.all_books, page_title: "本を更新・削除する" },
+    scopedSlots: _vm._u([
+      {
+        key: "book-edit",
+        fn: function(ref) {
+          var book = ref.book
+          return _c(
+            "div",
+            {},
+            [
+              _c("FormInput", {
+                attrs: { label: "タイトル", placeholder: "8文字以上" },
+                model: {
+                  value: book.title,
+                  callback: function($$v) {
+                    _vm.$set(book, "title", $$v)
+                  },
+                  expression: "book.title"
+                }
+              }),
+              _vm._v(" "),
+              _c("FormInput", {
+                attrs: { label: "著者", placeholder: "8文字以上" },
+                model: {
+                  value: book.author,
+                  callback: function($$v) {
+                    _vm.$set(book, "author", $$v)
+                  },
+                  expression: "book.author"
+                }
+              }),
+              _vm._v(" "),
+              _c("FormInput", {
+                attrs: { label: "巻", placeholder: "8文字以上" },
+                model: {
+                  value: book.volume,
+                  callback: function($$v) {
+                    _vm.$set(book, "volume", $$v)
+                  },
+                  expression: "book.volume"
+                }
+              }),
+              _vm._v(" "),
+              _c("FormInput", {
+                attrs: { label: "シリーズ", placeholder: "8文字以上" },
+                model: {
+                  value: book.series,
+                  callback: function($$v) {
+                    _vm.$set(book, "series", $$v)
+                  },
+                  expression: "book.series"
+                }
+              }),
+              _vm._v(" "),
+              _c("FormInput", {
+                attrs: { label: "出版", placeholder: "8文字以上" },
+                model: {
+                  value: book.publisher,
+                  callback: function($$v) {
+                    _vm.$set(book, "publisher", $$v)
+                  },
+                  expression: "book.publisher"
+                }
+              }),
+              _vm._v(" "),
+              _c("FormInput", {
+                attrs: { label: "出版日", placeholder: "8文字以上" },
+                model: {
+                  value: book.pubdate,
+                  callback: function($$v) {
+                    _vm.$set(book, "pubdate", $$v)
+                  },
+                  expression: "book.pubdate"
+                }
+              }),
+              _vm._v(" "),
+              _c("FormTextarea", {
+                attrs: { label: "詳細" },
+                model: {
+                  value: book.detail,
+                  callback: function($$v) {
+                    _vm.$set(book, "detail", $$v)
+                  },
+                  expression: "book.detail"
+                }
+              }),
+              _vm._v(" "),
+              _c("FormButton", {
+                attrs: { button_name: "更新する" },
+                on: {
+                  signalEvent: function($event) {
+                    return _vm.updateBook(book)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("FormButton", {
+                attrs: { button_name: "削除する" },
+                on: {
+                  signalEvent: function($event) {
+                    return _vm.destroyBook(book)
+                  }
+                }
+              })
+            ],
+            1
+          )
+        }
+      }
+    ])
+  })
 }
 var staticRenderFns = []
 render._withStripped = true
