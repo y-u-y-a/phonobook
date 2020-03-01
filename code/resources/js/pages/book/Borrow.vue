@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="half-box">
-            <Camera></Camera>
+            <Camera @signalEvent="changeState"></Camera>
             <!-- 仮置き -->
             <FormButton @signalEvent="searchBookWithISBN" button_name="本を取得する"></FormButton>
             <div class="inputISBN">
@@ -42,12 +42,9 @@ export default {
         return {
             isbn: "9784798038094",
             image: "/no_image.png",
-            book: {}
+            book: {},
+            auth_user: null
         }
-    },
-
-    computed: {
-        ...mapState("User", ["auth_user"])
     },
 
     methods: {
@@ -57,7 +54,7 @@ export default {
             // openBDに送信するデータを定義
             const isbn = this.isbn
             const url = "https://api.openbd.jp/v1/get?isbn=" + isbn
-            // 関数内ではthisが他を指すことがあるので、予め変数に代入しておく
+
             var vm = this
 
             if (isbn == "") {
@@ -82,24 +79,28 @@ export default {
             }
         },
 
+        changeState(user){
+            console.log(user)
+            this.auth_user = user
+        },
 
         // 貸出処理(顔認証)
         borrowBook() {
-            var path = "/api/books/" + this.isbn + "/borrow/" + this.auth_user.id
-            axios.get(path)
-            .then((response) => {
-                // 返却日の取得
-                var today = new Date()
-                today.setDate(today.getDate() + 14)
-                var returnDate = today.toLocaleDateString()
-                // アラートで表示
-                alert(`${response.data}\n返却日は${returnDate}です。`)
-                location.href = "/"
-            })
-            .catch((error) => {
-                alert("本データを取得してください")
-                console.log(error.name + ": " + error.message)
-            })
+        //     var path = "/api/books/" + this.isbn + "/borrow/" + this.auth_user.id
+        //     axios.get(path)
+        //     .then((response) => {
+        //         // 返却日の取得
+        //         var today = new Date()
+        //         today.setDate(today.getDate() + 14)
+        //         var returnDate = today.toLocaleDateString()
+        //         // アラートで表示
+        //         alert(`${response.data}\n返却日は${returnDate}です。`)
+        //         location.href = "/"
+        //     })
+        //     .catch((error) => {
+        //         alert("本データを取得してください")
+        //         console.log(error.name + ": " + error.message)
+        //     })
         }
     }
 }

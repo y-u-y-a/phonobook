@@ -2111,12 +2111,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Camera_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Camera.vue */ "./resources/js/components/Camera.vue");
 /* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -2156,17 +2150,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       isbn: "9784798038094",
       image: "/no_image.png",
-      book: {}
+      book: {},
+      auth_user: null
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("User", ["auth_user"])),
   methods: {
     // ISBNから本データを取得する
     searchBookWithISBN: function searchBookWithISBN() {
       // openBDに送信するデータを定義
       var isbn = this.isbn;
-      var url = "https://api.openbd.jp/v1/get?isbn=" + isbn; // 関数内ではthisが他を指すことがあるので、予め変数に代入しておく
-
+      var url = "https://api.openbd.jp/v1/get?isbn=" + isbn;
       var vm = this;
 
       if (isbn == "") {
@@ -2190,21 +2183,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
     },
+    changeState: function changeState(user) {
+      console.log(user);
+      this.auth_user = user;
+    },
     // 貸出処理(顔認証)
-    borrowBook: function borrowBook() {
-      var path = "/api/books/" + this.isbn + "/borrow/" + this.auth_user.id;
-      axios.get(path).then(function (response) {
-        // 返却日の取得
-        var today = new Date();
-        today.setDate(today.getDate() + 14);
-        var returnDate = today.toLocaleDateString(); // アラートで表示
-
-        alert("".concat(response.data, "\n\u8FD4\u5374\u65E5\u306F").concat(returnDate, "\u3067\u3059\u3002"));
-        location.href = "/";
-      })["catch"](function (error) {
-        alert("本データを取得してください");
-        console.log(error.name + ": " + error.message);
-      });
+    borrowBook: function borrowBook() {//     var path = "/api/books/" + this.isbn + "/borrow/" + this.auth_user.id
+      //     axios.get(path)
+      //     .then((response) => {
+      //         // 返却日の取得
+      //         var today = new Date()
+      //         today.setDate(today.getDate() + 14)
+      //         var returnDate = today.toLocaleDateString()
+      //         // アラートで表示
+      //         alert(`${response.data}\n返却日は${returnDate}です。`)
+      //         location.href = "/"
+      //     })
+      //     .catch((error) => {
+      //         alert("本データを取得してください")
+      //         console.log(error.name + ": " + error.message)
+      //     })
     }
   }
 });
@@ -2623,7 +2621,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _changeState = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(user) {
-        var params;
+        var _this = this;
+
+        var params, el;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2635,16 +2635,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 };
                 _context.next = 4;
                 return axios.post("/api/users/state", params).then(function (response) {
-                  var el = document.getElementById(user.id);
-                  el.classList.add("active");
-                  el.scrollIntoView({
-                    behavor: "smooth"
-                  });
-                })["catch"](function (error) {
-                  console.log(error.name + ": " + error.message);
+                  // 表示内容の切替のため
+                  _this.getAllUsers();
                 });
 
               case 4:
+                // ハイライト
+                el = document.getElementById(user.id);
+                el.classList.add("switch-alert");
+                el.scrollIntoView({
+                  behavor: "smooth"
+                });
+
+              case 7:
               case "end":
                 return _context.stop();
             }
@@ -7623,7 +7626,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
 
 // module
-exports.push([module.i, "html[data-v-f9c78604], body[data-v-f9c78604], div[data-v-f9c78604], span[data-v-f9c78604], applet[data-v-f9c78604], object[data-v-f9c78604], iframe[data-v-f9c78604],\nh1[data-v-f9c78604], h2[data-v-f9c78604], h3[data-v-f9c78604], h4[data-v-f9c78604], h5[data-v-f9c78604], h6[data-v-f9c78604], p[data-v-f9c78604],\nblockquote[data-v-f9c78604], pre[data-v-f9c78604],\na[data-v-f9c78604], abbr[data-v-f9c78604], acronym[data-v-f9c78604], address[data-v-f9c78604], big[data-v-f9c78604], cite[data-v-f9c78604], code[data-v-f9c78604],\ndel[data-v-f9c78604], dfn[data-v-f9c78604], em[data-v-f9c78604], img[data-v-f9c78604], ins[data-v-f9c78604], kbd[data-v-f9c78604], q[data-v-f9c78604], s[data-v-f9c78604], samp[data-v-f9c78604],\nsmall[data-v-f9c78604], strike[data-v-f9c78604], strong[data-v-f9c78604], sub[data-v-f9c78604], sup[data-v-f9c78604], tt[data-v-f9c78604], var[data-v-f9c78604],\nb[data-v-f9c78604], u[data-v-f9c78604], i[data-v-f9c78604], center[data-v-f9c78604],\ndl[data-v-f9c78604], dt[data-v-f9c78604], dd[data-v-f9c78604], ol[data-v-f9c78604], ul[data-v-f9c78604], li[data-v-f9c78604],\nfieldset[data-v-f9c78604], form[data-v-f9c78604], label[data-v-f9c78604], legend[data-v-f9c78604],\ntable[data-v-f9c78604], caption[data-v-f9c78604], tbody[data-v-f9c78604], tfoot[data-v-f9c78604], thead[data-v-f9c78604], tr[data-v-f9c78604], th[data-v-f9c78604], td[data-v-f9c78604],\narticle[data-v-f9c78604], aside[data-v-f9c78604], canvas[data-v-f9c78604], details[data-v-f9c78604], embed[data-v-f9c78604],\nfigure[data-v-f9c78604], figcaption[data-v-f9c78604], footer[data-v-f9c78604], header[data-v-f9c78604], hgroup[data-v-f9c78604],\nmenu[data-v-f9c78604], nav[data-v-f9c78604], output[data-v-f9c78604], ruby[data-v-f9c78604], section[data-v-f9c78604], summary[data-v-f9c78604],\ntime[data-v-f9c78604], mark[data-v-f9c78604], audio[data-v-f9c78604], video[data-v-f9c78604] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-f9c78604], aside[data-v-f9c78604], details[data-v-f9c78604], figcaption[data-v-f9c78604], figure[data-v-f9c78604],\nfooter[data-v-f9c78604], header[data-v-f9c78604], hgroup[data-v-f9c78604], menu[data-v-f9c78604], nav[data-v-f9c78604], section[data-v-f9c78604] {\n  display: block;\n}\nbody[data-v-f9c78604] {\n  line-height: 1;\n}\nol[data-v-f9c78604], ul[data-v-f9c78604] {\n  list-style: none;\n}\nblockquote[data-v-f9c78604], q[data-v-f9c78604] {\n  quotes: none;\n}\nblockquote[data-v-f9c78604]:before, blockquote[data-v-f9c78604]:after,\nq[data-v-f9c78604]:before, q[data-v-f9c78604]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-f9c78604] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-f9c78604] {\n  text-decoration: none;\n}\n.clearfix[data-v-f9c78604]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-f9c78604] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-f9c78604] {\n  height: 1%;\n}\n.clearfix[data-v-f9c78604] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-f9c78604] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-f9c78604] {\n  background-color: #F2F2F2;\n}\n@media screen and (min-width: 640px) {\n#officers[data-v-f9c78604] {\n    max-height: calc(100vh - 84px);\n    overflow: auto;\n    text-align: center;\n    background-color: white;\n}\n#officers table[data-v-f9c78604] {\n    width: 100%;\n    table-layout: fixed;\n    border-collapse: separate;\n    border-spacing: 2px;\n}\n#officers tr[data-v-f9c78604], #officers th[data-v-f9c78604], #officers td[data-v-f9c78604] {\n    border: 1px solid silver;\n}\n#officers th[data-v-f9c78604] {\n    font-size: 18px;\n    font-weight: bold;\n    background-color: #CEE3F6;\n}\n#officers th[data-v-f9c78604], #officers td[data-v-f9c78604] {\n    padding: 1rem 0;\n}\n}\n.active[data-v-f9c78604] {\n  background-color: #F6CECE;\n}", ""]);
+exports.push([module.i, "html[data-v-f9c78604], body[data-v-f9c78604], div[data-v-f9c78604], span[data-v-f9c78604], applet[data-v-f9c78604], object[data-v-f9c78604], iframe[data-v-f9c78604],\nh1[data-v-f9c78604], h2[data-v-f9c78604], h3[data-v-f9c78604], h4[data-v-f9c78604], h5[data-v-f9c78604], h6[data-v-f9c78604], p[data-v-f9c78604],\nblockquote[data-v-f9c78604], pre[data-v-f9c78604],\na[data-v-f9c78604], abbr[data-v-f9c78604], acronym[data-v-f9c78604], address[data-v-f9c78604], big[data-v-f9c78604], cite[data-v-f9c78604], code[data-v-f9c78604],\ndel[data-v-f9c78604], dfn[data-v-f9c78604], em[data-v-f9c78604], img[data-v-f9c78604], ins[data-v-f9c78604], kbd[data-v-f9c78604], q[data-v-f9c78604], s[data-v-f9c78604], samp[data-v-f9c78604],\nsmall[data-v-f9c78604], strike[data-v-f9c78604], strong[data-v-f9c78604], sub[data-v-f9c78604], sup[data-v-f9c78604], tt[data-v-f9c78604], var[data-v-f9c78604],\nb[data-v-f9c78604], u[data-v-f9c78604], i[data-v-f9c78604], center[data-v-f9c78604],\ndl[data-v-f9c78604], dt[data-v-f9c78604], dd[data-v-f9c78604], ol[data-v-f9c78604], ul[data-v-f9c78604], li[data-v-f9c78604],\nfieldset[data-v-f9c78604], form[data-v-f9c78604], label[data-v-f9c78604], legend[data-v-f9c78604],\ntable[data-v-f9c78604], caption[data-v-f9c78604], tbody[data-v-f9c78604], tfoot[data-v-f9c78604], thead[data-v-f9c78604], tr[data-v-f9c78604], th[data-v-f9c78604], td[data-v-f9c78604],\narticle[data-v-f9c78604], aside[data-v-f9c78604], canvas[data-v-f9c78604], details[data-v-f9c78604], embed[data-v-f9c78604],\nfigure[data-v-f9c78604], figcaption[data-v-f9c78604], footer[data-v-f9c78604], header[data-v-f9c78604], hgroup[data-v-f9c78604],\nmenu[data-v-f9c78604], nav[data-v-f9c78604], output[data-v-f9c78604], ruby[data-v-f9c78604], section[data-v-f9c78604], summary[data-v-f9c78604],\ntime[data-v-f9c78604], mark[data-v-f9c78604], audio[data-v-f9c78604], video[data-v-f9c78604] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-f9c78604], aside[data-v-f9c78604], details[data-v-f9c78604], figcaption[data-v-f9c78604], figure[data-v-f9c78604],\nfooter[data-v-f9c78604], header[data-v-f9c78604], hgroup[data-v-f9c78604], menu[data-v-f9c78604], nav[data-v-f9c78604], section[data-v-f9c78604] {\n  display: block;\n}\nbody[data-v-f9c78604] {\n  line-height: 1;\n}\nol[data-v-f9c78604], ul[data-v-f9c78604] {\n  list-style: none;\n}\nblockquote[data-v-f9c78604], q[data-v-f9c78604] {\n  quotes: none;\n}\nblockquote[data-v-f9c78604]:before, blockquote[data-v-f9c78604]:after,\nq[data-v-f9c78604]:before, q[data-v-f9c78604]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-f9c78604] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-f9c78604] {\n  text-decoration: none;\n}\n.clearfix[data-v-f9c78604]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-f9c78604] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-f9c78604] {\n  height: 1%;\n}\n.clearfix[data-v-f9c78604] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-f9c78604] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-f9c78604] {\n  background-color: #F2F2F2;\n}\n@media screen and (min-width: 640px) {\n#officers[data-v-f9c78604] {\n    max-height: calc(100vh - 84px);\n    overflow: auto;\n    text-align: center;\n    background-color: white;\n}\n#officers table[data-v-f9c78604] {\n    width: 100%;\n    table-layout: fixed;\n    border-collapse: separate;\n    border-spacing: 2px;\n}\n#officers tr[data-v-f9c78604], #officers th[data-v-f9c78604], #officers td[data-v-f9c78604] {\n    border: 1px solid silver;\n}\n#officers th[data-v-f9c78604] {\n    font-size: 18px;\n    font-weight: bold;\n    background-color: #CEE3F6;\n}\n#officers th[data-v-f9c78604], #officers td[data-v-f9c78604] {\n    padding: 1rem 0;\n}\n}\n.switch-alert[data-v-f9c78604] {\n  background-color: #F6CECE;\n}", ""]);
 
 // exports
 
@@ -40791,7 +40794,7 @@ var render = function() {
       "div",
       { staticClass: "half-box" },
       [
-        _c("Camera"),
+        _c("Camera", { on: { signalEvent: _vm.changeState } }),
         _vm._v(" "),
         _c("FormButton", {
           attrs: { button_name: "本を取得する" },
@@ -59560,8 +59563,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var state = {
   is_admin: false,
   login_user: null,
-  all_users: [],
-  auth_user: null // stateの直接参照は非推奨なのでgettersに定義してコール
+  all_users: [] // stateの直接参照は非推奨なのでgettersに定義してコール
 
 };
 var getters = {}; // commit("呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期のみ)

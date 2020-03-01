@@ -2,8 +2,7 @@
 const state = {
     is_admin: false,
     login_user: null,
-    all_users: [],
-    auth_user: null
+    all_users: []
 }
 
 // stateの直接参照は非推奨なのでgettersに定義してコール

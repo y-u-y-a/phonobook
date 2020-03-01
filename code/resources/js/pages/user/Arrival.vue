@@ -64,17 +64,14 @@ export default {
             // state切替
             await axios.post("/api/users/state", params)
             .then((response) => {
-
-                var el = document.getElementById(user.id)
-                el.classList.add("switch-alert")
                 // 表示内容の切替のため
                 this.getAllUsers()
-                el.scrollIntoView({
-                    behavor: "smooth"
-                })
             })
-            .catch((error) => {
-                console.log(error.name + ": " + error.message)
+            // ハイライト
+            var el = document.getElementById(user.id)
+            el.classList.add("switch-alert")
+            el.scrollIntoView({
+                behavor: "smooth"
             })
         }
     }
