@@ -1,9 +1,9 @@
 <template>
     <div id="users-books">
-        <form @submit.prevent="logout">
-            <FormButton button_name="ログアウトする"></FormButton>
-        </form>
-        <BooksList :page_title="`${login_user.name}さんが読んだ本の一覧`" :books=booksBorrowed>
+        <div class="form">
+            <FormButton @signalEvent="logout" button_name="ログアウトする"></FormButton>
+        </div>
+        <BooksList :page_title="`${login_user.name}さんが読んだ本の一覧`" :books=borrowed_books>
             <!-- slot要素でnameを指定 -->
             <slot name="user-show">
                 <FormButton button_name="返却する"></FormButton>
@@ -11,6 +11,7 @@
         </BooksList>
     </div>
 </template>
+
 
 <script>
 
@@ -28,7 +29,7 @@ export default {
 
     data() {
         return {
-            booksBorrowed: []
+            borrowed_books: []
         };
     },
 
@@ -37,38 +38,41 @@ export default {
     },
 
     created() {
-        this.getBooksBorrowed()
+        this.getBorrowedBooks()
     },
 
     methods: {
         logout() {
-            this.$store.dispatch("User/logout")
             console.log(this.login_user)
+            this.$store.dispatch("User/logout")
             location.href = "/"
         },
 
         // 借りている本を取得
-        getBooksBorrowed() {
+        getBorrowedBooks() {
+
             axios.get("/api/books/borrowed")
-            .then(response => {
-                this.booksBorrowed = response.data
+            .then((response) => {
+                this.borrowed_books = response.data
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error.name + ": " + error.message)
             })
         },
 
         // 本の返却
-        returnBook() {
-            // クリックした要素のidを取得する
-            var book_id = event.target.id
+        returnBook(e) {
+
+            // クリックした要素のidを取得
+            var book_id = e.target.id
+
             axios.get("/api/books/return/" + book_id)
-            .then(response => {
+            .then((response) => {
+
                 alert("返却しました")
-                // 現在のページをリロード
                 location.reload()
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error.name + ": " + error.message)
             })
         }

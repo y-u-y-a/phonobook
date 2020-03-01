@@ -11,11 +11,11 @@ const getters = {
 // commit("呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期のみ)
 const mutations = {
 
-    setAll(state, books){
+    setAllBooks(state, books){
         state.all_books = books
     },
 
-    set(state, book){
+    setBook(state, book){
         state.book = book
     }
 }
@@ -27,7 +27,7 @@ const actions = {
 
         await axios.get("/api/books/all") // 戻り値をJSONで取得
         .then((response) => {
-            context.commit("setAll", response.data)
+            context.commit("setAllBooks", response.data)
         })
         .catch((error) => {
             console.log(error.name + ": " + error.message);
@@ -41,7 +41,7 @@ const actions = {
         books.forEach((book) => {
 
             if(book.id == book_id){
-                context.commit("set", book)
+                context.commit("setBook", book)
                 return
             }
         })

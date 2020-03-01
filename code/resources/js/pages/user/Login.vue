@@ -6,14 +6,14 @@
 
         <div class="half-box">
             <div id="login">
-                <form @submit.prevent="login">
+                <div class="form">
                     <div class="title">ログインする</div>
                     <div class="form-container">
                         <FormInput v-model="email" label="メールアドレス" placeholder="8文字以上の半角英数字" ></FormInput>
                         <FormInput v-model="password" label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
                     </div>
-                    <FormButton button_name="ログインする"></FormButton>
-                </form>
+                    <FormButton @signalEvent="login" button_name="ログインする"></FormButton>
+                </div>
             </div>
         </div>
     </div>
@@ -27,6 +27,7 @@ import FormInput from "../../components/form/Input.vue"
 import FormButton from "../../components/form/Button.vue"
 
 export default {
+
     components: {
         Camera,
         FormInput,
@@ -35,8 +36,8 @@ export default {
 
     data() {
         return {
-            email: "",
-            password: ""
+            email: "yuya@gmail.com",
+            password: "yuyayuya"
         };
     },
 
@@ -70,7 +71,7 @@ export default {
     width: 90%;
     margin: 0 auto;
 }
-form{
+.form{
     margin: 2rem 0;
     padding-bottom: 2rem;
     background: $white;

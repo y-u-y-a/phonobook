@@ -1801,7 +1801,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       video: {},
       canvas: {},
-      capture: ""
+      face_image: null,
+      user: null
     };
   },
   mounted: function mounted() {
@@ -1813,20 +1814,19 @@ __webpack_require__.r(__webpack_exports__);
 
       //HTML要素から取得→dataに代入
       this.video = this.$refs.video;
-      this.canvas = this.$refs.canvas; //カメラ設定
-
-      var constraints = {
+      this.canvas = this.$refs.canvas;
+      var camera_config = {
         audio: false,
         video: {
           width: 300,
           height: 200,
-          facingMode: "user" // フロントカメラを利用する
-          // facingMode: { exact: "environment" }    // リアカメラを利用する場合
+          facingMode: "user" // フロントカメラ
+          // facingMode: { exact: "environment" } // リアカメラ
 
         } // カメラの起動
 
       };
-      navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+      navigator.mediaDevices.getUserMedia(camera_config).then(function (stream) {
         _this.video.srcObject = stream;
 
         _this.video.onloadedmetadata = function (e) {
@@ -1836,35 +1836,32 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error.name + ": " + error.message);
       });
     },
-    takeFaceImage: function takeFaceImage() {
-      console.log("aaa"); // 動画から2Dを取得
-
-      var ctx = this.canvas.getContext("2d"); // カメラ→画像に変換
-
-      ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height); // 画像に対する処理開始
-
+    // face_image取得・canvas描画
+    takeFace: function takeFace() {
+      // 動画から2Dを取得(drawImage()を使えるようにする)
+      var ctx = this.canvas.getContext("2d");
+      ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
       var type = "image/jpeg"; // base64として取得
 
       var base64 = this.canvas.toDataURL(type); // // base64の接頭部分を削除して設置
 
-      this.faceImage = base64.replace(/^.*,/, "");
+      this.face_image = base64.replace(/^.*,/, "");
     },
-    // VRで本人データの取得・stateの変更
-    authWithFaceImage: function authWithFaceImage() {
+    // VRと通信で本人データの取得・stateの変更
+    authFace: function authFace() {
       var _this2 = this;
 
       var params = {
-        faceImage: this.faceImage
+        face_image: this.face_image // 本人データの取得
+
       };
       axios.post("/api/users/authFace", params).then(function (response) {
-        var user = response.data;
+        _this2.user = response.data; // 親のイベント発火(login/arrival/borrow)
 
-        if (!user) {
-          alert("社員データが存在しません");
+        if (_this2.user) {
+          _this2.$emit("signalEvent", _this2.user);
         } else {
-          // 本人データの取得(arrival.vueと異なる部分)
-          _this2.email = user.email;
-          _this2.password = "";
+          alert("社員データが存在しません");
         }
       })["catch"](function (error) {
         alert("顔の撮影が必要です");
@@ -2094,7 +2091,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     UserButton: _components_top_UserButton__WEBPACK_IMPORTED_MODULE_0__["default"],
     AdminButton: _components_top_AdminButton__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("User", ["login_user", "is_admin"]))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("User", ["login_user", "is_admin"])),
+  created: function created() {
+    console.log("ログイン", this.login_user);
+  }
 });
 
 /***/ }),
@@ -2110,6 +2110,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Camera_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Camera.vue */ "./resources/js/components/Camera.vue");
 /* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2137,6 +2144,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2148,25 +2156,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       isbn: "9784798038094",
       image: "/no_image.png",
-      book: {},
-      user: {}
+      book: {}
     };
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("User", ["auth_user"])),
   methods: {
-    // // 画像からISBNを取得する(searchBookWithISBN()内で使う関数)
-    // bostBookBarcodeImage(){
-    //     var params = {
-    //         captureImage: this.faceImage
-    //     };
-    //     var axios = require("axios");
-    //     axios.post("/api/books/barcode", params)
-    //     .then((response)=>{
-    //         console.log(response.data);
-    //     })
-    //     .catch((error)=>{
-    //         console.log(error.name + ": " + error.message);
-    //     })
-    // },
     // ISBNから本データを取得する
     searchBookWithISBN: function searchBookWithISBN() {
       // openBDに送信するデータを定義
@@ -2198,7 +2192,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     // 貸出処理(顔認証)
     borrowBook: function borrowBook() {
-      var path = "/api/books/" + this.isbn + "/borrow/" + this.user.id;
+      var path = "/api/books/" + this.isbn + "/borrow/" + this.auth_user.id;
       axios.get(path).then(function (response) {
         // 返却日の取得
         var today = new Date();
@@ -2206,7 +2200,7 @@ __webpack_require__.r(__webpack_exports__);
         var returnDate = today.toLocaleDateString(); // アラートで表示
 
         alert("".concat(response.data, "\n\u8FD4\u5374\u65E5\u306F").concat(returnDate, "\u3067\u3059\u3002"));
-        location.href = "/user/top";
+        location.href = "/";
       })["catch"](function (error) {
         alert("本データを取得してください");
         console.log(error.name + ": " + error.message);
@@ -2387,6 +2381,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    // TODO: openBDでの処理をバックエンドへ移行
     getBookData: function getBookData() {
       var _this = this;
 
@@ -2562,9 +2557,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Camera_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Camera.vue */ "./resources/js/components/Camera.vue");
-/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Camera_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Camera.vue */ "./resources/js/components/Camera.vue");
+/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2602,25 +2605,60 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    Camera: _components_Camera_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Camera: _components_Camera_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   created: function created() {
     this.getAllUsers();
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("User", ["all_users"])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])("User", ["getAllUsers"]))
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapState"])("User", ["all_users"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapActions"])("User", ["getAllUsers"]), {
+    // 出退勤処理と表示データの更新
+    changeState: function () {
+      var _changeState = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(user) {
+        var params;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                console.log(user);
+                params = {
+                  user_id: user.id // state切替
+
+                };
+                _context.next = 4;
+                return axios.post("/api/users/state", params).then(function (response) {
+                  var el = document.getElementById(user.id);
+                  el.classList.add("active");
+                  el.scrollIntoView({
+                    behavor: "smooth"
+                  });
+                })["catch"](function (error) {
+                  console.log(error.name + ": " + error.message);
+                });
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }));
+
+      function changeState(_x) {
+        return _changeState.apply(this, arguments);
+      }
+
+      return changeState;
+    }()
+  })
 });
 
 /***/ }),
@@ -2678,8 +2716,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      email: "",
-      password: ""
+      email: "yuya@gmail.com",
+      password: "yuyayuya"
     };
   },
   methods: {
@@ -2733,16 +2771,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form/Input.vue */ "./resources/js/components/form/Input.vue");
-/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
+/* harmony import */ var _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/form/Input.vue */ "./resources/js/components/form/Input.vue");
+/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
 //
 //
 //
@@ -2762,8 +2792,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    FormInput: _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    FormInput: _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   data: function data() {
     return {
@@ -2774,47 +2804,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    register: function () {
-      var _register = _asyncToGenerator(
-      /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this = this;
-
-        var params;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                params = {
-                  name: this.name,
-                  email: this.email,
-                  password: this.password,
-                  password_confirmation: this.password_confirmation
-                };
-                _context.next = 3;
-                return this.$store.dispatch("User/register", params).then(function (response) {
-                  alert("登録が完了しました");
-
-                  _this.$router.push("/");
-                })["catch"](function (error) {
-                  console.log(err.name + ": " + err.message);
-                  alert("失敗しました");
-                });
-
-              case 3:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function register() {
-        return _register.apply(this, arguments);
-      }
-
-      return register;
-    }()
+    register: function register() {
+      var params = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        password_confirmation: this.password_confirmation
+      };
+      this.$store.dispatch("User/register", params);
+    }
   }
 });
 
@@ -2852,6 +2850,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -2862,36 +2861,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
-      booksBorrowed: []
+      borrowed_books: []
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("User", ["login_user"])),
   created: function created() {
-    this.getBooksBorrowed();
+    this.getBorrowedBooks();
   },
   methods: {
     logout: function logout() {
-      this.$store.dispatch("User/logout");
       console.log(this.login_user);
+      this.$store.dispatch("User/logout");
       location.href = "/";
     },
     // 借りている本を取得
-    getBooksBorrowed: function getBooksBorrowed() {
+    getBorrowedBooks: function getBorrowedBooks() {
       var _this = this;
 
       axios.get("/api/books/borrowed").then(function (response) {
-        _this.booksBorrowed = response.data;
+        _this.borrowed_books = response.data;
       })["catch"](function (error) {
         console.log(error.name + ": " + error.message);
       });
     },
     // 本の返却
-    returnBook: function returnBook() {
-      // クリックした要素のidを取得する
-      var book_id = event.target.id;
+    returnBook: function returnBook(e) {
+      // クリックした要素のidを取得
+      var book_id = e.target.id;
       axios.get("/api/books/return/" + book_id).then(function (response) {
-        alert("返却しました"); // 現在のページをリロード
-
+        alert("返却しました");
         location.reload();
       })["catch"](function (error) {
         console.log(error.name + ": " + error.message);
@@ -7625,7 +7623,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
 
 // module
-exports.push([module.i, "html[data-v-f9c78604], body[data-v-f9c78604], div[data-v-f9c78604], span[data-v-f9c78604], applet[data-v-f9c78604], object[data-v-f9c78604], iframe[data-v-f9c78604],\nh1[data-v-f9c78604], h2[data-v-f9c78604], h3[data-v-f9c78604], h4[data-v-f9c78604], h5[data-v-f9c78604], h6[data-v-f9c78604], p[data-v-f9c78604],\nblockquote[data-v-f9c78604], pre[data-v-f9c78604],\na[data-v-f9c78604], abbr[data-v-f9c78604], acronym[data-v-f9c78604], address[data-v-f9c78604], big[data-v-f9c78604], cite[data-v-f9c78604], code[data-v-f9c78604],\ndel[data-v-f9c78604], dfn[data-v-f9c78604], em[data-v-f9c78604], img[data-v-f9c78604], ins[data-v-f9c78604], kbd[data-v-f9c78604], q[data-v-f9c78604], s[data-v-f9c78604], samp[data-v-f9c78604],\nsmall[data-v-f9c78604], strike[data-v-f9c78604], strong[data-v-f9c78604], sub[data-v-f9c78604], sup[data-v-f9c78604], tt[data-v-f9c78604], var[data-v-f9c78604],\nb[data-v-f9c78604], u[data-v-f9c78604], i[data-v-f9c78604], center[data-v-f9c78604],\ndl[data-v-f9c78604], dt[data-v-f9c78604], dd[data-v-f9c78604], ol[data-v-f9c78604], ul[data-v-f9c78604], li[data-v-f9c78604],\nfieldset[data-v-f9c78604], form[data-v-f9c78604], label[data-v-f9c78604], legend[data-v-f9c78604],\ntable[data-v-f9c78604], caption[data-v-f9c78604], tbody[data-v-f9c78604], tfoot[data-v-f9c78604], thead[data-v-f9c78604], tr[data-v-f9c78604], th[data-v-f9c78604], td[data-v-f9c78604],\narticle[data-v-f9c78604], aside[data-v-f9c78604], canvas[data-v-f9c78604], details[data-v-f9c78604], embed[data-v-f9c78604],\nfigure[data-v-f9c78604], figcaption[data-v-f9c78604], footer[data-v-f9c78604], header[data-v-f9c78604], hgroup[data-v-f9c78604],\nmenu[data-v-f9c78604], nav[data-v-f9c78604], output[data-v-f9c78604], ruby[data-v-f9c78604], section[data-v-f9c78604], summary[data-v-f9c78604],\ntime[data-v-f9c78604], mark[data-v-f9c78604], audio[data-v-f9c78604], video[data-v-f9c78604] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-f9c78604], aside[data-v-f9c78604], details[data-v-f9c78604], figcaption[data-v-f9c78604], figure[data-v-f9c78604],\nfooter[data-v-f9c78604], header[data-v-f9c78604], hgroup[data-v-f9c78604], menu[data-v-f9c78604], nav[data-v-f9c78604], section[data-v-f9c78604] {\n  display: block;\n}\nbody[data-v-f9c78604] {\n  line-height: 1;\n}\nol[data-v-f9c78604], ul[data-v-f9c78604] {\n  list-style: none;\n}\nblockquote[data-v-f9c78604], q[data-v-f9c78604] {\n  quotes: none;\n}\nblockquote[data-v-f9c78604]:before, blockquote[data-v-f9c78604]:after,\nq[data-v-f9c78604]:before, q[data-v-f9c78604]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-f9c78604] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-f9c78604] {\n  text-decoration: none;\n}\n.clearfix[data-v-f9c78604]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-f9c78604] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-f9c78604] {\n  height: 1%;\n}\n.clearfix[data-v-f9c78604] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-f9c78604] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-f9c78604] {\n  background-color: #F2F2F2;\n}\n@media screen and (min-width: 640px) {\n#officers[data-v-f9c78604] {\n    max-height: calc(100vh - 84px);\n    overflow: auto;\n    text-align: center;\n    background-color: white;\n}\n#officers table[data-v-f9c78604] {\n    width: 100%;\n    table-layout: fixed;\n    border-collapse: separate;\n    border-spacing: 2px;\n}\n#officers tr[data-v-f9c78604], #officers th[data-v-f9c78604], #officers td[data-v-f9c78604] {\n    border: 1px solid silver;\n}\n#officers th[data-v-f9c78604] {\n    font-size: 18px;\n    font-weight: bold;\n    background-color: #CEE3F6;\n}\n#officers th[data-v-f9c78604], #officers td[data-v-f9c78604] {\n    padding: 1rem 0;\n}\n}", ""]);
+exports.push([module.i, "html[data-v-f9c78604], body[data-v-f9c78604], div[data-v-f9c78604], span[data-v-f9c78604], applet[data-v-f9c78604], object[data-v-f9c78604], iframe[data-v-f9c78604],\nh1[data-v-f9c78604], h2[data-v-f9c78604], h3[data-v-f9c78604], h4[data-v-f9c78604], h5[data-v-f9c78604], h6[data-v-f9c78604], p[data-v-f9c78604],\nblockquote[data-v-f9c78604], pre[data-v-f9c78604],\na[data-v-f9c78604], abbr[data-v-f9c78604], acronym[data-v-f9c78604], address[data-v-f9c78604], big[data-v-f9c78604], cite[data-v-f9c78604], code[data-v-f9c78604],\ndel[data-v-f9c78604], dfn[data-v-f9c78604], em[data-v-f9c78604], img[data-v-f9c78604], ins[data-v-f9c78604], kbd[data-v-f9c78604], q[data-v-f9c78604], s[data-v-f9c78604], samp[data-v-f9c78604],\nsmall[data-v-f9c78604], strike[data-v-f9c78604], strong[data-v-f9c78604], sub[data-v-f9c78604], sup[data-v-f9c78604], tt[data-v-f9c78604], var[data-v-f9c78604],\nb[data-v-f9c78604], u[data-v-f9c78604], i[data-v-f9c78604], center[data-v-f9c78604],\ndl[data-v-f9c78604], dt[data-v-f9c78604], dd[data-v-f9c78604], ol[data-v-f9c78604], ul[data-v-f9c78604], li[data-v-f9c78604],\nfieldset[data-v-f9c78604], form[data-v-f9c78604], label[data-v-f9c78604], legend[data-v-f9c78604],\ntable[data-v-f9c78604], caption[data-v-f9c78604], tbody[data-v-f9c78604], tfoot[data-v-f9c78604], thead[data-v-f9c78604], tr[data-v-f9c78604], th[data-v-f9c78604], td[data-v-f9c78604],\narticle[data-v-f9c78604], aside[data-v-f9c78604], canvas[data-v-f9c78604], details[data-v-f9c78604], embed[data-v-f9c78604],\nfigure[data-v-f9c78604], figcaption[data-v-f9c78604], footer[data-v-f9c78604], header[data-v-f9c78604], hgroup[data-v-f9c78604],\nmenu[data-v-f9c78604], nav[data-v-f9c78604], output[data-v-f9c78604], ruby[data-v-f9c78604], section[data-v-f9c78604], summary[data-v-f9c78604],\ntime[data-v-f9c78604], mark[data-v-f9c78604], audio[data-v-f9c78604], video[data-v-f9c78604] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-f9c78604], aside[data-v-f9c78604], details[data-v-f9c78604], figcaption[data-v-f9c78604], figure[data-v-f9c78604],\nfooter[data-v-f9c78604], header[data-v-f9c78604], hgroup[data-v-f9c78604], menu[data-v-f9c78604], nav[data-v-f9c78604], section[data-v-f9c78604] {\n  display: block;\n}\nbody[data-v-f9c78604] {\n  line-height: 1;\n}\nol[data-v-f9c78604], ul[data-v-f9c78604] {\n  list-style: none;\n}\nblockquote[data-v-f9c78604], q[data-v-f9c78604] {\n  quotes: none;\n}\nblockquote[data-v-f9c78604]:before, blockquote[data-v-f9c78604]:after,\nq[data-v-f9c78604]:before, q[data-v-f9c78604]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-f9c78604] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-f9c78604] {\n  text-decoration: none;\n}\n.clearfix[data-v-f9c78604]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-f9c78604] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-f9c78604] {\n  height: 1%;\n}\n.clearfix[data-v-f9c78604] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-f9c78604] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-f9c78604] {\n  background-color: #F2F2F2;\n}\n@media screen and (min-width: 640px) {\n#officers[data-v-f9c78604] {\n    max-height: calc(100vh - 84px);\n    overflow: auto;\n    text-align: center;\n    background-color: white;\n}\n#officers table[data-v-f9c78604] {\n    width: 100%;\n    table-layout: fixed;\n    border-collapse: separate;\n    border-spacing: 2px;\n}\n#officers tr[data-v-f9c78604], #officers th[data-v-f9c78604], #officers td[data-v-f9c78604] {\n    border: 1px solid silver;\n}\n#officers th[data-v-f9c78604] {\n    font-size: 18px;\n    font-weight: bold;\n    background-color: #CEE3F6;\n}\n#officers th[data-v-f9c78604], #officers td[data-v-f9c78604] {\n    padding: 1rem 0;\n}\n}\n.active[data-v-f9c78604] {\n  background-color: #F6CECE;\n}", ""]);
 
 // exports
 
@@ -7644,7 +7642,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
 
 // module
-exports.push([module.i, "html[data-v-0471e7ae], body[data-v-0471e7ae], div[data-v-0471e7ae], span[data-v-0471e7ae], applet[data-v-0471e7ae], object[data-v-0471e7ae], iframe[data-v-0471e7ae],\nh1[data-v-0471e7ae], h2[data-v-0471e7ae], h3[data-v-0471e7ae], h4[data-v-0471e7ae], h5[data-v-0471e7ae], h6[data-v-0471e7ae], p[data-v-0471e7ae],\nblockquote[data-v-0471e7ae], pre[data-v-0471e7ae],\na[data-v-0471e7ae], abbr[data-v-0471e7ae], acronym[data-v-0471e7ae], address[data-v-0471e7ae], big[data-v-0471e7ae], cite[data-v-0471e7ae], code[data-v-0471e7ae],\ndel[data-v-0471e7ae], dfn[data-v-0471e7ae], em[data-v-0471e7ae], img[data-v-0471e7ae], ins[data-v-0471e7ae], kbd[data-v-0471e7ae], q[data-v-0471e7ae], s[data-v-0471e7ae], samp[data-v-0471e7ae],\nsmall[data-v-0471e7ae], strike[data-v-0471e7ae], strong[data-v-0471e7ae], sub[data-v-0471e7ae], sup[data-v-0471e7ae], tt[data-v-0471e7ae], var[data-v-0471e7ae],\nb[data-v-0471e7ae], u[data-v-0471e7ae], i[data-v-0471e7ae], center[data-v-0471e7ae],\ndl[data-v-0471e7ae], dt[data-v-0471e7ae], dd[data-v-0471e7ae], ol[data-v-0471e7ae], ul[data-v-0471e7ae], li[data-v-0471e7ae],\nfieldset[data-v-0471e7ae], form[data-v-0471e7ae], label[data-v-0471e7ae], legend[data-v-0471e7ae],\ntable[data-v-0471e7ae], caption[data-v-0471e7ae], tbody[data-v-0471e7ae], tfoot[data-v-0471e7ae], thead[data-v-0471e7ae], tr[data-v-0471e7ae], th[data-v-0471e7ae], td[data-v-0471e7ae],\narticle[data-v-0471e7ae], aside[data-v-0471e7ae], canvas[data-v-0471e7ae], details[data-v-0471e7ae], embed[data-v-0471e7ae],\nfigure[data-v-0471e7ae], figcaption[data-v-0471e7ae], footer[data-v-0471e7ae], header[data-v-0471e7ae], hgroup[data-v-0471e7ae],\nmenu[data-v-0471e7ae], nav[data-v-0471e7ae], output[data-v-0471e7ae], ruby[data-v-0471e7ae], section[data-v-0471e7ae], summary[data-v-0471e7ae],\ntime[data-v-0471e7ae], mark[data-v-0471e7ae], audio[data-v-0471e7ae], video[data-v-0471e7ae] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-0471e7ae], aside[data-v-0471e7ae], details[data-v-0471e7ae], figcaption[data-v-0471e7ae], figure[data-v-0471e7ae],\nfooter[data-v-0471e7ae], header[data-v-0471e7ae], hgroup[data-v-0471e7ae], menu[data-v-0471e7ae], nav[data-v-0471e7ae], section[data-v-0471e7ae] {\n  display: block;\n}\nbody[data-v-0471e7ae] {\n  line-height: 1;\n}\nol[data-v-0471e7ae], ul[data-v-0471e7ae] {\n  list-style: none;\n}\nblockquote[data-v-0471e7ae], q[data-v-0471e7ae] {\n  quotes: none;\n}\nblockquote[data-v-0471e7ae]:before, blockquote[data-v-0471e7ae]:after,\nq[data-v-0471e7ae]:before, q[data-v-0471e7ae]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-0471e7ae] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-0471e7ae] {\n  text-decoration: none;\n}\n.clearfix[data-v-0471e7ae]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-0471e7ae] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-0471e7ae] {\n  height: 1%;\n}\n.clearfix[data-v-0471e7ae] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-0471e7ae] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-0471e7ae] {\n  background-color: #F2F2F2;\n}\n#login[data-v-0471e7ae] {\n  width: 90%;\n  margin: 0 auto;\n}\nform[data-v-0471e7ae] {\n  margin: 2rem 0;\n  padding-bottom: 2rem;\n  background: white;\n}\nform .title[data-v-0471e7ae] {\n  padding: 2rem 0;\n  font-size: 20px;\n  font-weight: bold;\n  letter-spacing: 2px;\n  border-bottom: 1px solid silver;\n  text-align: center;\n}\nform .form-container[data-v-0471e7ae] {\n  width: 90%;\n  margin: 0 auto;\n  padding-top: 2rem;\n}", ""]);
+exports.push([module.i, "html[data-v-0471e7ae], body[data-v-0471e7ae], div[data-v-0471e7ae], span[data-v-0471e7ae], applet[data-v-0471e7ae], object[data-v-0471e7ae], iframe[data-v-0471e7ae],\nh1[data-v-0471e7ae], h2[data-v-0471e7ae], h3[data-v-0471e7ae], h4[data-v-0471e7ae], h5[data-v-0471e7ae], h6[data-v-0471e7ae], p[data-v-0471e7ae],\nblockquote[data-v-0471e7ae], pre[data-v-0471e7ae],\na[data-v-0471e7ae], abbr[data-v-0471e7ae], acronym[data-v-0471e7ae], address[data-v-0471e7ae], big[data-v-0471e7ae], cite[data-v-0471e7ae], code[data-v-0471e7ae],\ndel[data-v-0471e7ae], dfn[data-v-0471e7ae], em[data-v-0471e7ae], img[data-v-0471e7ae], ins[data-v-0471e7ae], kbd[data-v-0471e7ae], q[data-v-0471e7ae], s[data-v-0471e7ae], samp[data-v-0471e7ae],\nsmall[data-v-0471e7ae], strike[data-v-0471e7ae], strong[data-v-0471e7ae], sub[data-v-0471e7ae], sup[data-v-0471e7ae], tt[data-v-0471e7ae], var[data-v-0471e7ae],\nb[data-v-0471e7ae], u[data-v-0471e7ae], i[data-v-0471e7ae], center[data-v-0471e7ae],\ndl[data-v-0471e7ae], dt[data-v-0471e7ae], dd[data-v-0471e7ae], ol[data-v-0471e7ae], ul[data-v-0471e7ae], li[data-v-0471e7ae],\nfieldset[data-v-0471e7ae], form[data-v-0471e7ae], label[data-v-0471e7ae], legend[data-v-0471e7ae],\ntable[data-v-0471e7ae], caption[data-v-0471e7ae], tbody[data-v-0471e7ae], tfoot[data-v-0471e7ae], thead[data-v-0471e7ae], tr[data-v-0471e7ae], th[data-v-0471e7ae], td[data-v-0471e7ae],\narticle[data-v-0471e7ae], aside[data-v-0471e7ae], canvas[data-v-0471e7ae], details[data-v-0471e7ae], embed[data-v-0471e7ae],\nfigure[data-v-0471e7ae], figcaption[data-v-0471e7ae], footer[data-v-0471e7ae], header[data-v-0471e7ae], hgroup[data-v-0471e7ae],\nmenu[data-v-0471e7ae], nav[data-v-0471e7ae], output[data-v-0471e7ae], ruby[data-v-0471e7ae], section[data-v-0471e7ae], summary[data-v-0471e7ae],\ntime[data-v-0471e7ae], mark[data-v-0471e7ae], audio[data-v-0471e7ae], video[data-v-0471e7ae] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-0471e7ae], aside[data-v-0471e7ae], details[data-v-0471e7ae], figcaption[data-v-0471e7ae], figure[data-v-0471e7ae],\nfooter[data-v-0471e7ae], header[data-v-0471e7ae], hgroup[data-v-0471e7ae], menu[data-v-0471e7ae], nav[data-v-0471e7ae], section[data-v-0471e7ae] {\n  display: block;\n}\nbody[data-v-0471e7ae] {\n  line-height: 1;\n}\nol[data-v-0471e7ae], ul[data-v-0471e7ae] {\n  list-style: none;\n}\nblockquote[data-v-0471e7ae], q[data-v-0471e7ae] {\n  quotes: none;\n}\nblockquote[data-v-0471e7ae]:before, blockquote[data-v-0471e7ae]:after,\nq[data-v-0471e7ae]:before, q[data-v-0471e7ae]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-0471e7ae] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-0471e7ae] {\n  text-decoration: none;\n}\n.clearfix[data-v-0471e7ae]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-0471e7ae] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-0471e7ae] {\n  height: 1%;\n}\n.clearfix[data-v-0471e7ae] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-0471e7ae] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-0471e7ae] {\n  background-color: #F2F2F2;\n}\n#login[data-v-0471e7ae] {\n  width: 90%;\n  margin: 0 auto;\n}\n.form[data-v-0471e7ae] {\n  margin: 2rem 0;\n  padding-bottom: 2rem;\n  background: white;\n}\n.form .title[data-v-0471e7ae] {\n  padding: 2rem 0;\n  font-size: 20px;\n  font-weight: bold;\n  letter-spacing: 2px;\n  border-bottom: 1px solid silver;\n  text-align: center;\n}\n.form .form-container[data-v-0471e7ae] {\n  width: 90%;\n  margin: 0 auto;\n  padding-top: 2rem;\n}", ""]);
 
 // exports
 
@@ -7663,7 +7661,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
 
 // module
-exports.push([module.i, "html[data-v-0190ea6e], body[data-v-0190ea6e], div[data-v-0190ea6e], span[data-v-0190ea6e], applet[data-v-0190ea6e], object[data-v-0190ea6e], iframe[data-v-0190ea6e],\nh1[data-v-0190ea6e], h2[data-v-0190ea6e], h3[data-v-0190ea6e], h4[data-v-0190ea6e], h5[data-v-0190ea6e], h6[data-v-0190ea6e], p[data-v-0190ea6e],\nblockquote[data-v-0190ea6e], pre[data-v-0190ea6e],\na[data-v-0190ea6e], abbr[data-v-0190ea6e], acronym[data-v-0190ea6e], address[data-v-0190ea6e], big[data-v-0190ea6e], cite[data-v-0190ea6e], code[data-v-0190ea6e],\ndel[data-v-0190ea6e], dfn[data-v-0190ea6e], em[data-v-0190ea6e], img[data-v-0190ea6e], ins[data-v-0190ea6e], kbd[data-v-0190ea6e], q[data-v-0190ea6e], s[data-v-0190ea6e], samp[data-v-0190ea6e],\nsmall[data-v-0190ea6e], strike[data-v-0190ea6e], strong[data-v-0190ea6e], sub[data-v-0190ea6e], sup[data-v-0190ea6e], tt[data-v-0190ea6e], var[data-v-0190ea6e],\nb[data-v-0190ea6e], u[data-v-0190ea6e], i[data-v-0190ea6e], center[data-v-0190ea6e],\ndl[data-v-0190ea6e], dt[data-v-0190ea6e], dd[data-v-0190ea6e], ol[data-v-0190ea6e], ul[data-v-0190ea6e], li[data-v-0190ea6e],\nfieldset[data-v-0190ea6e], form[data-v-0190ea6e], label[data-v-0190ea6e], legend[data-v-0190ea6e],\ntable[data-v-0190ea6e], caption[data-v-0190ea6e], tbody[data-v-0190ea6e], tfoot[data-v-0190ea6e], thead[data-v-0190ea6e], tr[data-v-0190ea6e], th[data-v-0190ea6e], td[data-v-0190ea6e],\narticle[data-v-0190ea6e], aside[data-v-0190ea6e], canvas[data-v-0190ea6e], details[data-v-0190ea6e], embed[data-v-0190ea6e],\nfigure[data-v-0190ea6e], figcaption[data-v-0190ea6e], footer[data-v-0190ea6e], header[data-v-0190ea6e], hgroup[data-v-0190ea6e],\nmenu[data-v-0190ea6e], nav[data-v-0190ea6e], output[data-v-0190ea6e], ruby[data-v-0190ea6e], section[data-v-0190ea6e], summary[data-v-0190ea6e],\ntime[data-v-0190ea6e], mark[data-v-0190ea6e], audio[data-v-0190ea6e], video[data-v-0190ea6e] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-0190ea6e], aside[data-v-0190ea6e], details[data-v-0190ea6e], figcaption[data-v-0190ea6e], figure[data-v-0190ea6e],\nfooter[data-v-0190ea6e], header[data-v-0190ea6e], hgroup[data-v-0190ea6e], menu[data-v-0190ea6e], nav[data-v-0190ea6e], section[data-v-0190ea6e] {\n  display: block;\n}\nbody[data-v-0190ea6e] {\n  line-height: 1;\n}\nol[data-v-0190ea6e], ul[data-v-0190ea6e] {\n  list-style: none;\n}\nblockquote[data-v-0190ea6e], q[data-v-0190ea6e] {\n  quotes: none;\n}\nblockquote[data-v-0190ea6e]:before, blockquote[data-v-0190ea6e]:after,\nq[data-v-0190ea6e]:before, q[data-v-0190ea6e]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-0190ea6e] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-0190ea6e] {\n  text-decoration: none;\n}\n.clearfix[data-v-0190ea6e]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-0190ea6e] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-0190ea6e] {\n  height: 1%;\n}\n.clearfix[data-v-0190ea6e] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-0190ea6e] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-0190ea6e] {\n  background-color: #F2F2F2;\n}\n@media screen and (min-width: 640px) {\n#register[data-v-0190ea6e] {\n    width: 50%;\n    margin: 0 auto;\n}\nform[data-v-0190ea6e] {\n    margin: 2rem 0;\n    padding-bottom: 2rem;\n    background: white;\n}\nform .title[data-v-0190ea6e] {\n    padding: 2rem 0;\n    font-size: 20px;\n    font-weight: bold;\n    letter-spacing: 2px;\n    border-bottom: 1px solid silver;\n    text-align: center;\n}\nform .form-container[data-v-0190ea6e] {\n    width: 90%;\n    margin: 0 auto;\n    padding-top: 2rem;\n}\n}", ""]);
+exports.push([module.i, "html[data-v-0190ea6e], body[data-v-0190ea6e], div[data-v-0190ea6e], span[data-v-0190ea6e], applet[data-v-0190ea6e], object[data-v-0190ea6e], iframe[data-v-0190ea6e],\nh1[data-v-0190ea6e], h2[data-v-0190ea6e], h3[data-v-0190ea6e], h4[data-v-0190ea6e], h5[data-v-0190ea6e], h6[data-v-0190ea6e], p[data-v-0190ea6e],\nblockquote[data-v-0190ea6e], pre[data-v-0190ea6e],\na[data-v-0190ea6e], abbr[data-v-0190ea6e], acronym[data-v-0190ea6e], address[data-v-0190ea6e], big[data-v-0190ea6e], cite[data-v-0190ea6e], code[data-v-0190ea6e],\ndel[data-v-0190ea6e], dfn[data-v-0190ea6e], em[data-v-0190ea6e], img[data-v-0190ea6e], ins[data-v-0190ea6e], kbd[data-v-0190ea6e], q[data-v-0190ea6e], s[data-v-0190ea6e], samp[data-v-0190ea6e],\nsmall[data-v-0190ea6e], strike[data-v-0190ea6e], strong[data-v-0190ea6e], sub[data-v-0190ea6e], sup[data-v-0190ea6e], tt[data-v-0190ea6e], var[data-v-0190ea6e],\nb[data-v-0190ea6e], u[data-v-0190ea6e], i[data-v-0190ea6e], center[data-v-0190ea6e],\ndl[data-v-0190ea6e], dt[data-v-0190ea6e], dd[data-v-0190ea6e], ol[data-v-0190ea6e], ul[data-v-0190ea6e], li[data-v-0190ea6e],\nfieldset[data-v-0190ea6e], form[data-v-0190ea6e], label[data-v-0190ea6e], legend[data-v-0190ea6e],\ntable[data-v-0190ea6e], caption[data-v-0190ea6e], tbody[data-v-0190ea6e], tfoot[data-v-0190ea6e], thead[data-v-0190ea6e], tr[data-v-0190ea6e], th[data-v-0190ea6e], td[data-v-0190ea6e],\narticle[data-v-0190ea6e], aside[data-v-0190ea6e], canvas[data-v-0190ea6e], details[data-v-0190ea6e], embed[data-v-0190ea6e],\nfigure[data-v-0190ea6e], figcaption[data-v-0190ea6e], footer[data-v-0190ea6e], header[data-v-0190ea6e], hgroup[data-v-0190ea6e],\nmenu[data-v-0190ea6e], nav[data-v-0190ea6e], output[data-v-0190ea6e], ruby[data-v-0190ea6e], section[data-v-0190ea6e], summary[data-v-0190ea6e],\ntime[data-v-0190ea6e], mark[data-v-0190ea6e], audio[data-v-0190ea6e], video[data-v-0190ea6e] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-0190ea6e], aside[data-v-0190ea6e], details[data-v-0190ea6e], figcaption[data-v-0190ea6e], figure[data-v-0190ea6e],\nfooter[data-v-0190ea6e], header[data-v-0190ea6e], hgroup[data-v-0190ea6e], menu[data-v-0190ea6e], nav[data-v-0190ea6e], section[data-v-0190ea6e] {\n  display: block;\n}\nbody[data-v-0190ea6e] {\n  line-height: 1;\n}\nol[data-v-0190ea6e], ul[data-v-0190ea6e] {\n  list-style: none;\n}\nblockquote[data-v-0190ea6e], q[data-v-0190ea6e] {\n  quotes: none;\n}\nblockquote[data-v-0190ea6e]:before, blockquote[data-v-0190ea6e]:after,\nq[data-v-0190ea6e]:before, q[data-v-0190ea6e]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-0190ea6e] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-0190ea6e] {\n  text-decoration: none;\n}\n.clearfix[data-v-0190ea6e]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-0190ea6e] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-0190ea6e] {\n  height: 1%;\n}\n.clearfix[data-v-0190ea6e] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-0190ea6e] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-0190ea6e] {\n  background-color: #F2F2F2;\n}\n@media screen and (min-width: 640px) {\n#register[data-v-0190ea6e] {\n    width: 50%;\n    margin: 0 auto;\n}\n.form[data-v-0190ea6e] {\n    margin: 2rem 0;\n    padding-bottom: 2rem;\n    background: white;\n}\n.form .title[data-v-0190ea6e] {\n    padding: 2rem 0;\n    font-size: 20px;\n    font-weight: bold;\n    letter-spacing: 2px;\n    border-bottom: 1px solid silver;\n    text-align: center;\n}\n.form .form-container[data-v-0190ea6e] {\n    width: 90%;\n    margin: 0 auto;\n    padding-top: 2rem;\n}\n}", ""]);
 
 // exports
 
@@ -40455,12 +40453,12 @@ var render = function() {
       _vm._v(" "),
       _c("FormButton", {
         attrs: { button_name: "撮影する" },
-        on: { signalEvent: _vm.takeFaceImage }
+        on: { signalEvent: _vm.takeFace }
       }),
       _vm._v(" "),
       _c("FormButton", {
         attrs: { button_name: "認証する" },
-        on: { signalEvent: _vm.authWithFaceImage }
+        on: { signalEvent: _vm.authFace }
       })
     ],
     1
@@ -40832,28 +40830,26 @@ var render = function() {
         { attrs: { id: "auth-result" } },
         [
           _c("div", { staticClass: "borrower" }, [
-            _vm.user.name == null
+            !_vm.auth_user
               ? _c("span", { staticClass: "disable" }, [
                   _vm._v("貸出し不可：カメラ撮影が必要です")
                 ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.user.name != null
+              : _vm.auth_user
               ? _c("span", { staticClass: "able" }, [
-                  _vm._v("貸出し可能：" + _vm._s(_vm.user.name))
+                  _vm._v("貸出し可能：" + _vm._s(_vm.auth_user.name))
                 ])
               : _vm._e()
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "book-image" }, [
-            _vm.book.title == null
+            !_vm.book.title
               ? _c("img", {
                   staticClass: "disable",
                   attrs: { src: _vm.image, alt: "No Image" }
                 })
               : _vm._e(),
             _vm._v(" "),
-            _vm.book.title != null
+            _vm.book.title
               ? _c("img", {
                   staticClass: "able",
                   attrs: { src: _vm.image, alt: "No Image" }
@@ -41336,7 +41332,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "half-box" }, [_c("Camera")], 1),
+    _c(
+      "div",
+      { staticClass: "half-box" },
+      [_c("Camera", { on: { signalEvent: _vm.changeState } })],
+      1
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "half-box" }, [
       _c("div", { attrs: { id: "officers" } }, [
@@ -41345,32 +41346,18 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
-            [
-              _vm._l(_vm.all_users, function(user) {
-                return _c("tr", [
-                  _c("td", [_vm._v(_vm._s(user.id))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(user.name))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(user.updated_at))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(user.state))])
-                ])
-              }),
-              _vm._v(" "),
-              _vm._l(50, function(n) {
-                return _c("tr", [
-                  _c("td", [_vm._v(_vm._s(n))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("ジョンソン")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("12:22")]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("◯")])
-                ])
-              })
-            ],
-            2
+            _vm._l(_vm.all_users, function(user, index) {
+              return _c("tr", { key: index, attrs: { id: user.id } }, [
+                _c("td", [_vm._v(_vm._s(user.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.updated_at))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(user.state))])
+              ])
+            }),
+            0
           )
         ])
       ])
@@ -41422,15 +41409,8 @@ var render = function() {
     _c("div", { staticClass: "half-box" }, [
       _c("div", { attrs: { id: "login" } }, [
         _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.login($event)
-              }
-            }
-          },
+          "div",
+          { staticClass: "form" },
           [
             _c("div", { staticClass: "title" }, [_vm._v("ログインする")]),
             _vm._v(" "),
@@ -41469,7 +41449,10 @@ var render = function() {
               1
             ),
             _vm._v(" "),
-            _c("FormButton", { attrs: { button_name: "ログインする" } })
+            _c("FormButton", {
+              attrs: { button_name: "ログインする" },
+              on: { signalEvent: _vm.login }
+            })
           ],
           1
         )
@@ -41501,15 +41484,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "register" } }, [
     _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.register($event)
-          }
-        }
-      },
+      "div",
+      { staticClass: "form" },
       [
         _c("div", { staticClass: "title" }, [_vm._v("ユーザーを登録する")]),
         _vm._v(" "),
@@ -41570,7 +41546,10 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("FormButton", { attrs: { button_name: "新規登録する" } })
+        _c("FormButton", {
+          attrs: { button_name: "新規登録する" },
+          on: { signalEvent: _vm.register }
+        })
       ],
       1
     )
@@ -41603,16 +41582,14 @@ var render = function() {
     { attrs: { id: "users-books" } },
     [
       _c(
-        "form",
-        {
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.logout($event)
-            }
-          }
-        },
-        [_c("FormButton", { attrs: { button_name: "ログアウトする" } })],
+        "div",
+        { staticClass: "form" },
+        [
+          _c("FormButton", {
+            attrs: { button_name: "ログアウトする" },
+            on: { signalEvent: _vm.logout }
+          })
+        ],
         1
       ),
       _vm._v(" "),
@@ -41621,7 +41598,7 @@ var render = function() {
         {
           attrs: {
             page_title: _vm.login_user.name + "さんが読んだ本の一覧",
-            books: _vm.booksBorrowed
+            books: _vm.borrowed_books
           }
         },
         [
@@ -59412,10 +59389,10 @@ var state = {
 var getters = {}; // commit("呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期のみ)
 
 var mutations = {
-  setAll: function setAll(state, books) {
+  setAllBooks: function setAllBooks(state, books) {
     state.all_books = books;
   },
-  set: function set(state, book) {
+  setBook: function setBook(state, book) {
     state.book = book;
   }
 }; // dispatch("モジュール名/呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期/非同期)
@@ -59432,7 +59409,7 @@ var actions = {
               _context.next = 2;
               return axios.get("/api/books/all") // 戻り値をJSONで取得
               .then(function (response) {
-                context.commit("setAll", response.data);
+                context.commit("setAllBooks", response.data);
               })["catch"](function (error) {
                 console.log(error.name + ": " + error.message);
               });
@@ -59455,7 +59432,7 @@ var actions = {
     var books = context.state.all_books;
     books.forEach(function (book) {
       if (book.id == book_id) {
-        context.commit("set", book);
+        context.commit("setBook", book);
         return;
       }
     });
@@ -59583,17 +59560,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var state = {
   is_admin: false,
   login_user: null,
-  all_users: [] // stateの直接参照は非推奨なのでgettersに定義してコール
+  all_users: [],
+  auth_user: null // stateの直接参照は非推奨なのでgettersに定義してコール
 
 };
 var getters = {}; // commit("呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期のみ)
 
 var mutations = {
-  setAll: function setAll(state, users) {
+  setAllUsers: function setAllUsers(state, users) {
     state.all_users = users;
   },
-  set: function set(state, user) {
+  setLoginUser: function setLoginUser(state, user) {
     state.login_user = user;
+  },
+  unsetLoginUsr: function unsetLoginUsr(state) {
+    state.login_user = null;
   },
   switch_admin: function switch_admin(state) {
     state.is_admin = !state.is_admin;
@@ -59621,7 +59602,7 @@ var actions = {
                     user.state = "◯";
                   }
                 });
-                context.commit("setAll", users);
+                context.commit("setAllUsers", users);
               });
 
             case 2:
@@ -59648,7 +59629,7 @@ var actions = {
             case 0:
               _context2.next = 2;
               return axios.get("/api/users/logined").then(function (response) {
-                context.commit("set", response.data);
+                context.commit("setLoginUser", response.data);
               });
 
             case 2:
@@ -59675,7 +59656,12 @@ var actions = {
             case 0:
               _context3.next = 2;
               return axios.post("/api/auth/register", params).then(function (response) {
-                console.log(params);
+                console.log(response.data);
+                alert("登録が完了しました");
+                location.href = "/";
+              })["catch"](function (error) {
+                console.log(error.name + ": " + error.message);
+                alert("登録に失敗しました");
               });
 
             case 2:
@@ -59702,7 +59688,8 @@ var actions = {
             case 0:
               _context4.next = 2;
               return axios.post("/api/login", params).then(function (response) {
-                context.commit("set", response.data);
+                context.commit("setLoginUser", response.data);
+                return;
               });
 
             case 2:
@@ -59731,9 +59718,10 @@ var actions = {
               return axios.post("/api/logout");
 
             case 2:
-              context.commit("set", null);
+              context.commit("unsetLoginUser");
+              return _context5.abrupt("return");
 
-            case 3:
+            case 4:
             case "end":
               return _context5.stop();
           }

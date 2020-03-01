@@ -12,12 +12,12 @@
         <div class="half-box">
             <div id="auth-result">
                 <div class="borrower">
-                    <span v-if="user.name == null" class="disable">貸出し不可：カメラ撮影が必要です</span>
-                    <span v-if="user.name != null" class="able">貸出し可能：{{user.name}}</span>
+                    <span v-if="!auth_user" class="disable">貸出し不可：カメラ撮影が必要です</span>
+                    <span v-else-if="auth_user" class="able">貸出し可能：{{auth_user.name}}</span>
                 </div>
                 <div class="book-image">
-                    <img v-if="book.title == null" class="disable" :src="image" alt="No Image" />
-                    <img v-if="book.title != null" class="able" :src="image" alt="No Image" />
+                    <img v-if="!book.title" class="disable" :src="image" alt="No Image" />
+                    <img v-if="book.title" class="able" :src="image" alt="No Image" />
                 </div>
                 <FormButton @signalEvent="borrowBook" button_name="この本を借りる" class="button"></FormButton>
             </div>
@@ -30,6 +30,8 @@
 import Camera    from "../../components/Camera.vue"
 import FormButton from "../../components/form/Button.vue"
 
+import { mapState, mapGetters, mapActions } from "vuex"
+
 export default {
     components: {
         Camera,
@@ -40,27 +42,15 @@ export default {
         return {
             isbn: "9784798038094",
             image: "/no_image.png",
-            book: {},
-            user: {}
-        };
+            book: {}
+        }
+    },
+
+    computed: {
+        ...mapState("User", ["auth_user"])
     },
 
     methods: {
-
-        // // 画像からISBNを取得する(searchBookWithISBN()内で使う関数)
-        // bostBookBarcodeImage(){
-        //     var params = {
-        //         captureImage: this.faceImage
-        //     };
-        //     var axios = require("axios");
-        //     axios.post("/api/books/barcode", params)
-        //     .then((response)=>{
-        //         console.log(response.data);
-        //     })
-        //     .catch((error)=>{
-        //         console.log(error.name + ": " + error.message);
-        //     })
-        // },
 
         // ISBNから本データを取得する
         searchBookWithISBN() {
@@ -95,18 +85,18 @@ export default {
 
         // 貸出処理(顔認証)
         borrowBook() {
-            var path = "/api/books/" + this.isbn + "/borrow/" + this.user.id
+            var path = "/api/books/" + this.isbn + "/borrow/" + this.auth_user.id
             axios.get(path)
-            .then(response => {
+            .then((response) => {
                 // 返却日の取得
                 var today = new Date()
                 today.setDate(today.getDate() + 14)
                 var returnDate = today.toLocaleDateString()
                 // アラートで表示
                 alert(`${response.data}\n返却日は${returnDate}です。`)
-                location.href = "/user/top"
+                location.href = "/"
             })
-            .catch(error => {
+            .catch((error) => {
                 alert("本データを取得してください")
                 console.log(error.name + ": " + error.message)
             })

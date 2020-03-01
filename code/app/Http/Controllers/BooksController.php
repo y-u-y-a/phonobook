@@ -84,66 +84,6 @@ class BooksController extends Controller
     }
 
 
-    /* バーコード画像からISBNを返す */
-    public function getISBN(Request $request)
-    {
-        // ①セッションを初期化
-        $ch = curl_init();
-
-        // 変数宣言
-        $api_url = "https://gateway.watsonplatform.net/visual-recognition/api/v3/recognize_text";
-        $version = "?version=2018-03-19";
-        $lang = "&accept-language=ja";
-        $api_key = VISUAL_RECOGNITION_SECRET_KEY;
-        $model_id = MODEL_ID;
-
-        $url = $api_url.$version.$lang;
-
-        // 取得したbase64を画像データにデコードする
-        $fileData = base64_decode($request->captureImage);
-        // ファイルの生成
-        $fileName = "isbn.jpeg";
-        // データをファイルに書き込み処理
-        file_put_contents($fileName, $fileData);
-
-        // namespaceの関係でバックスラッシュ\を入れる
-        $params   = array(
-        "images_file" => new \CURLFile($fileName, mime_content_type($fileName),basename($fileName)),
-        "classifier_ids" => "default"
-        );
-
-        // ②オプションを設定
-        curl_setopt_array($ch, [
-        CURLOPT_USERPWD => "apikey:".$api_key, // 認証
-        CURLOPT_URL => $url,
-        CURLOPT_HTTPHEADER => array("Content-Type: multipart/form-data"),
-        CURLOPT_POST => true,
-        CURLOPT_RETURNTRANSFER => true,  // curl_execの実行結果を文字列で返す
-        CURLOPT_SSL_VERIFYPEER => false, // サーバー証明書の検証を行わない
-        CURLOPT_POSTFIELDS => $params,
-        // CURLOPT_VERBOSE => true
-        ]);
-
-
-        // ③転送を実行し、返り値を取得
-        $vrExec = curl_exec($ch);
-
-        if (curl_errno($ch)){
-        return "Error:".curl_error($ch);
-        }else{
-        $decode = json_decode($vrExec,true);
-        }
-
-        return $decode;
-
-        // ④セッションを終了する
-        curl_close($ch);
-
-        $getISBN = $decode["images"][0]["text"];
-        return $getISBN;
-    }
-
-
     /* 登録処理 */
     public function store(Request $request)
     {
