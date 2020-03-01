@@ -7,7 +7,7 @@
                     <router-link :to="'/book/Show/' + book.id">
                         <img :src="book.cover" :alt="book.title" />
                     </router-link>
-                    <!-- slotで　使う要素を指定できる、bindで親に変数を渡す(画像の下のボタンなど) -->
+                    <!-- slotで使う要素を指定できる、bindで親に変数を渡す(画像の下のボタンなど) -->
                     <!-- /book/Index -->
                     <slot name="book-index" :book="book"></slot>
                     <!-- /book/Edit -->
