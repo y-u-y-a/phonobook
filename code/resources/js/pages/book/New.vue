@@ -1,43 +1,43 @@
 <template>
     <div id="book-new">
         <div class="half-box">
-            <Camera></Camera>
-            <FormInput v-model="isbn" label="ISBN" placeholder="" ></FormInput>
-            <FormButton @signalEvent="getBookData" button_name="取得する"></FormButton>
+            <LiveCamera @signalEvent="getBookWithOpenBD" />
         </div>
 
         <div class="half-box wrapper">
             <div class="container clearfix">
                 <div class="half-box">
                     <ul>
-                        <li><FormInput v-model="title" label="タイトル" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput v-model="author" label="著者" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput v-model="volume" label="巻" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput v-model="series" label="シリーズ" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput v-model="publisher" label="出版" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormInput v-model="pubdate" label="出版日" placeholder="8文字以上" ></FormInput></li>
-                        <li><FormTextarea v-model="detail" label="詳細"></FormTextarea></li>
+                        <li><FormInput v-model="book.title" label="タイトル" placeholder="8文字以上" /></li>
+                        <li><FormInput v-model="book.author" label="著者" placeholder="8文字以上" /></li>
+                        <li><FormInput v-model="book.volume" label="巻" placeholder="8文字以上" /></li>
+                        <li><FormInput v-model="book.series" label="シリーズ" placeholder="8文字以上" /></li>
+                        <li><FormInput v-model="book.publisher" label="出版" placeholder="8文字以上" /></li>
+                        <li><FormInput v-model="book.pubdate" label="出版日" placeholder="8文字以上" /></li>
+                        <li><FormTextarea v-model="book.detail" label="詳細" /></li>
                     </ul>
                 </div>
                 <div class="half-box">
-                    <img :src="cover" alt="No Image">
+                    <img :src="book.cover" :alt="book.title">
                 </div>
             </div>
-            <FormButton @signalEvent="registerBook" button_name="登録する" class="button"></FormButton>
+            <FormButton @signalEvent="registerBook(book)" button_name="登録する" class="button" />
         </div>
     </div>
 </template>
 
 <script>
 
-import Camera       from "../../components/Camera.vue"
-import FormInput    from "../../components/form/Input.vue"
+import LiveCamera from "../../components/LiveCamera.vue"
+import FormInput from "../../components/form/Input.vue"
 import FormTextarea from "../../components/form/Textarea.vue"
-import FormButton   from "../../components/form/Button.vue"
+import FormButton from "../../components/form/Button.vue"
+import { mapActions } from 'vuex'
 
-export default{
+export default {
+
     components: {
-        Camera,
+        LiveCamera,
         FormInput,
         FormTextarea,
         FormButton
@@ -45,75 +45,68 @@ export default{
 
     data(){
         return{
-            isbn      : "9784798038094",
-            title     : "",
-            author    : "",
-            volume    : "",
-            series    : "",
-            publisher : "",
-            pubdate   : "",
-            detail    : "",
-            cover     : "/no_image.png",
+            book: {
+                isbn      : "",
+                title     : "",
+                author    : "",
+                volume    : "",
+                series    : "",
+                publisher : "",
+                pubdate   : "",
+                cover     : "/no_image.png",
+                detail    : ""
+            }
         }
     },
 
+    // TODO: openBDでの処理をバックエンドへ移行
     methods:{
 
-        // TODO: openBDでの処理をバックエンドへ移行
-        getBookData(){
-            // openBDに送信するデータを定義
-            const isbn = this.isbn
-            const url  = "https://api.openbd.jp/v1/get?isbn=" + isbn
+        ...mapActions("Book", ["registerBook"]),
+
+        // isbnは, LiveCameraコンポーネントから取得
+        getBookWithOpenBD(isbn){
 
             if(isbn == ""){
-                alert("ISBNを入力してください")
-            }else if(isbn.length != 13){
-                alert("ISBNは13桁で入力してください")
-            }else{
-                // アクセス開始
-                $.getJSON(url, response => {
-                    if(response[0] != null){
-                        // 本データの取得
-                        var book = response[0].summary
-                        this.title = book.title
-                        this.author = book.author
-                        this.volume = book.volume
-                        this.series = book.series
-                        this.publisher = book.publisher
-                        this.pubdate = book.pubdate
-                        this.detail = response[0].onix.CollateralDetail.TextContent[0].Text
-                        // 画像が存在すれば更新
-                        if(book.cover != ""){
-                            this.cover = book.cover
-                        }
-                    }else{
-                        alert("本データが見つかりません")
-                    }
-                })
+                return alert("ISBNを入力してください。")
             }
-        },
+            if(isbn.length != 13){
+                return alert("ISBNは13桁で入力してください。")
+            }
 
-        registerBook(){
-            var params = {
-                isbn : this.isbn,
-                title : this.title,
-                author : this.author,
-                volum : this.volume,
-                series : this.series,
-                publisher: this.publisher,
-                pubdate : this.pubdate,
-                detail : this.detail,
-                cover : this.cover
-            }
-            axios.post("/api/books", params)
-            .then((response)=>{
-                alert("登録が完了しました")
-                location.href = "/book/New"
-                // this.$router.push("/book/New")
-            })
-            .catch((error, response)=>{
-                console.log(error.name + ": " + error.message)
-                alert("失敗しました")
+            // アクセス開始
+            const url  = "https://api.openbd.jp/v1/get?isbn=" + isbn
+
+            $.getJSON(url, (reply) => {
+
+                // アラートなし(LiveCameraの精度が△)
+                if(reply[0] == null){
+                    return
+                }
+
+                // 本データの取得
+                var book = reply[0].summary
+                var detail = reply[0].onix.CollateralDetail.TextContent
+
+                this.book.isbn = isbn
+                this.book.title = book.title
+                this.book.author = book.author
+                this.book.volume = book.volume
+                this.book.series = book.series
+                this.book.publisher = book.publisher
+                this.book.pubdate = book.pubdate
+
+                // detailがあれば取得
+                if(detail !== undefined){
+                    book.detail = detail[0].Text
+                }
+
+                // 存在すれば取得
+                if(book.cover != ""){
+                    this.book.cover = book.cover
+                }
+
+                console.log("最終データ", this.book)
             })
         }
     }
@@ -142,8 +135,9 @@ ul{
 img {
     display: block;
     height: 380px;
-    width: 90%;
+    width: 100%;
     margin: 0 auto;
+    // border: 2px solid $green;
 }
 .button{
     margin-top: 1rem;

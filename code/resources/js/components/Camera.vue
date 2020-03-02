@@ -1,13 +1,11 @@
 <template>
-    <div>
-        <div id="camera">
-            <!-- カメラによる動画の挿入 -->
-            <video autoplay ref="video" width="300" height="200"></video>
-            <!-- 切り取った画像を表示 -->
-            <canvas ref="canvas" width="300" height="200"></canvas>
-        </div>
-        <FormButton @signalEvent="takeFace" button_name="撮影する"></FormButton>
-        <FormButton @signalEvent="authFace" button_name="認証する"></FormButton>
+    <div id="camera">
+        <!-- カメラによる動画の挿入 -->
+        <video autoplay ref="video" width="100%" height="100%"></video>
+        <!-- 切り取った画像を描画 -->
+        <canvas ref="canvas"></canvas>
+        <!-- 撮影と認証処理 -->
+        <FormButton @signalEvent="takeFace(); authFace()" button_name="顔を認証する" class="button" />
     </div>
 </template>
 
@@ -17,8 +15,6 @@
 import FormButton from "../components/form/Button.vue"
 
 export default {
-
-    props: [""],
 
     components: {
         FormButton
@@ -47,8 +43,8 @@ export default {
             var camera_config = {
                 audio: false,
                 video: {
-                    width: 300,
-                    height: 200,
+                    // width: 500,
+                    // height: 250,
                     facingMode: "user" // フロントカメラ
                     // facingMode: { exact: "environment" } // リアカメラ
                 }
@@ -126,12 +122,17 @@ export default {
 @import "../../sass/app.scss";
 
 #camera {
-    margin: 4rem 0;
+    margin: 2rem 0 0;
     text-align: center;
-    video,
-    canvas {
+    video{
         background-color: $white;
         border: 1px solid $silver;
+    }
+    canvas{
+        display: none;
+    }
+    .button{
+        margin: 2rem;
     }
 }
 </style>

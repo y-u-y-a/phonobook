@@ -1,12 +1,10 @@
 <template>
     <div>
         <div class="half-box">
-            <Camera @signalEvent="getAuthUser"></Camera>
-            <!-- 仮置き -->
-            <FormButton @signalEvent="getBookWithOpenBD" button_name="本を取得する"></FormButton>
-            <div class="inputISBN">
-                <input v-model="isbn" type="text" />
-            </div>
+            <!-- 顔 -->
+            <Camera @signalEvent="getAuthUser" />
+            <!-- バーコード -->
+            <LiveCamera @signalEvent="getBookWithOpenBD" />
         </div>
 
         <div class="half-box">
@@ -16,10 +14,16 @@
                     <span v-else-if="auth_user" class="able">貸出し可能：{{auth_user.name}}</span>
                 </div>
                 <div class="book-image">
-                    <img v-if="!book.title" class="disable" :src="image" alt="No Image" />
-                    <img v-else-if="book.title" class="able" :src="image" :alt="book.title" />
+                    <img v-if="book.title" :src="book.cover" :alt="book.title" class="able" />
+                    <img v-else-if="!book.title" :src="book.cover" alt="No Image" class="disable" />
                 </div>
-                <FormButton @signalEvent="borrowBook({isbn: book.isbn, auth_user: auth_user, dest: '/book/Borrow'})" button_name="この本を借りる" class="button"></FormButton>
+                <FormButton  button_name="この本を借りる" class="button"
+                    @signalEvent="borrowBook({
+                        isbn: book.isbn,
+                        auth_user: auth_user,
+                        dest: '/book/Borrow'
+                    })"
+                />
             </div>
         </div>
     </div>
@@ -28,6 +32,7 @@
 <script>
 
 import Camera from "../../components/Camera.vue"
+import LiveCamera from "../../components/LiveCamera.vue"
 import FormButton from "../../components/form/Button.vue"
 
 import { mapState, mapGetters, mapActions } from "vuex"
@@ -36,14 +41,18 @@ export default {
 
     components: {
         Camera,
+        LiveCamera,
         FormButton
     },
 
     data() {
         return {
-            isbn: "9784798038094",
-            image: "/no_image.png",
-            book: {},
+
+            book: {
+                isbn: "",
+                title: "",
+                cover: "/no_image.png"
+            },
             auth_user: null
         }
     },
@@ -52,11 +61,7 @@ export default {
 
         ...mapActions("Book", ["borrowBook"]),
 
-        // ISBNでopenBDから本データを取得
-        getBookWithOpenBD() {
-
-            const isbn = this.isbn
-            const url = "https://api.openbd.jp/v1/get?isbn=" + isbn
+        getBookWithOpenBD(isbn) {
 
             if (isbn == "") {
                 alert("ISBNを入力してください。")
@@ -66,27 +71,34 @@ export default {
                 alert("ISBNは13桁で入力してください。")
                 return
             }
+
             // アクセス開始
-            $.getJSON(url, (reply_data) => {
-                // reply_dataは,APIからの返り値
-                if (reply_data[0] != null) {
+            const url = "https://api.openbd.jp/v1/get?isbn=" + isbn
 
-                    this.book = reply_data[0].summary
+            $.getJSON(url, (reply) => {
 
-                    // 表示用の変数imageに代入
-                    if (this.book.cover != "") {
-                        this.image = this.book.cover
-                    }
+                if (reply[0] == null){
+                    return
                 }
-                else{
-                    alert("データが見つかりません。")
+
+                // 本データの取得
+                const book = reply[0].summary
+
+                this.book.isbn = isbn
+                this.book.title = book.title
+
+                // 存在すれば取得
+                if (book.cover != "") {
+                    this.book.cover = book.cover
                 }
+
+                console.log("取得した本データ", book)
             })
         },
 
         getAuthUser(user){
             this.auth_user = user
-            console.log(this.auth_user)
+            console.log("認証ユーザー", this.auth_user)
         }
     }
 }

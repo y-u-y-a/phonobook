@@ -32,12 +32,6 @@ class BooksController extends Controller
     /* 借りている本を返す */
     public function getBorrowedBooks(Request $request)
     {
-        // if(Auth::check()){
-        //     $user = Auth::User();
-        //     $books = Book::where("user_id", $user->id)->get();
-        //     return $books;
-        // }
-
         $borrowed_books = Book::where("user_id", $request->user_id)->get();
         return $borrowed_books;
     }
@@ -78,16 +72,18 @@ class BooksController extends Controller
     public function store(Request $request)
     {
         $book = new Book;
+
+        $book->isbn = $request->isbn;
         $book->title = $request->title;
-        $book->author = $request->author;
         $book->volume = $request->volume;
         $book->series = $request->series;
         $book->publisher = $request->publisher;
         $book->pubdate = $request->pubdate;
-        $book->detail = $request->detail;
         $book->cover = $request->cover;
-        $book->isbn = $request->isbn;
+        $book->author = $request->author;
+        $book->detail = $request->detail;
         $book->state = 0;
+
         $book->save();
         return $book;
     }
