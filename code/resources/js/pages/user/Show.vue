@@ -1,16 +1,17 @@
 <template>
     <div id="users-books">
-        <form @submit.prevent="logout">
-            <FormButton button_name="ログアウトする"></FormButton>
-        </form>
-        <BooksList :page_title="`${login_user.name}さんが読んだ本の一覧`" :books=booksBorrowed>
-            <!-- slot要素でnameを指定 -->
-            <slot name="user-show">
-                <FormButton button_name="返却する"></FormButton>
-            </slot>
+        <div class="form">
+            <FormButton @signalEvent="logout" button_name="ログアウトする"></FormButton>
+        </div>
+        <BooksList :page_title="`${login_user.name}さんが現在借りている本`" :books=borrowed_books>
+            <!-- 子で指定したnameのslotにマウント -->
+            <div slot="user-show" slot-scope="{ book }">
+                <FormButton @signalEvent="returnBook(book)" button_name="返却する"></FormButton>
+            </div>
         </BooksList>
     </div>
 </template>
+
 
 <script>
 
@@ -28,7 +29,7 @@ export default {
 
     data() {
         return {
-            booksBorrowed: []
+            borrowed_books: []
         };
     },
 
@@ -37,38 +38,28 @@ export default {
     },
 
     created() {
-        this.getBooksBorrowed()
+        this.getBorrowedBooks()
     },
 
     methods: {
+
+        ...mapActions("Book", ["returnBook"]),
+
         logout() {
-            this.$store.dispatch("User/logout")
             console.log(this.login_user)
+            this.$store.dispatch("User/logout")
             location.href = "/"
         },
 
         // 借りている本を取得
-        getBooksBorrowed() {
-            axios.get("/api/books/borrowed")
-            .then(response => {
-                this.booksBorrowed = response.data
-            })
-            .catch(error => {
-                console.log(error.name + ": " + error.message)
-            })
-        },
+        async getBorrowedBooks() {
 
-        // 本の返却
-        returnBook() {
-            // クリックした要素のidを取得する
-            var book_id = event.target.id
-            axios.get("/api/books/return/" + book_id)
-            .then(response => {
-                alert("返却しました")
-                // 現在のページをリロード
-                location.reload()
+            await axios.get("/api/books/borrowed/" + this.login_user.id)
+            .then((response) => {
+                this.borrowed_books = response.data
             })
-            .catch(error => {
+            .catch((error) => {
+                alert("エラーが発生しました。")
                 console.log(error.name + ": " + error.message)
             })
         }

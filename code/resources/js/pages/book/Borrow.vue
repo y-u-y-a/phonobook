@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="half-box">
-            <Camera></Camera>
+            <Camera @signalEvent="getAuthUser"></Camera>
             <!-- 仮置き -->
-            <FormButton @signalEvent="searchBookWithISBN" button_name="本を取得する"></FormButton>
+            <FormButton @signalEvent="getBookWithOpenBD" button_name="本を取得する"></FormButton>
             <div class="inputISBN">
                 <input v-model="isbn" type="text" />
             </div>
@@ -12,14 +12,14 @@
         <div class="half-box">
             <div id="auth-result">
                 <div class="borrower">
-                    <span v-if="user.name == null" class="disable">貸出し不可：カメラ撮影が必要です</span>
-                    <span v-if="user.name != null" class="able">貸出し可能：{{user.name}}</span>
+                    <span v-if="!auth_user" class="disable">貸出し不可：カメラ撮影が必要です</span>
+                    <span v-else-if="auth_user" class="able">貸出し可能：{{auth_user.name}}</span>
                 </div>
                 <div class="book-image">
-                    <img v-if="book.title == null" class="disable" :src="image" alt="No Image" />
-                    <img v-if="book.title != null" class="able" :src="image" alt="No Image" />
+                    <img v-if="!book.title" class="disable" :src="image" alt="No Image" />
+                    <img v-else-if="book.title" class="able" :src="image" :alt="book.title" />
                 </div>
-                <FormButton @signalEvent="borrowBook" button_name="この本を借りる" class="button"></FormButton>
+                <FormButton @signalEvent="borrowBook({isbn: book.isbn, auth_user: auth_user, dest: '/book/Borrow'})" button_name="この本を借りる" class="button"></FormButton>
             </div>
         </div>
     </div>
@@ -27,10 +27,13 @@
 
 <script>
 
-import Camera    from "../../components/Camera.vue"
+import Camera from "../../components/Camera.vue"
 import FormButton from "../../components/form/Button.vue"
 
+import { mapState, mapGetters, mapActions } from "vuex"
+
 export default {
+
     components: {
         Camera,
         FormButton
@@ -41,75 +44,49 @@ export default {
             isbn: "9784798038094",
             image: "/no_image.png",
             book: {},
-            user: {}
-        };
+            auth_user: null
+        }
     },
 
     methods: {
 
-        // // 画像からISBNを取得する(searchBookWithISBN()内で使う関数)
-        // bostBookBarcodeImage(){
-        //     var params = {
-        //         captureImage: this.faceImage
-        //     };
-        //     var axios = require("axios");
-        //     axios.post("/api/books/barcode", params)
-        //     .then((response)=>{
-        //         console.log(response.data);
-        //     })
-        //     .catch((error)=>{
-        //         console.log(error.name + ": " + error.message);
-        //     })
-        // },
+        ...mapActions("Book", ["borrowBook"]),
 
-        // ISBNから本データを取得する
-        searchBookWithISBN() {
-            // openBDに送信するデータを定義
+        // ISBNでopenBDから本データを取得
+        getBookWithOpenBD() {
+
             const isbn = this.isbn
             const url = "https://api.openbd.jp/v1/get?isbn=" + isbn
-            // 関数内ではthisが他を指すことがあるので、予め変数に代入しておく
-            var vm = this
 
             if (isbn == "") {
-                alert("ISBNを入力してください")
-            } else if (isbn.length != 13) {
-                alert("ISBNは13桁で入力してください")
-            } else {
-                // アクセス開始
-                $.getJSON(url, function(data) {
-                    // dataは,APIからの返り値
-                    if (data[0] != null) {
-                        // data配列に取得
-                        vm.book = data[0].summary
-                        // 画像の表示のみ(image)
-                        if (vm.book.cover != "") {
-                            vm.image = vm.book.cover
-                        }
-                    } else {
-                        alert("データが見つかりません")
-                    }
-                })
+                alert("ISBNを入力してください。")
+                return
             }
+            if (isbn.length != 13) {
+                alert("ISBNは13桁で入力してください。")
+                return
+            }
+            // アクセス開始
+            $.getJSON(url, (reply_data) => {
+                // reply_dataは,APIからの返り値
+                if (reply_data[0] != null) {
+
+                    this.book = reply_data[0].summary
+
+                    // 表示用の変数imageに代入
+                    if (this.book.cover != "") {
+                        this.image = this.book.cover
+                    }
+                }
+                else{
+                    alert("データが見つかりません。")
+                }
+            })
         },
 
-
-        // 貸出処理(顔認証)
-        borrowBook() {
-            var path = "/api/books/" + this.isbn + "/borrow/" + this.user.id
-            axios.get(path)
-            .then(response => {
-                // 返却日の取得
-                var today = new Date()
-                today.setDate(today.getDate() + 14)
-                var returnDate = today.toLocaleDateString()
-                // アラートで表示
-                alert(`${response.data}\n返却日は${returnDate}です。`)
-                location.href = "/user/top"
-            })
-            .catch(error => {
-                alert("本データを取得してください")
-                console.log(error.name + ": " + error.message)
-            })
+        getAuthUser(user){
+            this.auth_user = user
+            console.log(this.auth_user)
         }
     }
 }

@@ -28,6 +28,7 @@ import AdminButton from "../components/top/AdminButton"
 import { mapState, mapGetters, mapActions } from "vuex"
 
 export default {
+
     components: {
         UserButton,
         AdminButton
@@ -37,6 +38,10 @@ export default {
         // スプレッド演算子(this.$store.stateの代替)
         ...mapState("User", ["login_user", "is_admin"]),
     },
+
+    created(){
+        console.log("ログイン", this.login_user)
+    }
 
 }
 </script>

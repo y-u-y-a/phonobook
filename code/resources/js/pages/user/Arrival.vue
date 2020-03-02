@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="half-box">
-            <Camera></Camera>
+            <Camera @signalEvent="changeState"></Camera>
         </div>
 
         <div class="half-box">
@@ -16,17 +16,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="user in all_users">
+                        <tr v-for="(user, index) in all_users" :key="index" :id="user.id">
                             <td>{{ user.id }}</td>
                             <td>{{ user.name }}</td>
                             <td>{{ user.updated_at }}</td>
                             <td>{{ user.state }}</td>
-                        </tr>
-                        <tr v-for="n in 50">
-                            <td>{{ n }}</td>
-                            <td>ジョンソン</td>
-                            <td>12:22</td>
-                            <td>◯</td>
                         </tr>
                     </tbody>
                 </table>
@@ -43,6 +37,7 @@ import FormButton from "../../components/form/Button.vue"
 import { mapState, mapGetters, mapActions } from "vuex"
 
 export default {
+
     components: {
         Camera,
         FormButton
@@ -59,26 +54,26 @@ export default {
     methods: {
         ...mapActions("User", ["getAllUsers"]),
 
-        // // 出退勤処理と表示データの更新
-        // async changeState(user) {
-        //     var params = {
-        //         user_id: user.id
-        //     }
-        //     // 出退勤処理
-        //     await axios.post("/api/users/state", params)
-        //     .then(response => {
-        //         // 表示データの更新
-        //         this.getAllUsers()
-        //         var el = document.getElementById(user.id)
-        //         el.style.backgroundColor = "#F6CECE"
-        //         el.scrollIntoView({
-        //             behavor: "smooth"
-        //         })
-        //     })
-        //     .catch(error => {
-        //         console.log(error.name + ": " + error.message)
-        //     })
-        // }
+        // 出退勤処理と表示データの更新
+        async changeState(user) {
+
+            console.log(user)
+            var params = {
+                user_id: user.id
+            }
+            // state切替
+            await axios.post("/api/users/state", params)
+            .then((response) => {
+                // 表示内容の切替のため
+                this.getAllUsers()
+            })
+            // ハイライト
+            var el = document.getElementById(user.id)
+            el.classList.add("switch-alert")
+            el.scrollIntoView({
+                behavor: "smooth"
+            })
+        }
     }
 }
 </script>
@@ -113,5 +108,8 @@ export default {
             padding: 1rem 0;
         }
     }
+}
+.switch-alert{
+    background-color: #F6CECE;
 }
 </style>

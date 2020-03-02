@@ -1,6 +1,6 @@
 <template>
     <div id="register">
-        <form @submit.prevent="register"><!-- 送信時のリロードをキャンセル -->
+        <div class="form">
             <div class="title">ユーザーを登録する</div>
             <div class="form-container">
                 <FormInput v-model="name" label="名前" placeholder="8文字以上" />
@@ -8,8 +8,8 @@
                 <FormInput v-model="password" label="パスワード" placeholder="8文字以上の半角英数字" />
                 <FormInput v-model="password_confirmation" label="パスワード確認" placeholder="8文字以上の半角英数字" />
             </div>
-            <FormButton button_name="新規登録する" />
-        </form>
+            <FormButton @signalEvent="register" button_name="新規登録する" />
+        </div>
     </div>
 </template>
 
@@ -19,6 +19,7 @@ import FormInput from "../../components/form/Input.vue"
 import FormButton from "../../components/form/Button.vue"
 
 export default {
+
     components: {
         FormInput,
         FormButton
@@ -35,22 +36,14 @@ export default {
 
     methods: {
 
-        async register() {
+        register() {
             var params = {
                 name: this.name,
                 email: this.email,
                 password: this.password,
                 password_confirmation: this.password_confirmation
             }
-            await this.$store.dispatch("User/register", params)
-            .then((response) => {
-                alert("登録が完了しました")
-                this.$router.push("/")
-            })
-            .catch((error) => {
-                console.log(err.name + ": " + err.message)
-                alert("失敗しました")
-            })
+            this.$store.dispatch("User/register", params)
         }
     }
 }
@@ -67,7 +60,7 @@ export default {
         width: 50%;
         margin: 0 auto;
     }
-    form{
+    .form{
         margin: 2rem 0;
         padding-bottom: 2rem;
         background: $white;

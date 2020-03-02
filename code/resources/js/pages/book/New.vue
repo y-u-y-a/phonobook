@@ -59,6 +59,7 @@ export default{
 
     methods:{
 
+        // TODO: openBDでの処理をバックエンドへ移行
         getBookData(){
             // openBDに送信するデータを定義
             const isbn = this.isbn

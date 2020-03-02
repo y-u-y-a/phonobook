@@ -14,8 +14,7 @@
             </div>
             <div class="half-box image-box">
                 <img :src="book.cover" alt="No Image" />
-                <FormButton v-if="book.state==0" @signalEvent="lendBook" button_name="この本を借りる" class=
-                "button"></FormButton>
+                <FormButton v-if="book.state==0" @signalEvent="borrowBook({isbn: book.isbn, auth_user: login_user, dest: '/book/Index'})" button_name="この本を借りる" class="button"></FormButton>
                 <!-- <FormButton button_name="レビューする"></FormButton> -->
             </div>
         </div>
@@ -41,28 +40,14 @@ export default {
     },
 
     computed: {
+        ...mapState("User", ["login_user"]),
         ...mapState("Book", ["book"])
     },
 
     methods: {
-        ...mapActions("Book", ["getAllBooks", "getBookById"]),
 
-        // 本を貸出す処理
-        lendBook() {
-            axios.get("/api/books/lend/" + this.book.id)
-            .then(response => {
-                if (response.data != "") {
-                    alert(`${response.data}\n返却日は〜です。`)
-                    location.href = "/list"
-                } else {
-                    alert("ログインしてください")
-                    location.href = "/login"
-                }
-            })
-            .catch(error => {
-                console.log(error.name + ": " + error.message)
-            })
-        }
+        ...mapActions("Book", ["getAllBooks", "getBookById", "borrowBook"])
+
     }
 }
 </script>

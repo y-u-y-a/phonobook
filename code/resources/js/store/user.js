@@ -12,12 +12,16 @@ const getters = {
 // commit("呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期のみ)
 const mutations = {
 
-    setAll(state, users){
+    setAllUsers(state, users){
         state.all_users = users
     },
 
-    set(state, user){
+    setLoginUser(state, user){
         state.login_user = user
+    },
+
+    unsetLoginUsr(state){
+        state.login_user = null
     },
 
     switch_admin(state){
@@ -42,7 +46,7 @@ const actions = {
                     user.state = "◯"
                 }
             })
-            context.commit("setAll", users)
+            context.commit("setAllUsers", users)
         })
     },
 
@@ -50,7 +54,7 @@ const actions = {
 
         await axios.get("/api/users/logined")
         .then((response) => {
-            context.commit("set", response.data)
+            context.commit("setLoginUser", response.data)
         })
     },
 
@@ -58,7 +62,13 @@ const actions = {
 
         await axios.post("/api/auth/register", params)
         .then((response) => {
-            console.log(params)
+            console.log(response.data)
+            alert("登録が完了しました")
+            location.href = "/"
+        })
+        .catch((error) => {
+            console.log(error.name + ": " + error.message)
+            alert("登録に失敗しました")
         })
     },
 
@@ -66,13 +76,15 @@ const actions = {
 
         await axios.post("/api/login", params)
         .then((response) => {
-            context.commit("set", response.data)
+            context.commit("setLoginUser", response.data)
+            return
         })
     },
 
     async logout(context){
         await axios.post("/api/logout")
-        context.commit("set", null)
+        context.commit("unsetLoginUser")
+        return
     }
 }
 
