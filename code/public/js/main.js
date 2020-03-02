@@ -2811,9 +2811,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/BooksList.vue */ "./resources/js/components/BooksList.vue");
-/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/BooksList.vue */ "./resources/js/components/BooksList.vue");
+/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2840,46 +2848,58 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    BooksList: _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    BooksList: _components_BooksList_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
       borrowed_books: []
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("User", ["login_user"])),
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapState"])("User", ["login_user"])),
   created: function created() {
     this.getBorrowedBooks();
   },
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapActions"])("Book", ["returnBook"]), {
     logout: function logout() {
       console.log(this.login_user);
       this.$store.dispatch("User/logout");
       location.href = "/";
     },
     // 借りている本を取得
-    getBorrowedBooks: function getBorrowedBooks() {
-      var _this = this;
+    getBorrowedBooks: function () {
+      var _getBorrowedBooks = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var _this = this;
 
-      axios.get("/api/books/borrowed").then(function (response) {
-        _this.borrowed_books = response.data;
-      })["catch"](function (error) {
-        console.log(error.name + ": " + error.message);
-      });
-    },
-    // 本の返却
-    returnBook: function returnBook(e) {
-      // クリックした要素のidを取得
-      var book_id = e.target.id;
-      axios.get("/api/books/return/" + book_id).then(function (response) {
-        alert("返却しました");
-        location.reload();
-      })["catch"](function (error) {
-        console.log(error.name + ": " + error.message);
-      });
-    }
-  }
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get("/api/books/borrowed/" + this.login_user.id).then(function (response) {
+                  _this.borrowed_books = response.data;
+                })["catch"](function (error) {
+                  alert("エラーが発生しました。");
+                  console.log(error.name + ": " + error.message);
+                });
+
+              case 2:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function getBorrowedBooks() {
+        return _getBorrowedBooks.apply(this, arguments);
+      }
+
+      return getBorrowedBooks;
+    }()
+  })
 });
 
 /***/ }),
@@ -7417,7 +7437,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
 
 // module
-exports.push([module.i, "html[data-v-41c93f82], body[data-v-41c93f82], div[data-v-41c93f82], span[data-v-41c93f82], applet[data-v-41c93f82], object[data-v-41c93f82], iframe[data-v-41c93f82],\nh1[data-v-41c93f82], h2[data-v-41c93f82], h3[data-v-41c93f82], h4[data-v-41c93f82], h5[data-v-41c93f82], h6[data-v-41c93f82], p[data-v-41c93f82],\nblockquote[data-v-41c93f82], pre[data-v-41c93f82],\na[data-v-41c93f82], abbr[data-v-41c93f82], acronym[data-v-41c93f82], address[data-v-41c93f82], big[data-v-41c93f82], cite[data-v-41c93f82], code[data-v-41c93f82],\ndel[data-v-41c93f82], dfn[data-v-41c93f82], em[data-v-41c93f82], img[data-v-41c93f82], ins[data-v-41c93f82], kbd[data-v-41c93f82], q[data-v-41c93f82], s[data-v-41c93f82], samp[data-v-41c93f82],\nsmall[data-v-41c93f82], strike[data-v-41c93f82], strong[data-v-41c93f82], sub[data-v-41c93f82], sup[data-v-41c93f82], tt[data-v-41c93f82], var[data-v-41c93f82],\nb[data-v-41c93f82], u[data-v-41c93f82], i[data-v-41c93f82], center[data-v-41c93f82],\ndl[data-v-41c93f82], dt[data-v-41c93f82], dd[data-v-41c93f82], ol[data-v-41c93f82], ul[data-v-41c93f82], li[data-v-41c93f82],\nfieldset[data-v-41c93f82], form[data-v-41c93f82], label[data-v-41c93f82], legend[data-v-41c93f82],\ntable[data-v-41c93f82], caption[data-v-41c93f82], tbody[data-v-41c93f82], tfoot[data-v-41c93f82], thead[data-v-41c93f82], tr[data-v-41c93f82], th[data-v-41c93f82], td[data-v-41c93f82],\narticle[data-v-41c93f82], aside[data-v-41c93f82], canvas[data-v-41c93f82], details[data-v-41c93f82], embed[data-v-41c93f82],\nfigure[data-v-41c93f82], figcaption[data-v-41c93f82], footer[data-v-41c93f82], header[data-v-41c93f82], hgroup[data-v-41c93f82],\nmenu[data-v-41c93f82], nav[data-v-41c93f82], output[data-v-41c93f82], ruby[data-v-41c93f82], section[data-v-41c93f82], summary[data-v-41c93f82],\ntime[data-v-41c93f82], mark[data-v-41c93f82], audio[data-v-41c93f82], video[data-v-41c93f82] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-41c93f82], aside[data-v-41c93f82], details[data-v-41c93f82], figcaption[data-v-41c93f82], figure[data-v-41c93f82],\nfooter[data-v-41c93f82], header[data-v-41c93f82], hgroup[data-v-41c93f82], menu[data-v-41c93f82], nav[data-v-41c93f82], section[data-v-41c93f82] {\n  display: block;\n}\nbody[data-v-41c93f82] {\n  line-height: 1;\n}\nol[data-v-41c93f82], ul[data-v-41c93f82] {\n  list-style: none;\n}\nblockquote[data-v-41c93f82], q[data-v-41c93f82] {\n  quotes: none;\n}\nblockquote[data-v-41c93f82]:before, blockquote[data-v-41c93f82]:after,\nq[data-v-41c93f82]:before, q[data-v-41c93f82]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-41c93f82] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-41c93f82] {\n  text-decoration: none;\n}\n.clearfix[data-v-41c93f82]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-41c93f82] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-41c93f82] {\n  height: 1%;\n}\n.clearfix[data-v-41c93f82] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-41c93f82] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-41c93f82] {\n  background-color: #F2F2F2;\n}\nbutton[data-v-41c93f82] {\n  display: block;\n  width: 150px;\n  margin: 0 auto;\n  padding: 0.5rem 0;\n  color: white;\n  font-size: 18px;\n  text-decoration: none;\n  border-radius: 25px;\n  background-image: linear-gradient(#6795fd 0%, #67ceff 100%);\n  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.29);\n  border-bottom: solid 4px #5e7fca;\n  cursor: pointer;\n}\nbutton[data-v-41c93f82]:hover {\n  opacity: 0.7;\n}\nbutton[data-v-41c93f82]:active {\n  transform: translateY(4px);\n  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);\n  border-bottom: none;\n}", ""]);
+exports.push([module.i, "html[data-v-41c93f82], body[data-v-41c93f82], div[data-v-41c93f82], span[data-v-41c93f82], applet[data-v-41c93f82], object[data-v-41c93f82], iframe[data-v-41c93f82],\nh1[data-v-41c93f82], h2[data-v-41c93f82], h3[data-v-41c93f82], h4[data-v-41c93f82], h5[data-v-41c93f82], h6[data-v-41c93f82], p[data-v-41c93f82],\nblockquote[data-v-41c93f82], pre[data-v-41c93f82],\na[data-v-41c93f82], abbr[data-v-41c93f82], acronym[data-v-41c93f82], address[data-v-41c93f82], big[data-v-41c93f82], cite[data-v-41c93f82], code[data-v-41c93f82],\ndel[data-v-41c93f82], dfn[data-v-41c93f82], em[data-v-41c93f82], img[data-v-41c93f82], ins[data-v-41c93f82], kbd[data-v-41c93f82], q[data-v-41c93f82], s[data-v-41c93f82], samp[data-v-41c93f82],\nsmall[data-v-41c93f82], strike[data-v-41c93f82], strong[data-v-41c93f82], sub[data-v-41c93f82], sup[data-v-41c93f82], tt[data-v-41c93f82], var[data-v-41c93f82],\nb[data-v-41c93f82], u[data-v-41c93f82], i[data-v-41c93f82], center[data-v-41c93f82],\ndl[data-v-41c93f82], dt[data-v-41c93f82], dd[data-v-41c93f82], ol[data-v-41c93f82], ul[data-v-41c93f82], li[data-v-41c93f82],\nfieldset[data-v-41c93f82], form[data-v-41c93f82], label[data-v-41c93f82], legend[data-v-41c93f82],\ntable[data-v-41c93f82], caption[data-v-41c93f82], tbody[data-v-41c93f82], tfoot[data-v-41c93f82], thead[data-v-41c93f82], tr[data-v-41c93f82], th[data-v-41c93f82], td[data-v-41c93f82],\narticle[data-v-41c93f82], aside[data-v-41c93f82], canvas[data-v-41c93f82], details[data-v-41c93f82], embed[data-v-41c93f82],\nfigure[data-v-41c93f82], figcaption[data-v-41c93f82], footer[data-v-41c93f82], header[data-v-41c93f82], hgroup[data-v-41c93f82],\nmenu[data-v-41c93f82], nav[data-v-41c93f82], output[data-v-41c93f82], ruby[data-v-41c93f82], section[data-v-41c93f82], summary[data-v-41c93f82],\ntime[data-v-41c93f82], mark[data-v-41c93f82], audio[data-v-41c93f82], video[data-v-41c93f82] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-41c93f82], aside[data-v-41c93f82], details[data-v-41c93f82], figcaption[data-v-41c93f82], figure[data-v-41c93f82],\nfooter[data-v-41c93f82], header[data-v-41c93f82], hgroup[data-v-41c93f82], menu[data-v-41c93f82], nav[data-v-41c93f82], section[data-v-41c93f82] {\n  display: block;\n}\nbody[data-v-41c93f82] {\n  line-height: 1;\n}\nol[data-v-41c93f82], ul[data-v-41c93f82] {\n  list-style: none;\n}\nblockquote[data-v-41c93f82], q[data-v-41c93f82] {\n  quotes: none;\n}\nblockquote[data-v-41c93f82]:before, blockquote[data-v-41c93f82]:after,\nq[data-v-41c93f82]:before, q[data-v-41c93f82]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-41c93f82] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-41c93f82] {\n  text-decoration: none;\n}\n.clearfix[data-v-41c93f82]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-41c93f82] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-41c93f82] {\n  height: 1%;\n}\n.clearfix[data-v-41c93f82] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-41c93f82] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-41c93f82] {\n  background-color: #F2F2F2;\n}\nbutton[data-v-41c93f82] {\n  display: block;\n  width: 150px;\n  margin: 0 auto;\n  padding: 0.5rem 0;\n  color: white;\n  font-size: 18px;\n  text-decoration: none;\n  border-radius: 25px;\n  background-image: linear-gradient(#6795fd 0%, #67ceff 100%);\n  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.29);\n  border-bottom: solid 4px #5e7fca;\n  cursor: pointer;\n  outline: none;\n}\nbutton[data-v-41c93f82]:hover {\n  opacity: 0.7;\n}\nbutton[data-v-41c93f82]:active {\n  transform: translateY(4px);\n  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);\n  border-bottom: none;\n}", ""]);
 
 // exports
 
@@ -40391,7 +40411,7 @@ var render = function() {
               _vm._v(" "),
               _vm._t("book-edit", null, { book: book }),
               _vm._v(" "),
-              _vm._t("user-show")
+              _vm._t("user-show", null, { book: book })
             ],
             2
           )
@@ -41591,21 +41611,35 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "BooksList",
-        {
-          attrs: {
-            page_title: _vm.login_user.name + "さんが読んだ本の一覧",
-            books: _vm.borrowed_books
-          }
+      _c("BooksList", {
+        attrs: {
+          page_title: _vm.login_user.name + "さんが現在借りている本",
+          books: _vm.borrowed_books
         },
-        [
-          _vm._t("user-show", [
-            _c("FormButton", { attrs: { button_name: "返却する" } })
-          ])
-        ],
-        2
-      )
+        scopedSlots: _vm._u([
+          {
+            key: "user-show",
+            fn: function(ref) {
+              var book = ref.book
+              return _c(
+                "div",
+                {},
+                [
+                  _c("FormButton", {
+                    attrs: { button_name: "返却する" },
+                    on: {
+                      signalEvent: function($event) {
+                        return _vm.returnBook(book)
+                      }
+                    }
+                  })
+                ],
+                1
+              )
+            }
+          }
+        ])
+      })
     ],
     1
   )
@@ -59539,6 +59573,7 @@ var actions = {
                 var message = "\u8CB8\u51FA\u3057\u767B\u9332\u304C\u5B8C\u4E86\u3057\u307E\u3057\u305F\uFF01\n\u8FD4\u5374\u65E5\u306F".concat(return_date, "\u3067\u3059\u3002");
                 alert(message);
                 location.href = dest;
+                return;
               });
 
             case 9:
@@ -59554,6 +59589,39 @@ var actions = {
     }
 
     return borrowBook;
+  }(),
+  // 返却処理
+  returnBook: function () {
+    var _returnBook = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(context, book) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.next = 2;
+              return axios.get("/api/books/return/" + book.id).then(function (response) {
+                confirm("返却しますか？");
+                location.reload();
+                return;
+              })["catch"](function (error) {
+                alert("エラーが発生しました。");
+                console.log(error.name + ": " + error.message);
+              });
+
+            case 2:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }));
+
+    function returnBook(_x8, _x9) {
+      return _returnBook.apply(this, arguments);
+    }
+
+    return returnBook;
   }()
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

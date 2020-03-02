@@ -3,11 +3,11 @@
         <div class="form">
             <FormButton @signalEvent="logout" button_name="ログアウトする"></FormButton>
         </div>
-        <BooksList :page_title="`${login_user.name}さんが読んだ本の一覧`" :books=borrowed_books>
-            <!-- slot要素でnameを指定 -->
-            <slot name="user-show">
-                <FormButton button_name="返却する"></FormButton>
-            </slot>
+        <BooksList :page_title="`${login_user.name}さんが現在借りている本`" :books=borrowed_books>
+            <!-- 子で指定したnameのslotにマウント -->
+            <div slot="user-show" slot-scope="{ book }">
+                <FormButton @signalEvent="returnBook(book)" button_name="返却する"></FormButton>
+            </div>
         </BooksList>
     </div>
 </template>
@@ -42,6 +42,9 @@ export default {
     },
 
     methods: {
+
+        ...mapActions("Book", ["returnBook"]),
+
         logout() {
             console.log(this.login_user)
             this.$store.dispatch("User/logout")
@@ -49,30 +52,14 @@ export default {
         },
 
         // 借りている本を取得
-        getBorrowedBooks() {
+        async getBorrowedBooks() {
 
-            axios.get("/api/books/borrowed")
+            await axios.get("/api/books/borrowed/" + this.login_user.id)
             .then((response) => {
                 this.borrowed_books = response.data
             })
             .catch((error) => {
-                console.log(error.name + ": " + error.message)
-            })
-        },
-
-        // 本の返却
-        returnBook(e) {
-
-            // クリックした要素のidを取得
-            var book_id = e.target.id
-
-            axios.get("/api/books/return/" + book_id)
-            .then((response) => {
-
-                alert("返却しました")
-                location.reload()
-            })
-            .catch((error) => {
+                alert("エラーが発生しました。")
                 console.log(error.name + ": " + error.message)
             })
         }

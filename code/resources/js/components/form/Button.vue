@@ -35,6 +35,7 @@ button {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.29);
     border-bottom: solid 4px #5e7fca;
     cursor: pointer;
+    outline: none;
 }
 button:hover {
     opacity: 0.7;

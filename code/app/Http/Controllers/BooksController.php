@@ -30,13 +30,16 @@ class BooksController extends Controller
 
 
     /* 借りている本を返す */
-    public function getBooksBorrowed()
+    public function getBorrowedBooks(Request $request)
     {
-        if(Auth::check()){
-            $user = Auth::User();
-            $books = Book::where("user_id", $user->id)->get();
-            return $books;
-        }
+        // if(Auth::check()){
+        //     $user = Auth::User();
+        //     $books = Book::where("user_id", $user->id)->get();
+        //     return $books;
+        // }
+
+        $borrowed_books = Book::where("user_id", $request->user_id)->get();
+        return $borrowed_books;
     }
 
 

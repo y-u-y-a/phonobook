@@ -95,6 +95,23 @@ const actions = {
             alert(message)
 
             location.href = dest
+            return
+        })
+    },
+
+    // 返却処理
+    async returnBook(context, book) {
+
+        await axios.get("/api/books/return/" + book.id)
+        .then((response) => {
+
+            confirm("返却しますか？")
+            location.reload()
+            return
+        })
+        .catch((error) => {
+            alert("エラーが発生しました。")
+            console.log(error.name + ": " + error.message)
         })
     }
 }
