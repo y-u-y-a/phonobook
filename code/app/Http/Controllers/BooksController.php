@@ -53,34 +53,21 @@ class BooksController extends Controller
     }
 
 
-    /* 貸出処理(ログインユーザー) */
-    public function lend(Request $request)
-    {
-        if(Auth::check()){
-            // ログインユーザーの取得
-            $user = Auth::user();
-            $book = Book::find($request->id);
-            $book->state = 1;
-            $book->user_id = $user->id;
-            $book->save();
-            return "貸出し登録が完了しました！";
-        }else{
-            return null;
-        }
-    }
-
-
-    /* 貸出処理(顔認証) */
+    /* 貸出処理 */
     public function borrow(Request $request)
     {
         // ISBNで本を検索
         $book = Book::where("isbn", $request->book_isbn)->first();
+
+        if(!$book){
+            return "ng";
+        }
         $book = Book::find($book->id);
         $user = User::find($request->user_id);
         $book->state = 1;
         $book->user_id = $user->id;
         $book->save();
-        return "貸出し登録が完了しました！";
+        return "ok";
     }
 
 

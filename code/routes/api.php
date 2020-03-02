@@ -6,11 +6,8 @@ use Illuminate\Http\Request;
 Route::get("/books/all", "BooksController@index")->name("get.all_books");
 Route::get("/books/borrowed", "BooksController@getBooksBorrowed")->name("get.borrowed_books");
 Route::get("/books/{id}", "BooksController@show")->name("get.book");
-Route::get("/books/return/{id}", "BooksController@return")->name("return.book");
-// 貸出処理(ログインユーザー)
-Route::get("/books/lend/{id}", "BooksController@lend")->name("lend.book");
-// 貸出処理(顔認証)
 Route::get("/books/{book_isbn}/borrow/{user_id}", "BooksController@borrow")->name("borrow.book");
+Route::get("/books/return/{id}", "BooksController@return")->name("return.book");
 Route::post("/books", "BooksController@store")->name("store.book");
 Route::patch("/books", "BooksController@update")->name("update.book");
 Route::delete("/books", "BooksController@destroy")->name("destroy.book");

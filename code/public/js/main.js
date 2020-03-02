@@ -1851,20 +1851,25 @@ __webpack_require__.r(__webpack_exports__);
     authFace: function authFace() {
       var _this2 = this;
 
+      if (!this.face_image) {
+        return alert("撮影をしてください。");
+      }
+
       var params = {
         face_image: this.face_image // 本人データの取得
 
       };
       axios.post("/api/users/authFace", params).then(function (response) {
-        _this2.user = response.data; // 親のイベント発火(login/arrival/borrow)
+        _this2.user = response.data;
 
-        if (_this2.user) {
-          _this2.$emit("signalEvent", _this2.user);
-        } else {
-          alert("社員データが存在しません");
-        }
+        if (!_this2.user) {
+          return alert("認証できませんでした。");
+        } // 親のイベント発火(login/arrival/borrow)
+
+
+        _this2.$emit("signalEvent", _this2.user);
       })["catch"](function (error) {
-        alert("顔の撮影が必要です");
+        alert("エラーが発生しました。");
         console.log(error.name + ": " + error.message);
       });
     }
@@ -2111,6 +2116,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Camera_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Camera.vue */ "./resources/js/components/Camera.vue");
 /* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2154,57 +2165,43 @@ __webpack_require__.r(__webpack_exports__);
       auth_user: null
     };
   },
-  methods: {
-    // ISBNから本データを取得する
-    searchBookWithISBN: function searchBookWithISBN() {
-      // openBDに送信するデータを定義
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])("Book", ["borrowBook"]), {
+    // ISBNでopenBDから本データを取得
+    getBookWithOpenBD: function getBookWithOpenBD() {
+      var _this = this;
+
       var isbn = this.isbn;
       var url = "https://api.openbd.jp/v1/get?isbn=" + isbn;
-      var vm = this;
 
       if (isbn == "") {
-        alert("ISBNを入力してください");
-      } else if (isbn.length != 13) {
-        alert("ISBNは13桁で入力してください");
-      } else {
-        // アクセス開始
-        $.getJSON(url, function (data) {
-          // dataは,APIからの返り値
-          if (data[0] != null) {
-            // data配列に取得
-            vm.book = data[0].summary; // 画像の表示のみ(image)
-
-            if (vm.book.cover != "") {
-              vm.image = vm.book.cover;
-            }
-          } else {
-            alert("データが見つかりません");
-          }
-        });
+        alert("ISBNを入力してください。");
+        return;
       }
+
+      if (isbn.length != 13) {
+        alert("ISBNは13桁で入力してください。");
+        return;
+      } // アクセス開始
+
+
+      $.getJSON(url, function (reply_data) {
+        // reply_dataは,APIからの返り値
+        if (reply_data[0] != null) {
+          _this.book = reply_data[0].summary; // 表示用の変数imageに代入
+
+          if (_this.book.cover != "") {
+            _this.image = _this.book.cover;
+          }
+        } else {
+          alert("データが見つかりません。");
+        }
+      });
     },
-    changeState: function changeState(user) {
-      console.log(user);
+    getAuthUser: function getAuthUser(user) {
       this.auth_user = user;
-    },
-    // 貸出処理(顔認証)
-    borrowBook: function borrowBook() {//     var path = "/api/books/" + this.isbn + "/borrow/" + this.auth_user.id
-      //     axios.get(path)
-      //     .then((response) => {
-      //         // 返却日の取得
-      //         var today = new Date()
-      //         today.setDate(today.getDate() + 14)
-      //         var returnDate = today.toLocaleDateString()
-      //         // アラートで表示
-      //         alert(`${response.data}\n返却日は${returnDate}です。`)
-      //         location.href = "/"
-      //     })
-      //     .catch((error) => {
-      //         alert("本データを取得してください")
-      //         console.log(error.name + ": " + error.message)
-      //     })
+      console.log(this.auth_user);
     }
-  }
+  })
 });
 
 /***/ }),
@@ -2489,7 +2486,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2525,23 +2521,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
     return created;
   }(),
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("Book", ["book"])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])("Book", ["getAllBooks", "getBookById"]), {
-    // 本を貸出す処理
-    lendBook: function lendBook() {
-      axios.get("/api/books/lend/" + this.book.id).then(function (response) {
-        if (response.data != "") {
-          alert("".concat(response.data, "\n\u8FD4\u5374\u65E5\u306F\u301C\u3067\u3059\u3002"));
-          location.href = "/list";
-        } else {
-          alert("ログインしてください");
-          location.href = "/login";
-        }
-      })["catch"](function (error) {
-        console.log(error.name + ": " + error.message);
-      });
-    }
-  })
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("User", ["login_user"]), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])("Book", ["book"])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])("Book", ["getAllBooks", "getBookById", "borrowBook"]))
 });
 
 /***/ }),
@@ -40794,11 +40775,11 @@ var render = function() {
       "div",
       { staticClass: "half-box" },
       [
-        _c("Camera", { on: { signalEvent: _vm.changeState } }),
+        _c("Camera", { on: { signalEvent: _vm.getAuthUser } }),
         _vm._v(" "),
         _c("FormButton", {
           attrs: { button_name: "本を取得する" },
-          on: { signalEvent: _vm.searchBookWithISBN }
+          on: { signalEvent: _vm.getBookWithOpenBD }
         }),
         _vm._v(" "),
         _c("div", { staticClass: "inputISBN" }, [
@@ -40850,12 +40831,10 @@ var render = function() {
                   staticClass: "disable",
                   attrs: { src: _vm.image, alt: "No Image" }
                 })
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.book.title
+              : _vm.book.title
               ? _c("img", {
                   staticClass: "able",
-                  attrs: { src: _vm.image, alt: "No Image" }
+                  attrs: { src: _vm.image, alt: _vm.book.title }
                 })
               : _vm._e()
           ]),
@@ -40863,7 +40842,15 @@ var render = function() {
           _c("FormButton", {
             staticClass: "button",
             attrs: { button_name: "この本を借りる" },
-            on: { signalEvent: _vm.borrowBook }
+            on: {
+              signalEvent: function($event) {
+                return _vm.borrowBook({
+                  isbn: _vm.book.isbn,
+                  auth_user: _vm.auth_user,
+                  dest: "/book/Borrow"
+                })
+              }
+            }
           })
         ],
         1
@@ -41299,7 +41286,15 @@ var render = function() {
             ? _c("FormButton", {
                 staticClass: "button",
                 attrs: { button_name: "この本を借りる" },
-                on: { signalEvent: _vm.lendBook }
+                on: {
+                  signalEvent: function($event) {
+                    return _vm.borrowBook({
+                      isbn: _vm.book.isbn,
+                      auth_user: _vm.login_user,
+                      dest: "/book/Index"
+                    })
+                  }
+                }
               })
             : _vm._e()
         ],
@@ -59413,8 +59408,6 @@ var actions = {
               return axios.get("/api/books/all") // 戻り値をJSONで取得
               .then(function (response) {
                 context.commit("setAllBooks", response.data);
-              })["catch"](function (error) {
-                console.log(error.name + ": " + error.message);
               });
 
             case 2:
@@ -59501,6 +59494,66 @@ var actions = {
     }
 
     return destroyBook;
+  }(),
+  // 貸出処理(isbn, auth_user)
+  borrowBook: function () {
+    var _borrowBook = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(_ref, _ref2) {
+      var context, isbn, auth_user, dest, path;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              context = _ref.context;
+              isbn = _ref2.isbn, auth_user = _ref2.auth_user, dest = _ref2.dest;
+
+              if (isbn) {
+                _context4.next = 4;
+                break;
+              }
+
+              return _context4.abrupt("return", alert("本データを取得してください。"));
+
+            case 4:
+              if (auth_user) {
+                _context4.next = 6;
+                break;
+              }
+
+              return _context4.abrupt("return", alert("ログインもしくは顔認証してください。"));
+
+            case 6:
+              path = "/api/books/" + isbn + "/borrow/" + auth_user.id;
+              _context4.next = 9;
+              return axios.get(path).then(function (response) {
+                if (response.data == "ng") {
+                  return alert("本が登録されていません。");
+                } // TODO: adminのみ本を登録しますか？から登録画面へ
+                // 返却日を表示
+
+
+                var today = new Date();
+                today.setDate(today.getDate() + 14);
+                var return_date = today.toLocaleDateString();
+                var message = "\u8CB8\u51FA\u3057\u767B\u9332\u304C\u5B8C\u4E86\u3057\u307E\u3057\u305F\uFF01\n\u8FD4\u5374\u65E5\u306F".concat(return_date, "\u3067\u3059\u3002");
+                alert(message);
+                location.href = dest;
+              });
+
+            case 9:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }));
+
+    function borrowBook(_x6, _x7) {
+      return _borrowBook.apply(this, arguments);
+    }
+
+    return borrowBook;
   }()
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

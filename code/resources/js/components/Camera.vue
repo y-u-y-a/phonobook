@@ -87,6 +87,11 @@ export default {
 
         // VRと通信で本人データの取得・stateの変更
         authFace() {
+
+            if(!this.face_image){
+                return alert("撮影をしてください。")
+            }
+
             var params = {
                 face_image: this.face_image
             }
@@ -97,16 +102,15 @@ export default {
 
                 this.user = response.data
 
+                if(!this.user){
+                    return alert("認証できませんでした。")
+                }
+
                 // 親のイベント発火(login/arrival/borrow)
-                if(this.user){
-                    this.$emit("signalEvent", this.user)
-                }
-                else{
-                    alert("社員データが存在しません")
-                }
+                this.$emit("signalEvent", this.user)
             })
             .catch((error) => {
-                alert("顔の撮影が必要です")
+                alert("エラーが発生しました。")
                 console.log(error.name + ": " + error.message)
             })
         }

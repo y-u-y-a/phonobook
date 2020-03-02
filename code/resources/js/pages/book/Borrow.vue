@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="half-box">
-            <Camera @signalEvent="changeState"></Camera>
+            <Camera @signalEvent="getAuthUser"></Camera>
             <!-- 仮置き -->
-            <FormButton @signalEvent="searchBookWithISBN" button_name="本を取得する"></FormButton>
+            <FormButton @signalEvent="getBookWithOpenBD" button_name="本を取得する"></FormButton>
             <div class="inputISBN">
                 <input v-model="isbn" type="text" />
             </div>
@@ -17,9 +17,9 @@
                 </div>
                 <div class="book-image">
                     <img v-if="!book.title" class="disable" :src="image" alt="No Image" />
-                    <img v-if="book.title" class="able" :src="image" alt="No Image" />
+                    <img v-else-if="book.title" class="able" :src="image" :alt="book.title" />
                 </div>
-                <FormButton @signalEvent="borrowBook" button_name="この本を借りる" class="button"></FormButton>
+                <FormButton @signalEvent="borrowBook({isbn: book.isbn, auth_user: auth_user, dest: '/book/Borrow'})" button_name="この本を借りる" class="button"></FormButton>
             </div>
         </div>
     </div>
@@ -27,12 +27,13 @@
 
 <script>
 
-import Camera    from "../../components/Camera.vue"
+import Camera from "../../components/Camera.vue"
 import FormButton from "../../components/form/Button.vue"
 
 import { mapState, mapGetters, mapActions } from "vuex"
 
 export default {
+
     components: {
         Camera,
         FormButton
@@ -49,58 +50,43 @@ export default {
 
     methods: {
 
-        // ISBNから本データを取得する
-        searchBookWithISBN() {
-            // openBDに送信するデータを定義
+        ...mapActions("Book", ["borrowBook"]),
+
+        // ISBNでopenBDから本データを取得
+        getBookWithOpenBD() {
+
             const isbn = this.isbn
             const url = "https://api.openbd.jp/v1/get?isbn=" + isbn
 
-            var vm = this
-
             if (isbn == "") {
-                alert("ISBNを入力してください")
-            } else if (isbn.length != 13) {
-                alert("ISBNは13桁で入力してください")
-            } else {
-                // アクセス開始
-                $.getJSON(url, function(data) {
-                    // dataは,APIからの返り値
-                    if (data[0] != null) {
-                        // data配列に取得
-                        vm.book = data[0].summary
-                        // 画像の表示のみ(image)
-                        if (vm.book.cover != "") {
-                            vm.image = vm.book.cover
-                        }
-                    } else {
-                        alert("データが見つかりません")
-                    }
-                })
+                alert("ISBNを入力してください。")
+                return
             }
+            if (isbn.length != 13) {
+                alert("ISBNは13桁で入力してください。")
+                return
+            }
+            // アクセス開始
+            $.getJSON(url, (reply_data) => {
+                // reply_dataは,APIからの返り値
+                if (reply_data[0] != null) {
+
+                    this.book = reply_data[0].summary
+
+                    // 表示用の変数imageに代入
+                    if (this.book.cover != "") {
+                        this.image = this.book.cover
+                    }
+                }
+                else{
+                    alert("データが見つかりません。")
+                }
+            })
         },
 
-        changeState(user){
-            console.log(user)
+        getAuthUser(user){
             this.auth_user = user
-        },
-
-        // 貸出処理(顔認証)
-        borrowBook() {
-        //     var path = "/api/books/" + this.isbn + "/borrow/" + this.auth_user.id
-        //     axios.get(path)
-        //     .then((response) => {
-        //         // 返却日の取得
-        //         var today = new Date()
-        //         today.setDate(today.getDate() + 14)
-        //         var returnDate = today.toLocaleDateString()
-        //         // アラートで表示
-        //         alert(`${response.data}\n返却日は${returnDate}です。`)
-        //         location.href = "/"
-        //     })
-        //     .catch((error) => {
-        //         alert("本データを取得してください")
-        //         console.log(error.name + ": " + error.message)
-        //     })
+            console.log(this.auth_user)
         }
     }
 }
