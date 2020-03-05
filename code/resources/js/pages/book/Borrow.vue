@@ -47,7 +47,6 @@ export default {
 
     data() {
         return {
-
             book: {
                 isbn: "",
                 title: "",

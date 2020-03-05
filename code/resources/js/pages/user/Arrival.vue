@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="half-box">
-            <Camera @signalEvent="changeState"></Camera>
+            <Camera @signalEvent="changeState" />
         </div>
 
         <div class="half-box">
@@ -16,7 +16,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(user, index) in all_users" :key="index" :id="user.id">
+                        <tr v-for="(user, index) in all_users"
+                            :key="index"
+                            :id="user.id"
+                        >
                             <td>{{ user.id }}</td>
                             <td>{{ user.name }}</td>
                             <td>{{ user.updated_at }}</td>

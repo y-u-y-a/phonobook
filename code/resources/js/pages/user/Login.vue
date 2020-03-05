@@ -1,20 +1,19 @@
 <template>
-    <div>
-        <div class="half-box">
-            <Camera></Camera>
-        </div>
-
-        <div class="half-box">
-            <div id="login">
-                <div class="form">
-                    <div class="title">ログインする</div>
-                    <div class="form-container">
-                        <FormInput v-model="email" label="メールアドレス" placeholder="8文字以上の半角英数字" ></FormInput>
-                        <FormInput v-model="password" label="パスワード" placeholder="8文字以上の半角英数字" ></FormInput>
-                    </div>
-                    <FormButton @signalEvent="login" button_name="ログインする"></FormButton>
-                </div>
+    <div id="login">
+        <div class="form">
+            <div class="title">ログインする</div>
+            <div class="form-container">
+                <FormInput v-model="user_name" label="メールアドレス" placeholder="" />
+                <FormSelect :options="[
+                    {name: '@gmail.com', value: '@gmail.com'},
+                    {name: '@yahoo.co.jp', value: '@yahoo.co.jp'}
+                ]" default_value="@yahoo.co.jp" v-model="domain" />
+                <FormInput v-model="password" label="パスワード" placeholder="" />
             </div>
+            <FormButton @signalEvent="login({
+                email: user_name + domain,
+                password: password
+            })" button_name="ログインする" />
         </div>
     </div>
 </template>
@@ -22,42 +21,30 @@
 
 <script>
 
-import Camera    from "../../components/Camera.vue"
 import FormInput from "../../components/form/Input.vue"
+import FormSelect from "../../components/form/Select.vue"
 import FormButton from "../../components/form/Button.vue"
+
+import { mapState, mapGetters, mapActions } from "vuex"
 
 export default {
 
     components: {
-        Camera,
         FormInput,
+        FormSelect,
         FormButton
     },
 
     data() {
         return {
-            email: "yuya@gmail.com",
-            password: "yuyayuya"
-        };
+            user_name: "tanaka",
+            domain: "@gmail.com",
+            password: "tanakatanaka"
+        }
     },
 
     methods: {
-
-        async login() {
-            var params = {
-                email: this.email,
-                password: this.password
-            }
-            await this.$store.dispatch("User/login", params)
-            .then((response) => {
-                alert("ログインしました")
-                location.href = "/"
-            })
-            .catch((error) => {
-                console.log(error.name + ": " + error.message)
-                alert("ログインに失敗しました")
-            })
-        }
+        ...mapActions("User", ["login"])
     }
 }
 </script>
@@ -66,27 +53,29 @@ export default {
 <style lang="scss" scoped>
 
 @import "../../../sass/app.scss";
-
-#login{
-    width: 90%;
-    margin: 0 auto;
-}
-.form{
-    margin: 2rem 0;
-    padding-bottom: 2rem;
-    background: $white;
-    .title{
-        padding: 2rem 0;
-        font-size: 20px;
-        font-weight: bold;
-        letter-spacing: 2px;
-        border-bottom: 1px solid $silver;
-        text-align: center;
-    }
-    .form-container{
-        width: 90%;
+// PC
+@media screen and (min-width: 640px) {
+    #login{
+        width: 50%;
         margin: 0 auto;
-        padding-top: 2rem;
+    }
+    .form{
+        margin: 2rem 0;
+        padding-bottom: 2rem;
+        background: $white;
+        .title{
+            padding: 2rem 0;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border-bottom: 1px solid $silver;
+            text-align: center;
+        }
+        .form-container{
+            width: 90%;
+            margin: 0 auto;
+            padding-top: 2rem;
+        }
     }
 }
 </style>
