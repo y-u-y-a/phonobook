@@ -1,11 +1,12 @@
 <template>
-    <div id="book-new">
+    <div class="flex">
         <div class="half-box">
+            <Camera />
             <LiveCamera @signalEvent="getBookWithOpenBD" />
         </div>
 
-        <div class="half-box wrapper">
-            <div class="container clearfix">
+        <div class="half-box">
+            <div class="flex container">
                 <div class="half-box">
                     <ul>
                         <li><FormInput v-model="book.title" label="タイトル" placeholder="8文字以上" /></li>
@@ -19,16 +20,19 @@
                 </div>
                 <div class="half-box">
                     <img :src="book.cover" :alt="book.title">
+                    <div class="button-wrapper">
+                        <FormButton @signalEvent="registerBook(book)" button_name="登録する" class="button" />
+                    </div>
                 </div>
             </div>
-            <FormButton @signalEvent="registerBook(book)" button_name="登録する" class="button" />
         </div>
     </div>
 </template>
 
 <script>
 
-import LiveCamera from "../../components/LiveCamera.vue"
+import Camera from "../../components/Camera.vue"
+import LiveCamera from "../../components/barcode/LiveCamera.vue"
 import FormInput from "../../components/form/Input.vue"
 import FormTextarea from "../../components/form/Textarea.vue"
 import FormButton from "../../components/form/Button.vue"
@@ -37,6 +41,7 @@ import { mapActions } from 'vuex'
 export default {
 
     components: {
+        Camera,
         LiveCamera,
         FormInput,
         FormTextarea,
@@ -118,19 +123,20 @@ export default {
 
 @import "../../../sass/app.scss";
 
-.wrapper{
-    margin-top: 4rem;
+.camera{
+    button{
+        display: none;
+    }
 }
+
 .container{
     width: 90%;
-    margin: 0 auto;
+    margin: 2rem auto 0;
     padding: 2rem 0 4rem;
     background-color: $white;
-    clear: both;
-}
-ul{
-    width: 90%;
-    margin: 0 auto;
+    .half-box{
+        margin: 0 1rem;
+    }
 }
 img {
     display: block;
@@ -139,7 +145,8 @@ img {
     margin: 0 auto;
     // border: 2px solid $green;
 }
-.button{
-    margin-top: 1rem;
+.button-wrapper{
+    display: block;
+    margin-top: 4rem;
 }
 </style>

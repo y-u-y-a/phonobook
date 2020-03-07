@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="flex">
         <div class="half-box">
             <!-- 顔 -->
-            <Camera @signalEvent="getAuthUser" />
+            <FaceCamera @signalEvent="getAuthUser" />
             <!-- バーコード -->
             <LiveCamera @signalEvent="getBookWithOpenBD" />
         </div>
@@ -31,8 +31,8 @@
 
 <script>
 
-import Camera from "../../components/Camera.vue"
-import LiveCamera from "../../components/LiveCamera.vue"
+import FaceCamera from "../../components/FaceCamera.vue"
+import LiveCamera from "../../components/barcode/LiveCamera.vue"
 import FormButton from "../../components/form/Button.vue"
 
 import { mapState, mapGetters, mapActions } from "vuex"
@@ -40,7 +40,7 @@ import { mapState, mapGetters, mapActions } from "vuex"
 export default {
 
     components: {
-        Camera,
+        FaceCamera,
         LiveCamera,
         FormButton
     },

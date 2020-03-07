@@ -1776,6 +1776,107 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      video: {},
+      canvas: {},
+      face_image: null,
+      user: null
+    };
+  },
+  mounted: function mounted() {
+    this.setCamera();
+  },
+  methods: {
+    setCamera: function setCamera() {
+      var _this = this;
+
+      //HTML要素から取得→dataに代入
+      this.video = this.$refs.video;
+      this.canvas = this.$refs.canvas;
+      var camera_config = {
+        audio: false,
+        video: {
+          // width: 500,
+          // height: 250,
+          facingMode: "user" // フロントカメラ
+          // facingMode: { exact: "environment" } // リアカメラ
+
+        } // カメラの起動
+
+      };
+      navigator.mediaDevices.getUserMedia(camera_config).then(function (stream) {
+        _this.video.srcObject = stream;
+
+        _this.video.onloadedmetadata = function (e) {
+          _this.video.play();
+        };
+      })["catch"](function (error) {
+        console.log(error.name + ": " + error.message);
+      });
+    },
+    // face_image取得・canvas描画
+    takeFace: function takeFace() {
+      // 動画から2Dを取得(drawImage()を使えるようにする)
+      var ctx = this.canvas.getContext("2d");
+      ctx.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
+      var type = "image/jpeg"; // base64として取得
+
+      var base64 = this.canvas.toDataURL(type); // // base64の接頭部分を削除して設置
+
+      this.face_image = base64.replace(/^.*,/, "");
+    },
+    // VRと通信で本人データの取得・stateの変更
+    authFace: function authFace() {
+      var _this2 = this;
+
+      if (!this.face_image) {
+        return alert("撮影をしてください。");
+      }
+
+      var params = {
+        face_image: this.face_image // 本人データの取得
+
+      };
+      axios.post("/api/users/authFace", params).then(function (response) {
+        _this2.user = response.data;
+
+        if (!_this2.user) {
+          return alert("認証できませんでした。");
+        } // 親のイベント発火(login/arrival/borrow)
+
+
+        _this2.$emit("signalEvent", _this2.user);
+      })["catch"](function (error) {
+        alert("エラーが発生しました。");
+        console.log(error.name + ": " + error.message);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FaceCamera.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FaceCamera.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
 //
 //
@@ -1916,10 +2017,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LiveCamera.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LiveCamera.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/barcode/LiveCamera.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/barcode/LiveCamera.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1945,7 +2046,7 @@ __webpack_require__.r(__webpack_exports__);
         inputStream: {
           name: "Live",
           type: "LiveStream",
-          // カメラ映像を表示する要素を指定
+          // videoとcanvasを表示する要素を指定
           target: document.querySelector("#live-camera"),
           // フロントはuser
           constraints: {
@@ -1961,9 +2062,9 @@ __webpack_require__.r(__webpack_exports__);
 
       };
       quagga__WEBPACK_IMPORTED_MODULE_0___default.a.onDetected(function (success) {
-        var isbn = success.codeResult.code;
+        var isbn_code = success.codeResult.code;
 
-        _this.$emit("signalEvent", isbn);
+        _this.$emit("signalEvent", isbn_code);
 
         return;
       }); // 初期設定 -> 起動 ========================
@@ -2216,8 +2317,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Camera_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Camera.vue */ "./resources/js/components/Camera.vue");
-/* harmony import */ var _components_LiveCamera_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/LiveCamera.vue */ "./resources/js/components/LiveCamera.vue");
+/* harmony import */ var _components_FaceCamera_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/FaceCamera.vue */ "./resources/js/components/FaceCamera.vue");
+/* harmony import */ var _components_barcode_LiveCamera_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/barcode/LiveCamera.vue */ "./resources/js/components/barcode/LiveCamera.vue");
 /* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -2263,8 +2364,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    Camera: _components_Camera_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    LiveCamera: _components_LiveCamera_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    FaceCamera: _components_FaceCamera_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    LiveCamera: _components_barcode_LiveCamera_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
@@ -2430,11 +2531,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_LiveCamera_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/LiveCamera.vue */ "./resources/js/components/LiveCamera.vue");
-/* harmony import */ var _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/form/Input.vue */ "./resources/js/components/form/Input.vue");
-/* harmony import */ var _components_form_Textarea_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/form/Textarea.vue */ "./resources/js/components/form/Textarea.vue");
-/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_Camera_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Camera.vue */ "./resources/js/components/Camera.vue");
+/* harmony import */ var _components_barcode_LiveCamera_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/barcode/LiveCamera.vue */ "./resources/js/components/barcode/LiveCamera.vue");
+/* harmony import */ var _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/form/Input.vue */ "./resources/js/components/form/Input.vue");
+/* harmony import */ var _components_form_Textarea_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/form/Textarea.vue */ "./resources/js/components/form/Textarea.vue");
+/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -2469,6 +2571,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -2476,10 +2582,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    LiveCamera: _components_LiveCamera_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    FormInput: _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    FormTextarea: _components_form_Textarea_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    Camera: _components_Camera_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    LiveCamera: _components_barcode_LiveCamera_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    FormInput: _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    FormTextarea: _components_form_Textarea_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   data: function data() {
     return {
@@ -2497,7 +2604,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   // TODO: openBDでの処理をバックエンドへ移行
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapActions"])("Book", ["registerBook"]), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapActions"])("Book", ["registerBook"]), {
     // isbnは, LiveCameraコンポーネントから取得
     getBookWithOpenBD: function getBookWithOpenBD(isbn) {
       var _this = this;
@@ -2652,7 +2759,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_Camera_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Camera.vue */ "./resources/js/components/Camera.vue");
+/* harmony import */ var _components_FaceCamera_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/FaceCamera.vue */ "./resources/js/components/FaceCamera.vue");
 /* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/form/Button.vue */ "./resources/js/components/form/Button.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
@@ -2700,13 +2807,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    Camera: _components_Camera_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    FaceCamera: _components_FaceCamera_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   created: function created() {
@@ -7439,7 +7545,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "@media screen and (min-width: 640px) {\n.half-box {\n    width: 50%;\n    float: left;\n}\n}", ""]);
+exports.push([module.i, "@media screen and (min-width: 640px) {\n.flex {\n    display: flex;\n}\n.half-box {\n    display: inline-block;\n    width: 50%;\n}\n}", ""]);
 
 // exports
 
@@ -7477,7 +7583,26 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
 
 // module
-exports.push([module.i, "html[data-v-029156d0], body[data-v-029156d0], div[data-v-029156d0], span[data-v-029156d0], applet[data-v-029156d0], object[data-v-029156d0], iframe[data-v-029156d0],\nh1[data-v-029156d0], h2[data-v-029156d0], h3[data-v-029156d0], h4[data-v-029156d0], h5[data-v-029156d0], h6[data-v-029156d0], p[data-v-029156d0],\nblockquote[data-v-029156d0], pre[data-v-029156d0],\na[data-v-029156d0], abbr[data-v-029156d0], acronym[data-v-029156d0], address[data-v-029156d0], big[data-v-029156d0], cite[data-v-029156d0], code[data-v-029156d0],\ndel[data-v-029156d0], dfn[data-v-029156d0], em[data-v-029156d0], img[data-v-029156d0], ins[data-v-029156d0], kbd[data-v-029156d0], q[data-v-029156d0], s[data-v-029156d0], samp[data-v-029156d0],\nsmall[data-v-029156d0], strike[data-v-029156d0], strong[data-v-029156d0], sub[data-v-029156d0], sup[data-v-029156d0], tt[data-v-029156d0], var[data-v-029156d0],\nb[data-v-029156d0], u[data-v-029156d0], i[data-v-029156d0], center[data-v-029156d0],\ndl[data-v-029156d0], dt[data-v-029156d0], dd[data-v-029156d0], ol[data-v-029156d0], ul[data-v-029156d0], li[data-v-029156d0],\nfieldset[data-v-029156d0], form[data-v-029156d0], label[data-v-029156d0], legend[data-v-029156d0],\ntable[data-v-029156d0], caption[data-v-029156d0], tbody[data-v-029156d0], tfoot[data-v-029156d0], thead[data-v-029156d0], tr[data-v-029156d0], th[data-v-029156d0], td[data-v-029156d0],\narticle[data-v-029156d0], aside[data-v-029156d0], canvas[data-v-029156d0], details[data-v-029156d0], embed[data-v-029156d0],\nfigure[data-v-029156d0], figcaption[data-v-029156d0], footer[data-v-029156d0], header[data-v-029156d0], hgroup[data-v-029156d0],\nmenu[data-v-029156d0], nav[data-v-029156d0], output[data-v-029156d0], ruby[data-v-029156d0], section[data-v-029156d0], summary[data-v-029156d0],\ntime[data-v-029156d0], mark[data-v-029156d0], audio[data-v-029156d0], video[data-v-029156d0] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-029156d0], aside[data-v-029156d0], details[data-v-029156d0], figcaption[data-v-029156d0], figure[data-v-029156d0],\nfooter[data-v-029156d0], header[data-v-029156d0], hgroup[data-v-029156d0], menu[data-v-029156d0], nav[data-v-029156d0], section[data-v-029156d0] {\n  display: block;\n}\nbody[data-v-029156d0] {\n  line-height: 1;\n}\nol[data-v-029156d0], ul[data-v-029156d0] {\n  list-style: none;\n}\nblockquote[data-v-029156d0], q[data-v-029156d0] {\n  quotes: none;\n}\nblockquote[data-v-029156d0]:before, blockquote[data-v-029156d0]:after,\nq[data-v-029156d0]:before, q[data-v-029156d0]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-029156d0] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-029156d0] {\n  text-decoration: none;\n}\n.clearfix[data-v-029156d0]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-029156d0] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-029156d0] {\n  height: 1%;\n}\n.clearfix[data-v-029156d0] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-029156d0] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-029156d0] {\n  background-color: #F2F2F2;\n}\n#camera[data-v-029156d0] {\n  margin: 2rem 0 0;\n  text-align: center;\n}\n#camera video[data-v-029156d0] {\n  background-color: white;\n  border: 1px solid silver;\n}\n#camera canvas[data-v-029156d0] {\n  display: none;\n}\n#camera .button[data-v-029156d0] {\n  margin: 2rem;\n}", ""]);
+exports.push([module.i, "html[data-v-029156d0], body[data-v-029156d0], div[data-v-029156d0], span[data-v-029156d0], applet[data-v-029156d0], object[data-v-029156d0], iframe[data-v-029156d0],\nh1[data-v-029156d0], h2[data-v-029156d0], h3[data-v-029156d0], h4[data-v-029156d0], h5[data-v-029156d0], h6[data-v-029156d0], p[data-v-029156d0],\nblockquote[data-v-029156d0], pre[data-v-029156d0],\na[data-v-029156d0], abbr[data-v-029156d0], acronym[data-v-029156d0], address[data-v-029156d0], big[data-v-029156d0], cite[data-v-029156d0], code[data-v-029156d0],\ndel[data-v-029156d0], dfn[data-v-029156d0], em[data-v-029156d0], img[data-v-029156d0], ins[data-v-029156d0], kbd[data-v-029156d0], q[data-v-029156d0], s[data-v-029156d0], samp[data-v-029156d0],\nsmall[data-v-029156d0], strike[data-v-029156d0], strong[data-v-029156d0], sub[data-v-029156d0], sup[data-v-029156d0], tt[data-v-029156d0], var[data-v-029156d0],\nb[data-v-029156d0], u[data-v-029156d0], i[data-v-029156d0], center[data-v-029156d0],\ndl[data-v-029156d0], dt[data-v-029156d0], dd[data-v-029156d0], ol[data-v-029156d0], ul[data-v-029156d0], li[data-v-029156d0],\nfieldset[data-v-029156d0], form[data-v-029156d0], label[data-v-029156d0], legend[data-v-029156d0],\ntable[data-v-029156d0], caption[data-v-029156d0], tbody[data-v-029156d0], tfoot[data-v-029156d0], thead[data-v-029156d0], tr[data-v-029156d0], th[data-v-029156d0], td[data-v-029156d0],\narticle[data-v-029156d0], aside[data-v-029156d0], canvas[data-v-029156d0], details[data-v-029156d0], embed[data-v-029156d0],\nfigure[data-v-029156d0], figcaption[data-v-029156d0], footer[data-v-029156d0], header[data-v-029156d0], hgroup[data-v-029156d0],\nmenu[data-v-029156d0], nav[data-v-029156d0], output[data-v-029156d0], ruby[data-v-029156d0], section[data-v-029156d0], summary[data-v-029156d0],\ntime[data-v-029156d0], mark[data-v-029156d0], audio[data-v-029156d0], video[data-v-029156d0] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-029156d0], aside[data-v-029156d0], details[data-v-029156d0], figcaption[data-v-029156d0], figure[data-v-029156d0],\nfooter[data-v-029156d0], header[data-v-029156d0], hgroup[data-v-029156d0], menu[data-v-029156d0], nav[data-v-029156d0], section[data-v-029156d0] {\n  display: block;\n}\nbody[data-v-029156d0] {\n  line-height: 1;\n}\nol[data-v-029156d0], ul[data-v-029156d0] {\n  list-style: none;\n}\nblockquote[data-v-029156d0], q[data-v-029156d0] {\n  quotes: none;\n}\nblockquote[data-v-029156d0]:before, blockquote[data-v-029156d0]:after,\nq[data-v-029156d0]:before, q[data-v-029156d0]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-029156d0] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-029156d0] {\n  text-decoration: none;\n}\n.clearfix[data-v-029156d0]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-029156d0] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-029156d0] {\n  height: 1%;\n}\n.clearfix[data-v-029156d0] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-029156d0] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-029156d0] {\n  background-color: #F2F2F2;\n}\n.camera[data-v-029156d0] {\n  margin: 2rem 0 0;\n  text-align: center;\n}\n.camera video[data-v-029156d0] {\n  margin-bottom: 2rem;\n  background-color: white;\n}\n.camera canvas[data-v-029156d0] {\n  display: none;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FaceCamera.vue?vue&type=style&index=0&id=bf1310e6&lang=scss&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FaceCamera.vue?vue&type=style&index=0&id=bf1310e6&lang=scss&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
+
+// module
+exports.push([module.i, "html[data-v-bf1310e6], body[data-v-bf1310e6], div[data-v-bf1310e6], span[data-v-bf1310e6], applet[data-v-bf1310e6], object[data-v-bf1310e6], iframe[data-v-bf1310e6],\nh1[data-v-bf1310e6], h2[data-v-bf1310e6], h3[data-v-bf1310e6], h4[data-v-bf1310e6], h5[data-v-bf1310e6], h6[data-v-bf1310e6], p[data-v-bf1310e6],\nblockquote[data-v-bf1310e6], pre[data-v-bf1310e6],\na[data-v-bf1310e6], abbr[data-v-bf1310e6], acronym[data-v-bf1310e6], address[data-v-bf1310e6], big[data-v-bf1310e6], cite[data-v-bf1310e6], code[data-v-bf1310e6],\ndel[data-v-bf1310e6], dfn[data-v-bf1310e6], em[data-v-bf1310e6], img[data-v-bf1310e6], ins[data-v-bf1310e6], kbd[data-v-bf1310e6], q[data-v-bf1310e6], s[data-v-bf1310e6], samp[data-v-bf1310e6],\nsmall[data-v-bf1310e6], strike[data-v-bf1310e6], strong[data-v-bf1310e6], sub[data-v-bf1310e6], sup[data-v-bf1310e6], tt[data-v-bf1310e6], var[data-v-bf1310e6],\nb[data-v-bf1310e6], u[data-v-bf1310e6], i[data-v-bf1310e6], center[data-v-bf1310e6],\ndl[data-v-bf1310e6], dt[data-v-bf1310e6], dd[data-v-bf1310e6], ol[data-v-bf1310e6], ul[data-v-bf1310e6], li[data-v-bf1310e6],\nfieldset[data-v-bf1310e6], form[data-v-bf1310e6], label[data-v-bf1310e6], legend[data-v-bf1310e6],\ntable[data-v-bf1310e6], caption[data-v-bf1310e6], tbody[data-v-bf1310e6], tfoot[data-v-bf1310e6], thead[data-v-bf1310e6], tr[data-v-bf1310e6], th[data-v-bf1310e6], td[data-v-bf1310e6],\narticle[data-v-bf1310e6], aside[data-v-bf1310e6], canvas[data-v-bf1310e6], details[data-v-bf1310e6], embed[data-v-bf1310e6],\nfigure[data-v-bf1310e6], figcaption[data-v-bf1310e6], footer[data-v-bf1310e6], header[data-v-bf1310e6], hgroup[data-v-bf1310e6],\nmenu[data-v-bf1310e6], nav[data-v-bf1310e6], output[data-v-bf1310e6], ruby[data-v-bf1310e6], section[data-v-bf1310e6], summary[data-v-bf1310e6],\ntime[data-v-bf1310e6], mark[data-v-bf1310e6], audio[data-v-bf1310e6], video[data-v-bf1310e6] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-bf1310e6], aside[data-v-bf1310e6], details[data-v-bf1310e6], figcaption[data-v-bf1310e6], figure[data-v-bf1310e6],\nfooter[data-v-bf1310e6], header[data-v-bf1310e6], hgroup[data-v-bf1310e6], menu[data-v-bf1310e6], nav[data-v-bf1310e6], section[data-v-bf1310e6] {\n  display: block;\n}\nbody[data-v-bf1310e6] {\n  line-height: 1;\n}\nol[data-v-bf1310e6], ul[data-v-bf1310e6] {\n  list-style: none;\n}\nblockquote[data-v-bf1310e6], q[data-v-bf1310e6] {\n  quotes: none;\n}\nblockquote[data-v-bf1310e6]:before, blockquote[data-v-bf1310e6]:after,\nq[data-v-bf1310e6]:before, q[data-v-bf1310e6]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-bf1310e6] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-bf1310e6] {\n  text-decoration: none;\n}\n.clearfix[data-v-bf1310e6]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-bf1310e6] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-bf1310e6] {\n  height: 1%;\n}\n.clearfix[data-v-bf1310e6] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-bf1310e6] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-bf1310e6] {\n  background-color: #F2F2F2;\n}\n.camera[data-v-bf1310e6] {\n  margin: 2rem 0 0;\n  text-align: center;\n}\n.camera video[data-v-bf1310e6] {\n  margin-bottom: 2rem;\n  background-color: white;\n}\n.camera canvas[data-v-bf1310e6] {\n  display: none;\n}", ""]);
 
 // exports
 
@@ -7503,19 +7628,19 @@ exports.push([module.i, "html[data-v-1f42fb90], body[data-v-1f42fb90], div[data-
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LiveCamera.vue?vue&type=style&index=0&id=1c1ea948&lang=scss&scoped=true&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LiveCamera.vue?vue&type=style&index=0&id=1c1ea948&lang=scss&scoped=true& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/barcode/LiveCamera.vue?vue&type=style&index=0&id=8c14dc6a&lang=scss&scoped=true&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/barcode/LiveCamera.vue?vue&type=style&index=0&id=8c14dc6a&lang=scss&scoped=true& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
 
 // module
-exports.push([module.i, "html[data-v-1c1ea948], body[data-v-1c1ea948], div[data-v-1c1ea948], span[data-v-1c1ea948], applet[data-v-1c1ea948], object[data-v-1c1ea948], iframe[data-v-1c1ea948],\nh1[data-v-1c1ea948], h2[data-v-1c1ea948], h3[data-v-1c1ea948], h4[data-v-1c1ea948], h5[data-v-1c1ea948], h6[data-v-1c1ea948], p[data-v-1c1ea948],\nblockquote[data-v-1c1ea948], pre[data-v-1c1ea948],\na[data-v-1c1ea948], abbr[data-v-1c1ea948], acronym[data-v-1c1ea948], address[data-v-1c1ea948], big[data-v-1c1ea948], cite[data-v-1c1ea948], code[data-v-1c1ea948],\ndel[data-v-1c1ea948], dfn[data-v-1c1ea948], em[data-v-1c1ea948], img[data-v-1c1ea948], ins[data-v-1c1ea948], kbd[data-v-1c1ea948], q[data-v-1c1ea948], s[data-v-1c1ea948], samp[data-v-1c1ea948],\nsmall[data-v-1c1ea948], strike[data-v-1c1ea948], strong[data-v-1c1ea948], sub[data-v-1c1ea948], sup[data-v-1c1ea948], tt[data-v-1c1ea948], var[data-v-1c1ea948],\nb[data-v-1c1ea948], u[data-v-1c1ea948], i[data-v-1c1ea948], center[data-v-1c1ea948],\ndl[data-v-1c1ea948], dt[data-v-1c1ea948], dd[data-v-1c1ea948], ol[data-v-1c1ea948], ul[data-v-1c1ea948], li[data-v-1c1ea948],\nfieldset[data-v-1c1ea948], form[data-v-1c1ea948], label[data-v-1c1ea948], legend[data-v-1c1ea948],\ntable[data-v-1c1ea948], caption[data-v-1c1ea948], tbody[data-v-1c1ea948], tfoot[data-v-1c1ea948], thead[data-v-1c1ea948], tr[data-v-1c1ea948], th[data-v-1c1ea948], td[data-v-1c1ea948],\narticle[data-v-1c1ea948], aside[data-v-1c1ea948], canvas[data-v-1c1ea948], details[data-v-1c1ea948], embed[data-v-1c1ea948],\nfigure[data-v-1c1ea948], figcaption[data-v-1c1ea948], footer[data-v-1c1ea948], header[data-v-1c1ea948], hgroup[data-v-1c1ea948],\nmenu[data-v-1c1ea948], nav[data-v-1c1ea948], output[data-v-1c1ea948], ruby[data-v-1c1ea948], section[data-v-1c1ea948], summary[data-v-1c1ea948],\ntime[data-v-1c1ea948], mark[data-v-1c1ea948], audio[data-v-1c1ea948], video[data-v-1c1ea948] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-1c1ea948], aside[data-v-1c1ea948], details[data-v-1c1ea948], figcaption[data-v-1c1ea948], figure[data-v-1c1ea948],\nfooter[data-v-1c1ea948], header[data-v-1c1ea948], hgroup[data-v-1c1ea948], menu[data-v-1c1ea948], nav[data-v-1c1ea948], section[data-v-1c1ea948] {\n  display: block;\n}\nbody[data-v-1c1ea948] {\n  line-height: 1;\n}\nol[data-v-1c1ea948], ul[data-v-1c1ea948] {\n  list-style: none;\n}\nblockquote[data-v-1c1ea948], q[data-v-1c1ea948] {\n  quotes: none;\n}\nblockquote[data-v-1c1ea948]:before, blockquote[data-v-1c1ea948]:after,\nq[data-v-1c1ea948]:before, q[data-v-1c1ea948]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-1c1ea948] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-1c1ea948] {\n  text-decoration: none;\n}\n.clearfix[data-v-1c1ea948]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-1c1ea948] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-1c1ea948] {\n  height: 1%;\n}\n.clearfix[data-v-1c1ea948] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-1c1ea948] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-1c1ea948] {\n  background-color: #F2F2F2;\n}\n#live-camera[data-v-1c1ea948] {\n  height: 100%;\n  width: 100%;\n  margin: 4rem 0 0;\n  overflow: hidden;\n}", ""]);
+exports.push([module.i, "html[data-v-8c14dc6a], body[data-v-8c14dc6a], div[data-v-8c14dc6a], span[data-v-8c14dc6a], applet[data-v-8c14dc6a], object[data-v-8c14dc6a], iframe[data-v-8c14dc6a],\nh1[data-v-8c14dc6a], h2[data-v-8c14dc6a], h3[data-v-8c14dc6a], h4[data-v-8c14dc6a], h5[data-v-8c14dc6a], h6[data-v-8c14dc6a], p[data-v-8c14dc6a],\nblockquote[data-v-8c14dc6a], pre[data-v-8c14dc6a],\na[data-v-8c14dc6a], abbr[data-v-8c14dc6a], acronym[data-v-8c14dc6a], address[data-v-8c14dc6a], big[data-v-8c14dc6a], cite[data-v-8c14dc6a], code[data-v-8c14dc6a],\ndel[data-v-8c14dc6a], dfn[data-v-8c14dc6a], em[data-v-8c14dc6a], img[data-v-8c14dc6a], ins[data-v-8c14dc6a], kbd[data-v-8c14dc6a], q[data-v-8c14dc6a], s[data-v-8c14dc6a], samp[data-v-8c14dc6a],\nsmall[data-v-8c14dc6a], strike[data-v-8c14dc6a], strong[data-v-8c14dc6a], sub[data-v-8c14dc6a], sup[data-v-8c14dc6a], tt[data-v-8c14dc6a], var[data-v-8c14dc6a],\nb[data-v-8c14dc6a], u[data-v-8c14dc6a], i[data-v-8c14dc6a], center[data-v-8c14dc6a],\ndl[data-v-8c14dc6a], dt[data-v-8c14dc6a], dd[data-v-8c14dc6a], ol[data-v-8c14dc6a], ul[data-v-8c14dc6a], li[data-v-8c14dc6a],\nfieldset[data-v-8c14dc6a], form[data-v-8c14dc6a], label[data-v-8c14dc6a], legend[data-v-8c14dc6a],\ntable[data-v-8c14dc6a], caption[data-v-8c14dc6a], tbody[data-v-8c14dc6a], tfoot[data-v-8c14dc6a], thead[data-v-8c14dc6a], tr[data-v-8c14dc6a], th[data-v-8c14dc6a], td[data-v-8c14dc6a],\narticle[data-v-8c14dc6a], aside[data-v-8c14dc6a], canvas[data-v-8c14dc6a], details[data-v-8c14dc6a], embed[data-v-8c14dc6a],\nfigure[data-v-8c14dc6a], figcaption[data-v-8c14dc6a], footer[data-v-8c14dc6a], header[data-v-8c14dc6a], hgroup[data-v-8c14dc6a],\nmenu[data-v-8c14dc6a], nav[data-v-8c14dc6a], output[data-v-8c14dc6a], ruby[data-v-8c14dc6a], section[data-v-8c14dc6a], summary[data-v-8c14dc6a],\ntime[data-v-8c14dc6a], mark[data-v-8c14dc6a], audio[data-v-8c14dc6a], video[data-v-8c14dc6a] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-8c14dc6a], aside[data-v-8c14dc6a], details[data-v-8c14dc6a], figcaption[data-v-8c14dc6a], figure[data-v-8c14dc6a],\nfooter[data-v-8c14dc6a], header[data-v-8c14dc6a], hgroup[data-v-8c14dc6a], menu[data-v-8c14dc6a], nav[data-v-8c14dc6a], section[data-v-8c14dc6a] {\n  display: block;\n}\nbody[data-v-8c14dc6a] {\n  line-height: 1;\n}\nol[data-v-8c14dc6a], ul[data-v-8c14dc6a] {\n  list-style: none;\n}\nblockquote[data-v-8c14dc6a], q[data-v-8c14dc6a] {\n  quotes: none;\n}\nblockquote[data-v-8c14dc6a]:before, blockquote[data-v-8c14dc6a]:after,\nq[data-v-8c14dc6a]:before, q[data-v-8c14dc6a]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-8c14dc6a] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-8c14dc6a] {\n  text-decoration: none;\n}\n.clearfix[data-v-8c14dc6a]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-8c14dc6a] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-8c14dc6a] {\n  height: 1%;\n}\n.clearfix[data-v-8c14dc6a] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-8c14dc6a] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-8c14dc6a] {\n  background-color: #F2F2F2;\n}\n.live-camera[data-v-8c14dc6a] {\n  display: none;\n}", ""]);
 
 // exports
 
@@ -7686,7 +7811,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
 
 // module
-exports.push([module.i, "html[data-v-491cb27a], body[data-v-491cb27a], div[data-v-491cb27a], span[data-v-491cb27a], applet[data-v-491cb27a], object[data-v-491cb27a], iframe[data-v-491cb27a],\nh1[data-v-491cb27a], h2[data-v-491cb27a], h3[data-v-491cb27a], h4[data-v-491cb27a], h5[data-v-491cb27a], h6[data-v-491cb27a], p[data-v-491cb27a],\nblockquote[data-v-491cb27a], pre[data-v-491cb27a],\na[data-v-491cb27a], abbr[data-v-491cb27a], acronym[data-v-491cb27a], address[data-v-491cb27a], big[data-v-491cb27a], cite[data-v-491cb27a], code[data-v-491cb27a],\ndel[data-v-491cb27a], dfn[data-v-491cb27a], em[data-v-491cb27a], img[data-v-491cb27a], ins[data-v-491cb27a], kbd[data-v-491cb27a], q[data-v-491cb27a], s[data-v-491cb27a], samp[data-v-491cb27a],\nsmall[data-v-491cb27a], strike[data-v-491cb27a], strong[data-v-491cb27a], sub[data-v-491cb27a], sup[data-v-491cb27a], tt[data-v-491cb27a], var[data-v-491cb27a],\nb[data-v-491cb27a], u[data-v-491cb27a], i[data-v-491cb27a], center[data-v-491cb27a],\ndl[data-v-491cb27a], dt[data-v-491cb27a], dd[data-v-491cb27a], ol[data-v-491cb27a], ul[data-v-491cb27a], li[data-v-491cb27a],\nfieldset[data-v-491cb27a], form[data-v-491cb27a], label[data-v-491cb27a], legend[data-v-491cb27a],\ntable[data-v-491cb27a], caption[data-v-491cb27a], tbody[data-v-491cb27a], tfoot[data-v-491cb27a], thead[data-v-491cb27a], tr[data-v-491cb27a], th[data-v-491cb27a], td[data-v-491cb27a],\narticle[data-v-491cb27a], aside[data-v-491cb27a], canvas[data-v-491cb27a], details[data-v-491cb27a], embed[data-v-491cb27a],\nfigure[data-v-491cb27a], figcaption[data-v-491cb27a], footer[data-v-491cb27a], header[data-v-491cb27a], hgroup[data-v-491cb27a],\nmenu[data-v-491cb27a], nav[data-v-491cb27a], output[data-v-491cb27a], ruby[data-v-491cb27a], section[data-v-491cb27a], summary[data-v-491cb27a],\ntime[data-v-491cb27a], mark[data-v-491cb27a], audio[data-v-491cb27a], video[data-v-491cb27a] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-491cb27a], aside[data-v-491cb27a], details[data-v-491cb27a], figcaption[data-v-491cb27a], figure[data-v-491cb27a],\nfooter[data-v-491cb27a], header[data-v-491cb27a], hgroup[data-v-491cb27a], menu[data-v-491cb27a], nav[data-v-491cb27a], section[data-v-491cb27a] {\n  display: block;\n}\nbody[data-v-491cb27a] {\n  line-height: 1;\n}\nol[data-v-491cb27a], ul[data-v-491cb27a] {\n  list-style: none;\n}\nblockquote[data-v-491cb27a], q[data-v-491cb27a] {\n  quotes: none;\n}\nblockquote[data-v-491cb27a]:before, blockquote[data-v-491cb27a]:after,\nq[data-v-491cb27a]:before, q[data-v-491cb27a]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-491cb27a] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-491cb27a] {\n  text-decoration: none;\n}\n.clearfix[data-v-491cb27a]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-491cb27a] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-491cb27a] {\n  height: 1%;\n}\n.clearfix[data-v-491cb27a] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-491cb27a] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-491cb27a] {\n  background-color: #F2F2F2;\n}\n.wrapper[data-v-491cb27a] {\n  margin-top: 4rem;\n}\n.container[data-v-491cb27a] {\n  width: 90%;\n  margin: 0 auto;\n  padding: 2rem 0 4rem;\n  background-color: white;\n  clear: both;\n}\nul[data-v-491cb27a] {\n  width: 90%;\n  margin: 0 auto;\n}\nimg[data-v-491cb27a] {\n  display: block;\n  height: 380px;\n  width: 100%;\n  margin: 0 auto;\n}\n.button[data-v-491cb27a] {\n  margin-top: 1rem;\n}", ""]);
+exports.push([module.i, "html[data-v-491cb27a], body[data-v-491cb27a], div[data-v-491cb27a], span[data-v-491cb27a], applet[data-v-491cb27a], object[data-v-491cb27a], iframe[data-v-491cb27a],\nh1[data-v-491cb27a], h2[data-v-491cb27a], h3[data-v-491cb27a], h4[data-v-491cb27a], h5[data-v-491cb27a], h6[data-v-491cb27a], p[data-v-491cb27a],\nblockquote[data-v-491cb27a], pre[data-v-491cb27a],\na[data-v-491cb27a], abbr[data-v-491cb27a], acronym[data-v-491cb27a], address[data-v-491cb27a], big[data-v-491cb27a], cite[data-v-491cb27a], code[data-v-491cb27a],\ndel[data-v-491cb27a], dfn[data-v-491cb27a], em[data-v-491cb27a], img[data-v-491cb27a], ins[data-v-491cb27a], kbd[data-v-491cb27a], q[data-v-491cb27a], s[data-v-491cb27a], samp[data-v-491cb27a],\nsmall[data-v-491cb27a], strike[data-v-491cb27a], strong[data-v-491cb27a], sub[data-v-491cb27a], sup[data-v-491cb27a], tt[data-v-491cb27a], var[data-v-491cb27a],\nb[data-v-491cb27a], u[data-v-491cb27a], i[data-v-491cb27a], center[data-v-491cb27a],\ndl[data-v-491cb27a], dt[data-v-491cb27a], dd[data-v-491cb27a], ol[data-v-491cb27a], ul[data-v-491cb27a], li[data-v-491cb27a],\nfieldset[data-v-491cb27a], form[data-v-491cb27a], label[data-v-491cb27a], legend[data-v-491cb27a],\ntable[data-v-491cb27a], caption[data-v-491cb27a], tbody[data-v-491cb27a], tfoot[data-v-491cb27a], thead[data-v-491cb27a], tr[data-v-491cb27a], th[data-v-491cb27a], td[data-v-491cb27a],\narticle[data-v-491cb27a], aside[data-v-491cb27a], canvas[data-v-491cb27a], details[data-v-491cb27a], embed[data-v-491cb27a],\nfigure[data-v-491cb27a], figcaption[data-v-491cb27a], footer[data-v-491cb27a], header[data-v-491cb27a], hgroup[data-v-491cb27a],\nmenu[data-v-491cb27a], nav[data-v-491cb27a], output[data-v-491cb27a], ruby[data-v-491cb27a], section[data-v-491cb27a], summary[data-v-491cb27a],\ntime[data-v-491cb27a], mark[data-v-491cb27a], audio[data-v-491cb27a], video[data-v-491cb27a] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-491cb27a], aside[data-v-491cb27a], details[data-v-491cb27a], figcaption[data-v-491cb27a], figure[data-v-491cb27a],\nfooter[data-v-491cb27a], header[data-v-491cb27a], hgroup[data-v-491cb27a], menu[data-v-491cb27a], nav[data-v-491cb27a], section[data-v-491cb27a] {\n  display: block;\n}\nbody[data-v-491cb27a] {\n  line-height: 1;\n}\nol[data-v-491cb27a], ul[data-v-491cb27a] {\n  list-style: none;\n}\nblockquote[data-v-491cb27a], q[data-v-491cb27a] {\n  quotes: none;\n}\nblockquote[data-v-491cb27a]:before, blockquote[data-v-491cb27a]:after,\nq[data-v-491cb27a]:before, q[data-v-491cb27a]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-491cb27a] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-491cb27a] {\n  text-decoration: none;\n}\n.clearfix[data-v-491cb27a]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-491cb27a] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-491cb27a] {\n  height: 1%;\n}\n.clearfix[data-v-491cb27a] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-491cb27a] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-491cb27a] {\n  background-color: #F2F2F2;\n}\n.camera button[data-v-491cb27a] {\n  display: none;\n}\n.container[data-v-491cb27a] {\n  width: 90%;\n  margin: 2rem auto 0;\n  padding: 2rem 0 4rem;\n  background-color: white;\n}\n.container .half-box[data-v-491cb27a] {\n  margin: 0 1rem;\n}\nimg[data-v-491cb27a] {\n  display: block;\n  height: 380px;\n  width: 100%;\n  margin: 0 auto;\n}\n.button-wrapper[data-v-491cb27a] {\n  display: block;\n  margin-top: 4rem;\n}", ""]);
 
 // exports
 
@@ -7724,7 +7849,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Nunito);", ""]);
 
 // module
-exports.push([module.i, "html[data-v-f9c78604], body[data-v-f9c78604], div[data-v-f9c78604], span[data-v-f9c78604], applet[data-v-f9c78604], object[data-v-f9c78604], iframe[data-v-f9c78604],\nh1[data-v-f9c78604], h2[data-v-f9c78604], h3[data-v-f9c78604], h4[data-v-f9c78604], h5[data-v-f9c78604], h6[data-v-f9c78604], p[data-v-f9c78604],\nblockquote[data-v-f9c78604], pre[data-v-f9c78604],\na[data-v-f9c78604], abbr[data-v-f9c78604], acronym[data-v-f9c78604], address[data-v-f9c78604], big[data-v-f9c78604], cite[data-v-f9c78604], code[data-v-f9c78604],\ndel[data-v-f9c78604], dfn[data-v-f9c78604], em[data-v-f9c78604], img[data-v-f9c78604], ins[data-v-f9c78604], kbd[data-v-f9c78604], q[data-v-f9c78604], s[data-v-f9c78604], samp[data-v-f9c78604],\nsmall[data-v-f9c78604], strike[data-v-f9c78604], strong[data-v-f9c78604], sub[data-v-f9c78604], sup[data-v-f9c78604], tt[data-v-f9c78604], var[data-v-f9c78604],\nb[data-v-f9c78604], u[data-v-f9c78604], i[data-v-f9c78604], center[data-v-f9c78604],\ndl[data-v-f9c78604], dt[data-v-f9c78604], dd[data-v-f9c78604], ol[data-v-f9c78604], ul[data-v-f9c78604], li[data-v-f9c78604],\nfieldset[data-v-f9c78604], form[data-v-f9c78604], label[data-v-f9c78604], legend[data-v-f9c78604],\ntable[data-v-f9c78604], caption[data-v-f9c78604], tbody[data-v-f9c78604], tfoot[data-v-f9c78604], thead[data-v-f9c78604], tr[data-v-f9c78604], th[data-v-f9c78604], td[data-v-f9c78604],\narticle[data-v-f9c78604], aside[data-v-f9c78604], canvas[data-v-f9c78604], details[data-v-f9c78604], embed[data-v-f9c78604],\nfigure[data-v-f9c78604], figcaption[data-v-f9c78604], footer[data-v-f9c78604], header[data-v-f9c78604], hgroup[data-v-f9c78604],\nmenu[data-v-f9c78604], nav[data-v-f9c78604], output[data-v-f9c78604], ruby[data-v-f9c78604], section[data-v-f9c78604], summary[data-v-f9c78604],\ntime[data-v-f9c78604], mark[data-v-f9c78604], audio[data-v-f9c78604], video[data-v-f9c78604] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-f9c78604], aside[data-v-f9c78604], details[data-v-f9c78604], figcaption[data-v-f9c78604], figure[data-v-f9c78604],\nfooter[data-v-f9c78604], header[data-v-f9c78604], hgroup[data-v-f9c78604], menu[data-v-f9c78604], nav[data-v-f9c78604], section[data-v-f9c78604] {\n  display: block;\n}\nbody[data-v-f9c78604] {\n  line-height: 1;\n}\nol[data-v-f9c78604], ul[data-v-f9c78604] {\n  list-style: none;\n}\nblockquote[data-v-f9c78604], q[data-v-f9c78604] {\n  quotes: none;\n}\nblockquote[data-v-f9c78604]:before, blockquote[data-v-f9c78604]:after,\nq[data-v-f9c78604]:before, q[data-v-f9c78604]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-f9c78604] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-f9c78604] {\n  text-decoration: none;\n}\n.clearfix[data-v-f9c78604]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-f9c78604] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-f9c78604] {\n  height: 1%;\n}\n.clearfix[data-v-f9c78604] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-f9c78604] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-f9c78604] {\n  background-color: #F2F2F2;\n}\n@media screen and (min-width: 640px) {\n#officers[data-v-f9c78604] {\n    max-height: calc(100vh - 84px);\n    overflow: auto;\n    text-align: center;\n    background-color: white;\n}\n#officers table[data-v-f9c78604] {\n    width: 100%;\n    table-layout: fixed;\n    border-collapse: separate;\n    border-spacing: 2px;\n}\n#officers tr[data-v-f9c78604], #officers th[data-v-f9c78604], #officers td[data-v-f9c78604] {\n    border: 1px solid silver;\n}\n#officers th[data-v-f9c78604] {\n    font-size: 18px;\n    font-weight: bold;\n    background-color: #CEE3F6;\n}\n#officers th[data-v-f9c78604], #officers td[data-v-f9c78604] {\n    padding: 1rem 0;\n}\n}\n.switch-alert[data-v-f9c78604] {\n  background-color: #F6CECE;\n}", ""]);
+exports.push([module.i, "html[data-v-f9c78604], body[data-v-f9c78604], div[data-v-f9c78604], span[data-v-f9c78604], applet[data-v-f9c78604], object[data-v-f9c78604], iframe[data-v-f9c78604],\nh1[data-v-f9c78604], h2[data-v-f9c78604], h3[data-v-f9c78604], h4[data-v-f9c78604], h5[data-v-f9c78604], h6[data-v-f9c78604], p[data-v-f9c78604],\nblockquote[data-v-f9c78604], pre[data-v-f9c78604],\na[data-v-f9c78604], abbr[data-v-f9c78604], acronym[data-v-f9c78604], address[data-v-f9c78604], big[data-v-f9c78604], cite[data-v-f9c78604], code[data-v-f9c78604],\ndel[data-v-f9c78604], dfn[data-v-f9c78604], em[data-v-f9c78604], img[data-v-f9c78604], ins[data-v-f9c78604], kbd[data-v-f9c78604], q[data-v-f9c78604], s[data-v-f9c78604], samp[data-v-f9c78604],\nsmall[data-v-f9c78604], strike[data-v-f9c78604], strong[data-v-f9c78604], sub[data-v-f9c78604], sup[data-v-f9c78604], tt[data-v-f9c78604], var[data-v-f9c78604],\nb[data-v-f9c78604], u[data-v-f9c78604], i[data-v-f9c78604], center[data-v-f9c78604],\ndl[data-v-f9c78604], dt[data-v-f9c78604], dd[data-v-f9c78604], ol[data-v-f9c78604], ul[data-v-f9c78604], li[data-v-f9c78604],\nfieldset[data-v-f9c78604], form[data-v-f9c78604], label[data-v-f9c78604], legend[data-v-f9c78604],\ntable[data-v-f9c78604], caption[data-v-f9c78604], tbody[data-v-f9c78604], tfoot[data-v-f9c78604], thead[data-v-f9c78604], tr[data-v-f9c78604], th[data-v-f9c78604], td[data-v-f9c78604],\narticle[data-v-f9c78604], aside[data-v-f9c78604], canvas[data-v-f9c78604], details[data-v-f9c78604], embed[data-v-f9c78604],\nfigure[data-v-f9c78604], figcaption[data-v-f9c78604], footer[data-v-f9c78604], header[data-v-f9c78604], hgroup[data-v-f9c78604],\nmenu[data-v-f9c78604], nav[data-v-f9c78604], output[data-v-f9c78604], ruby[data-v-f9c78604], section[data-v-f9c78604], summary[data-v-f9c78604],\ntime[data-v-f9c78604], mark[data-v-f9c78604], audio[data-v-f9c78604], video[data-v-f9c78604] {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  font-size: 100%;\n  font: inherit;\n  vertical-align: baseline;\n}\n\n/* HTML5 display-role reset for older browsers */\narticle[data-v-f9c78604], aside[data-v-f9c78604], details[data-v-f9c78604], figcaption[data-v-f9c78604], figure[data-v-f9c78604],\nfooter[data-v-f9c78604], header[data-v-f9c78604], hgroup[data-v-f9c78604], menu[data-v-f9c78604], nav[data-v-f9c78604], section[data-v-f9c78604] {\n  display: block;\n}\nbody[data-v-f9c78604] {\n  line-height: 1;\n}\nol[data-v-f9c78604], ul[data-v-f9c78604] {\n  list-style: none;\n}\nblockquote[data-v-f9c78604], q[data-v-f9c78604] {\n  quotes: none;\n}\nblockquote[data-v-f9c78604]:before, blockquote[data-v-f9c78604]:after,\nq[data-v-f9c78604]:before, q[data-v-f9c78604]:after {\n  content: \"\";\n  content: none;\n}\ntable[data-v-f9c78604] {\n  border-collapse: collapse;\n  border-spacing: 0;\n}\na[data-v-f9c78604] {\n  text-decoration: none;\n}\n.clearfix[data-v-f9c78604]:after {\n  content: \".\";\n  display: block;\n  height: 0;\n  clear: both;\n  visibility: hidden;\n}\n.clearfix[data-v-f9c78604] {\n  display: inline-table;\n}\n\n/* Hides from IE-mac \\*/\n* html .clearfix[data-v-f9c78604] {\n  height: 1%;\n}\n.clearfix[data-v-f9c78604] {\n  display: block;\n}\n\n/* End hide from IE-mac */\nhtml[data-v-f9c78604] {\n  min-height: 100%;\n  position: relative;\n}\nbody[data-v-f9c78604] {\n  background-color: #F2F2F2;\n}\n@media screen and (min-width: 640px) {\n.camera-parent[data-v-f9c78604] {\n    vertical-align: top;\n}\n.camera-parent .camera[data-v-f9c78604] {\n    margin-top: 0;\n}\n#officers[data-v-f9c78604] {\n    max-height: calc(100vh - 84px);\n    overflow: auto;\n    text-align: center;\n    background-color: white;\n}\n#officers table[data-v-f9c78604] {\n    width: 100%;\n    table-layout: fixed;\n    border-collapse: separate;\n}\n#officers tr[data-v-f9c78604], #officers th[data-v-f9c78604], #officers td[data-v-f9c78604] {\n    border: 1px solid silver;\n}\n#officers th[data-v-f9c78604] {\n    font-size: 18px;\n    font-weight: bold;\n    background-color: #CEE3F6;\n}\n#officers th[data-v-f9c78604], #officers td[data-v-f9c78604] {\n    padding: 1rem 0;\n}\n}\n.switch-alert[data-v-f9c78604] {\n  background-color: #F6CECE;\n}", ""]);
 
 // exports
 
@@ -39472,6 +39597,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FaceCamera.vue?vue&type=style&index=0&id=bf1310e6&lang=scss&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FaceCamera.vue?vue&type=style&index=0&id=bf1310e6&lang=scss&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./FaceCamera.vue?vue&type=style&index=0&id=bf1310e6&lang=scss&scoped=true& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FaceCamera.vue?vue&type=style&index=0&id=bf1310e6&lang=scss&scoped=true&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Header.vue?vue&type=style&index=0&id=1f42fb90&lang=scss&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Header.vue?vue&type=style&index=0&id=1f42fb90&lang=scss&scoped=true& ***!
@@ -39502,15 +39657,15 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LiveCamera.vue?vue&type=style&index=0&id=1c1ea948&lang=scss&scoped=true&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LiveCamera.vue?vue&type=style&index=0&id=1c1ea948&lang=scss&scoped=true& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/barcode/LiveCamera.vue?vue&type=style&index=0&id=8c14dc6a&lang=scss&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/lib/loader.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/barcode/LiveCamera.vue?vue&type=style&index=0&id=8c14dc6a&lang=scss&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./LiveCamera.vue?vue&type=style&index=0&id=1c1ea948&lang=scss&scoped=true& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LiveCamera.vue?vue&type=style&index=0&id=1c1ea948&lang=scss&scoped=true&");
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./LiveCamera.vue?vue&type=style&index=0&id=8c14dc6a&lang=scss&scoped=true& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/barcode/LiveCamera.vue?vue&type=style&index=0&id=8c14dc6a&lang=scss&scoped=true&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -39524,7 +39679,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -40630,9 +40785,40 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "camera" }, [
+    _c("video", {
+      ref: "video",
+      attrs: { autoplay: "", width: "100%", height: "100%" }
+    }),
+    _vm._v(" "),
+    _c("canvas", { ref: "canvas" })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FaceCamera.vue?vue&type=template&id=bf1310e6&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FaceCamera.vue?vue&type=template&id=bf1310e6&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
   return _c(
     "div",
-    { attrs: { id: "camera" } },
+    { staticClass: "camera" },
     [
       _c("video", {
         ref: "video",
@@ -40723,10 +40909,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LiveCamera.vue?vue&type=template&id=1c1ea948&scoped=true&":
-/*!*************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LiveCamera.vue?vue&type=template&id=1c1ea948&scoped=true& ***!
-  \*************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/barcode/LiveCamera.vue?vue&type=template&id=8c14dc6a&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/barcode/LiveCamera.vue?vue&type=template&id=8c14dc6a&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -40738,7 +40924,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "live-camera" } })
+  return _c("div", { staticClass: "live-camera", attrs: { id: "live-camera" } })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -41042,12 +41228,12 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "flex" }, [
     _c(
       "div",
       { staticClass: "half-box" },
       [
-        _c("Camera", { on: { signalEvent: _vm.getAuthUser } }),
+        _c("FaceCamera", { on: { signalEvent: _vm.getAuthUser } }),
         _vm._v(" "),
         _c("LiveCamera", { on: { signalEvent: _vm.getBookWithOpenBD } })
       ],
@@ -41299,159 +41485,165 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "book-new" } }, [
+  return _c("div", { staticClass: "flex" }, [
     _c(
       "div",
       { staticClass: "half-box" },
-      [_c("LiveCamera", { on: { signalEvent: _vm.getBookWithOpenBD } })],
+      [
+        _c("Camera"),
+        _vm._v(" "),
+        _c("LiveCamera", { on: { signalEvent: _vm.getBookWithOpenBD } })
+      ],
       1
     ),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "half-box wrapper" },
-      [
-        _c("div", { staticClass: "container clearfix" }, [
-          _c("div", { staticClass: "half-box" }, [
-            _c("ul", [
-              _c(
-                "li",
-                [
-                  _c("FormInput", {
-                    attrs: { label: "タイトル", placeholder: "8文字以上" },
-                    model: {
-                      value: _vm.book.title,
-                      callback: function($$v) {
-                        _vm.$set(_vm.book, "title", $$v)
-                      },
-                      expression: "book.title"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                [
-                  _c("FormInput", {
-                    attrs: { label: "著者", placeholder: "8文字以上" },
-                    model: {
-                      value: _vm.book.author,
-                      callback: function($$v) {
-                        _vm.$set(_vm.book, "author", $$v)
-                      },
-                      expression: "book.author"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                [
-                  _c("FormInput", {
-                    attrs: { label: "巻", placeholder: "8文字以上" },
-                    model: {
-                      value: _vm.book.volume,
-                      callback: function($$v) {
-                        _vm.$set(_vm.book, "volume", $$v)
-                      },
-                      expression: "book.volume"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                [
-                  _c("FormInput", {
-                    attrs: { label: "シリーズ", placeholder: "8文字以上" },
-                    model: {
-                      value: _vm.book.series,
-                      callback: function($$v) {
-                        _vm.$set(_vm.book, "series", $$v)
-                      },
-                      expression: "book.series"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                [
-                  _c("FormInput", {
-                    attrs: { label: "出版", placeholder: "8文字以上" },
-                    model: {
-                      value: _vm.book.publisher,
-                      callback: function($$v) {
-                        _vm.$set(_vm.book, "publisher", $$v)
-                      },
-                      expression: "book.publisher"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                [
-                  _c("FormInput", {
-                    attrs: { label: "出版日", placeholder: "8文字以上" },
-                    model: {
-                      value: _vm.book.pubdate,
-                      callback: function($$v) {
-                        _vm.$set(_vm.book, "pubdate", $$v)
-                      },
-                      expression: "book.pubdate"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                [
-                  _c("FormTextarea", {
-                    attrs: { label: "詳細" },
-                    model: {
-                      value: _vm.book.detail,
-                      callback: function($$v) {
-                        _vm.$set(_vm.book, "detail", $$v)
-                      },
-                      expression: "book.detail"
-                    }
-                  })
-                ],
-                1
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "half-box" }, [
-            _c("img", { attrs: { src: _vm.book.cover, alt: _vm.book.title } })
+    _c("div", { staticClass: "half-box" }, [
+      _c("div", { staticClass: "flex container" }, [
+        _c("div", { staticClass: "half-box" }, [
+          _c("ul", [
+            _c(
+              "li",
+              [
+                _c("FormInput", {
+                  attrs: { label: "タイトル", placeholder: "8文字以上" },
+                  model: {
+                    value: _vm.book.title,
+                    callback: function($$v) {
+                      _vm.$set(_vm.book, "title", $$v)
+                    },
+                    expression: "book.title"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              [
+                _c("FormInput", {
+                  attrs: { label: "著者", placeholder: "8文字以上" },
+                  model: {
+                    value: _vm.book.author,
+                    callback: function($$v) {
+                      _vm.$set(_vm.book, "author", $$v)
+                    },
+                    expression: "book.author"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              [
+                _c("FormInput", {
+                  attrs: { label: "巻", placeholder: "8文字以上" },
+                  model: {
+                    value: _vm.book.volume,
+                    callback: function($$v) {
+                      _vm.$set(_vm.book, "volume", $$v)
+                    },
+                    expression: "book.volume"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              [
+                _c("FormInput", {
+                  attrs: { label: "シリーズ", placeholder: "8文字以上" },
+                  model: {
+                    value: _vm.book.series,
+                    callback: function($$v) {
+                      _vm.$set(_vm.book, "series", $$v)
+                    },
+                    expression: "book.series"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              [
+                _c("FormInput", {
+                  attrs: { label: "出版", placeholder: "8文字以上" },
+                  model: {
+                    value: _vm.book.publisher,
+                    callback: function($$v) {
+                      _vm.$set(_vm.book, "publisher", $$v)
+                    },
+                    expression: "book.publisher"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              [
+                _c("FormInput", {
+                  attrs: { label: "出版日", placeholder: "8文字以上" },
+                  model: {
+                    value: _vm.book.pubdate,
+                    callback: function($$v) {
+                      _vm.$set(_vm.book, "pubdate", $$v)
+                    },
+                    expression: "book.pubdate"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              [
+                _c("FormTextarea", {
+                  attrs: { label: "詳細" },
+                  model: {
+                    value: _vm.book.detail,
+                    callback: function($$v) {
+                      _vm.$set(_vm.book, "detail", $$v)
+                    },
+                    expression: "book.detail"
+                  }
+                })
+              ],
+              1
+            )
           ])
         ]),
         _vm._v(" "),
-        _c("FormButton", {
-          staticClass: "button",
-          attrs: { button_name: "登録する" },
-          on: {
-            signalEvent: function($event) {
-              return _vm.registerBook(_vm.book)
-            }
-          }
-        })
-      ],
-      1
-    )
+        _c("div", { staticClass: "half-box" }, [
+          _c("img", { attrs: { src: _vm.book.cover, alt: _vm.book.title } }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "button-wrapper" },
+            [
+              _c("FormButton", {
+                staticClass: "button",
+                attrs: { button_name: "登録する" },
+                on: {
+                  signalEvent: function($event) {
+                    return _vm.registerBook(_vm.book)
+                  }
+                }
+              })
+            ],
+            1
+          )
+        ])
+      ])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -41561,14 +41753,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "flex" }, [
     _c(
       "div",
-      { staticClass: "half-box" },
-      [_c("Camera", { on: { signalEvent: _vm.changeState } })],
+      { staticClass: "half-box camera-parent" },
+      [_c("FaceCamera", { on: { signalEvent: _vm.changeState } })],
       1
     ),
-    _vm._v(" "),
     _c("div", { staticClass: "half-box" }, [
       _c("div", { attrs: { id: "officers" } }, [
         _c("table", [
@@ -58061,6 +58252,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/FaceCamera.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/FaceCamera.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FaceCamera_vue_vue_type_template_id_bf1310e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FaceCamera.vue?vue&type=template&id=bf1310e6&scoped=true& */ "./resources/js/components/FaceCamera.vue?vue&type=template&id=bf1310e6&scoped=true&");
+/* harmony import */ var _FaceCamera_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FaceCamera.vue?vue&type=script&lang=js& */ "./resources/js/components/FaceCamera.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _FaceCamera_vue_vue_type_style_index_0_id_bf1310e6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FaceCamera.vue?vue&type=style&index=0&id=bf1310e6&lang=scss&scoped=true& */ "./resources/js/components/FaceCamera.vue?vue&type=style&index=0&id=bf1310e6&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _FaceCamera_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FaceCamera_vue_vue_type_template_id_bf1310e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FaceCamera_vue_vue_type_template_id_bf1310e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "bf1310e6",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/FaceCamera.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/FaceCamera.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/FaceCamera.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FaceCamera_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./FaceCamera.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FaceCamera.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FaceCamera_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/FaceCamera.vue?vue&type=style&index=0&id=bf1310e6&lang=scss&scoped=true&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/FaceCamera.vue?vue&type=style&index=0&id=bf1310e6&lang=scss&scoped=true& ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_FaceCamera_vue_vue_type_style_index_0_id_bf1310e6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./FaceCamera.vue?vue&type=style&index=0&id=bf1310e6&lang=scss&scoped=true& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FaceCamera.vue?vue&type=style&index=0&id=bf1310e6&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_FaceCamera_vue_vue_type_style_index_0_id_bf1310e6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_FaceCamera_vue_vue_type_style_index_0_id_bf1310e6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_FaceCamera_vue_vue_type_style_index_0_id_bf1310e6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_FaceCamera_vue_vue_type_style_index_0_id_bf1310e6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_FaceCamera_vue_vue_type_style_index_0_id_bf1310e6_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/FaceCamera.vue?vue&type=template&id=bf1310e6&scoped=true&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/FaceCamera.vue?vue&type=template&id=bf1310e6&scoped=true& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FaceCamera_vue_vue_type_template_id_bf1310e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./FaceCamera.vue?vue&type=template&id=bf1310e6&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FaceCamera.vue?vue&type=template&id=bf1310e6&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FaceCamera_vue_vue_type_template_id_bf1310e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FaceCamera_vue_vue_type_template_id_bf1310e6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/Header.vue":
 /*!********************************************!*\
   !*** ./resources/js/components/Header.vue ***!
@@ -58148,19 +58426,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/LiveCamera.vue":
-/*!************************************************!*\
-  !*** ./resources/js/components/LiveCamera.vue ***!
-  \************************************************/
+/***/ "./resources/js/components/barcode/LiveCamera.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/barcode/LiveCamera.vue ***!
+  \********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _LiveCamera_vue_vue_type_template_id_1c1ea948_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LiveCamera.vue?vue&type=template&id=1c1ea948&scoped=true& */ "./resources/js/components/LiveCamera.vue?vue&type=template&id=1c1ea948&scoped=true&");
-/* harmony import */ var _LiveCamera_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LiveCamera.vue?vue&type=script&lang=js& */ "./resources/js/components/LiveCamera.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _LiveCamera_vue_vue_type_style_index_0_id_1c1ea948_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LiveCamera.vue?vue&type=style&index=0&id=1c1ea948&lang=scss&scoped=true& */ "./resources/js/components/LiveCamera.vue?vue&type=style&index=0&id=1c1ea948&lang=scss&scoped=true&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _LiveCamera_vue_vue_type_template_id_8c14dc6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LiveCamera.vue?vue&type=template&id=8c14dc6a&scoped=true& */ "./resources/js/components/barcode/LiveCamera.vue?vue&type=template&id=8c14dc6a&scoped=true&");
+/* harmony import */ var _LiveCamera_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LiveCamera.vue?vue&type=script&lang=js& */ "./resources/js/components/barcode/LiveCamera.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _LiveCamera_vue_vue_type_style_index_0_id_8c14dc6a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LiveCamera.vue?vue&type=style&index=0&id=8c14dc6a&lang=scss&scoped=true& */ "./resources/js/components/barcode/LiveCamera.vue?vue&type=style&index=0&id=8c14dc6a&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -58171,65 +58449,65 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _LiveCamera_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _LiveCamera_vue_vue_type_template_id_1c1ea948_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _LiveCamera_vue_vue_type_template_id_1c1ea948_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _LiveCamera_vue_vue_type_template_id_8c14dc6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _LiveCamera_vue_vue_type_template_id_8c14dc6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "1c1ea948",
+  "8c14dc6a",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/LiveCamera.vue"
+component.options.__file = "resources/js/components/barcode/LiveCamera.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/LiveCamera.vue?vue&type=script&lang=js&":
-/*!*************************************************************************!*\
-  !*** ./resources/js/components/LiveCamera.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************/
+/***/ "./resources/js/components/barcode/LiveCamera.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/barcode/LiveCamera.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./LiveCamera.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LiveCamera.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./LiveCamera.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/barcode/LiveCamera.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/LiveCamera.vue?vue&type=style&index=0&id=1c1ea948&lang=scss&scoped=true&":
-/*!**********************************************************************************************************!*\
-  !*** ./resources/js/components/LiveCamera.vue?vue&type=style&index=0&id=1c1ea948&lang=scss&scoped=true& ***!
-  \**********************************************************************************************************/
+/***/ "./resources/js/components/barcode/LiveCamera.vue?vue&type=style&index=0&id=8c14dc6a&lang=scss&scoped=true&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/barcode/LiveCamera.vue?vue&type=style&index=0&id=8c14dc6a&lang=scss&scoped=true& ***!
+  \******************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_style_index_0_id_1c1ea948_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../node_modules/vue-loader/lib??vue-loader-options!./LiveCamera.vue?vue&type=style&index=0&id=1c1ea948&lang=scss&scoped=true& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LiveCamera.vue?vue&type=style&index=0&id=1c1ea948&lang=scss&scoped=true&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_style_index_0_id_1c1ea948_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_style_index_0_id_1c1ea948_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_style_index_0_id_1c1ea948_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_style_index_0_id_1c1ea948_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_style_index_0_id_1c1ea948_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_style_index_0_id_8c14dc6a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/sass-loader/lib/loader.js??ref--7-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./LiveCamera.vue?vue&type=style&index=0&id=8c14dc6a&lang=scss&scoped=true& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/lib/loader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/barcode/LiveCamera.vue?vue&type=style&index=0&id=8c14dc6a&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_style_index_0_id_8c14dc6a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_style_index_0_id_8c14dc6a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_style_index_0_id_8c14dc6a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_style_index_0_id_8c14dc6a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_lib_loader_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_style_index_0_id_8c14dc6a_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./resources/js/components/LiveCamera.vue?vue&type=template&id=1c1ea948&scoped=true&":
-/*!*******************************************************************************************!*\
-  !*** ./resources/js/components/LiveCamera.vue?vue&type=template&id=1c1ea948&scoped=true& ***!
-  \*******************************************************************************************/
+/***/ "./resources/js/components/barcode/LiveCamera.vue?vue&type=template&id=8c14dc6a&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/barcode/LiveCamera.vue?vue&type=template&id=8c14dc6a&scoped=true& ***!
+  \***************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_template_id_1c1ea948_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./LiveCamera.vue?vue&type=template&id=1c1ea948&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LiveCamera.vue?vue&type=template&id=1c1ea948&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_template_id_1c1ea948_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_template_id_8c14dc6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./LiveCamera.vue?vue&type=template&id=8c14dc6a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/barcode/LiveCamera.vue?vue&type=template&id=8c14dc6a&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_template_id_8c14dc6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_template_id_1c1ea948_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_LiveCamera_vue_vue_type_template_id_8c14dc6a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -1,5 +1,5 @@
 <template>
-    <div id="live-camera"></div>
+    <div id="live-camera" class="live-camera"></div>
 </template>
 
 
@@ -22,7 +22,7 @@ export default {
                 inputStream: {
                     name: "Live",
                     type: "LiveStream",
-                    // カメラ映像を表示する要素を指定
+                    // videoとcanvasを表示する要素を指定
                     target: document.querySelector("#live-camera"),
                     // フロントはuser
                     constraints: { facingMode: "environment" },
@@ -38,8 +38,8 @@ export default {
             // 正常に検出されたらコールする処理
             Quagga.onDetected((success) => {
 
-                const isbn = success.codeResult.code
-                this.$emit("signalEvent", isbn)
+                const isbn_code = success.codeResult.code
+                this.$emit("signalEvent", isbn_code)
                 return
             })
 
@@ -61,12 +61,9 @@ export default {
 
 <style lang="scss" scoped>
 
-@import "../../sass/app.scss";
+@import "../../../sass/app.scss";
 
-#live-camera {
-    height: 100%;
-    width: 100%;
-    margin: 4rem 0 0;
-    overflow: hidden;
+.live-camera {
+    display: none;
 }
 </style>

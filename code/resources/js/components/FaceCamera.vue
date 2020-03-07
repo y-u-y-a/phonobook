@@ -4,13 +4,21 @@
         <video autoplay ref="video" width="100%" height="100%"></video>
         <!-- 切り取った画像を描画 -->
         <canvas ref="canvas"></canvas>
+        <!-- 撮影と認証処理 -->
+        <FormButton @signalEvent="takeFace(); authFace()" button_name="顔を認証する" class="button" />
     </div>
 </template>
 
 
 <script>
 
+import FormButton from "../components/form/Button.vue"
+
 export default {
+
+    components: {
+        FormButton
+    },
 
     data() {
         return {
