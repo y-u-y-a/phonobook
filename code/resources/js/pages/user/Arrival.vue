@@ -1,28 +1,30 @@
 <template>
-    <div>
-        <div class="half-box">
-            <Camera @signalEvent="changeState"></Camera>
-        </div>
+    <div class="flex">
+         <div class="half-box camera-parent">
+            <FaceCamera @signalEvent="changeState" />
+        </div><!--
 
-        <div class="half-box">
+        --><div class="half-box">
             <div id="officers">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>社員番号</th>
-                            <th>名前</th>
-                            <th>出勤時間</th>
-                            <th>出勤状況</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(user, index) in all_users" :key="index" :id="user.id">
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.name }}</td>
-                            <td>{{ user.updated_at }}</td>
-                            <td>{{ user.state }}</td>
-                        </tr>
-                    </tbody>
+                <thead>
+                <tr>
+                    <th>社員番号</th>
+                    <th>名前</th>
+                    <th>出勤時間</th>
+                    <th>出勤状況</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(user, index) in all_users"
+                    :key="index"
+                    :id="user.id">
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.updated_at }}</td>
+                    <td>{{ user.state }}</td>
+                </tr>
+                </tbody>
                 </table>
             </div>
         </div>
@@ -31,7 +33,7 @@
 
 <script>
 
-import Camera from "../../components/Camera.vue"
+import FaceCamera from "../../components/FaceCamera.vue"
 import FormButton from "../../components/form/Button.vue"
 
 import { mapState, mapGetters, mapActions } from "vuex"
@@ -39,7 +41,7 @@ import { mapState, mapGetters, mapActions } from "vuex"
 export default {
 
     components: {
-        Camera,
+        FaceCamera,
         FormButton
     },
 
@@ -85,6 +87,12 @@ export default {
 
 // PC
 @media screen and (min-width: 640px) {
+    .camera-parent{
+        vertical-align: top;
+        .camera{
+            margin-top: 0;
+        }
+    }
     #officers{
         max-height: calc(100vh - 84px);
         overflow: auto;
@@ -94,7 +102,7 @@ export default {
             width: 100%;
             table-layout: fixed;
             border-collapse: separate;
-            border-spacing: 2px;
+            // border-spacing: 2px;
         }
         tr,th,td {
             border: 1px solid $silver;

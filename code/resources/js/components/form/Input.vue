@@ -25,12 +25,13 @@ export default {
 
 <style lang="scss" scoped>
 .form-input {
+    display: inline-block;
     margin-bottom: 2rem;
     label {
         font-size: 18px;
     }
     input {
-        font-size: 14px;
+        font-size: 18px;
     }
 }
 </style>

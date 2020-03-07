@@ -23,9 +23,12 @@ export default {
 
 // PC
 @media screen and (min-width: 640px) {
+    .flex{
+        display: flex;
+    }
     .half-box{
+        display: inline-block;
         width: 50%;
-        float: left;
     }
 }
 </style>

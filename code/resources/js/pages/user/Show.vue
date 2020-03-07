@@ -1,12 +1,12 @@
 <template>
     <div id="users-books">
         <div class="form">
-            <FormButton @signalEvent="logout" button_name="ログアウトする"></FormButton>
+            <FormButton @signalEvent="logout" button_name="ログアウトする" />
         </div>
         <BooksList :page_title="`${login_user.name}さんが現在借りている本`" :books=borrowed_books>
-            <!-- 子で指定したnameのslotにマウント -->
+            <!-- BookListのuser-showにマウント/bookを取得 -->
             <div slot="user-show" slot-scope="{ book }">
-                <FormButton @signalEvent="returnBook(book)" button_name="返却する"></FormButton>
+                <FormButton @signalEvent="returnBook(book)" button_name="返却する" />
             </div>
         </BooksList>
     </div>
@@ -43,13 +43,8 @@ export default {
 
     methods: {
 
+        ...mapActions("User", ["logout"]),
         ...mapActions("Book", ["returnBook"]),
-
-        logout() {
-            console.log(this.login_user)
-            this.$store.dispatch("User/logout")
-            location.href = "/"
-        },
 
         // 借りている本を取得
         async getBorrowedBooks() {

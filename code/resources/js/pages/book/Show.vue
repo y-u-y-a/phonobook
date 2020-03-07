@@ -14,8 +14,12 @@
             </div>
             <div class="half-box image-box">
                 <img :src="book.cover" alt="No Image" />
-                <FormButton v-if="book.state==0" @signalEvent="borrowBook({isbn: book.isbn, auth_user: login_user, dest: '/book/Index'})" button_name="この本を借りる" class="button"></FormButton>
-                <!-- <FormButton button_name="レビューする"></FormButton> -->
+                <FormButton v-if="book.state==0" @signalEvent="borrowBook({
+                    isbn: book.isbn,
+                    auth_user: login_user,
+                    dest: '/book/Index'
+                })" button_name="この本を借りる" class="button" />
+                <!-- <FormButton button_name="レビューする" /> -->
             </div>
         </div>
         <div class="book-review">↓ ============　この本の評価　============ ↓</div>

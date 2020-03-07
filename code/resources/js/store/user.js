@@ -58,32 +58,49 @@ const actions = {
         })
     },
 
-    async register(context, params) {
+    async register(context, { name, email, password, password_confirmation }) {
+
+        var params = {
+            name: name,
+            email: email,
+            password: password,
+            password_confirmation: password_confirmation
+        }
 
         await axios.post("/api/auth/register", params)
         .then((response) => {
             console.log(response.data)
-            alert("登録が完了しました")
             location.href = "/"
         })
         .catch((error) => {
+            alert("登録に失敗しました。")
             console.log(error.name + ": " + error.message)
-            alert("登録に失敗しました")
         })
     },
 
-    async login(context, params){
+    async login(context, { email, password }){
+
+        var params = {
+            email: email,
+            password: password
+        }
 
         await axios.post("/api/login", params)
         .then((response) => {
             context.commit("setLoginUser", response.data)
+            location.href = "/"
             return
+        })
+        .catch((error) => {
+            alert("ログインに失敗しました。")
+            console.log(error.name + ": " + error.message)
         })
     },
 
     async logout(context){
         await axios.post("/api/logout")
         context.commit("unsetLoginUser")
+        location.href = "/"
         return
     }
 }

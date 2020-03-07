@@ -3,12 +3,17 @@
         <div class="form">
             <div class="title">ユーザーを登録する</div>
             <div class="form-container">
-                <FormInput v-model="name" label="名前" placeholder="8文字以上" />
+                <FormInput v-model="name" label="名前" placeholder="" />
                 <FormInput v-model="email" label="メールアドレス" placeholder="" />
-                <FormInput v-model="password" label="パスワード" placeholder="8文字以上の半角英数字" />
-                <FormInput v-model="password_confirmation" label="パスワード確認" placeholder="8文字以上の半角英数字" />
+                <FormInput v-model="password" label="パスワード" placeholder="" />
+                <FormInput v-model="password_confirmation" label="パスワード確認" placeholder="" />
             </div>
-            <FormButton @signalEvent="register" button_name="新規登録する" />
+            <FormButton @signalEvent="register({
+                name: name,
+                email: email,
+                password: password,
+                password_confirmation: password_confirmation
+                })" button_name="新規登録する" />
         </div>
     </div>
 </template>
@@ -17,6 +22,8 @@
 
 import FormInput from "../../components/form/Input.vue"
 import FormButton from "../../components/form/Button.vue"
+
+import { mapState, mapGetters, mapActions } from "vuex"
 
 export default {
 
@@ -35,16 +42,7 @@ export default {
     },
 
     methods: {
-
-        register() {
-            var params = {
-                name: this.name,
-                email: this.email,
-                password: this.password,
-                password_confirmation: this.password_confirmation
-            }
-            this.$store.dispatch("User/register", params)
-        }
+        ...mapActions("User", ["register"])
     }
 }
 </script>

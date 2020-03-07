@@ -2,6 +2,7 @@
 
 # 1. Laravel内に.envを作成
     $ touch ./code/.env
+
 まずはlaravelインストール時のデフォルトをコピペする
 
 下記を変更
@@ -45,7 +46,15 @@ PUSHER_APP_CLUSTER=mt1
 
 MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"
 MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
+
+==================================
+VISUAL_RECOGNITION_SECRET_KEY=""
+MODEL_ID=""
+==================================
 ```
+VISUAL_RECOGNITION_SECRET_KEY, MODEL_IDに関してはIBMのVisualRecognitionの登録が必要。
+顔認証機能で使用します。
+
 
 # 2. コンテナを作成・起動
     $ docker-compose up -d
@@ -54,7 +63,9 @@ MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}"
 # 3. シェルスクリプトを実行(settings.sh)
     $ chmod 755 docker/php/settings.sh
     $ docker/php/settings.sh
-composer install、npm installをコンテナ内で実行します。
+
+composer install、npm install、migrateをコンテナ内で実行
+(時間がかかります。)
 
 
 ## ブラウザで起動しているか確認
@@ -64,6 +75,11 @@ localhost:8001にアクセス
 # 4. アセットを編集する場合、コンテナでコンパイルを実行
     $ docker exec -it phonoBook.php bash
     $ npm run watch
+
+
+# 5. IBMのVisualRecognitionの登録
+
+
 
 # エラーが出た場合
     $ docker logs [コンテナID or コンテナ名]

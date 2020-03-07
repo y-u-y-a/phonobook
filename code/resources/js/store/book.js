@@ -44,6 +44,33 @@ const actions = {
         })
     },
 
+    async registerBook(context, book){
+
+        if(!confirm("この本を登録しますか？")){
+            return
+        }
+
+        var params = {
+            isbn: book.isbn,
+            title: book.title,
+            volume: book.volume,
+            series: book.series,
+            publisher: book.publisher,
+            pubdate: book.pubdate,
+            cover: book.cover,
+            author: book.author
+        }
+
+        await axios.post("/api/books", params)
+        .then((response) => {
+            return
+        })
+        .catch((error) => {
+            alert("失敗しました。")
+            console.log(error.name + ": " + error.message)
+        })
+    },
+
     async updateBook(context, book){
 
         await axios.patch("/api/books", book)
@@ -56,12 +83,16 @@ const actions = {
 
     async destroyBook(context, book){
 
+        if(!confirm("削除してもよろしいですか？")){
+            location.reload()
+            return
+        }
+
         // deleteメソッドではdataキーが必要！
         await axios.delete("/api/books", {
             data: { id: book.id }
         })
         .then(() => {
-            confirm("削除してもよろしいですか？")
             location.reload()
             return
         })
@@ -75,6 +106,10 @@ const actions = {
         }
         if(!auth_user){
             return alert("ログインもしくは顔認証してください。")
+        }
+
+        if(!confirm("この本を借りますか？")){
+            return
         }
 
         var path = "/api/books/" + isbn + "/borrow/" + auth_user.id
@@ -102,10 +137,13 @@ const actions = {
     // 返却処理
     async returnBook(context, book) {
 
+        if(!confirm("返却しますか？")){
+            return
+        }
+
         await axios.get("/api/books/return/" + book.id)
         .then((response) => {
 
-            confirm("返却しますか？")
             location.reload()
             return
         })
