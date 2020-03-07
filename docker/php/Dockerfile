@@ -1,4 +1,3 @@
-# PHP構築 ============================
 FROM php:7.2-fpm
 
 # composerをインストール
@@ -15,4 +14,5 @@ RUN apt-get update \
     libpq-dev \
     && docker-php-ext-install pdo_pgsql pdo_mysql mysqli mbstring
 
+# nginxのために解放
 EXPOSE 9000
