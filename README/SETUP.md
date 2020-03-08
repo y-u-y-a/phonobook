@@ -52,8 +52,9 @@ VISUAL_RECOGNITION_SECRET_KEY=""
 MODEL_ID=""
 ==================================
 ```
+
 VISUAL_RECOGNITION_SECRET_KEY, MODEL_IDに関してはIBMのVisualRecognitionの登録が必要。
-顔認証機能で使用します。
+顔認証機能で使用します。（/codeの.envに定義）
 
 
 # 2. コンテナを作成・起動
@@ -61,8 +62,8 @@ VISUAL_RECOGNITION_SECRET_KEY, MODEL_IDに関してはIBMのVisualRecognitionの
 
 
 # 3. シェルスクリプトを実行(settings.sh)
-    $ chmod 755 docker/php/settings.sh
-    $ docker/php/settings.sh
+    $ chmod 755 docker/settings.sh
+    $ docker/settings.sh
 
 composer install、npm install、migrateをコンテナ内で実行
 (時間がかかります。)
@@ -84,6 +85,8 @@ localhost:8001にアクセス
 # エラーが出た場合
     $ docker logs [コンテナID or コンテナ名]
 
+# /dockerに移動せずに実行
+    $ docks -f ./docker/docker-compose.yaml up -d
 
 
 

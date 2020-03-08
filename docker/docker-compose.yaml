@@ -18,11 +18,11 @@ services:
     php:
         container_name: phonoBook.php
         build:
-            context: ./docker/php
+            context: ./php
             dockerfile: Dockerfile.dev
         image: php:phonoBook
         volumes:
-            - ./code:/var/www/html
+            - ../code:/var/www/html
         depends_on:
             - mysql
         networks:
@@ -32,8 +32,8 @@ services:
         container_name: phonoBook.nginx
         image: nginx:1.15.6
         volumes:
-            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-            - ./code:/var/www/html
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - ../code:/var/www/html
         depends_on:
             - php
         ports:

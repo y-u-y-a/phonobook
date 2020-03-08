@@ -4,7 +4,7 @@ FROM php:7.2-fpm
 RUN cd /usr/bin && curl -s http://getcomposer.org/installer | php && ln -s /usr/bin/composer.phar /usr/bin/composer
 
 # Node.js(ver:12)をインストール
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash --
 RUN apt-get install -y nodejs
 
 # ライブラリのインストール
