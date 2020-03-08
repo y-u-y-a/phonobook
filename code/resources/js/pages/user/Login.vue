@@ -1,5 +1,5 @@
 <template>
-    <div id="login">
+    <div class="form-wrapper">
         <div class="form">
             <div class="title">ログインする</div>
             <div class="form-container">
@@ -55,12 +55,11 @@ export default {
 @import "../../../sass/app.scss";
 // PC
 @media screen and (min-width: 640px) {
-    #login{
+    .form-wrapper{
         width: 50%;
-        margin: 0 auto;
+        margin: 2rem auto 0;
     }
     .form{
-        margin: 2rem 0;
         padding-bottom: 2rem;
         background: $white;
         .title{

@@ -74,7 +74,7 @@ const actions = {
         })
         .catch((error) => {
             alert("登録に失敗しました。")
-            console.log(error.name + ": " + error.message)
+            console.log(error)
         })
     },
 
@@ -93,7 +93,7 @@ const actions = {
         })
         .catch((error) => {
             alert("ログインに失敗しました。")
-            console.log(error.name + ": " + error.message)
+            console.log(error)
         })
     },
 

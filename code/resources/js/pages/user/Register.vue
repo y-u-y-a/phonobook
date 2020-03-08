@@ -1,16 +1,20 @@
 <template>
-    <div id="register">
+    <div class="form-wrapper">
         <div class="form">
             <div class="title">ユーザーを登録する</div>
             <div class="form-container">
                 <FormInput v-model="name" label="名前" placeholder="" />
-                <FormInput v-model="email" label="メールアドレス" placeholder="" />
+                <FormInput v-model="user_name" label="メールアドレス" placeholder="" />
+                <FormSelect :options="[
+                    {name: '@gmail.com', value: '@gmail.com'},
+                    {name: '@yahoo.co.jp', value: '@yahoo.co.jp'}
+                ]" default_value="@yahoo.co.jp" v-model="domain" />
                 <FormInput v-model="password" label="パスワード" placeholder="" />
                 <FormInput v-model="password_confirmation" label="パスワード確認" placeholder="" />
             </div>
             <FormButton @signalEvent="register({
                 name: name,
-                email: email,
+                email: user_name + domain,
                 password: password,
                 password_confirmation: password_confirmation
                 })" button_name="新規登録する" />
@@ -21,6 +25,7 @@
 <script>
 
 import FormInput from "../../components/form/Input.vue"
+import FormSelect from "../../components/form/Select.vue"
 import FormButton from "../../components/form/Button.vue"
 
 import { mapState, mapGetters, mapActions } from "vuex"
@@ -29,15 +34,17 @@ export default {
 
     components: {
         FormInput,
+        FormSelect,
         FormButton
     },
 
     data() {
         return {
-            name: null,
-            email: null,
-            password: null,
-            password_confirmation: null
+            name: "taku",
+            user_name: "taku",
+            domain: "@yahoo.co.jp",
+            password: "takutaku",
+            password_confirmation: "takutaku"
         }
     },
 
@@ -54,12 +61,11 @@ export default {
 
 // PC
 @media screen and (min-width: 640px) {
-    #register{
+    .form-wrapper{
         width: 50%;
-        margin: 0 auto;
+        margin: 2rem auto 0;
     }
     .form{
-        margin: 2rem 0;
         padding-bottom: 2rem;
         background: $white;
         .title{

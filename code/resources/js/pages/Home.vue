@@ -40,7 +40,7 @@ export default {
     },
 
     created(){
-        console.log("ログイン", this.login_user)
+        console.log("ログイン：", this.login_user)
     }
 
 }
