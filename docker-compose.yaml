@@ -17,7 +17,9 @@ services:
 
     php:
         container_name: phonoBook.php
-        build: ./docker/php
+        build:
+            context: ./docker/php
+            dockerfile: Dockerfile.dev
         image: php:phonoBook
         volumes:
             - ./code:/var/www/html
