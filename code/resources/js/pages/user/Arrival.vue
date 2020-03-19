@@ -3,7 +3,6 @@
          <div class="half-box camera-parent">
             <FaceCamera @signalEvent="changeState" />
         </div><!--
-
         --><div class="half-box">
             <div id="officers">
                 <table>

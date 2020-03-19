@@ -13,18 +13,20 @@ services:
         volumes:
             - mysql-data:/var/lib/mysql
         networks:
-            - phonoBook-net
+            - default
 
     php:
         container_name: phonoBook.php
-        build: ./docker/php
+        build:
+            context: ./docker/php
+            dockerfile: Dockerfile.dev
         image: php:phonoBook
         volumes:
             - ./code:/var/www/html
         depends_on:
             - mysql
         networks:
-            - phonoBook-net
+            - default
 
     nginx:
         container_name: phonoBook.nginx
@@ -37,11 +39,12 @@ services:
         ports:
             - 8001:80
         networks:
-            - phonoBook-net
+            - default
 
+# defaultのネットワークを使用
 networks:
-    phonoBook-net:
-        driver: bridge
+    default:
+        external: false
 
 volumes:
-  mysql-data:
+    mysql-data:

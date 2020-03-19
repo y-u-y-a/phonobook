@@ -40,6 +40,7 @@ const actions = {
             var users = response.data
             // 表示には◯×を使用
             users.forEach((user) => {
+
                 if (user.state == 0) {
                     user.state = "×"
                 }else{
@@ -74,7 +75,7 @@ const actions = {
         })
         .catch((error) => {
             alert("登録に失敗しました。")
-            console.log(error.name + ": " + error.message)
+            console.log(error)
         })
     },
 
@@ -93,7 +94,7 @@ const actions = {
         })
         .catch((error) => {
             alert("ログインに失敗しました。")
-            console.log(error.name + ": " + error.message)
+            console.log(error)
         })
     },
 

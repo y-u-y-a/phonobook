@@ -4,30 +4,26 @@ import Vue from "vue"
 
 import App from "./App.vue"
 import "./bootstrap.js"
-import router from "./router.js"
-import store from "./store/index.js"
+import Router from "./router.js"
+import Store from "./store/index.js"
 
 // SSRごとにログインユーザーを取得
 const createApp = async function() {
-    await store.dispatch("User/getLoginUser")
+    await Store.dispatch("User/getLoginUser")
 
     new Vue({
-        router,
-        store,
+        Router,
+        Store,
         render: h => h(App),
     }).$mount("#app")
 }
 createApp()
 
-// new Vue({
-//     router,
-//     store,
-//     render: h => h(App),
-// }).$mount("#app")
 
 // new Vue({
-//     router,
-//     store,
+//     Router,
+//     Store,
 //     el: "#app",
-//     components: {App}, template: "<App/>"
+//     components: { App }, // コンポーネントを登録
+//     template: "<App />" // 呼び出し用のテンプレートを登録
 // })

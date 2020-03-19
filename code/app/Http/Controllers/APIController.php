@@ -9,12 +9,12 @@ class APIController extends Controller
 {
 
     /**
-     * 顔画像データを使ってVRAPIと通信
+     * 顔画像データを使ってVisualRecognitionAPIと通信
      * 取得できた場合は, userを返す
      * できなかった場合は, nullを返す
      *
-     * @param int face_image
-     * @return user|null
+     * @param Int face_image
+     * @return String|Null
      */
     public function authFaceWithVR(Request $request)
     {
