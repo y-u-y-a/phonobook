@@ -7,7 +7,6 @@ const state = {
 // stateの直接参照は非推奨なのでgettersに定義してコール
 const getters = {
 }
-
 // commit("呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期のみ)
 const mutations = {
 
@@ -17,7 +16,11 @@ const mutations = {
 
     setBook(state, book){
         state.book = book
-    }
+    },
+
+    // removeBook(state, book){
+    //     delete state.book
+    // }
 }
 
 // dispatch("モジュール名/呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期/非同期)
@@ -156,8 +159,8 @@ const actions = {
 
 export default {
     namespaced: true,
-    state,
-    getters,
-    mutations,
-    actions
+    state: state,
+    getters: getters,
+    mutations: mutations,
+    actions: actions
 }

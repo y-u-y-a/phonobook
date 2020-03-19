@@ -40,6 +40,7 @@ const actions = {
             var users = response.data
             // 表示には◯×を使用
             users.forEach((user) => {
+
                 if (user.state == 0) {
                     user.state = "×"
                 }else{

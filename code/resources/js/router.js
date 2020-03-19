@@ -20,6 +20,7 @@ import BookShow from "./pages/book/Show"
 // VueRouterプラグインを使用→これによって<RouterView />コンポーネントなどを使うことができる
 Vue.use(VueRouter)
 
+// ページ遷移URL一覧
 const routes = [
     { path: "/", component: Home },
 
@@ -37,11 +38,7 @@ const routes = [
     { path: "/book/Show/:id", component: BookShow },
 ]
 
-// VueRouterインスタンスを作成
-const router = new VueRouter({
+export default new VueRouter({
     mode: "history", //パスに#が付かなくなる
     routes
 })
-
-// VueRouterインスタンスをエクスポート
-export default router

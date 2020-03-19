@@ -73,13 +73,13 @@ composer install、npm install、migrateをコンテナ内で実行
 localhost:8001にアクセス
 
 
-# 4. アセットを編集する場合、コンテナでコンパイルを実行
+# 4. アセットを編集する場合、コンテナでコンパイルを実行(デタッチモードで実行できる？)
     $ docker exec -it phonoBook.php bash
     $ npm run watch
 
 
 # 5. IBMのVisualRecognitionの登録
-
+各自で登録
 
 
 # エラーが出た場合

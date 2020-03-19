@@ -7,7 +7,7 @@ import Book from "./book.js"
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
 
   // mapStateで呼出すnamespaceに対応
   modules: {
@@ -15,5 +15,3 @@ const store = new Vuex.Store({
     Book
   }
 })
-
-export default store
