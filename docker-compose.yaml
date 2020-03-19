@@ -10,6 +10,7 @@ services:
             MYSQL_ROOT_PASSWORD: root
         ports:
             - 4306:3306
+        # バインドマウント
         volumes:
             - mysql-data:/var/lib/mysql
         networks:
@@ -46,5 +47,10 @@ networks:
     default:
         external: false
 
+# デフォルトだと無名のVolume(データの永続化領域)が生成してしまうので明示
+# servicesで指定するvolumes(バインドマウント)とは無関係
+# external:で外部で作成しているプロジェクト用MySQLのボリュームを指定
 volumes:
     mysql-data:
+        external:
+            name: project-mysql

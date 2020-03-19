@@ -59465,8 +59465,8 @@ var createApp = /*#__PURE__*/function () {
 
           case 2:
             new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
-              Router: _router_js__WEBPACK_IMPORTED_MODULE_4__["default"],
-              Store: _store_index_js__WEBPACK_IMPORTED_MODULE_5__["default"],
+              router: _router_js__WEBPACK_IMPORTED_MODULE_4__["default"],
+              store: _store_index_js__WEBPACK_IMPORTED_MODULE_5__["default"],
               render: function render(h) {
                 return h(_App_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
               }
