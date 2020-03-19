@@ -12,8 +12,8 @@ const createApp = async function() {
     await Store.dispatch("User/getLoginUser")
 
     new Vue({
-        Router,
-        Store,
+        router: Router,
+        store: Store,
         render: h => h(App),
     }).$mount("#app")
 }
