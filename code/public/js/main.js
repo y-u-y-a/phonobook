@@ -2800,7 +2800,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -59466,8 +59465,8 @@ var createApp = /*#__PURE__*/function () {
 
           case 2:
             new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
-              router: _router_js__WEBPACK_IMPORTED_MODULE_4__["default"],
-              store: _store_index_js__WEBPACK_IMPORTED_MODULE_5__["default"],
+              Router: _router_js__WEBPACK_IMPORTED_MODULE_4__["default"],
+              Store: _store_index_js__WEBPACK_IMPORTED_MODULE_5__["default"],
               render: function render(h) {
                 return h(_App_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
               }
@@ -59487,15 +59486,11 @@ var createApp = /*#__PURE__*/function () {
 }();
 
 createApp(); // new Vue({
-//     router,
-//     store,
-//     render: h => h(App),
-// }).$mount("#app")
-// new Vue({
-//     router,
-//     store,
+//     Router,
+//     Store,
 //     el: "#app",
-//     components: {App}, template: "<App/>"
+//     components: { App }, // コンポーネントを登録
+//     template: "<App />" // 呼び出し用のテンプレートを登録
 // })
 
 /***/ }),
@@ -60434,7 +60429,8 @@ __webpack_require__.r(__webpack_exports__);
 
  // VueRouterプラグインを使用→これによって<RouterView />コンポーネントなどを使うことができる
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]); // ページ遷移URL一覧
+
 var routes = [{
   path: "/",
   component: _pages_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
@@ -60467,15 +60463,12 @@ var routes = [{
 }, {
   path: "/book/Show/:id",
   component: _pages_book_Show__WEBPACK_IMPORTED_MODULE_11__["default"]
-}]; // VueRouterインスタンスを作成
-
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
+}];
+/* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: "history",
   //パスに#が付かなくなる
   routes: routes
-}); // VueRouterインスタンスをエクスポート
-
-/* harmony default export */ __webpack_exports__["default"] = (router);
+}));
 
 /***/ }),
 
@@ -60509,7 +60502,10 @@ var mutations = {
   },
   setBook: function setBook(state, book) {
     state.book = book;
-  }
+  } // removeBook(state, book){
+  //     delete state.book
+  // }
+
 }; // dispatch("モジュール名/呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期/非同期)
 
 var actions = {
@@ -60761,14 +60757,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
-var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
+/* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   // mapStateで呼出すnamespaceに対応
   modules: {
     User: _user_js__WEBPACK_IMPORTED_MODULE_2__["default"],
     Book: _book_js__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
-});
-/* harmony default export */ __webpack_exports__["default"] = (store);
+}));
 
 /***/ }),
 
