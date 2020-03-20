@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // Authを使うため
 use App\Book;
 use App\User;
+use Validator;
 
 
 
@@ -69,23 +70,31 @@ class BooksController extends Controller
 
 
     /* 登録処理 */
-    public function store(Request $request)
+    public function new(Request $request)
     {
+
         $book = new Book;
+        $validation = $book->validate($request->all());
 
-        $book->isbn = $request->isbn;
-        $book->title = $request->title;
-        $book->volume = $request->volume;
-        $book->series = $request->series;
-        $book->publisher = $request->publisher;
-        $book->pubdate = $request->pubdate;
-        $book->cover = $request->cover;
-        $book->author = $request->author;
-        $book->detail = $request->detail;
-        $book->state = 0;
+        // 成功した場合
+        if($validation->passes()){
 
-        $book->save();
-        return $book;
+            $book->isbn = $request->isbn;
+            $book->title = $request->title;
+            $book->volume = $request->volume;
+            $book->series = $request->series;
+            $book->publisher = $request->publisher;
+            $book->pubdate = $request->pubdate;
+            $book->cover = $request->cover;
+            $book->author = $request->author;
+            $book->detail = $request->detail;
+            $book->state = 0;
+            $book->save();
+        }
+
+        // messagesメソッドでエラーメッセージを取得
+        return json_encode($validation->messages());
+        // return response()->json($validation->messages());
     }
 
 
@@ -101,6 +110,7 @@ class BooksController extends Controller
         $book->pubdate = $request->pubdate;
         $book->detail = $request->detail;
         $book->state = $request->state;
+
         $book->save();
         return $book;
     }
