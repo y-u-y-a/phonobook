@@ -60572,10 +60572,16 @@ var actions = {
               };
               _context2.next = 5;
               return axios.post("/api/books", params).then(function (response) {
+                var err = response.data;
+
+                if (err) {
+                  alert(err.isbn);
+                }
+
                 return;
-              })["catch"](function (error) {
-                alert("失敗しました。");
-                console.log(error.name + ": " + error.message);
+              })["catch"](function (e) {
+                alert("エラーが発生しました。");
+                console.log(e);
               });
 
             case 5:

@@ -8,7 +8,7 @@ Route::get("/books/borrowed/{user_id}", "BooksController@getBorrowedBooks")->nam
 Route::get("/books/{id}", "BooksController@show")->name("get.book");
 Route::get("/books/{book_isbn}/borrow/{user_id}", "BooksController@borrow")->name("borrow.book");
 Route::get("/books/return/{id}", "BooksController@return")->name("return.book");
-Route::post("/books", "BooksController@store")->name("store.book");
+Route::post("/books", "BooksController@new")->name("store.book");
 Route::patch("/books", "BooksController@update")->name("update.book");
 Route::delete("/books", "BooksController@destroy")->name("destroy.book");
 
