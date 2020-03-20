@@ -12,10 +12,11 @@ const createApp = async function() {
     await Store.dispatch("User/getLoginUser")
 
     new Vue({
+        el: "#app",
         router: Router,
         store: Store,
         render: h => h(App),
-    }).$mount("#app")
+    })
 }
 createApp()
 
@@ -27,3 +28,10 @@ createApp()
 //     components: { App }, // コンポーネントを登録
 //     template: "<App />" // 呼び出し用のテンプレートを登録
 // })
+
+// render: function(createElement){
+//     return createElement(App)
+// }
+// render: function(h){
+//     return h(App)
+// }
