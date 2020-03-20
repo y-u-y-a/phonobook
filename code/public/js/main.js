@@ -59465,12 +59465,13 @@ var createApp = /*#__PURE__*/function () {
 
           case 2:
             new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
+              el: "#app",
               router: _router_js__WEBPACK_IMPORTED_MODULE_4__["default"],
               store: _store_index_js__WEBPACK_IMPORTED_MODULE_5__["default"],
               render: function render(h) {
                 return h(_App_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
               }
-            }).$mount("#app");
+            });
 
           case 3:
           case "end":
@@ -59492,6 +59493,12 @@ createApp(); // new Vue({
 //     components: { App }, // コンポーネントを登録
 //     template: "<App />" // 呼び出し用のテンプレートを登録
 // })
+// render: function(createElement){
+//     return createElement(App)
+// }
+// render: function(h){
+//     return h(App)
+// }
 
 /***/ }),
 

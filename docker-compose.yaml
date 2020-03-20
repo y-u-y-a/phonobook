@@ -47,10 +47,17 @@ networks:
     default:
         external: false
 
+#(プロジェクト毎にボリュームを作成する場合)
+volumes:
+    mysql-data:
+        external: false
+
 # デフォルトだと無名のVolume(データの永続化領域)が生成してしまうので明示
 # servicesで指定するvolumes(バインドマウント)とは無関係
 # external:で外部で作成しているプロジェクト用MySQLのボリュームを指定
-volumes:
-    mysql-data:
-        external:
-            name: project-mysql
+# dooker downで削除しても消えない
+# (既存のボリュームを指定する場合)
+# volumes:
+#     mysql-data:
+#         external:
+#             name: project-mysql
