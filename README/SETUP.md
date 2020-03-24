@@ -22,7 +22,7 @@ VISUAL_RECOGNITION_SECRET_KEY, MODEL_IDに関してはIBMのVisualRecognitionの
     $ chmod 755 docker/settings.sh
     $ docker/settings.sh
 
-composer install, npm install, migrateをコンテナ内で実行
+composer install(venderが無いので), npm install, migrateをコンテナ内で実行
 (時間がかかります。)
 
 
