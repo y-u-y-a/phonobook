@@ -11063,27 +11063,43 @@ a:hover {
 }
 
 .c-base {
-  color: #fff !important;
+  color: #F2F2F2 !important;
 }
 
 .bg-base {
-  background: #fff !important;
+  background: #F2F2F2 !important;
 }
 
 .c-main {
-  color: #fff !important;
+  color: #04B431 !important;
 }
 
 .bg-main {
-  background: #fff !important;
+  background: #04B431 !important;
+}
+
+.c-main-half {
+  color: #81e99b !important;
+}
+
+.bg-main-half {
+  background: #81e99b !important;
 }
 
 .c-accent {
-  color: #fff !important;
+  color: #FA5858 !important;
 }
 
 .bg-accent {
-  background: #fff !important;
+  background: #FA5858 !important;
+}
+
+.c-accent-half {
+  color: #F8E0E0 !important;
+}
+
+.bg-accent-half {
+  background: #F8E0E0 !important;
 }
 
 /*====================
@@ -11422,6 +11438,11 @@ padding系
 .pt-05,
 .py-05 {
   padding-top: 0.5rem !important;
+}
+
+.pt-1,
+.py-1 {
+  padding-top: 1rem !important;
 }
 
 .pt-1,

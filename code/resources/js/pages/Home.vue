@@ -1,41 +1,54 @@
 <template>
-    <div>
-        <ul v-if="is_admin">
-            <AdminButton button_name="ユーザーを登録する" path="/user/Register" />
-            <AdminButton button_name="本を登録する" path="/book/New" />
-            <AdminButton button_name="本を更新・削除する" path="/book/Edit" />
-        </ul>
-        <ul v-else-if="!is_admin">
-            <UserButton button_name="出勤する or 退勤する" path="/user/Arrival" />
-            <UserButton button_name="本を借りる" path="/book/Borrow" />
-            <UserButton button_name="本の一覧をみる" path="/book/Index" />
-            <template v-if="login_user == ''">
-                <UserButton button_name="ログインする" path="/user/Login" />
-            </template>
-            <template v-else>
-                <UserButton button_name="マイページ" :path="'/user/Show/'+login_user.id" />
-            </template>
-        </ul>
+    <div class="wm-40 pt-5">
+        <!-- 管理ユーザー -->
+        <div v-if="is_admin" id="admin-actions">
+            <TopButton
+                button_name="ユーザーを登録する"
+                path="/user/Register" />
+            <TopButton
+                button_name="本を登録する"
+                path="/book/New" />
+            <TopButton
+                button_name="本を更新・削除する"
+                path="/book/Edit" />
+        </div>
+        <!-- 一般ユーザー -->
+        <div v-else-if="!is_admin" id="user-actions">
+            <TopButton
+                button_name="出勤する or 退勤する"
+                path="/user/Arrival" />
+            <TopButton
+                button_name="本を借りる"
+                path="/book/Borrow" />
+            <TopButton
+                button_name="本の一覧をみる"
+                path="/book/Index" />
+            <TopButton
+                v-if="login_user == ''"
+                button_name="ログインする"
+                path="/user/Login" />
+            <TopButton
+                v-else
+                button_name="マイページ"
+                :path="'/user/Show/'+login_user.id" />
+        </div>
     </div>
 </template>
 
 
 <script>
 
-import UserButton from "../components/top/UserButton"
-import AdminButton from "../components/top/AdminButton"
+import TopButton from "../components/top/Button"
 
 import { mapState, mapGetters, mapActions } from "vuex"
 
 export default {
 
     components: {
-        UserButton,
-        AdminButton
+        TopButton
     },
 
     computed: {
-        // スプレッド演算子(this.$store.stateの代替)
         ...mapState("User", ["login_user", "is_admin"]),
     },
 
@@ -49,12 +62,30 @@ export default {
 
 <style lang="scss" scoped>
 
+@import "../../sass/app.scss";
+
 // PC
 @media screen and (min-width: 640px) {
-    ul {
-        width: 40%;
-        margin: 0 auto;
-        padding-top: 100px;
+
+    #user-actions{
+        button {
+            color: $main;
+            border: 1px solid $main;
+        }
+        button:hover{
+            color: $white;
+            background: $main;
+        }
+    }
+    #admin-actions{
+        button {
+            color: $accent;
+            border: 1px solid $accent;
+        }
+        button:hover{
+            color: $white;
+            background: $accent;
+        }
     }
 }
 </style>

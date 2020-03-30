@@ -18,15 +18,22 @@ $black:#2E2E2E;
 .c-black{ color: $black !important; }
 .bg-black{ background: $black !important; }
 
-$base: #fff;
+$base: #F2F2F2;
 .c-base{ color: $base !important; }
 .bg-base{ background: $base !important; }
 
-$main: #fff;
+$main: #04B431;
 .c-main{ color: $main !important; }
 .bg-main{ background: $main !important; }
 
-$accent: #fff;
+$main-half: rgb(129, 233, 155);
+.c-main-half{ color: $main-half !important; }
+.bg-main-half{ background: $main-half !important; }
+
+$accent: #FA5858;
 .c-accent{ color: $accent !important; }
 .bg-accent{ background: $accent !important; }
 
+$accent-half: #F8E0E0;
+.c-accent-half{ color: $accent-half !important; }
+.bg-accent-half{ background: $accent-half !important; }
