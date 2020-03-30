@@ -11018,6 +11018,10 @@ a {
   text-decoration: none;
 }
 
+a:hover {
+  text-decoration: none;
+}
+
 .clearfix:after {
   content: ".";
   display: block;
@@ -11041,6 +11045,46 @@ a {
 }
 
 /* End hide from IE-mac */
+
+.c-white {
+  color: #fff !important;
+}
+
+.bg-white {
+  background: #fff !important;
+}
+
+.c-black {
+  color: #2E2E2E !important;
+}
+
+.bg-black {
+  background: #2E2E2E !important;
+}
+
+.c-base {
+  color: #fff !important;
+}
+
+.bg-base {
+  background: #fff !important;
+}
+
+.c-main {
+  color: #fff !important;
+}
+
+.bg-main {
+  background: #fff !important;
+}
+
+.c-accent {
+  color: #fff !important;
+}
+
+.bg-accent {
+  background: #fff !important;
+}
 
 /*====================
 グリッド系
@@ -11100,7 +11144,7 @@ flex系
   justify-content: flex-end !important;
 }
 
-.flex-center {
+.flex-x-center {
   justify-content: center !important;
 }
 
@@ -11115,15 +11159,15 @@ flex系
 /* 縦 */
 
 .flex-top {
-  align-items: space-around !important;
+  align-items: flex-start !important;
 }
 
 .flex-bottom {
-  align-items: space-around !important;
+  align-items: flex-end !important;
 }
 
-.flex-center {
-  align-items: space-around !important;
+.flex-y-center {
+  align-items: center !important;
 }
 
 /* 折り返し */
@@ -11140,13 +11184,11 @@ flex系
   flex-wrap: wrap-reverse !important;
 }
 
-/* 横・折り返し */
+/* 並び・折り返し */
 
 .flex-row-wrap {
   flex-flow: row wrap !important;
 }
-
-/* 縦・折り返し */
 
 .flex-column-wrap {
   flex-flow: column wrap !important;
@@ -11286,207 +11328,171 @@ padding系
   padding: 6rem !important;
 }
 
-/* 左右 */
-
-.px-025 {
-  padding: 0 0.25rem !important;
-}
-
-.px-05 {
-  padding: 0 0.5rem !important;
-}
-
-.px-1 {
-  padding: 0 1rem !important;
-}
-
-.px-2 {
-  padding: 0 2rem !important;
-}
-
-.px-3 {
-  padding: 0 3rem !important;
-}
-
-.px-4 {
-  padding: 0 4rem !important;
-}
-
-.px-5 {
-  padding: 0 5rem !important;
-}
-
-.px-6 {
-  padding: 0 6rem !important;
-}
-
-/* 上下 */
-
-.py-025 {
-  padding: 0.25rem 0 !important;
-}
-
-.py-05 {
-  padding: 0.5rem 0 !important;
-}
-
-.py-1 {
-  padding: 1rem 0 !important;
-}
-
-.py-2 {
-  padding: 2rem 0 !important;
-}
-
-.py-3 {
-  padding: 3rem 0 !important;
-}
-
-.py-4 {
-  padding: 4rem 0 !important;
-}
-
-.py-5 {
-  padding: 5rem 0 !important;
-}
-
-.py-6 {
-  padding: 6rem 0 !important;
-}
-
 /* 左 */
 
-.pl-025 {
+.pl-025,
+.px-025 {
   padding-left: 0.25rem !important;
 }
 
-.pl-05 {
+.pl-05,
+.px-05 {
   padding-left: 0.5rem !important;
 }
 
-.pl-1 {
+.pl-1,
+.px-1 {
   padding-left: 1rem !important;
 }
 
-.pl-2 {
+.pl-2,
+.px-2 {
   padding-left: 2rem !important;
 }
 
-.pl-3 {
+.pl-3,
+.px-3 {
   padding-left: 3rem !important;
 }
 
-.pl-4 {
+.pl-4,
+.px-4 {
   padding-left: 4rem !important;
 }
 
-.pl-5 {
+.pl-5,
+.px-5 {
   padding-left: 5rem !important;
 }
 
-.pl-6 {
+.pl-6,
+.px-6 {
   padding-left: 6rem !important;
 }
 
 /* 右 */
 
-.pr-025 {
+.pr-025,
+.px-025 {
   padding-right: 0.25rem !important;
 }
 
-.pr-05 {
+.pr-05,
+.px-05 {
   padding-right: 0.5rem !important;
 }
 
-.pr-1 {
+.pr-1,
+.px-1 {
   padding-right: 1rem !important;
 }
 
-.pr-2 {
+.pr-2,
+.px-2 {
   padding-right: 2rem !important;
 }
 
-.pr-3 {
+.pr-3,
+.px-3 {
   padding-right: 3rem !important;
 }
 
-.pr-4 {
+.pr-4,
+.px-4 {
   padding-right: 4rem !important;
 }
 
-.pr-5 {
+.pr-5,
+.px-5 {
   padding-right: 5rem !important;
 }
 
-.pr-6 {
+.pr-6,
+.px-6 {
   padding-right: 6rem !important;
 }
 
 /* 上 */
 
-.pt-025 {
+.pt-025,
+.py-025 {
   padding-top: 0.25rem !important;
 }
 
-.pt-05 {
+.pt-05,
+.py-05 {
   padding-top: 0.5rem !important;
 }
 
-.pt-1 {
+.pt-1,
+.py-1 {
   padding-top: 1rem !important;
 }
 
-.pt-2 {
+.pt-2,
+.py-2 {
   padding-top: 2rem !important;
 }
 
-.pt-3 {
+.pt-3,
+.py-3 {
   padding-top: 3rem !important;
 }
 
-.pt-4 {
+.pt-4,
+.py-4 {
   padding-top: 4rem !important;
 }
 
-.pt-5 {
+.pt-5,
+.py-5 {
   padding-top: 5rem !important;
 }
 
-.pt-6 {
+.pt-6,
+.py-6 {
   padding-top: 6rem !important;
 }
 
 /* 下 */
 
-.pb-025 {
+.pb-025,
+.py-025 {
   padding-bottom: 0.25rem !important;
 }
 
-.pb-05 {
+.pb-05,
+.py-05 {
   padding-bottom: 0.5rem !important;
 }
 
-.pb-1 {
+.pb-1,
+.py-1 {
   padding-bottom: 1rem !important;
 }
 
-.pb-2 {
+.pb-2,
+.py-2 {
   padding-bottom: 2rem !important;
 }
 
-.pb-3 {
+.pb-3,
+.py-3 {
   padding-bottom: 3rem !important;
 }
 
-.pb-4 {
+.pb-4,
+.py-4 {
   padding-bottom: 4rem !important;
 }
 
-.pb-5 {
+.pb-5,
+.py-5 {
   padding-bottom: 5rem !important;
 }
 
-.pb-6 {
+.pb-6,
+.py-6 {
   padding-bottom: 6rem !important;
 }
 
@@ -11526,208 +11532,240 @@ margin系
   margin: 6rem !important;
 }
 
-/* 左右 */
-
-.mx-025 {
-  margin: 0 0.25rem !important;
-}
-
-.mx-05 {
-  margin: 0 0.5rem !important;
-}
-
-.mx-1 {
-  margin: 0 1rem !important;
-}
-
-.mx-2 {
-  margin: 0 2rem !important;
-}
-
-.mx-3 {
-  margin: 0 3rem !important;
-}
-
-.mx-4 {
-  margin: 0 4rem !important;
-}
-
-.mx-5 {
-  margin: 0 5rem !important;
-}
-
-.mx-6 {
-  margin: 0 6rem !important;
-}
-
-/* 上下 */
-
-.my-025 {
-  margin: 0.25rem 0 !important;
-}
-
-.my-05 {
-  margin: 0.5rem 0 !important;
-}
-
-.my-1 {
-  margin: 1rem 0 !important;
-}
-
-.my-2 {
-  margin: 2rem 0 !important;
-}
-
-.my-3 {
-  margin: 3rem 0 !important;
-}
-
-.my-4 {
-  margin: 4rem 0 !important;
-}
-
-.my-5 {
-  margin: 5rem 0 !important;
-}
-
-.my-6 {
-  margin: 6rem 0 !important;
-}
-
 /* 左 */
 
-.ml-025 {
+.ml-025,
+.mx-025 {
   margin-left: 0.25rem !important;
 }
 
-.ml-05 {
+.ml-05,
+.mx-05 {
   margin-left: 0.5rem !important;
 }
 
-.ml-1 {
+.ml-1,
+.mx-1 {
   margin-left: 1rem !important;
 }
 
-.ml-2 {
+.ml-2,
+.mx-2 {
   margin-left: 2rem !important;
 }
 
-.ml-3 {
+.ml-3,
+.mx-3 {
   margin-left: 3rem !important;
 }
 
-.ml-4 {
+.ml-4,
+.mx-4 {
   margin-left: 4rem !important;
 }
 
-.ml-5 {
+.ml-5,
+.mx-5 {
   margin-left: 5rem !important;
 }
 
-.ml-6 {
+.ml-6,
+.mx-6 {
   margin-left: 6rem !important;
 }
 
 /* 右 */
 
-.mr-025 {
+.mr-025,
+.mx-025 {
   margin-right: 0.25rem !important;
 }
 
-.mr-05 {
+.mr-05,
+.mx-05 {
   margin-right: 0.5rem !important;
 }
 
-.mr-1 {
+.mr-1,
+.mx-1 {
   margin-right: 1rem !important;
 }
 
-.mr-2 {
+.mr-2,
+.mx-2 {
   margin-right: 2rem !important;
 }
 
-.mr-3 {
+.mr-3,
+.mx-3 {
   margin-right: 3rem !important;
 }
 
-.mr-4 {
+.mr-4,
+.mx-4 {
   margin-right: 4rem !important;
 }
 
-.mr-5 {
+.mr-5,
+.mx-5 {
   margin-right: 5rem !important;
 }
 
-.mr-6 {
+.mr-6,
+.mx-6 {
   margin-right: 6rem !important;
 }
 
 /* 上 */
 
-.mt-025 {
+.mt-025,
+.my-025 {
   margin-top: 0.25rem !important;
 }
 
-.mt-05 {
+.mt-05,
+.my-05 {
   margin-top: 0.5rem !important;
 }
 
-.mt-1 {
+.mt-1,
+.my-1 {
   margin-top: 1rem !important;
 }
 
-.mt-2 {
+.mt-2,
+.my-2 {
   margin-top: 2rem !important;
 }
 
-.mt-3 {
+.mt-3,
+.my-3 {
   margin-top: 3rem !important;
 }
 
-.mt-4 {
+.mt-4,
+.my-4 {
   margin-top: 4rem !important;
 }
 
-.mt-5 {
+.mt-5,
+.my-5 {
   margin-top: 5rem !important;
 }
 
-.mt-6 {
+.mt-6,
+.my-6 {
   margin-top: 6rem !important;
 }
 
 /* 下 */
 
-.mb-025 {
+.mb-025,
+.my-025 {
   margin-bottom: 0.25rem !important;
 }
 
-.mb-05 {
+.mb-05,
+.my-05 {
   margin-bottom: 0.5rem !important;
 }
 
-.mb-1 {
+.mb-1,
+.my-1 {
   margin-bottom: 1rem !important;
 }
 
-.mb-2 {
+.mb-2,
+.my-2 {
   margin-bottom: 2rem !important;
 }
 
-.mb-3 {
+.mb-3,
+.my-3 {
   margin-bottom: 3rem !important;
 }
 
-.mb-4 {
+.mb-4,
+.my-4 {
   margin-bottom: 4rem !important;
 }
 
-.mb-5 {
+.mb-5,
+.my-5 {
   margin-bottom: 5rem !important;
 }
 
-.mb-6 {
+.mb-6,
+.my-6 {
   margin-bottom: 6rem !important;
+}
+
+/*====================
+font系
+=====================*/
+
+[class*="b-font"] {
+  font-weight: bold !important;
+}
+
+[class*="font-12"] {
+  font-size: 12px !important;
+}
+
+[class*="font-14"] {
+  font-size: 14px !important;
+}
+
+[class*="font-16"] {
+  font-size: 16px !important;
+}
+
+[class*="font-18"] {
+  font-size: 18px !important;
+}
+
+[class*="font-20"] {
+  font-size: 20px !important;
+}
+
+[class*="font-22"] {
+  font-size: 22px !important;
+}
+
+[class*="font-24"] {
+  font-size: 24px !important;
+}
+
+[class*="font-26"] {
+  font-size: 26px !important;
+}
+
+[class*="font-28"] {
+  font-size: 28px !important;
+}
+
+[class*="font-30"] {
+  font-size: 30px !important;
+}
+
+[class*="font-32"] {
+  font-size: 32px !important;
+}
+
+[class*="font-34"] {
+  font-size: 34px !important;
+}
+
+[class*="font-36"] {
+  font-size: 36px !important;
+}
+
+[class*="font-38"] {
+  font-size: 38px !important;
+}
+
+[class*="font-40"] {
+  font-size: 40px !important;
 }
 
 /* モーダル用 */
@@ -11740,6 +11778,10 @@ margin系
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.pointer {
+  cursor: pointer !important;
 }
 
 html {
