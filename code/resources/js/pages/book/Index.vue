@@ -1,7 +1,9 @@
 <template>
-    <BooksList page_title="本の一覧" :books=all_books>
+    <BooksList
+        page_title="本の一覧"
+        :books=all_books >
         <!-- BookListのbook-indexに挿入/slotPlopsでデータ取得 -->
-        <div slot="book-index" slot-scope="slotPlops" class="state">
+        <div slot="book-index" slot-scope="slotPlops" class="b-font-18 letter-2">
             <div v-if="slotPlops.book.state==0" class="ok">貸出し可能</div>
             <div v-else class="ng">貸出し中</div>
         </div>
@@ -39,11 +41,6 @@ export default {
 
 @import "../../../sass/app.scss";
 
-.state {
-    font-size: 18px;
-    font-weight: bold;
-    letter-spacing: 2px;
-}
 .ok {
     color: $green;
 }

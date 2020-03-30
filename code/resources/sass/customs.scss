@@ -13,36 +13,36 @@
     margin: 0 !important;
 }
 .row > [class*="col-"] {
-    padding: 0 !important;
-    padding: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }
 /*====================
 flex系
 =====================*/
 [class*="flex"]{ display: flex !important; }
 /* 並び */
-.flex-row{  flex-direction: row !important; }
-.flex-column{  flex-direction: column !important; }
-.flex-reverse{  flex-direction: reverse !important; }
+.flex-row{ flex-direction: row !important; }
+.flex-column{ flex-direction: column !important; }
+.flex-reverse{ flex-direction: reverse !important; }
 /* 横 */
-.flex-left{  justify-content: flex-start !important; }
-.flex-right{  justify-content: flex-end !important; }
-.flex-x-center{  justify-content: center !important; }
-.flex-x-between{  justify-content: space-between !important; }
+.flex-left{ justify-content: flex-start !important; }
+.flex-right{ justify-content: flex-end !important; }
+.flex-x-center{ justify-content: center !important; }
+.flex-x-between{ justify-content: space-between !important; }
 .flex-x-around{ justify-content: space-around !important; }
 /* 縦 */
-.flex-top{  align-items: flex-start !important; }
-.flex-bottom{  align-items: flex-end !important; }
-.flex-y-center{  align-items: center !important; }
+.flex-top{ align-items: flex-start !important; }
+.flex-bottom{ align-items: flex-end !important; }
+.flex-y-center{ align-items: center !important; }
 .flex-y-between{ align-content: space-between !important; }
 .flex-y-around{ align-content: space-around !important; }
 /* 折り返し */
-.flex-wrap{  flex-wrap: wrap !important; }
-.flex-nowrap{  flex-wrap: nowrap !important; }
-.flex-wrap-reverse{  flex-wrap: wrap-reverse !important; }
+.flex-wrap{ flex-wrap: wrap !important; }
+.flex-nowrap{ flex-wrap: nowrap !important; }
+.flex-wrap-reverse{ flex-wrap: wrap-reverse !important; }
 /* 並び・折り返し */
-.flex-row-wrap{  flex-flow: row wrap !important; }
-.flex-column-wrap{  flex-flow: column wrap !important; }
+.flex-row-wrap{ flex-flow: row wrap !important; }
+.flex-column-wrap{ flex-flow: column wrap !important; }
 /*====================
 width系
 =====================*/
@@ -179,6 +179,9 @@ font系
 [class*="font-36"]{ font-size: 36px !important; }
 [class*="font-38"]{ font-size: 38px !important; }
 [class*="font-40"]{ font-size: 40px !important; }
+/* 文字幅 */
+.letter-2{ letter-spacing: 2px !important; }
+.letter-5{ letter-spacing: 5px !important; }
 
 /* モーダル用 */
 .modal-default{
@@ -191,4 +194,5 @@ font系
   background-color:rgba(0,0,0,0.5);
 }
 
+.dash-bottom{ border-bottom: 1px dashed $silver !important; }
 .pointer {cursor: pointer !important;}

@@ -1,23 +1,32 @@
 <template>
-    <div class="flex">
-        <div class="half-box">
+    <div class="row">
+        <div class="col-6 mt-2">
             <!-- 顔 -->
             <FaceCamera @signalEvent="getAuthUser" />
             <!-- バーコード -->
             <LiveCamera @signalEvent="getBookWithOpenBD" />
         </div>
 
-        <div class="half-box">
-            <div id="auth-result">
-                <div class="borrower">
+        <div class="col-6 mt-2">
+            <div class="wm-90 py-2 bg-white text-center">
+                <div class="borrower pb-1 b-font">
                     <span v-if="!auth_user" class="disable">貸出し不可：カメラ撮影が必要です</span>
                     <span v-else-if="auth_user" class="able">貸出し可能：{{auth_user.name}}</span>
                 </div>
-                <div class="book-image">
-                    <img v-if="book.title" :src="book.cover" :alt="book.title" class="able" />
-                    <img v-else-if="!book.title" :src="book.cover" alt="No Image" class="disable" />
+                <div class="book-image pb-2 b-font-16">
+                    <img
+                        v-if="book.title"
+                        :src="book.cover"
+                        :alt="book.title"
+                        class="able" />
+                    <img
+                        v-else-if="!book.title"
+                        :src="book.cover"
+                        alt="No Image"
+                        class="disable" />
                 </div>
-                <FormButton  button_name="この本を借りる" class="button"
+                <FormButton
+                    button_name="この本を借りる"
                     @signalEvent="borrowBook({
                         isbn: book.isbn,
                         auth_user: auth_user,
@@ -108,39 +117,24 @@ export default {
 
 @import "../../../sass/app.scss";
 
-#auth-result{
-    width: 90%;
-    margin: 2rem auto 0;
-    padding: 2rem 0;
-    background: $white;
-    .borrower{
-        padding-bottom: 1rem;
-        text-align: center;
-        .disable {
-            color: $red;
-            font-weight: bold;
-            font-size: 16px;
-        }
-        .able {
-            color: $green;
-            font-weight: bold;
-            font-size: 16px;
-        }
+.disable {
+    color: $red;
+}
+.able {
+    color: $green;
+}
+.book-image{
+    img {
+        display: block;
+        height: 375px;
+        width: 280px;
+        margin: 0 auto;
     }
-    .book-image{
-        padding-bottom: 2rem;
-        img {
-            display: block;
-            height: 375px;
-            width: 280px;
-            margin: 0 auto;
-        }
-        .disable {
-            border: 5px solid $red;
-        }
-        .able {
-            border: 5px solid $green;
-        }
+    .disable {
+        border: 5px solid $red;
+    }
+    .able {
+        border: 5px solid $green;
     }
 }
 </style>

@@ -1,28 +1,52 @@
 <template>
-    <div class="flex">
-        <div class="half-box">
+    <div class="row">
+        <div class="col-6">
             <Camera />
             <LiveCamera @signalEvent="getBookWithOpenBD" />
         </div>
 
-        <div class="half-box">
-            <div class="flex container">
-                <div class="half-box">
-                    <ul>
-                        <li><FormInput v-model="book.title" label="タイトル" placeholder="8文字以上" /></li>
-                        <li><FormInput v-model="book.author" label="著者" placeholder="8文字以上" /></li>
-                        <li><FormInput v-model="book.volume" label="巻" placeholder="8文字以上" /></li>
-                        <li><FormInput v-model="book.series" label="シリーズ" placeholder="8文字以上" /></li>
-                        <li><FormInput v-model="book.publisher" label="出版" placeholder="8文字以上" /></li>
-                        <li><FormInput v-model="book.pubdate" label="出版日" placeholder="8文字以上" /></li>
-                        <li><FormTextarea v-model="book.detail" label="詳細" /></li>
-                    </ul>
+        <div class="col-6">
+            <div class="row wm-90 mt-2 p-1 bg-white">
+                <div class="col-6">
+                    <FormInput
+                        v-model="book.title"
+                        label="タイトル"
+                        placeholder="8文字以上" />
+                    <FormInput
+                        v-model="book.author"
+                        label="著者"
+                        placeholder="8文字以上" />
+                    <FormInput
+                        v-model="book.volume"
+                        label="巻"
+                        placeholder="8文字以上" />
+                    <FormInput
+                        v-model="book.series"
+                        label="シリーズ"
+                        placeholder="8文字以上" />
+                    <FormInput
+                        v-model="book.publisher"
+                        label="出版"
+                        placeholder="8文字以上" />
+                    <FormInput
+                        v-model="book.pubdate"
+                        label="出版日"
+                        placeholder="8文字以上" />
+                    <!-- <FormTextarea
+                        v-model="book.detail"
+                        label="詳細" /> -->
                 </div>
-                <div class="half-box">
-                    <img :src="book.cover" :alt="book.title">
-                    <div class="button-wrapper">
-                        <FormButton @signalEvent="registerBook(book)" button_name="登録する" class="button" />
-                    </div>
+                <div class="col-6 text-center">
+                    <img
+                        :src="book.cover"
+                        :alt="book.title"
+                        height="380px"
+                        width="100%"
+                        class="d-block">
+                    <FormButton
+                        @signalEvent="registerBook(book)"
+                        button_name="登録する"
+                        class="mt-4" />
                 </div>
             </div>
         </div>
@@ -127,26 +151,5 @@ export default {
     button{
         display: none;
     }
-}
-
-.container{
-    width: 90%;
-    margin: 2rem auto 0;
-    padding: 2rem 0 4rem;
-    background-color: $white;
-    .half-box{
-        margin: 0 1rem;
-    }
-}
-img {
-    display: block;
-    height: 380px;
-    width: 100%;
-    margin: 0 auto;
-    // border: 2px solid $green;
-}
-.button-wrapper{
-    display: block;
-    margin-top: 4rem;
 }
 </style>

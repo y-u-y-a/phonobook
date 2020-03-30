@@ -11026,30 +11026,6 @@ button:focus {
   outline: 0;
 }
 
-.clearfix:after {
-  content: ".";
-  display: block;
-  height: 0;
-  clear: both;
-  visibility: hidden;
-}
-
-.clearfix {
-  display: inline-table;
-}
-
-/* Hides from IE-mac \*/
-
-* html .clearfix {
-  height: 1%;
-}
-
-.clearfix {
-  display: block;
-}
-
-/* End hide from IE-mac */
-
 .c-white {
   color: #fff !important;
 }
@@ -11128,8 +11104,8 @@ button:focus {
 }
 
 .row > [class*="col-"] {
-  padding: 0 !important;
-  padding: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /*====================
@@ -11801,6 +11777,16 @@ font系
   font-size: 40px !important;
 }
 
+/* 文字幅 */
+
+.letter-2 {
+  letter-spacing: 2px !important;
+}
+
+.letter-5 {
+  letter-spacing: 5px !important;
+}
+
 /* モーダル用 */
 
 .modal-default {
@@ -11811,6 +11797,10 @@ font系
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dash-bottom {
+  border-bottom: 1px dashed silver !important;
 }
 
 .pointer {

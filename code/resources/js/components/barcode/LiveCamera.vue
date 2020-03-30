@@ -1,5 +1,5 @@
 <template>
-    <div id="live-camera" class="live-camera"></div>
+    <div id="live-camera" class="d-none"></div>
 </template>
 
 
@@ -63,7 +63,4 @@ export default {
 
 @import "../../../sass/app.scss";
 
-.live-camera {
-    display: none;
-}
 </style>
