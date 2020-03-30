@@ -1,12 +1,16 @@
 <template>
-    <div id="users-books">
-        <div class="form">
-            <FormButton @signalEvent="logout" button_name="ログアウトする" />
-        </div>
-        <BooksList :page_title="`${login_user.name}さんが現在借りている本`" :books=borrowed_books>
+    <div>
+        <FormButton
+            @signalEvent="logout"
+            button_name="ログアウトする" />
+        <BooksList
+            :page_title="`${login_user.name}さんが現在借りている本`"
+            :books=borrowed_books >
             <!-- BookListのuser-showにマウント/bookを取得 -->
-            <div slot="user-show" slot-scope="{ book }">
-                <FormButton @signalEvent="returnBook(book)" button_name="返却する" />
+            <div slot="user-show" slot-scope="{ book }" >
+                <FormButton
+                    @signalEvent="returnBook(book)"
+                    button_name="返却する" />
             </div>
         </BooksList>
     </div>
@@ -30,7 +34,7 @@ export default {
     data() {
         return {
             borrowed_books: []
-        };
+        }
     },
 
     computed: {
@@ -49,13 +53,13 @@ export default {
         // 借りている本を取得
         async getBorrowedBooks() {
 
-            await axios.get("/api/books/borrowed/" + this.login_user.id)
+            await axios.get(`/api/books/borrowed/${this.login_user.id}`)
             .then((response) => {
                 this.borrowed_books = response.data
             })
             .catch((error) => {
                 alert("エラーが発生しました。")
-                console.log(error.name + ": " + error.message)
+                console.log(error.name)
             })
         }
     }
