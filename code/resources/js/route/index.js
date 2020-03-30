@@ -3,18 +3,18 @@ import Vue from "vue"
 import VueRouter from "vue-router"
 
 
-import Home from "./pages/Home"
+import Home from "../pages/Home"
 // User関係
-import UserRegister from "./pages/user/Register"
-import UserLogin from "./pages/user/Login"
-import UserArrival from "./pages/user/Arrival"
-import UserShow from "./pages/user/Show"
+import UserRegister from "../pages/user/Register"
+import UserLogin from "../pages/user/Login"
+import UserArrival from "../pages/user/Arrival"
+import UserShow from "../pages/user/Show"
 // Book関係
-import BookNew from "./pages/book/New"
-import BookEdit from "./pages/book/Edit"
-import BookIndex from "./pages/book/Index"
-import BookBorrow from "./pages/book/Borrow"
-import BookShow from "./pages/book/Show"
+import BookNew from "../pages/book/New"
+import BookEdit from "../pages/book/Edit"
+import BookIndex from "../pages/book/Index"
+import BookBorrow from "../pages/book/Borrow"
+import BookShow from "../pages/book/Show"
 
 
 // VueRouterプラグインを使用→これによって<RouterView />コンポーネントなどを使うことができる

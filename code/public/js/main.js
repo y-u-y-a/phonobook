@@ -59439,7 +59439,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
 /* harmony import */ var _bootstrap_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./bootstrap.js */ "./resources/js/bootstrap.js");
-/* harmony import */ var _router_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./router.js */ "./resources/js/router.js");
+/* harmony import */ var _route_index_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./route/index.js */ "./resources/js/route/index.js");
 /* harmony import */ var _store_index_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/index.js */ "./resources/js/store/index.js");
 
 
@@ -59466,7 +59466,7 @@ var createApp = /*#__PURE__*/function () {
           case 2:
             new vue__WEBPACK_IMPORTED_MODULE_1___default.a({
               el: "#app",
-              router: _router_js__WEBPACK_IMPORTED_MODULE_4__["default"],
+              router: _route_index_js__WEBPACK_IMPORTED_MODULE_4__["default"],
               store: _store_index_js__WEBPACK_IMPORTED_MODULE_5__["default"],
               render: function render(h) {
                 return h(_App_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
@@ -60398,10 +60398,10 @@ function getCookieValue(searchKey) {
 
 /***/ }),
 
-/***/ "./resources/js/router.js":
-/*!********************************!*\
-  !*** ./resources/js/router.js ***!
-  \********************************/
+/***/ "./resources/js/route/index.js":
+/*!*************************************!*\
+  !*** ./resources/js/route/index.js ***!
+  \*************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -60410,16 +60410,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _pages_Home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/Home */ "./resources/js/pages/Home.vue");
-/* harmony import */ var _pages_user_Register__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/user/Register */ "./resources/js/pages/user/Register.vue");
-/* harmony import */ var _pages_user_Login__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/user/Login */ "./resources/js/pages/user/Login.vue");
-/* harmony import */ var _pages_user_Arrival__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/user/Arrival */ "./resources/js/pages/user/Arrival.vue");
-/* harmony import */ var _pages_user_Show__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/user/Show */ "./resources/js/pages/user/Show.vue");
-/* harmony import */ var _pages_book_New__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/book/New */ "./resources/js/pages/book/New.vue");
-/* harmony import */ var _pages_book_Edit__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/book/Edit */ "./resources/js/pages/book/Edit.vue");
-/* harmony import */ var _pages_book_Index__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/book/Index */ "./resources/js/pages/book/Index.vue");
-/* harmony import */ var _pages_book_Borrow__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/book/Borrow */ "./resources/js/pages/book/Borrow.vue");
-/* harmony import */ var _pages_book_Show__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/book/Show */ "./resources/js/pages/book/Show.vue");
+/* harmony import */ var _pages_Home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../pages/Home */ "./resources/js/pages/Home.vue");
+/* harmony import */ var _pages_user_Register__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../pages/user/Register */ "./resources/js/pages/user/Register.vue");
+/* harmony import */ var _pages_user_Login__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../pages/user/Login */ "./resources/js/pages/user/Login.vue");
+/* harmony import */ var _pages_user_Arrival__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../pages/user/Arrival */ "./resources/js/pages/user/Arrival.vue");
+/* harmony import */ var _pages_user_Show__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../pages/user/Show */ "./resources/js/pages/user/Show.vue");
+/* harmony import */ var _pages_book_New__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../pages/book/New */ "./resources/js/pages/book/New.vue");
+/* harmony import */ var _pages_book_Edit__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../pages/book/Edit */ "./resources/js/pages/book/Edit.vue");
+/* harmony import */ var _pages_book_Index__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../pages/book/Index */ "./resources/js/pages/book/Index.vue");
+/* harmony import */ var _pages_book_Borrow__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../pages/book/Borrow */ "./resources/js/pages/book/Borrow.vue");
+/* harmony import */ var _pages_book_Show__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../pages/book/Show */ "./resources/js/pages/book/Show.vue");
 // パッケージ
 
 
