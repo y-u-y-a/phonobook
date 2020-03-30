@@ -11022,6 +11022,10 @@ a:hover {
   text-decoration: none;
 }
 
+button:focus {
+  outline: 0;
+}
+
 .clearfix:after {
   content: ".";
   display: block;
@@ -11113,7 +11117,6 @@ a:hover {
 .container-xl {
   width: 100%;
   padding: 0 !important;
-  margin: 0 !important;
   margin-right: auto;
   margin-left: auto;
 }
@@ -11121,6 +11124,7 @@ a:hover {
 .row {
   display: flex;
   flex-wrap: wrap;
+  margin: 0 !important;
 }
 
 .row > [class*="col-"] {

@@ -1,11 +1,17 @@
 <template>
-    <!-- buttonクリックで親側のsignalEventを発火させ、親で定義した関数を実行する -->
-    <button @click="issueEvent" type="submit">{{ button_name }}</button>
+    <!-- clickで親側のsignalEventを発火させ、親側のイベント実行 -->
+    <button
+        @click="issueEvent"
+        type="submit"
+        class="rich-button"
+    >{{ button_name }}</button>
 </template>
 
 
 <script>
+
 export default {
+
     props: ["button_name"],
 
     methods: {
@@ -22,11 +28,10 @@ export default {
 
 @import "../../../sass/app.scss";
 
-button {
-    display: block;
+.rich-button {
     width: 150px;
     margin: 0 auto;
-    padding: 0.5rem 0;
+    padding: 1rem 0;
     color: $white;
     font-size: 18px;
     text-decoration: none;
@@ -35,12 +40,11 @@ button {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.29);
     border-bottom: solid 4px #5e7fca;
     cursor: pointer;
-    outline: none;
 }
-button:hover {
+.rich-button:hover {
     opacity: 0.7;
 }
-button:active {
+.rich-button:active {
     -webkit-transform: translateY(4px);
     transform: translateY(4px);
     box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);

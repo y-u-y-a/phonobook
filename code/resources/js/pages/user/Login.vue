@@ -1,19 +1,34 @@
 <template>
-    <div class="form-wrapper">
-        <div class="form">
-            <div class="title">ログインする</div>
-            <div class="form-container">
-                <FormInput v-model="user_name" label="メールアドレス" placeholder="" />
-                <FormSelect :options="[
-                    {name: '@gmail.com', value: '@gmail.com'},
-                    {name: '@yahoo.co.jp', value: '@yahoo.co.jp'}
-                ]" default_value="@yahoo.co.jp" v-model="domain" />
-                <FormInput v-model="password" label="パスワード" placeholder="" />
+    <div class="wm-50 my-2">
+        <div class="pb-2 bg-white">
+            <div class="title py-2 b-font-20 text-center">ログインする</div>
+            <div class="wm-90 pt-2">
+                <FormInput
+                    v-model="user_name"
+                    label="メールアドレス"
+                    placeholder="">
+                    <FormSelect
+                        slot="form-select"
+                        :options="[
+                        {name: '@gmail.com', value: '@gmail.com'},
+                        {name: '@yahoo.co.jp', value: '@yahoo.co.jp'}
+                        ]"
+                        default_value="@yahoo.co.jp"
+                        v-model="domain" />
+                </FormInput>
+                <FormInput
+                    v-model="password"
+                    label="パスワード"
+                    placeholder="" />
             </div>
-            <FormButton @signalEvent="login({
-                email: user_name + domain,
-                password: password
-            })" button_name="ログインする" />
+            <div class="text-center">
+                <FormButton
+                    @signalEvent="login({
+                        email: user_name + domain,
+                        password: password
+                    })"
+                    button_name="ログインする" />
+            </div>
         </div>
     </div>
 </template>
@@ -55,26 +70,9 @@ export default {
 @import "../../../sass/app.scss";
 // PC
 @media screen and (min-width: 640px) {
-    .form-wrapper{
-        width: 50%;
-        margin: 2rem auto 0;
-    }
-    .form{
-        padding-bottom: 2rem;
-        background: $white;
-        .title{
-            padding: 2rem 0;
-            font-size: 20px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            border-bottom: 1px solid $silver;
-            text-align: center;
-        }
-        .form-container{
-            width: 90%;
-            margin: 0 auto;
-            padding-top: 2rem;
-        }
+    .title{
+        letter-spacing: 2px;
+        border-bottom: 1px solid $silver;
     }
 }
 </style>

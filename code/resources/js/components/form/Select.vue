@@ -1,6 +1,7 @@
 <template>
-    <select @change="issueEvent" >
-        <option v-for="option in options"
+    <select @change="issueEvent" class="font-18">
+        <option
+            v-for="option in options"
             :key="option.name"
             :value="option.value"
             :selected="option.name == default_value"
@@ -35,9 +36,5 @@ export default {
 </script>
 
 
-<style scoped>
-select{
-    display: inline-block;
-    font-size: 18px;
-}
+<style lang="scss" scoped>
 </style>

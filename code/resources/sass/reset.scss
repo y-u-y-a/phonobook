@@ -48,7 +48,9 @@ a {
 a:hover {
   text-decoration: none;
 }
-
+button:focus{
+  outline: 0;
+}
 
 
 // clearfix ==========================

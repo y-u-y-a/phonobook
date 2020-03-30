@@ -1,8 +1,18 @@
 <template>
-    <div class="form-input">
-        <label>{{ label }}：</label>
-        <!-- inputされる度に親側の@inputを発火(v-modelのデフォルトイベント) -->
-        <input @input="issueEvent" :value="value" :placeholder=placeholder type="text" required />
+    <div class="container-fluid mb-2 font-18">
+        <label class="row mb-05">{{ label }}</label>
+        <div class="row flex-between">
+            <!-- inputされる度に親側の@inputを発火(v-modelのデフォルトイベント) -->
+            <input
+                @input="issueEvent"
+                :value="value"
+                :placeholder=placeholder
+                type="text"
+                class="col-7"
+                required />
+            <!-- セレクトボックス(email接尾辞) -->
+            <slot name="form-select"></slot>
+        </div>
     </div>
 </template>
 
@@ -24,14 +34,4 @@ export default {
 
 
 <style lang="scss" scoped>
-.form-input {
-    display: inline-block;
-    margin-bottom: 2rem;
-    label {
-        font-size: 18px;
-    }
-    input {
-        font-size: 18px;
-    }
-}
 </style>
