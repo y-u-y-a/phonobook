@@ -1,6 +1,6 @@
 <template>
     <header class="bg-black">
-        <div class="wm-90 flex-between flex-y-center py-2">
+        <div class="wm-90 flex-x-between flex-y-center py-2">
             <RouterLink
                 to="/"
                 tag="h1"

@@ -11168,11 +11168,11 @@ flex系
   justify-content: center !important;
 }
 
-.flex-between {
+.flex-x-between {
   justify-content: space-between !important;
 }
 
-.flex-around {
+.flex-x-around {
   justify-content: space-around !important;
 }
 
@@ -11188,6 +11188,14 @@ flex系
 
 .flex-y-center {
   align-items: center !important;
+}
+
+.flex-y-between {
+  align-content: space-between !important;
+}
+
+.flex-y-around {
+  align-content: space-around !important;
 }
 
 /* 折り返し */

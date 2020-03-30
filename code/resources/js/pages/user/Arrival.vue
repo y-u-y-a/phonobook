@@ -1,9 +1,9 @@
 <template>
-    <div class="flex">
-         <div class="half-box camera-parent">
+    <div class="row">
+        <div class="col-6">
             <FaceCamera @signalEvent="changeState" />
-        </div><!--
-        --><div class="half-box">
+        </div>
+        <div class="col-6">
             <div id="officers">
                 <table>
                 <thead>
@@ -86,12 +86,6 @@ export default {
 
 // PC
 @media screen and (min-width: 640px) {
-    .camera-parent{
-        vertical-align: top;
-        .camera{
-            margin-top: 0;
-        }
-    }
     #officers{
         max-height: calc(100vh - 84px);
         overflow: auto;
@@ -101,7 +95,6 @@ export default {
             width: 100%;
             table-layout: fixed;
             border-collapse: separate;
-            // border-spacing: 2px;
         }
         tr,th,td {
             border: 1px solid $silver;

@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid mb-2 font-18">
         <label class="row mb-05">{{ label }}</label>
-        <div class="row flex-between">
+        <div class="row flex-x-between">
             <!-- inputされる度に親側の@inputを発火(v-modelのデフォルトイベント) -->
             <input
                 @input="issueEvent"

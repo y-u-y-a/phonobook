@@ -1,11 +1,19 @@
 <template>
-    <div class="camera">
+    <div class="text-center">
         <!-- カメラによる動画の挿入 -->
-        <video autoplay ref="video" width="100%" height="100%"></video>
+        <video
+            class="mb-2 bg-white"
+            ref="video"
+            width="100%"
+            height="100%"
+            autoplay >
+        </video>
         <!-- 切り取った画像を描画 -->
         <canvas ref="canvas"></canvas>
         <!-- 撮影と認証処理 -->
-        <FormButton @signalEvent="takeFace(); authFace()" button_name="顔を認証する" class="button" />
+        <FormButton
+            @signalEvent="takeFace(); authFace()"
+            button_name="顔を認証する" />
     </div>
 </template>
 
@@ -58,7 +66,7 @@ export default {
                 }
             })
             .catch((error) => {
-                console.log(error.name + ": " + error.message)
+                console.log(error)
             })
         },
 
@@ -107,7 +115,7 @@ export default {
             })
             .catch((error) => {
                 alert("エラーが発生しました。")
-                console.log(error.name + ": " + error.message)
+                console.log(error)
             })
         }
 
@@ -121,16 +129,7 @@ export default {
 
 @import "../../sass/app.scss";
 
-.camera {
-    margin: 2rem 0 0;
-    text-align: center;
-    video{
-        margin-bottom: 2rem;
-        background-color: $white;
-        // border: 1px solid $silver;
-    }
-    canvas{
-        display: none;
-    }
+canvas{
+    display: none;
 }
 </style>

@@ -28,12 +28,14 @@ flex系
 .flex-left{  justify-content: flex-start !important; }
 .flex-right{  justify-content: flex-end !important; }
 .flex-x-center{  justify-content: center !important; }
-.flex-between{  justify-content: space-between !important; }
-.flex-around{  justify-content: space-around !important; }
+.flex-x-between{  justify-content: space-between !important; }
+.flex-x-around{ justify-content: space-around !important; }
 /* 縦 */
 .flex-top{  align-items: flex-start !important; }
 .flex-bottom{  align-items: flex-end !important; }
 .flex-y-center{  align-items: center !important; }
+.flex-y-between{ align-content: space-between !important; }
+.flex-y-around{ align-content: space-around !important; }
 /* 折り返し */
 .flex-wrap{  flex-wrap: wrap !important; }
 .flex-nowrap{  flex-wrap: nowrap !important; }
