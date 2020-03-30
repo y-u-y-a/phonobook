@@ -1,5 +1,4 @@
-$black       :#2E2E2E;
-$white       :white;
+
 $gray        :gray;
 $silver      :silver;
 $light-silver:#F2F2F2;
@@ -10,7 +9,24 @@ $link-red    :#FA5858;
 $light-red   :#F8E0E0;
 $light-blue  :#CEE3F6;
 
-// 未使用
+
+$white:#fff;
+.c-white{ color: $white !important; }
+.bg-white{ background: $white !important; }
+
+$black:#2E2E2E;
+.c-black{ color: $black !important; }
+.bg-black{ background: $black !important; }
+
 $base: #fff;
+.c-base{ color: $base !important; }
+.bg-base{ background: $base !important; }
+
 $main: #fff;
+.c-main{ color: $main !important; }
+.bg-main{ background: $main !important; }
+
 $accent: #fff;
+.c-accent{ color: $accent !important; }
+.bg-accent{ background: $accent !important; }
+
