@@ -1,11 +1,13 @@
-// 共通
+
 @import url(https://fonts.googleapis.com/css?family=Nunito);
+@import "bootstrap";
 @import "reset";
 @import "colors";
+@import "customs";
 
 // これだけでfooterが柔軟に固定される？
 html{
-  min-height:100%;   // 最小高さの設定
+  min-height:100%; // 最小高さの設定
   position: relative;
 }
 body{
