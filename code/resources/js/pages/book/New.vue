@@ -1,8 +1,8 @@
 <template>
     <div class="row">
-        <div class="col-6">
-            <Camera />
-            <LiveCamera @signalEvent="getBookWithOpenBD" />
+        <div class="col-6 mt-2">
+            <Camera camera_type="movie" />
+            <CodeReader @signalEvent="getBookWithOpenBD" />
         </div>
 
         <div class="col-6">
@@ -56,7 +56,7 @@
 <script>
 
 import Camera from "../../components/Camera.vue"
-import LiveCamera from "../../components/barcode/LiveCamera.vue"
+import CodeReader from "../../components/CodeReader.vue"
 import FormInput from "../../components/form/Input.vue"
 import FormTextarea from "../../components/form/Textarea.vue"
 import FormButton from "../../components/form/Button.vue"
@@ -66,7 +66,7 @@ export default {
 
     components: {
         Camera,
-        LiveCamera,
+        CodeReader,
         FormInput,
         FormTextarea,
         FormButton
@@ -93,7 +93,7 @@ export default {
 
         ...mapActions("Book", ["registerBook"]),
 
-        // isbnは, LiveCameraコンポーネントから取得
+        // isbnは, CodeReaderコンポーネントから取得
         getBookWithOpenBD(isbn){
 
             if(isbn == ""){
@@ -104,11 +104,11 @@ export default {
             }
 
             // アクセス開始
-            const url  = "https://api.openbd.jp/v1/get?isbn=" + isbn
+            const url  = `https://api.openbd.jp/v1/get?isbn=${isbn}`
 
             $.getJSON(url, (reply) => {
 
-                // アラートなし(LiveCameraの精度が△)
+                // アラートなし(CodeReaderの精度が△)
                 if(reply[0] == null){
                     return
                 }
@@ -135,21 +135,9 @@ export default {
                     this.book.cover = book.cover
                 }
 
-                console.log("最終データ", this.book)
+                console.log("最終データ：", this.book)
             })
         }
     }
 }
 </script>
-
-
-<style lang="scss" scoped>
-
-@import "../../../sass/app.scss";
-
-.camera{
-    button{
-        display: none;
-    }
-}
-</style>

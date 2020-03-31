@@ -1,7 +1,9 @@
 <template>
     <div class="row">
         <div class="col-6">
-            <FaceCamera @signalEvent="changeState" />
+            <Camera
+                camera_type="capture"
+                @signalEvent="changeState" />
         </div>
         <div class="col-6">
             <div id="officers">
@@ -32,7 +34,7 @@
 
 <script>
 
-import FaceCamera from "../../components/FaceCamera.vue"
+import Camera from "../../components/Camera.vue"
 import FormButton from "../../components/form/Button.vue"
 
 import { mapState, mapGetters, mapActions } from "vuex"
@@ -40,7 +42,7 @@ import { mapState, mapGetters, mapActions } from "vuex"
 export default {
 
     components: {
-        FaceCamera,
+        Camera,
         FormButton
     },
 

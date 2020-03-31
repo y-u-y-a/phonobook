@@ -2,9 +2,11 @@
     <div class="row">
         <div class="col-6 mt-2">
             <!-- 顔 -->
-            <FaceCamera @signalEvent="getAuthUser" />
+            <Camera
+                camera_type="capture"
+                @signalEvent="getAuthUser" />
             <!-- バーコード -->
-            <LiveCamera @signalEvent="getBookWithOpenBD" />
+            <CodeReader @signalEvent="getBookFromOpenBD" />
         </div>
 
         <div class="col-6 mt-2">
@@ -40,8 +42,8 @@
 
 <script>
 
-import FaceCamera from "../../components/FaceCamera.vue"
-import LiveCamera from "../../components/barcode/LiveCamera.vue"
+import Camera from "../../components/Camera.vue"
+import CodeReader from "../../components/CodeReader.vue"
 import FormButton from "../../components/form/Button.vue"
 
 import { mapState, mapGetters, mapActions } from "vuex"
@@ -49,8 +51,8 @@ import { mapState, mapGetters, mapActions } from "vuex"
 export default {
 
     components: {
-        FaceCamera,
-        LiveCamera,
+        Camera,
+        CodeReader,
         FormButton
     },
 
@@ -69,7 +71,7 @@ export default {
 
         ...mapActions("Book", ["borrowBook"]),
 
-        getBookWithOpenBD(isbn) {
+        getBookFromOpenBD(isbn) {
 
             if (isbn == "") {
                 alert("ISBNを入力してください。")
@@ -106,7 +108,7 @@ export default {
 
         getAuthUser(user){
             this.auth_user = user
-            console.log("認証ユーザー", this.auth_user)
+            console.log("認証ユーザー：", this.auth_user)
         }
     }
 }

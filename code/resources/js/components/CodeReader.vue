@@ -1,4 +1,5 @@
 <template>
+    <!-- 本のバーコード読み取り用カメラ -->
     <div id="live-camera" class="d-none"></div>
 </template>
 
@@ -61,6 +62,6 @@ export default {
 
 <style lang="scss" scoped>
 
-@import "../../../sass/app.scss";
+@import "../../sass/app.scss";
 
 </style>

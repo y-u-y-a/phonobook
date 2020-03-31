@@ -1,16 +1,35 @@
 <template>
-    <div class="camera">
+    <div class="text-center">
         <!-- カメラによる動画の挿入 -->
-        <video autoplay ref="video" width="100%" height="100%"></video>
+        <video
+            ref="video"
+            width="100%"
+            height="100%"
+            class="mb-2 bg-white"
+            autoplay >
+        </video>
         <!-- 切り取った画像を描画 -->
-        <canvas ref="canvas"></canvas>
+        <canvas ref="canvas" class="d-none"></canvas>
+        <!-- 撮影と認証処理(Borrow.vueで使用) -->
+        <FormButton
+            v-if="camera_type=='capture'"
+            @signalEvent="takeFace(); authFace()"
+            button_name="顔を認証する" />
     </div>
 </template>
 
 
 <script>
 
+import FormButton from "../components/form/Button.vue"
+
 export default {
+
+    components: {
+        FormButton
+    },
+
+    props: ["camera_type"],
 
     data() {
         return {
@@ -50,7 +69,7 @@ export default {
                 }
             })
             .catch((error) => {
-                console.log(error.name + ": " + error.message)
+                console.log(error)
             })
         },
 
@@ -99,30 +118,9 @@ export default {
             })
             .catch((error) => {
                 alert("エラーが発生しました。")
-                console.log(error.name + ": " + error.message)
+                console.log(error)
             })
         }
-
-
     }
 }
 </script>
-
-
-<style lang="scss" scoped>
-
-@import "../../sass/app.scss";
-
-.camera {
-    margin: 2rem 0 0;
-    text-align: center;
-    video{
-        margin-bottom: 2rem;
-        background-color: $white;
-        // border: 1px solid $silver;
-    }
-    canvas{
-        display: none;
-    }
-}
-</style>
