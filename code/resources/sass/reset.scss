@@ -45,18 +45,9 @@ table {
 a {
   text-decoration: none;
 }
-
-
-// clearfix ==========================
-.clearfix:after {
-content: ".";
-display: block;
-height: 0;
-clear: both;
-visibility: hidden;
+a:hover {
+  text-decoration: none;
 }
-.clearfix {display: inline-table;}
-/* Hides from IE-mac \*/
-* html .clearfix {height: 1%;}
-.clearfix {display: block;}
-/* End hide from IE-mac */
+button:focus{
+  outline: 0;
+}

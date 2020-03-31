@@ -1,7 +1,7 @@
 <template>
     <div>
-        <Header />
-        <main>
+        <TheHeader />
+        <main class="container-fluid">
             <RouterView />
         </main>
     </div>
@@ -9,11 +9,11 @@
 
 
 <script>
-import Header from "./components/Header"
+import TheHeader from "./components/TheHeader"
 
 export default {
     components: {
-        Header
+        TheHeader
     }
 }
 </script>

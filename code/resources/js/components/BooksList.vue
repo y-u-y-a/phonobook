@@ -1,11 +1,19 @@
 <template>
-    <div id="books-list">
-        <div class="page-title">{{ page_title }}</div>
-        <ul>
-            <li v-for="(book, index) in books" :key="index">
-                <div class="book">
+    <div class="wm-90">
+        <div class="py-2 b-font-24">{{ page_title }}</div>
+        <ul class="row">
+            <li
+                v-for="(book, index) in books"
+                :key="index"
+                class="col-3 mb-1 text-center">
+                <div class="wm-90 py-1 bg-white">
                     <router-link :to="'/book/Show/' + book.id">
-                        <img :src="book.cover" :alt="book.title" />
+                        <img
+                            :src="book.cover"
+                            :alt="book.title"
+                            width="200"
+                            height="290"
+                            class="mb-1 pointer" />
                     </router-link>
                     <!-- bindで親に変数を渡す(画像の下のボタンなど) -->
                     <!-- /book/Index -->
@@ -36,34 +44,10 @@ export default {
 
 // PC
 @media screen and (min-width: 640px) {
-    #books-list{
-        width: 90%;
-        margin: 0 auto;
-    }
-    .page-title {
-        padding: 2rem 0;
-        font-size: 24px;
-        font-weight: bold;
-    }
     li {
-        display: inline-block;
-        width: 25%;
-        margin-bottom: 3rem;
         box-sizing: border-box; // width=青+padding
-        padding: 0 10px;
-        text-align: center;
-        .book {
-            padding: 1rem 0;
-            background-color: $white;
-            a:hover {
-                opacity: 0.7;
-                cursor: pointer;
-            }
-            img {
-                width: 200px;
-                height: 290px;
-                margin-bottom: 1rem;
-            }
+        a:hover {
+            opacity: 0.7;
         }
     }
 }

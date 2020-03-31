@@ -1,9 +1,11 @@
 <template>
-    <div class="flex">
-         <div class="half-box camera-parent">
-            <FaceCamera @signalEvent="changeState" />
-        </div><!--
-        --><div class="half-box">
+    <div class="row">
+        <div class="col-6">
+            <Camera
+                camera_type="capture"
+                @signalEvent="changeState" />
+        </div>
+        <div class="col-6">
             <div id="officers">
                 <table>
                 <thead>
@@ -32,7 +34,7 @@
 
 <script>
 
-import FaceCamera from "../../components/FaceCamera.vue"
+import Camera from "../../components/Camera.vue"
 import FormButton from "../../components/form/Button.vue"
 
 import { mapState, mapGetters, mapActions } from "vuex"
@@ -40,7 +42,7 @@ import { mapState, mapGetters, mapActions } from "vuex"
 export default {
 
     components: {
-        FaceCamera,
+        Camera,
         FormButton
     },
 
@@ -86,12 +88,6 @@ export default {
 
 // PC
 @media screen and (min-width: 640px) {
-    .camera-parent{
-        vertical-align: top;
-        .camera{
-            margin-top: 0;
-        }
-    }
     #officers{
         max-height: calc(100vh - 84px);
         overflow: auto;
@@ -101,7 +97,6 @@ export default {
             width: 100%;
             table-layout: fixed;
             border-collapse: separate;
-            // border-spacing: 2px;
         }
         tr,th,td {
             border: 1px solid $silver;

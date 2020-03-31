@@ -1,28 +1,52 @@
 <template>
-    <div class="flex">
-        <div class="half-box">
-            <Camera />
-            <LiveCamera @signalEvent="getBookWithOpenBD" />
+    <div class="row">
+        <div class="col-6 mt-2">
+            <Camera camera_type="movie" />
+            <CodeReader @signalEvent="getBookWithOpenBD" />
         </div>
 
-        <div class="half-box">
-            <div class="flex container">
-                <div class="half-box">
-                    <ul>
-                        <li><FormInput v-model="book.title" label="タイトル" placeholder="8文字以上" /></li>
-                        <li><FormInput v-model="book.author" label="著者" placeholder="8文字以上" /></li>
-                        <li><FormInput v-model="book.volume" label="巻" placeholder="8文字以上" /></li>
-                        <li><FormInput v-model="book.series" label="シリーズ" placeholder="8文字以上" /></li>
-                        <li><FormInput v-model="book.publisher" label="出版" placeholder="8文字以上" /></li>
-                        <li><FormInput v-model="book.pubdate" label="出版日" placeholder="8文字以上" /></li>
-                        <li><FormTextarea v-model="book.detail" label="詳細" /></li>
-                    </ul>
+        <div class="col-6">
+            <div class="row wm-90 mt-2 p-1 bg-white">
+                <div class="col-6">
+                    <FormInput
+                        v-model="book.title"
+                        label="タイトル"
+                        placeholder="8文字以上" />
+                    <FormInput
+                        v-model="book.author"
+                        label="著者"
+                        placeholder="8文字以上" />
+                    <FormInput
+                        v-model="book.volume"
+                        label="巻"
+                        placeholder="8文字以上" />
+                    <FormInput
+                        v-model="book.series"
+                        label="シリーズ"
+                        placeholder="8文字以上" />
+                    <FormInput
+                        v-model="book.publisher"
+                        label="出版"
+                        placeholder="8文字以上" />
+                    <FormInput
+                        v-model="book.pubdate"
+                        label="出版日"
+                        placeholder="8文字以上" />
+                    <!-- <FormTextarea
+                        v-model="book.detail"
+                        label="詳細" /> -->
                 </div>
-                <div class="half-box">
-                    <img :src="book.cover" :alt="book.title">
-                    <div class="button-wrapper">
-                        <FormButton @signalEvent="registerBook(book)" button_name="登録する" class="button" />
-                    </div>
+                <div class="col-6 text-center">
+                    <img
+                        :src="book.cover"
+                        :alt="book.title"
+                        height="380px"
+                        width="100%"
+                        class="d-block">
+                    <FormButton
+                        @signalEvent="registerBook(book)"
+                        button_name="登録する"
+                        class="mt-4" />
                 </div>
             </div>
         </div>
@@ -32,7 +56,7 @@
 <script>
 
 import Camera from "../../components/Camera.vue"
-import LiveCamera from "../../components/barcode/LiveCamera.vue"
+import CodeReader from "../../components/CodeReader.vue"
 import FormInput from "../../components/form/Input.vue"
 import FormTextarea from "../../components/form/Textarea.vue"
 import FormButton from "../../components/form/Button.vue"
@@ -42,7 +66,7 @@ export default {
 
     components: {
         Camera,
-        LiveCamera,
+        CodeReader,
         FormInput,
         FormTextarea,
         FormButton
@@ -69,7 +93,7 @@ export default {
 
         ...mapActions("Book", ["registerBook"]),
 
-        // isbnは, LiveCameraコンポーネントから取得
+        // isbnは, CodeReaderコンポーネントから取得
         getBookWithOpenBD(isbn){
 
             if(isbn == ""){
@@ -80,11 +104,11 @@ export default {
             }
 
             // アクセス開始
-            const url  = "https://api.openbd.jp/v1/get?isbn=" + isbn
+            const url  = `https://api.openbd.jp/v1/get?isbn=${isbn}`
 
             $.getJSON(url, (reply) => {
 
-                // アラートなし(LiveCameraの精度が△)
+                // アラートなし(CodeReaderの精度が△)
                 if(reply[0] == null){
                     return
                 }
@@ -111,42 +135,9 @@ export default {
                     this.book.cover = book.cover
                 }
 
-                console.log("最終データ", this.book)
+                console.log("最終データ：", this.book)
             })
         }
     }
 }
 </script>
-
-
-<style lang="scss" scoped>
-
-@import "../../../sass/app.scss";
-
-.camera{
-    button{
-        display: none;
-    }
-}
-
-.container{
-    width: 90%;
-    margin: 2rem auto 0;
-    padding: 2rem 0 4rem;
-    background-color: $white;
-    .half-box{
-        margin: 0 1rem;
-    }
-}
-img {
-    display: block;
-    height: 380px;
-    width: 100%;
-    margin: 0 auto;
-    // border: 2px solid $green;
-}
-.button-wrapper{
-    display: block;
-    margin-top: 4rem;
-}
-</style>

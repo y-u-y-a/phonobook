@@ -1,5 +1,4 @@
-$black       :#2E2E2E;
-$white       :white;
+
 $gray        :gray;
 $silver      :silver;
 $light-silver:#F2F2F2;
@@ -10,7 +9,31 @@ $link-red    :#FA5858;
 $light-red   :#F8E0E0;
 $light-blue  :#CEE3F6;
 
-// 未使用
-$base: #fff;
-$main: #fff;
-$accent: #fff;
+
+$white:#fff;
+.c-white{ color: $white !important; }
+.bg-white{ background: $white !important; }
+
+$black:#2E2E2E;
+.c-black{ color: $black !important; }
+.bg-black{ background: $black !important; }
+
+$base: #F2F2F2;
+.c-base{ color: $base !important; }
+.bg-base{ background: $base !important; }
+
+$main: #04B431;
+.c-main{ color: $main !important; }
+.bg-main{ background: $main !important; }
+
+$main-half: rgb(129, 233, 155);
+.c-main-half{ color: $main-half !important; }
+.bg-main-half{ background: $main-half !important; }
+
+$accent: #FA5858;
+.c-accent{ color: $accent !important; }
+.bg-accent{ background: $accent !important; }
+
+$accent-half: #F8E0E0;
+.c-accent-half{ color: $accent-half !important; }
+.bg-accent-half{ background: $accent-half !important; }

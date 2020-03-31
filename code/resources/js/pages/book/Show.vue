@@ -1,28 +1,51 @@
 <template>
-    <div id="book-show">
-        <div class="book-info clearfix">
-            <div class="title">{{ book.title }}</div>
-            <div class="half-box">
-                <ul>
-                    <li v-if="book.author!=undefined">著者 ：{{ book.author }}</li>
-                    <li v-if="book.volume!=undefined">巻 ：{{ book.volume }}</li>
-                    <li v-if="book.series!=undefined">シリーズ ：{{ book.series }}</li>
-                    <li v-if="book.publisher!=undefined">出版社 ：{{ book.publisher }}</li>
-                    <li v-if="book.pubdate!=undefined">出版日 ：{{ book.pubdate }}</li>
-                    <li v-if="book.detail!=undefined">{{ book.detail }}</li>
-                </ul>
-            </div>
-            <div class="half-box image-box">
-                <img :src="book.cover" alt="No Image" />
-                <FormButton v-if="book.state==0" @signalEvent="borrowBook({
-                    isbn: book.isbn,
-                    auth_user: login_user,
-                    dest: '/book/Index'
-                })" button_name="この本を借りる" class="button" />
+    <div class="bg-white">
+        <div class="row wm-90 pb-2 dash-bottom">
+            <div class="py-4 b-font-24">{{ book.title }}</div>
+            <ul class="col-7 font-16">
+                <li
+                    v-if="book.author!=undefined"
+                    class="mb-2">
+                著者 ：{{ book.author }}</li>
+                <li
+                    v-if="book.volume!=undefined"
+                    class="mb-2">
+                巻 ：{{ book.volume }}</li>
+                <li
+                    v-if="book.series!=undefined"
+                    class="mb-2">
+                シリーズ ：{{ book.series }}</li>
+                <li
+                    v-if="book.publisher!=undefined"
+                    class="mb-2">
+                出版社 ：{{ book.publisher }}</li>
+                <li
+                    v-if="book.pubdate!=undefined"
+                    class="mb-2">
+                出版日 ：{{ book.pubdate }}</li>
+                <li
+                    v-if="book.detail!=undefined"
+                    class="mb-2">
+                {{ book.detail }}</li>
+            </ul>
+            <div class="col-5 text-center">
+                <img
+                    :src="book.cover"
+                    alt="No Image"
+                    class="d-block wm-60" />
+                <FormButton
+                    v-if="book.state==0"
+                    @signalEvent="borrowBook({
+                        isbn: book.isbn,
+                        auth_user: login_user,
+                        dest: '/book/Index'
+                    })"
+                    button_name="この本を借りる"
+                    class="mt-2" />
                 <!-- <FormButton button_name="レビューする" /> -->
             </div>
         </div>
-        <div class="book-review">↓ ============　この本の評価　============ ↓</div>
+        <div class="text-center">↓ ============　この本の評価　============ ↓</div>
     </div>
 </template>
 
@@ -63,36 +86,5 @@ export default {
 
 // PC
 @media screen and (min-width: 640px) {
-    #book-show {
-        background: $white;
-    }
-    .book-info{
-        padding-bottom: 2rem;
-        border-bottom: 1px dashed $silver;
-        .title {
-            width: 90%;
-            margin: 0 auto;
-            padding: 30px 0;
-            font-size: 24px;
-            font-weight: bold;
-        }
-        ul{
-            width: 80%;
-            margin: 0 auto;
-            font-size: 16px;
-            li{
-                margin-bottom: 2rem;
-            }
-        }
-        .image-box{
-            text-align: center;
-        }
-        .button{
-            margin-top: 2rem;
-        }
-    }
-    .book-review{
-        text-align: center;
-    }
 }
 </style>
