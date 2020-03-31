@@ -1,6 +1,6 @@
 <template>
     <!-- 本のバーコード読み取り用カメラ -->
-    <div id="live-camera" class="d-none"></div>
+    <div id="code-reader" class="d-none"></div>
 </template>
 
 
@@ -11,12 +11,12 @@ import Quagga from "quagga"
 export default {
 
     mounted() {
-        this.setLiveCamera()
+        this.setCodeReaderCamera()
     },
 
     methods: {
 
-        setLiveCamera(){
+        setCodeReaderCamera(){
 
             const config = {
 
@@ -24,7 +24,7 @@ export default {
                     name: "Live",
                     type: "LiveStream",
                     // videoとcanvasを表示する要素を指定
-                    target: document.querySelector("#live-camera"),
+                    target: document.querySelector("#code-reader"),
                     // フロントはuser
                     constraints: { facingMode: "environment" },
                 },
