@@ -11,10 +11,13 @@
 
         <div class="col-6 mt-2">
             <div class="wm-90 py-2 bg-white text-center">
-                <div class="borrower pb-1 b-font">
+                <!-- borrower -->
+                <div class="pb-1 b-font">
                     <span v-if="!auth_user" class="disable">貸出し不可：カメラ撮影が必要です</span>
                     <span v-else-if="auth_user" class="able">貸出し可能：{{auth_user.name}}</span>
                 </div>
+                book-image
+                <!-- book-image -->
                 <div class="book-image pb-2 b-font-16">
                     <img
                         v-if="book.title"
