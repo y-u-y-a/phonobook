@@ -11777,7 +11777,9 @@ font系
   font-size: 40px !important;
 }
 
-/* 文字幅 */
+/*====================
+文字幅
+=====================*/
 
 .letter-2 {
   letter-spacing: 2px !important;
@@ -11787,7 +11789,21 @@ font系
   letter-spacing: 5px !important;
 }
 
-/* モーダル用(画面全体を覆う設定) */
+/*====================
+カーソル系
+=====================*/
+
+pointer {
+  cursor: pointer !important;
+}
+
+/*====================
+装飾
+=====================*/
+
+.dash-bottom {
+  border-bottom: 1px dashed silver !important;
+}
 
 .modal-default {
   position: fixed;
@@ -11798,22 +11814,10 @@ font系
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-/* 文字を...に変換 */
-
 .dot-replace {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-}
-
-/* 装飾 */
-
-.dash-bottom {
-  border-bottom: 1px dashed silver !important;
-}
-
-.pointer {
-  cursor: pointer !important;
 }
 
 html {
