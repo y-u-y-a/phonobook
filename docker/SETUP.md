@@ -22,8 +22,13 @@ VISUAL_RECOGNITION_SECRET_KEY, MODEL_IDに関してはIBMのVisualRecognitionの
     $ chmod 755 docker/settings.sh
     $ docker/settings.sh
 
-composer install(venderが無いので), npm install, migrateをコンテナ内で実行
-(時間がかかります。)
+やっていること(時間がかかります。)
+1. composer install
+→ /vendorを生成し、必要なライブラリを Composerでインストールしています。
+2. npm install
+→ /node_modulesを生成し、必要なライブラリをnpmでインストールしています。
+3. migrate
+→ マイグレーションを実行してデータベースを作成しています。
 
 
 ## ブラウザで起動しているか確認
@@ -34,8 +39,8 @@ localhost:8001にアクセス
     $ docker exec -it phonoBook.php bash -c "npm run watch"
 
 
-# ※エラーが出た場合
+<!-- # ※エラーが出た場合
     $ docker logs [コンテナID or コンテナ名]
 
 # ※ファイル名を指定して実行
-    $ docker-compose -f ./[ファイル名].yaml up -d
+    $ docker-compose -f ./[ファイル名].yaml up -d -->
