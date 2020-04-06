@@ -1,51 +1,53 @@
 <template>
-    <div class="row">
-        <div class="col-6 mt-2">
-            <!-- 顔 -->
-            <Camera
-                camera_type="capture"
-                @signalEvent="getAuthUser" />
-            <!-- バーコード -->
-            <CodeReader @signalEvent="getBookFromOpenBD" />
-        </div>
-
-        <div class="col-6 mt-2">
-            <div class="wm-90 py-2 bg-white text-center">
-                <!-- borrower -->
-                <div class="pb-1 b-font">
-                    <span v-if="!auth_user" class="disable">貸出し不可：カメラ撮影が必要です</span>
-                    <span v-else-if="auth_user" class="able">貸出し可能：{{auth_user.name}}</span>
-                </div>
-                book-image
-                <!-- book-image -->
-                <div class="book-image pb-2 b-font-16">
-                    <img
-                        v-if="book.title"
-                        :src="book.cover"
-                        :alt="book.title"
-                        class="able" />
-                    <img
-                        v-else-if="!book.title"
-                        :src="book.cover"
-                        alt="No Image"
-                        class="disable" />
-                </div>
+    <div>
+        <div class="flex-column mt-2 py-2 bg-white text-center">
+            <!-- borrower -->
+            <div class="flex-x-center b-font">
+                <span v-if="!auth_user" class="disable">
+                    貸出し不可：カメラ撮影が必要です
+                </span>
+                <span v-else-if="auth_user" class="able">
+                    貸出し可能：{{auth_user.name}}
+                </span>
+            </div>
+            <!-- book-image -->
+            <div class="book-image mt-1 mb-2 b-font-16">
+                <img
+                    v-if="book.title"
+                    :src="book.cover"
+                    :alt="book.title"
+                    class="able" />
+                <img
+                    v-else-if="!book.title"
+                    :src="book.cover"
+                    alt="No Image"
+                    class="disable" />
+            </div>
+            <div class="flex-x-center">
+                <FormButton
+                    @signalEvent="modal_camera=!modal_camera"
+                    button_name="カメラ起動" />
+                <CodeReader @trigger="getBookFromOpenBD" />
                 <FormButton
                     button_name="この本を借りる"
                     @signalEvent="borrowBook({
                         isbn: book.isbn,
                         auth_user: auth_user,
                         dest: '/book/Borrow'
-                    })"
-                />
+                    })" />
             </div>
         </div>
+
+        <ModalCamera
+            v-if="modal_camera"
+            @authTrigger="getBorrower"
+            camera_type="capture" />
     </div>
 </template>
 
 <script>
 
-import Camera from "../../components/Camera.vue"
+import ModalCamera from "../../modal/Camera.vue"
 import CodeReader from "../../components/CodeReader.vue"
 import FormButton from "../../components/form/Button.vue"
 
@@ -54,7 +56,7 @@ import { mapState, mapGetters, mapActions } from "vuex"
 export default {
 
     components: {
-        Camera,
+        ModalCamera,
         CodeReader,
         FormButton
     },
@@ -66,7 +68,8 @@ export default {
                 title: "",
                 cover: "/no_image.png"
             },
-            auth_user: null
+            auth_user: null,
+            modal_camera: false
         }
     },
 
@@ -105,12 +108,17 @@ export default {
                     this.book.cover = book.cover
                 }
 
-                console.log("取得した本データ", book)
+                console.log("取得した本データ：", book)
+
+                this.modal_camera = false
             })
         },
 
-        getAuthUser(user){
+        getBorrower(user){
+
             this.auth_user = user
+            this.modal_camera = false
+
             console.log("認証ユーザー：", this.auth_user)
         }
     }

@@ -10,7 +10,7 @@
         </video>
         <!-- 切り取った画像を描画 -->
         <canvas ref="canvas" class="d-none"></canvas>
-        <!-- 撮影と認証処理(Borrow.vueで使用) -->
+        <!-- 撮影と認証処理(Borrow.vue, Arrival.vueで使用) -->
         <FormButton
             v-if="camera_type=='capture'"
             @signalEvent="takeFace(); authFace()"

@@ -34,7 +34,6 @@
 
 <script>
 
-import Camera from "../../components/Camera.vue"
 import ModalCamera from "../../modal/Camera.vue"
 import FormButton from "../../components/form/Button.vue"
 
@@ -43,7 +42,6 @@ import { mapState, mapGetters, mapActions } from "vuex"
 export default {
 
     components: {
-        Camera,
         ModalCamera,
         FormButton
     },

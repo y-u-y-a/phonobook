@@ -40,7 +40,7 @@ export default {
             Quagga.onDetected((success) => {
 
                 const isbn_code = success.codeResult.code
-                this.$emit("signalEvent", isbn_code)
+                this.$emit("trigger", isbn_code)
                 return
             })
 
