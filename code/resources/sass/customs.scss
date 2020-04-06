@@ -1,4 +1,17 @@
 /*====================
+レスポンシブ表示系
+=====================*/
+/* PC */
+@media screen and (min-width: 640px){
+    .sp{ display: none !important; }
+    [class*="sp-"]{ display: none !important; }
+}
+/* スマホ */
+@media screen and (max-width: 640px){
+    .pc{ display: none !important; }
+    [class*="pc-"]{ display: none !important; }
+}
+/*====================
 グリッド系
 =====================*/
 .container-fluid {
@@ -11,31 +24,33 @@
     display: flex;
     flex-wrap: wrap;
     margin: 0 !important;
-}
-.row > [class*="col-"] {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    [class*="col-"] {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
 }
 /*====================
 flex系
 =====================*/
 [class*="flex"]{ display: flex !important; }
 /* 並び */
-.flex-row{ flex-direction: row !important; }
-.flex-column{ flex-direction: column !important; }
+[class*="flex-row"]{ flex-direction: row !important; }
+[class*="flex-column"]{ flex-direction: column !important; }
 .flex-reverse{ flex-direction: reverse !important; }
 /* 横 */
 .flex-left{ justify-content: flex-start !important; }
 .flex-right{ justify-content: flex-end !important; }
 .flex-x-center{ justify-content: center !important; }
-.flex-x-between{ justify-content: space-between !important; }
-.flex-x-around{ justify-content: space-around !important; }
 /* 縦 */
 .flex-top{ align-items: flex-start !important; }
 .flex-bottom{ align-items: flex-end !important; }
 .flex-y-center{ align-items: center !important; }
-.flex-y-between{ align-content: space-between !important; }
-.flex-y-around{ align-content: space-around !important; }
+/* 主軸 */
+[class*="flex-justify-between"]{ justify-content: space-between !important; }
+[class*="flex-justify-around"]{ justify-content: space-around !important; }
+/* 主軸に対して交差する軸 */
+[class*="flex-align-between"]{ align-content: space-between !important; }
+[class*="flex-align-around"]{ align-content: space-around !important; }
 /* 折り返し */
 .flex-wrap{ flex-wrap: wrap !important; }
 .flex-nowrap{ flex-wrap: nowrap !important; }
@@ -265,17 +280,22 @@ font系
 /*====================
 文字幅
 =====================*/
+.letter-1{ letter-spacing: 1px !important; }
 .letter-2{ letter-spacing: 2px !important; }
+.letter-3{ letter-spacing: 3px !important; }
+.letter-4{ letter-spacing: 4px !important; }
 .letter-5{ letter-spacing: 5px !important; }
 /*====================
 カーソル系
 =====================*/
-pointer {cursor: pointer !important;}
+.pointer {cursor: pointer !important;}
 
 
 /*====================
 装飾
 =====================*/
+.solid-main-1{ border: 1px solid $main; }
+.solid-accent-1{ border: 1px solid $accent; }
 .dash-bottom{ border-bottom: 1px dashed $silver !important; }
 // モーダル用(画面全体を覆う設定)
 .modal-default{
@@ -287,7 +307,7 @@ pointer {cursor: pointer !important;}
   background-color:rgba(0,0,0,0.5);
 }
 // 文字を...に変換
-.dot-replace{
+.dot{
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

@@ -1,6 +1,6 @@
 
 const state = {
-    is_admin: false,
+    is_admin: true,
     login_user: null,
     all_users: []
 }

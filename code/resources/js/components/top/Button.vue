@@ -2,8 +2,9 @@
     <router-link
         tag="button"
         :to="`${path}`"
-        class="d-block w-100 py-2 mb-3 b-font-24"
-        >{{ button_name }}</router-link>
+        class="d-block py-2 mb-3 b-font-24">
+        {{ button_name }}
+    </router-link>
 </template>
 
 

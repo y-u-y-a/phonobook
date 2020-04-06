@@ -11083,6 +11083,34 @@ button:focus {
 }
 
 /*====================
+レスポンシブ表示系
+=====================*/
+
+/* PC */
+
+@media screen and (min-width: 640px) {
+  .sp {
+    display: none !important;
+  }
+
+  [class*="sp-"] {
+    display: none !important;
+  }
+}
+
+/* スマホ */
+
+@media screen and (max-width: 640px) {
+  .pc {
+    display: none !important;
+  }
+
+  [class*="pc-"] {
+    display: none !important;
+  }
+}
+
+/*====================
 グリッド系
 =====================*/
 
@@ -11103,7 +11131,7 @@ button:focus {
   margin: 0 !important;
 }
 
-.row > [class*="col-"] {
+.row [class*="col-"] {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
@@ -11118,11 +11146,11 @@ flex系
 
 /* 並び */
 
-.flex-row {
+[class*="flex-row"] {
   flex-direction: row !important;
 }
 
-.flex-column {
+[class*="flex-column"] {
   flex-direction: column !important;
 }
 
@@ -11144,14 +11172,6 @@ flex系
   justify-content: center !important;
 }
 
-.flex-x-between {
-  justify-content: space-between !important;
-}
-
-.flex-x-around {
-  justify-content: space-around !important;
-}
-
 /* 縦 */
 
 .flex-top {
@@ -11166,11 +11186,23 @@ flex系
   align-items: center !important;
 }
 
-.flex-y-between {
+/* 主軸 */
+
+[class*="flex-justify-between"] {
+  justify-content: space-between !important;
+}
+
+[class*="flex-justify-around"] {
+  justify-content: space-around !important;
+}
+
+/* 主軸に対して交差する軸 */
+
+[class*="flex-align-between"] {
   align-content: space-between !important;
 }
 
-.flex-y-around {
+[class*="flex-align-around"] {
   align-content: space-around !important;
 }
 
@@ -11781,8 +11813,20 @@ font系
 文字幅
 =====================*/
 
+.letter-1 {
+  letter-spacing: 1px !important;
+}
+
 .letter-2 {
   letter-spacing: 2px !important;
+}
+
+.letter-3 {
+  letter-spacing: 3px !important;
+}
+
+.letter-4 {
+  letter-spacing: 4px !important;
 }
 
 .letter-5 {
@@ -11793,13 +11837,21 @@ font系
 カーソル系
 =====================*/
 
-pointer {
+.pointer {
   cursor: pointer !important;
 }
 
 /*====================
 装飾
 =====================*/
+
+.solid-main-1 {
+  border: 1px solid #04B431;
+}
+
+.solid-accent-1 {
+  border: 1px solid #FA5858;
+}
 
 .dash-bottom {
   border-bottom: 1px dashed silver !important;
@@ -11814,7 +11866,7 @@ pointer {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.dot-replace {
+.dot {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
