@@ -1,71 +1,76 @@
 <template>
-    <div class="row">
-        <div class="col-6 mt-2">
-            <Camera camera_type="movie" />
-            <CodeReader @signalEvent="getBookWithOpenBD" />
-        </div>
-
-        <div class="col-6">
-            <div class="row wm-90 mt-2 p-1 bg-white">
-                <div class="col-6">
-                    <FormInput
-                        v-model="book.title"
-                        label="タイトル"
-                        placeholder="8文字以上" />
-                    <FormInput
-                        v-model="book.author"
-                        label="著者"
-                        placeholder="8文字以上" />
-                    <FormInput
-                        v-model="book.volume"
-                        label="巻"
-                        placeholder="8文字以上" />
-                    <FormInput
-                        v-model="book.series"
-                        label="シリーズ"
-                        placeholder="8文字以上" />
-                    <FormInput
-                        v-model="book.publisher"
-                        label="出版"
-                        placeholder="8文字以上" />
-                    <FormInput
-                        v-model="book.pubdate"
-                        label="出版日"
-                        placeholder="8文字以上" />
-                    <!-- <FormTextarea
-                        v-model="book.detail"
-                        label="詳細" /> -->
-                </div>
-                <div class="col-6 text-center">
-                    <img
-                        :src="book.cover"
-                        :alt="book.title"
-                        height="380px"
-                        width="100%"
-                        class="d-block">
+    <div class="wm-90">
+        <div class="row flex-x-center mt-2 p-2 bg-white">
+            <!-- 左側 -->
+            <div class="col-md-6 col-12">
+                <FormInput
+                    v-model="book.title"
+                    label="タイトル"
+                    placeholder="8文字以上" />
+                <FormInput
+                    v-model="book.author"
+                    label="著者"
+                    placeholder="8文字以上" />
+                <FormInput
+                    v-model="book.volume"
+                    label="巻"
+                    placeholder="8文字以上" />
+                <FormInput
+                    v-model="book.series"
+                    label="シリーズ"
+                    placeholder="8文字以上" />
+                <FormInput
+                    v-model="book.publisher"
+                    label="出版"
+                    placeholder="8文字以上" />
+                <FormInput
+                    v-model="book.pubdate"
+                    label="出版日"
+                    placeholder="8文字以上" />
+                <!-- <FormTextarea
+                    v-model="book.detail"
+                    label="詳細" /> -->
+            </div>
+            <!-- 右側 -->
+            <div class="col-md-5 col-12 text-center">
+                <img
+                    :src="book.cover"
+                    :alt="book.title"
+                    height="450px"
+                    width="100%"
+                    class="d-block">
+                <div class="flex-justify-between mt-2">
+                    <FormButton
+                        @signalEvent="modal_camera=!modal_camera"
+                        button_name="カメラ起動" />
+                    <CodeReader @trigger="getBookFromOpenBD" />
                     <FormButton
                         @signalEvent="registerBook(book)"
-                        button_name="登録する"
-                        class="mt-4" />
+                        button_name="登録する" />
                 </div>
             </div>
         </div>
+
+        <ModalCamera
+            v-if="modal_camera"
+            camera_type="reader" />
     </div>
 </template>
 
 <script>
 
-import Camera from "../../components/Camera.vue"
+import ModalCamera from "../../modal/Camera.vue"
 import CodeReader from "../../components/CodeReader.vue"
 import FormInput from "../../components/form/Input.vue"
 import FormTextarea from "../../components/form/Textarea.vue"
 import FormButton from "../../components/form/Button.vue"
+
 import { mapActions } from 'vuex'
 
 export default {
 
     components: {
-        Camera,
+        ModalCamera,
         CodeReader,
         FormInput,
         FormTextarea,
@@ -84,7 +89,8 @@ export default {
                 pubdate   : "",
                 cover     : "/no_image.png",
                 detail    : ""
-            }
+            },
+            modal_camera: false
         }
     },
 
@@ -94,7 +100,7 @@ export default {
         ...mapActions("Book", ["registerBook"]),
 
         // isbnは, CodeReaderコンポーネントから取得
-        getBookWithOpenBD(isbn){
+        getBookFromOpenBD(isbn){
 
             if(isbn == ""){
                 return alert("ISBNを入力してください。")
@@ -134,6 +140,9 @@ export default {
                 if(book.cover != ""){
                     this.book.cover = book.cover
                 }
+
+                // モーダルを閉じる
+                this.modal_camera = false
 
                 console.log("最終データ：", this.book)
             })
