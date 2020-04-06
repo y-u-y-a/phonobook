@@ -30,7 +30,7 @@ export default {
 
 .rich-button {
     width: 150px;
-    margin: 0 auto;
+    // margin: 0 auto;
     padding: 1rem 0;
     color: $white;
     font-size: 18px;

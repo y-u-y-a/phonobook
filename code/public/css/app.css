@@ -11051,19 +11051,19 @@ button:focus {
 }
 
 .c-main {
-  color: #04B431 !important;
+  color: #5882FA !important;
 }
 
 .bg-main {
-  background: #04B431 !important;
+  background: #5882FA !important;
 }
 
 .c-main-half {
-  color: #81e99b !important;
+  color: #CEE3F6 !important;
 }
 
 .bg-main-half {
-  background: #81e99b !important;
+  background: #CEE3F6 !important;
 }
 
 .c-accent {
@@ -11846,15 +11846,23 @@ font系
 =====================*/
 
 .solid-main-1 {
-  border: 1px solid #04B431;
+  border: 1px solid #5882FA;
 }
 
 .solid-accent-1 {
   border: 1px solid #FA5858;
 }
 
-.dash-bottom {
+.b-solid-silver-1 {
+  border-bottom: 1px solid silver !important;
+}
+
+.b-dashed-silver-1 {
   border-bottom: 1px dashed silver !important;
+}
+
+.radius-4 {
+  border-radius: 4px !important;
 }
 
 .modal-default {

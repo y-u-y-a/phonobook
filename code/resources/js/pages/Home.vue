@@ -7,7 +7,7 @@
                 :key="button.name"
                 :button_name="button.name"
                 :path="button.path"
-                class="mx-2 c-main bg-white solid-main-1" />
+                class="mx-2 c-main bg-white solid-main-1 radius-4" />
         </div>
         <!-- 管理ユーザーのみ -->
         <div v-if="is_admin" class="flex-column col-md-4 col-12">
@@ -16,7 +16,7 @@
                 :key="button.name"
                 :button_name="button.name"
                 :path="button.path"
-                class="mx-2 c-accent bg-white solid-accent-1" />
+                class="mx-2 c-accent bg-white solid-accent-1 radius-4" />
         </div>
     </div>
 </template>

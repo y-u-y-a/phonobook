@@ -116,10 +116,6 @@ export default {
                 // 親のイベント発火(login/arrival/borrow)
                 this.$emit("signalEvent", this.user)
             })
-            .catch((error) => {
-                alert("エラーが発生しました。")
-                console.log(error)
-            })
         }
     }
 }

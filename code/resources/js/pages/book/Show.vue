@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white">
-        <div class="row wm-90 pb-2 dash-bottom">
+        <div class="row wm-90 pb-2 b-dashed-silver-1">
             <div class="py-4 b-font-24">{{ book.title }}</div>
             <ul class="col-7 font-16">
                 <li

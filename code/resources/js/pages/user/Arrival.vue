@@ -1,40 +1,41 @@
 <template>
-    <div class="row">
-        <div class="col-6">
-            <Camera
-                camera_type="capture"
-                @signalEvent="changeState" />
+    <div class="wm-90 font-18">
+
+        <div class="row my-2">
+            <FormButton
+                @signalEvent="modal_camera=!modal_camera"
+                button_name="カメラ起動" />
         </div>
-        <div class="col-6">
-            <div id="officers">
-                <table>
-                <thead>
-                <tr>
-                    <th>社員番号</th>
-                    <th>名前</th>
-                    <th>出勤時間</th>
-                    <th>出勤状況</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(user, index) in all_users"
-                    :key="index"
-                    :id="user.id">
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.updated_at }}</td>
-                    <td>{{ user.state }}</td>
-                </tr>
-                </tbody>
-                </table>
-            </div>
-        </div>
+
+        <table class="d-block bg-white text-center">
+            <tr class="row py-1 b-solid-silver-1">
+                <th class="col-md-3 col-4 dot">社員番号</th>
+                <th class="col-md-3 col-4 dot">名前</th>
+                <th class="pc col-md-3 dot">出勤時間</th>
+                <th class="col-md-3 col-4 dot">出勤状況</th>
+            </tr>
+            <tr v-for="user in all_users"
+                :key="user.id"
+                :id="user.id"
+                class="row py-1 b-dashed-silver-1">
+                <td class="col-md-3 col-4 dot">{{ user.id }}</td>
+                <td class="col-md-3 col-4 dot">{{ user.name }}</td>
+                <td class="pc col-md-3 dot">{{ user.updated_at }}</td>
+                <td class="col-md-3 col-4 dot">{{ user.state }}</td>
+            </tr>
+        </table>
+
+        <ModalCamera
+            v-if="modal_camera"
+            @authTrigger="changeState"
+            camera_type="capture" />
     </div>
 </template>
 
 <script>
 
 import Camera from "../../components/Camera.vue"
+import ModalCamera from "../../modal/Camera.vue"
 import FormButton from "../../components/form/Button.vue"
 
 import { mapState, mapGetters, mapActions } from "vuex"
@@ -43,11 +44,18 @@ export default {
 
     components: {
         Camera,
+        ModalCamera,
         FormButton
     },
 
     created() {
         this.getAllUsers()
+    },
+
+    data(){
+        return {
+            modal_camera: false
+        }
     },
 
     computed: {
@@ -60,7 +68,6 @@ export default {
         // 出退勤処理と表示データの更新
         async changeState(user) {
 
-            console.log(user)
             var params = {
                 user_id: user.id
             }
@@ -76,6 +83,9 @@ export default {
             el.scrollIntoView({
                 behavor: "smooth"
             })
+
+            // モーダルを閉じる
+            this.modal_camera = !this.modal_camera
         }
     }
 }
@@ -88,30 +98,8 @@ export default {
 
 // PC
 @media screen and (min-width: 640px) {
-    #officers{
-        max-height: calc(100vh - 84px);
-        overflow: auto;
-        text-align: center;
-        background-color: $white;
-        table{
-            width: 100%;
-            table-layout: fixed;
-            border-collapse: separate;
-        }
-        tr,th,td {
-            border: 1px solid $silver;
-        }
-        th {
-            font-size: 18px;
-            font-weight: bold;
-            background-color: $light-blue;
-        }
-        th, td{
-            padding: 1rem 0;
-        }
-    }
 }
 .switch-alert{
-    background-color: #F6CECE;
+    background: $main-half;
 }
 </style>

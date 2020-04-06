@@ -296,7 +296,11 @@ font系
 =====================*/
 .solid-main-1{ border: 1px solid $main; }
 .solid-accent-1{ border: 1px solid $accent; }
-.dash-bottom{ border-bottom: 1px dashed $silver !important; }
+.b-solid-silver-1{ border-bottom: 1px solid $silver !important; }
+.b-dashed-silver-1{ border-bottom: 1px dashed $silver !important; }
+
+.radius-4{ border-radius: 4px !important; }
+
 // モーダル用(画面全体を覆う設定)
 .modal-default{
   position:fixed;
