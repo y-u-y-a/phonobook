@@ -17,7 +17,7 @@
                         {name: '@gmail.com', value: '@gmail.com'},
                         {name: '@yahoo.co.jp', value: '@yahoo.co.jp'}
                         ]"
-                        default_value="@yahoo.co.jp"
+                        default_value="@gmail.com"
                         v-model="domain" />
                 </FormInput>
                 <FormInput
