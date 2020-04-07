@@ -2,7 +2,7 @@
     <BooksList
         :books=all_books
         page_title="本を更新・削除する" >
-        <!-- slot-scopeで子コンポーネントから受け取る -->
+        <!-- slot -->
         <div slot="book-edit" slot-scope="{ book }">
             <FormInput
                 v-model="book.title"
@@ -28,9 +28,9 @@
                 v-model="book.pubdate"
                 label="出版日"
                 placeholder="8文字以上" />
-            <FormTextarea
+            <!-- <FormTextarea
                 v-model="book.detail"
-                label="詳細" />
+                label="詳細" /> -->
             <FormButton
                 button_name="更新する"
                 @signalEvent="updateBook(book)" />

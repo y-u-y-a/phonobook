@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="flex-column mt-2 py-2 bg-white text-center">
+        <div class="flex-column mt-3 py-2 bg-white text-center">
             <!-- borrower -->
             <div class="flex-x-center b-font">
                 <span v-if="!auth_user" class="disable">
@@ -16,12 +16,12 @@
                     v-if="book.title"
                     :src="book.cover"
                     :alt="book.title"
-                    class="able" />
+                    class="able shadow" />
                 <img
                     v-else-if="!book.title"
                     :src="book.cover"
                     alt="No Image"
-                    class="disable" />
+                    class="disable shadow" />
             </div>
             <div class="flex-x-center">
                 <FormButton

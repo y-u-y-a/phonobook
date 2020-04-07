@@ -11857,6 +11857,10 @@ font系
   border-bottom: 1px solid silver !important;
 }
 
+.t-dashed-silver-1 {
+  border-top: 1px dashed silver !important;
+}
+
 .b-dashed-silver-1 {
   border-bottom: 1px dashed silver !important;
 }

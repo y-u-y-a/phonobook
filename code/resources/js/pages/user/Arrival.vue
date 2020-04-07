@@ -7,7 +7,7 @@
                 button_name="カメラ起動" />
         </div>
 
-        <table class="d-block bg-white text-center">
+        <table class="d-block bg-white text-center shadow">
             <tr class="row py-1 b-solid-silver-1">
                 <th class="col-md-3 col-4 dot">社員番号</th>
                 <th class="col-md-3 col-4 dot">名前</th>

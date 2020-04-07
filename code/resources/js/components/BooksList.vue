@@ -1,20 +1,20 @@
 <template>
     <div class="wm-90">
         <div class="py-2 b-font-24">{{ page_title }}</div>
-        <ul class="row">
+        <ul class="row flex-justify-between">
             <li
-                v-for="(book, index) in books"
-                :key="index"
-                class="col-3 mb-1 text-center">
-                <div class="wm-90 py-1 bg-white">
-                    <router-link :to="'/book/Show/' + book.id">
-                        <img
-                            :src="book.cover"
-                            :alt="book.title"
-                            width="200"
-                            height="290"
-                            class="mb-1 pointer" />
-                    </router-link>
+                v-for="book in books"
+                :key="book.id"
+                class="flex-x-center col-md-3 mb-2">
+                <div class="text-center shadow">
+                    <router-link
+                        tag="img"
+                        :to="'/book/Show/' + book.id"
+                        :src="book.cover"
+                        :alt="book.title"
+                        width="230"
+                        height="300"
+                        class="pointer" />
                     <!-- bindで親に変数を渡す(画像の下のボタンなど) -->
                     <!-- /book/Index -->
                     <slot name="book-index" :book="book"></slot>

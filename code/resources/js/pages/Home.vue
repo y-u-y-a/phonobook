@@ -1,5 +1,5 @@
 <template>
-    <div class="row flex-x-center mt-5">
+    <div class="row flex-x-center mt-6">
         <div class="flex-column col-md-4 col-12">
             <!-- 全てのユーザー -->
             <TopButton
@@ -7,7 +7,7 @@
                 :key="button.name"
                 :button_name="button.name"
                 :path="button.path"
-                class="mx-2 c-main bg-white solid-main-1 radius-4" />
+                class="mx-2 c-main bg-white solid-main-1 radius-4 shadow" />
         </div>
         <!-- 管理ユーザーのみ -->
         <div v-if="is_admin" class="flex-column col-md-4 col-12">
@@ -16,7 +16,7 @@
                 :key="button.name"
                 :button_name="button.name"
                 :path="button.path"
-                class="mx-2 c-accent bg-white solid-accent-1 radius-4" />
+                class="mx-2 c-accent bg-white solid-accent-1 radius-4 shadow" />
         </div>
     </div>
 </template>
@@ -39,9 +39,7 @@ export default {
             user_button_list: [
                 {name: "出勤する or 退勤する", path: "/user/Arrival"},
                 {name: "本を借りる", path: "/book/Borrow"},
-                {name: "本の一覧をみる", path: "/book/Index"},
-                {name: "ログインする", path: "/user/Login"},
-                // {name: "マイページ", path: `/user/Show/${this.login_user.id}`}
+                {name: "本の一覧をみる", path: "/book/Index"}
             ],
             admin_button_list: [
                 {name: "ユーザーを登録する", path: "/user/Register"},
