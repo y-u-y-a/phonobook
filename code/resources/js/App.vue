@@ -17,18 +17,3 @@ export default {
     }
 }
 </script>
-
-
-<style lang="scss">
-
-// PC
-@media screen and (min-width: 640px) {
-    .flex{
-        display: flex;
-    }
-    .half-box{
-        display: inline-block;
-        width: 50%;
-    }
-}
-</style>

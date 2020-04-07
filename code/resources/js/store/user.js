@@ -55,7 +55,12 @@ const actions = {
 
         await axios.get("/api/users/logined")
         .then((response) => {
-            context.commit("setLoginUser", response.data)
+
+            const get_user = response.data
+
+            if(get_user){
+                context.commit("setLoginUser", get_user)
+            }
         })
     },
 
@@ -73,10 +78,6 @@ const actions = {
             console.log(response.data)
             location.href = "/"
         })
-        .catch((error) => {
-            alert("登録に失敗しました。")
-            console.log(error)
-        })
     },
 
     async login(context, { email, password }){
@@ -90,19 +91,15 @@ const actions = {
         .then((response) => {
             context.commit("setLoginUser", response.data)
             location.href = "/"
-            return
-        })
-        .catch((error) => {
-            alert("ログインに失敗しました。")
-            console.log(error)
         })
     },
 
     async logout(context){
         await axios.post("/api/logout")
-        context.commit("unsetLoginUser")
-        location.href = "/"
-        return
+        .then(()=>{
+            context.commit("unsetLoginUser")
+            location.href = "/"
+        })
     }
 }
 

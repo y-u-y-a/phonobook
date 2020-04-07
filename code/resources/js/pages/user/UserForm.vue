@@ -1,8 +1,8 @@
 <template>
-    <div class="row flex-x-center mt-2">
-        <div class="col-md-5 bg-white">
-            <header class="py-2 b-font-20 letter-2 text-center b-solid-silver-1">ユーザーを登録する</header>
-            <div class="wm-90 py-2">
+    <div class="wm-50 my-2">
+        <div class="pb-2 bg-white">
+            <div class="title py-2 b-font-20 text-center">ユーザーを登録する</div>
+            <div class="wm-90 pt-2">
                 <FormInput
                     v-model="name"
                     label="名前"
@@ -28,17 +28,16 @@
                     v-model="password_confirmation"
                     label="パスワード確認"
                     placeholder="" />
-
-                <div class="text-center">
-                    <FormButton
-                        @signalEvent="register({
-                            name: name,
-                            email: user_name + domain,
-                            password: password,
-                            password_confirmation: password_confirmation
-                        })"
-                        button_name="新規登録する" />
-                </div>
+            </div>
+            <div class="text-center">
+                <FormButton
+                    @signalEvent="register({
+                        name: name,
+                        email: user_name + domain,
+                        password: password,
+                        password_confirmation: password_confirmation
+                    })"
+                    button_name="新規登録する" />
             </div>
         </div>
     </div>
@@ -66,7 +65,7 @@ export default {
             user_name: "taku",
             domain: "@yahoo.co.jp",
             password: "takutaku",
-            password_confirmation: "takutaku",
+            password_confirmation: "takutaku"
         }
     },
 
@@ -75,3 +74,17 @@ export default {
     }
 }
 </script>
+
+
+<style lang="scss" scoped>
+
+@import "../../../sass/app.scss";
+
+// PC
+@media screen and (min-width: 640px) {
+    .title{
+        letter-spacing: 2px;
+        border-bottom: 1px solid $silver;
+    }
+}
+</style>

@@ -1,8 +1,8 @@
 <template>
-    <div class="wm-50 my-2">
-        <div class="pb-2 bg-white">
-            <div class="title py-2 b-font-20 text-center">ログインする</div>
-            <div class="wm-90 pt-2">
+    <div class="row flex-x-center mt-2">
+        <div class="col-md-5 bg-white">
+            <div class="py-2 b-font-20 letter-2 text-center b-solid-silver-1">ログインする</div>
+            <div class="wm-90 py-2">
                 <FormInput
                     v-model="user_name"
                     label="メールアドレス"
@@ -20,14 +20,15 @@
                     v-model="password"
                     label="パスワード"
                     placeholder="" />
-            </div>
-            <div class="text-center">
-                <FormButton
-                    @signalEvent="login({
-                        email: user_name + domain,
-                        password: password
-                    })"
-                    button_name="ログインする" />
+
+                <div class="text-center">
+                    <FormButton
+                        @signalEvent="login({
+                            email: user_name + domain,
+                            password: password
+                        })"
+                        button_name="ログインする" />
+                </div>
             </div>
         </div>
     </div>

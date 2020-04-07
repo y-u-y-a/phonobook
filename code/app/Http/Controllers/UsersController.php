@@ -18,12 +18,12 @@ class UsersController extends Controller
 
     public function getLoginUser()
     {
-        $user = null;
 
         if(Auth::check()){
-            $user = Auth::User();
+            $login_user = Auth::User();
+            return response()->json($login_user);
         }
-        return $user;
+        return;
     }
 
 

@@ -66,11 +66,11 @@ const actions = {
 
         await axios.post("/api/books", params)
         .then((response) => {
-            const err = response.data
+            // const err = response.data
 
-            if(err){
-                alert(err.isbn)
-            }
+            // if(err){
+            //     alert(err.isbn)
+            // }
             return
         })
         .catch((e) => {

@@ -7,8 +7,10 @@ import "./bootstrap.js"
 import Router from "./route/index.js"
 import Store from "./store/index.js"
 
-// SSRごとにログインユーザーを取得
+
 const createApp = async function() {
+
+    // SSRごとにログインユーザーを取得
     await Store.dispatch("User/getLoginUser")
 
     new Vue({
