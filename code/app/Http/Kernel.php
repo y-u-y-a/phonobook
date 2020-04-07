@@ -27,9 +27,13 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewareGroups = [
+
+        // "web"ミドルウェアグループを定義
         'web' => [
+            // ブラウザのCookieの暗号化と復号化
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            // セッション開始？
             \Illuminate\Session\Middleware\StartSession::class,
             // \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
@@ -37,6 +41,7 @@ class Kernel extends HttpKernel
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
 
+        // "api"ミドルウェアグループを定義
         'api' => [
             'throttle:60,1',
             'bindings',
