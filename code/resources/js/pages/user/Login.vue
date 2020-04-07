@@ -53,9 +53,9 @@ export default {
 
     data() {
         return {
-            user_name: "tanaka",
+            user_name: "",
             domain: "@gmail.com",
-            password: "tanakatanaka"
+            password: ""
         }
     },
 

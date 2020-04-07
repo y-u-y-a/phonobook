@@ -62,11 +62,11 @@ export default {
 
     data() {
         return {
-            name: "taku",
-            user_name: "taku",
-            domain: "@yahoo.co.jp",
-            password: "takutaku",
-            password_confirmation: "takutaku",
+            name: "",
+            user_name: "",
+            domain: "@gmail.com",
+            password: "",
+            password_confirmation: "",
         }
     },
 
