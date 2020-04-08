@@ -1,5 +1,5 @@
 <template>
-    <select @change="issueEvent" class="font-18">
+    <select @change="issueEvent" class="form-control">
         <option
             v-for="option in options"
             :key="option.name"
