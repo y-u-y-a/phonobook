@@ -30,21 +30,25 @@
                         v-if="book.detail!=undefined"
                         class="mb-2">
                     {{ book.detail }}</li>
+                    <li>
+                        <FormRichButton
+                            v-if="book.state==0"
+                            @trigger="borrowBook({
+                                isbn: book.isbn,
+                                auth_user: login_user,
+                                dest: '/book/Index'
+                            })"
+                            button_name="この本を借りる" />
+                    </li>
                 </ul>
                 <div class="col-md-5 text-center">
                     <img
                         :src="book.cover"
                         alt="No Image"
-                        class="d-block wm-60 shadow" />
-                    <FormButton
-                        v-if="book.state==0"
-                        @signalEvent="borrowBook({
-                            isbn: book.isbn,
-                            auth_user: login_user,
-                            dest: '/book/Index'
-                        })"
-                        button_name="この本を借りる" />
-                    <!-- <FormButton button_name="レビューする" /> -->
+                        width="60%"
+                        height="375px"
+                        class="shadow" />
+                    <!-- <FormRichButton button_name="レビューする" /> -->
                 </div>
             </div>
         </div>
@@ -55,13 +59,13 @@
 
 <script>
 
-import FormButton from "../../components/form/Button.vue"
+import FormRichButton from "../../components/form/RichButton.vue"
 import { mapState, mapGetters, mapActions } from "vuex"
 
 export default {
 
     components: {
-        FormButton
+        FormRichButton
     },
 
     async created() {

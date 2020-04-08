@@ -24,13 +24,13 @@
                     class="disable shadow" />
             </div>
             <div class="flex-x-center">
-                <FormButton
-                    @signalEvent="modal_camera=!modal_camera"
+                <FormRichButton
+                    @trigger="modal_camera=!modal_camera"
                     button_name="カメラ起動" />
                 <CodeReader @trigger="getBookFromOpenBD" />
-                <FormButton
+                <FormRichButton
                     button_name="この本を借りる"
-                    @signalEvent="borrowBook({
+                    @trigger="borrowBook({
                         isbn: book.isbn,
                         auth_user: auth_user,
                         dest: '/book/Borrow'
@@ -49,7 +49,7 @@
 
 import ModalCamera from "../../modal/Camera.vue"
 import CodeReader from "../../components/CodeReader.vue"
-import FormButton from "../../components/form/Button.vue"
+import FormRichButton from "../../components/form/RichButton.vue"
 
 import { mapState, mapGetters, mapActions } from "vuex"
 
@@ -58,7 +58,7 @@ export default {
     components: {
         ModalCamera,
         CodeReader,
-        FormButton
+        FormRichButton
     },
 
     data() {

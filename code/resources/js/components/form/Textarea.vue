@@ -1,7 +1,11 @@
 <template>
-    <div class="form-textarea">
-        <label>{{ label }}：</label>
-        <textarea @input="issueEvent" :value="value" :placeholder=placeholder />
+    <div class="form-group">
+        <label class="mb-05">{{ label }}</label>
+        <textarea
+            @input="issueEvent"
+            :value="value"
+            :placeholder=placeholder
+            class="form-control" />
     </div>
 </template>
 

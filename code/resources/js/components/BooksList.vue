@@ -1,6 +1,6 @@
 <template>
     <div class="wm-90">
-        <div class="py-2 b-font-24">{{ page_title }}</div>
+        <header class="py-2 b-font-24">{{ page_title }}</header>
         <ul class="row flex-justify-between">
             <li
                 v-for="book in books"

@@ -11,9 +11,9 @@
         <!-- 切り取った画像を描画 -->
         <canvas ref="canvas" class="d-none"></canvas>
         <!-- 撮影と認証処理(Borrow.vue, Arrival.vueで使用) -->
-        <FormButton
+        <FormRichButton
             v-if="camera_type=='capture'"
-            @signalEvent="takeFace(); authFace()"
+            @trigger="takeFace(); authFace()"
             button_name="顔を認証する" />
     </div>
 </template>
@@ -21,12 +21,12 @@
 
 <script>
 
-import FormButton from "../components/form/Button.vue"
+import FormRichButton from "../components/form/RichButton.vue"
 
 export default {
 
     components: {
-        FormButton
+        FormRichButton
     },
 
     props: ["camera_type"],

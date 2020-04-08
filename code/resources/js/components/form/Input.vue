@@ -1,16 +1,16 @@
 <template>
-    <div class="flex-column mb-2 font-18">
+    <div class="form-group">
         <label class="mb-05">{{ label }}</label>
-        <div class="flex-justify-between">
+        <div class="flex-left">
             <!-- inputされる度に親側の@inputを発火(v-modelのデフォルトイベント) -->
             <input
-                @input="issueEvent"
+                @input="issueTrigger"
                 :value="value"
                 :placeholder=placeholder
                 type="text"
-                class="col-7"
+                class="form-control"
                 required />
-            <!-- セレクトボックス(email接尾辞) -->
+            <!-- セレクトボックス(email接尾辞用) -->
             <slot name="form-select"></slot>
         </div>
     </div>
@@ -24,14 +24,10 @@ export default {
     props: ["label", "placeholder", "value"],
 
     methods: {
-        // 親へのイベントを発行し、データ譲渡
-        issueEvent(e){
+        issueTrigger(e){
+            // 親側ではv-modelでOK(=@input+:value)
             this.$emit("input", e.target.value)
         }
     }
 }
 </script>
-
-
-<style lang="scss" scoped>
-</style>

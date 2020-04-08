@@ -5,7 +5,7 @@
         <!-- slot -->
         <div slot="user-show" slot-scope="{ book }" class="py-1 bg-white" >
             <FormButton
-                @signalEvent="returnBook(book)"
+                @trigger="returnBook(book)"
                 button_name="返却する" />
         </div>
     </BooksList>

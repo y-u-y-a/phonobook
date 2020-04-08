@@ -2,8 +2,8 @@
     <div class="wm-90 font-18">
 
         <div class="row my-2">
-            <FormButton
-                @signalEvent="modal_camera=!modal_camera"
+            <FormRichButton
+                @trigger="modal_camera=!modal_camera"
                 button_name="カメラ起動" />
         </div>
 
@@ -35,7 +35,7 @@
 <script>
 
 import ModalCamera from "../../modal/Camera.vue"
-import FormButton from "../../components/form/Button.vue"
+import FormRichButton from "../../components/form/RichButton.vue"
 
 import { mapState, mapGetters, mapActions } from "vuex"
 
@@ -43,7 +43,7 @@ export default {
 
     components: {
         ModalCamera,
-        FormButton
+        FormRichButton
     },
 
     created() {

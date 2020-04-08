@@ -13,7 +13,7 @@
         <!-- 撮影と認証処理(Borrow.vueで使用) -->
         <FormButton
             v-if="camera_type=='capture'"
-            @signalEvent="takeFace(); authFace()"
+            @trigger="takeFace(); authFace()"
             button_name="顔を認証する" />
     </div>
 </template>
@@ -114,7 +114,7 @@ export default {
                 }
 
                 // 親のイベント発火(login/arrival/borrow)
-                this.$emit("signalEvent", this.user)
+                this.$emit("trigger", this.user)
             })
         }
     }

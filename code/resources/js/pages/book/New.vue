@@ -1,8 +1,8 @@
 <template>
     <div class="wm-90">
-        <div class="row flex-x-center mt-2 p-2 bg-white">
+        <div class="row flex-justify-between p-2 bg-white">
             <!-- 左側 -->
-            <div class="col-md-6 col-12">
+            <div class="col-md-5">
                 <FormInput
                     v-model="book.title"
                     label="タイトル"
@@ -27,12 +27,12 @@
                     v-model="book.pubdate"
                     label="出版日"
                     placeholder="8文字以上" />
-                <!-- <FormTextarea
+                <FormTextarea
                     v-model="book.detail"
-                    label="詳細" /> -->
+                    label="詳細" />
             </div>
             <!-- 右側 -->
-            <div class="col-md-5 col-12 text-center">
+            <div class="col-md-5 text-center">
                 <img
                     :src="book.cover"
                     :alt="book.title"
@@ -40,12 +40,12 @@
                     width="100%"
                     class="d-block">
                 <div class="flex-justify-between mt-2">
-                    <FormButton
-                        @signalEvent="modal_camera=!modal_camera"
+                    <FormRichButton
+                        @trigger="modal_camera=!modal_camera"
                         button_name="カメラ起動" />
                     <CodeReader @trigger="getBookFromOpenBD" />
-                    <FormButton
-                        @signalEvent="registerBook(book)"
+                    <FormRichButton
+                        @trigger="registerBook(book)"
                         button_name="登録する" />
                 </div>
             </div>
@@ -63,7 +63,7 @@ import ModalCamera from "../../modal/Camera.vue"
 import CodeReader from "../../components/CodeReader.vue"
 import FormInput from "../../components/form/Input.vue"
 import FormTextarea from "../../components/form/Textarea.vue"
-import FormButton from "../../components/form/Button.vue"
+import FormRichButton from "../../components/form/RichButton.vue"
 
 import { mapActions } from 'vuex'
 
@@ -74,7 +74,7 @@ export default {
         CodeReader,
         FormInput,
         FormTextarea,
-        FormButton
+        FormRichButton
     },
 
     data(){

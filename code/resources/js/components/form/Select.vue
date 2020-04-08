@@ -1,12 +1,15 @@
 <template>
-    <select @change="issueEvent" class="form-control">
-        <option
-            v-for="option in options"
-            :key="option.name"
-            :value="option.value"
-            :selected="option.name == default_value"
-        >{{ option.name }}</option>
-    </select>
+    <div class="form-group">
+        <label class="mb-05">{{ label }}</label>
+        <select @change="issueTrigger" class="form-control">
+            <option
+                v-for="option in options"
+                :key="option.name"
+                :value="option.value"
+                :selected="option.name == default_value"
+            >{{ option.name }}</option>
+        </select>
+    </div>
 </template>
 
 
@@ -24,11 +27,17 @@ export default {
         default_value: {
             type: String,
             required: false
+        },
+
+        label: {
+            type: String,
+            required: false
         }
     },
 
     methods: {
-        issueEvent(e){
+        issueTrigger(e){
+            // 親側ではv-modelでOK(=@input+:value)
             this.$emit("input", e.target.value)
         }
     }
