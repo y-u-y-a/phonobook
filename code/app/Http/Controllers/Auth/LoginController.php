@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
 
+    // 場所： /vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php
     use AuthenticatesUsers;
 
 

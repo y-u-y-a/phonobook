@@ -14,7 +14,7 @@ class Book extends Model
         return $this->belongsTo('App\User');
     }
 
-    // バリデーション
+    // バリデーション結果を生成
     public function validate($input) {
 
         $rules = [

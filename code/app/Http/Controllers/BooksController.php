@@ -74,10 +74,10 @@ class BooksController extends Controller
     {
 
         $book = new Book;
-        $validation = $book->validate($request->all());
+        $validation_result = $book->validate($request->all());
 
         // 成功した場合
-        if($validation->passes()){
+        if($validation_result->passes()){
 
             $book->isbn = $request->isbn;
             $book->title = $request->title;
@@ -92,9 +92,9 @@ class BooksController extends Controller
             $book->save();
         }
 
-        // messagesメソッドでエラーメッセージを取得
-        return json_encode($validation->messages());
-        // return response()->json($validation->messages());
+        // 失敗した場合
+        return json_encode($validation_result->messages());
+        // return response()->json($validation_result->messages());
     }
 
 
