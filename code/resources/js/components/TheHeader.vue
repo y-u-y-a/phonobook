@@ -1,6 +1,6 @@
 <template>
-    <header class="bg-black c-white">
-        <div class="row wm-90 flex-justify-between flex-y-center py-2">
+    <header class="bg-black c-white font-16">
+        <div class="row wm-90 flex-justify-between flex-y-center py-1">
             <!-- ロゴ -->
             <RouterLink
                 tag="h1"
@@ -14,26 +14,26 @@
                     v-if="login_user"
                     tag="div"
                     :to="`/user/Show/${login_user.id}`"
-                    class="pc nav-link ml-1 px-2 py-05　font-18 pointer">
+                    class="pc nav-link ml-1 px-2 py-05 pointer">
                     マイページ
                 </RouterLink>
                 <RouterLink
                     v-if="!login_user"
                     tag="div"
                     to="/user/Login"
-                    class="pc nav-link ml-1 px-2 py-05　font-18 pointer">
+                    class="pc nav-link ml-1 px-2 py-05 pointer">
                     ログイン
                 </RouterLink>
                 <RouterLink
                     tag="div"
                     to="/"
-                    class="pc nav-link ml-1 px-2 py-05　font-18 pointer">
+                    class="pc nav-link ml-1 px-2 py-05 pointer">
                     トップへ
                 </RouterLink>
                 <div
                     v-if="login_user"
                     @click="logout"
-                    class="pc nav-link ml-1 px-2 py-05　font-18 pointer">
+                    class="pc nav-link ml-1 px-2 py-05 pointer">
                     ログアウト
                 </div>
             </nav>
