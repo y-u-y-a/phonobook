@@ -156,8 +156,9 @@ font系
 /*====================
 border系
 =====================*/
-@for $i from 1 to 10 {
+@for $i from 1 to 50 {
 
+    .solid-white-#{$i}{ border: $i * 1px solid $white; }
     .solid-main-#{$i}{ border: $i * 1px solid $main; }
     .solid-accent-#{$i}{ border: $i * 1px solid $accent; }
     .dashed-main-#{$i}{ border: $i * 1px dashed $main; }
@@ -168,9 +169,10 @@ border系
     .t-solid-silver-#{$i}{ border-top: $i * 1px solid $silver; }
     .b-solid-silver-#{$i}{ border-bottom: $i * 1px solid $silver; }
 
-    .radius-#{i}{ border-radius: $i * 1px; }
+    .radius-#{$i}{ border-radius: $i * 1px; }
 }
-
+// スクロール系
+// shadow系
 
 
 /*====================
@@ -185,7 +187,7 @@ border系
   left:0;
   width:100%;
   height:100%;
-  background-color:rgba(0,0,0,0.5);
+  background:rgba(0,0,0,0.8);
 }
 
 // 文字を...に変換

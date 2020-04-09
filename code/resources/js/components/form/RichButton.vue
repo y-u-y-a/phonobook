@@ -1,6 +1,6 @@
 <template>
     <button
-        @click="issueTrigger"
+        @click.stop="issueTrigger"
         type="submit"
         class="rich-button"
     >{{ button_name }}</button>

@@ -6,7 +6,7 @@
                 tag="h1"
                 to="/"
                 class="b-font-32 letter-5 pointer">
-                phonoBook
+                {{ APP_NAME }}
             </RouterLink>
             <!-- ナビゲーションバー -->
             <nav class="row">
@@ -14,26 +14,26 @@
                     v-if="login_user"
                     tag="div"
                     :to="`/user/Show/${login_user.id}`"
-                    class="pc nav-link ml-1 px-2 py-05 pointer">
+                    class="pc nav-link ml-1 px-2 py-05 radius-25 solid-white-1 pointer">
                     マイページ
                 </RouterLink>
                 <RouterLink
                     v-if="!login_user"
                     tag="div"
                     to="/user/Login"
-                    class="pc nav-link ml-1 px-2 py-05 pointer">
+                    class="pc nav-link ml-1 px-2 py-05 radius-25 solid-white-1 pointer">
                     ログイン
                 </RouterLink>
                 <RouterLink
                     tag="div"
                     to="/"
-                    class="pc nav-link ml-1 px-2 py-05 pointer">
+                    class="pc nav-link ml-1 px-2 py-05 radius-25 solid-white-1 pointer">
                     トップへ
                 </RouterLink>
                 <div
                     v-if="login_user"
                     @click="logout"
-                    class="pc nav-link ml-1 px-2 py-05 pointer">
+                    class="pc nav-link ml-1 px-2 py-05 radius-25 solid-white-1 pointer">
                     ログアウト
                 </div>
             </nav>
@@ -47,6 +47,12 @@
 import { mapState, mapMutations, mapActions } from "vuex"
 
 export default {
+
+    data(){
+        return {
+            APP_NAME: process.env.MIX_APP_NAME
+        }
+    },
 
     computed: {
         ...mapState("User", ["is_admin", "login_user"])
@@ -64,16 +70,8 @@ export default {
 
 @import "../../sass/app.scss";
 
-// PC
-@media screen and (min-width: 640px) {
-
-    .nav-link {
-        border: 1px solid white;
-        border-radius: 25px;
-    }
-    .nav-link:hover{
-        color: $black;
-        background: $white;
-    }
+.nav-link:hover{
+    color: $black;
+    background: $white;
 }
 </style>

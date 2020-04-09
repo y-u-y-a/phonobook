@@ -1,7 +1,7 @@
 <template>
     <!-- clickで親側のtriggerを発火させ、親側のイベント実行 -->
     <button
-        @click="issueTrigger"
+        @click.stop="issueTrigger"
         type="submit"
         class="btn c-white bg-main"
     >{{ button_name }}</button>

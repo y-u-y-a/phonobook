@@ -41,7 +41,7 @@
                     class="d-block">
                 <div class="flex-justify-between mt-2">
                     <FormRichButton
-                        @trigger="modal_camera=!modal_camera"
+                        @trigger="modal_camera=true"
                         button_name="カメラ起動" />
                     <CodeReader @trigger="getBookFromOpenBD" />
                     <FormRichButton
@@ -53,7 +53,12 @@
 
         <ModalCamera
             v-if="modal_camera"
-            camera_type="reader" />
+            @trigger="modal_camera=false"
+            camera_type="reader">
+            <div slot="operate-message" class="c-white b-font-28">
+                本のバーコードをかざしてください。
+            </div>
+        </ModalCamera>
     </div>
 </template>
 

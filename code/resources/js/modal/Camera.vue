@@ -1,11 +1,11 @@
 <template>
-    <div class="modal-default text-center">
+    <div @click="issueTrigger" class="modal-default text-center">
         <!-- カメラによる動画の挿入 -->
         <video
             ref="video"
             width="100%"
-            height="50%"
-            class="mb-2"
+            height="60%"
+            class="mb-4"
             autoplay >
         </video>
         <!-- 切り取った画像を描画 -->
@@ -15,6 +15,8 @@
             v-if="camera_type=='capture'"
             @trigger="takeFace(); authFace()"
             button_name="顔を認証する" />
+
+        <slot name="operate-message"></slot>
     </div>
 </template>
 
@@ -45,6 +47,10 @@ export default {
     },
 
     methods: {
+
+        issueTrigger(){
+            this.$emit("trigger")
+        },
 
         setCamera(){
             //HTML要素から取得→dataに代入

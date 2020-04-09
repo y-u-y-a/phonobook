@@ -13073,6 +13073,10 @@ font系
 border系
 =====================*/
 
+.solid-white-1 {
+  border: 1px solid #fff;
+}
+
 .solid-main-1 {
   border: 1px solid #5882FA;
 }
@@ -13105,8 +13109,12 @@ border系
   border-bottom: 1px solid silver;
 }
 
-.radius-i {
+.radius-1 {
   border-radius: 1px;
+}
+
+.solid-white-2 {
+  border: 2px solid #fff;
 }
 
 .solid-main-2 {
@@ -13141,8 +13149,12 @@ border系
   border-bottom: 2px solid silver;
 }
 
-.radius-i {
+.radius-2 {
   border-radius: 2px;
+}
+
+.solid-white-3 {
+  border: 3px solid #fff;
 }
 
 .solid-main-3 {
@@ -13177,8 +13189,12 @@ border系
   border-bottom: 3px solid silver;
 }
 
-.radius-i {
+.radius-3 {
   border-radius: 3px;
+}
+
+.solid-white-4 {
+  border: 4px solid #fff;
 }
 
 .solid-main-4 {
@@ -13213,8 +13229,12 @@ border系
   border-bottom: 4px solid silver;
 }
 
-.radius-i {
+.radius-4 {
   border-radius: 4px;
+}
+
+.solid-white-5 {
+  border: 5px solid #fff;
 }
 
 .solid-main-5 {
@@ -13249,8 +13269,12 @@ border系
   border-bottom: 5px solid silver;
 }
 
-.radius-i {
+.radius-5 {
   border-radius: 5px;
+}
+
+.solid-white-6 {
+  border: 6px solid #fff;
 }
 
 .solid-main-6 {
@@ -13285,8 +13309,12 @@ border系
   border-bottom: 6px solid silver;
 }
 
-.radius-i {
+.radius-6 {
   border-radius: 6px;
+}
+
+.solid-white-7 {
+  border: 7px solid #fff;
 }
 
 .solid-main-7 {
@@ -13321,8 +13349,12 @@ border系
   border-bottom: 7px solid silver;
 }
 
-.radius-i {
+.radius-7 {
   border-radius: 7px;
+}
+
+.solid-white-8 {
+  border: 8px solid #fff;
 }
 
 .solid-main-8 {
@@ -13357,8 +13389,12 @@ border系
   border-bottom: 8px solid silver;
 }
 
-.radius-i {
+.radius-8 {
   border-radius: 8px;
+}
+
+.solid-white-9 {
+  border: 9px solid #fff;
 }
 
 .solid-main-9 {
@@ -13393,8 +13429,1608 @@ border系
   border-bottom: 9px solid silver;
 }
 
-.radius-i {
+.radius-9 {
   border-radius: 9px;
+}
+
+.solid-white-10 {
+  border: 10px solid #fff;
+}
+
+.solid-main-10 {
+  border: 10px solid #5882FA;
+}
+
+.solid-accent-10 {
+  border: 10px solid #FA5858;
+}
+
+.dashed-main-10 {
+  border: 10px dashed #5882FA;
+}
+
+.dashed-accent-10 {
+  border: 10px dashed #FA5858;
+}
+
+.t-dashed-silver-10 {
+  border-top: 10px dashed silver;
+}
+
+.b-dashed-silver-10 {
+  border-bottom: 10px dashed silver;
+}
+
+.t-solid-silver-10 {
+  border-top: 10px solid silver;
+}
+
+.b-solid-silver-10 {
+  border-bottom: 10px solid silver;
+}
+
+.radius-10 {
+  border-radius: 10px;
+}
+
+.solid-white-11 {
+  border: 11px solid #fff;
+}
+
+.solid-main-11 {
+  border: 11px solid #5882FA;
+}
+
+.solid-accent-11 {
+  border: 11px solid #FA5858;
+}
+
+.dashed-main-11 {
+  border: 11px dashed #5882FA;
+}
+
+.dashed-accent-11 {
+  border: 11px dashed #FA5858;
+}
+
+.t-dashed-silver-11 {
+  border-top: 11px dashed silver;
+}
+
+.b-dashed-silver-11 {
+  border-bottom: 11px dashed silver;
+}
+
+.t-solid-silver-11 {
+  border-top: 11px solid silver;
+}
+
+.b-solid-silver-11 {
+  border-bottom: 11px solid silver;
+}
+
+.radius-11 {
+  border-radius: 11px;
+}
+
+.solid-white-12 {
+  border: 12px solid #fff;
+}
+
+.solid-main-12 {
+  border: 12px solid #5882FA;
+}
+
+.solid-accent-12 {
+  border: 12px solid #FA5858;
+}
+
+.dashed-main-12 {
+  border: 12px dashed #5882FA;
+}
+
+.dashed-accent-12 {
+  border: 12px dashed #FA5858;
+}
+
+.t-dashed-silver-12 {
+  border-top: 12px dashed silver;
+}
+
+.b-dashed-silver-12 {
+  border-bottom: 12px dashed silver;
+}
+
+.t-solid-silver-12 {
+  border-top: 12px solid silver;
+}
+
+.b-solid-silver-12 {
+  border-bottom: 12px solid silver;
+}
+
+.radius-12 {
+  border-radius: 12px;
+}
+
+.solid-white-13 {
+  border: 13px solid #fff;
+}
+
+.solid-main-13 {
+  border: 13px solid #5882FA;
+}
+
+.solid-accent-13 {
+  border: 13px solid #FA5858;
+}
+
+.dashed-main-13 {
+  border: 13px dashed #5882FA;
+}
+
+.dashed-accent-13 {
+  border: 13px dashed #FA5858;
+}
+
+.t-dashed-silver-13 {
+  border-top: 13px dashed silver;
+}
+
+.b-dashed-silver-13 {
+  border-bottom: 13px dashed silver;
+}
+
+.t-solid-silver-13 {
+  border-top: 13px solid silver;
+}
+
+.b-solid-silver-13 {
+  border-bottom: 13px solid silver;
+}
+
+.radius-13 {
+  border-radius: 13px;
+}
+
+.solid-white-14 {
+  border: 14px solid #fff;
+}
+
+.solid-main-14 {
+  border: 14px solid #5882FA;
+}
+
+.solid-accent-14 {
+  border: 14px solid #FA5858;
+}
+
+.dashed-main-14 {
+  border: 14px dashed #5882FA;
+}
+
+.dashed-accent-14 {
+  border: 14px dashed #FA5858;
+}
+
+.t-dashed-silver-14 {
+  border-top: 14px dashed silver;
+}
+
+.b-dashed-silver-14 {
+  border-bottom: 14px dashed silver;
+}
+
+.t-solid-silver-14 {
+  border-top: 14px solid silver;
+}
+
+.b-solid-silver-14 {
+  border-bottom: 14px solid silver;
+}
+
+.radius-14 {
+  border-radius: 14px;
+}
+
+.solid-white-15 {
+  border: 15px solid #fff;
+}
+
+.solid-main-15 {
+  border: 15px solid #5882FA;
+}
+
+.solid-accent-15 {
+  border: 15px solid #FA5858;
+}
+
+.dashed-main-15 {
+  border: 15px dashed #5882FA;
+}
+
+.dashed-accent-15 {
+  border: 15px dashed #FA5858;
+}
+
+.t-dashed-silver-15 {
+  border-top: 15px dashed silver;
+}
+
+.b-dashed-silver-15 {
+  border-bottom: 15px dashed silver;
+}
+
+.t-solid-silver-15 {
+  border-top: 15px solid silver;
+}
+
+.b-solid-silver-15 {
+  border-bottom: 15px solid silver;
+}
+
+.radius-15 {
+  border-radius: 15px;
+}
+
+.solid-white-16 {
+  border: 16px solid #fff;
+}
+
+.solid-main-16 {
+  border: 16px solid #5882FA;
+}
+
+.solid-accent-16 {
+  border: 16px solid #FA5858;
+}
+
+.dashed-main-16 {
+  border: 16px dashed #5882FA;
+}
+
+.dashed-accent-16 {
+  border: 16px dashed #FA5858;
+}
+
+.t-dashed-silver-16 {
+  border-top: 16px dashed silver;
+}
+
+.b-dashed-silver-16 {
+  border-bottom: 16px dashed silver;
+}
+
+.t-solid-silver-16 {
+  border-top: 16px solid silver;
+}
+
+.b-solid-silver-16 {
+  border-bottom: 16px solid silver;
+}
+
+.radius-16 {
+  border-radius: 16px;
+}
+
+.solid-white-17 {
+  border: 17px solid #fff;
+}
+
+.solid-main-17 {
+  border: 17px solid #5882FA;
+}
+
+.solid-accent-17 {
+  border: 17px solid #FA5858;
+}
+
+.dashed-main-17 {
+  border: 17px dashed #5882FA;
+}
+
+.dashed-accent-17 {
+  border: 17px dashed #FA5858;
+}
+
+.t-dashed-silver-17 {
+  border-top: 17px dashed silver;
+}
+
+.b-dashed-silver-17 {
+  border-bottom: 17px dashed silver;
+}
+
+.t-solid-silver-17 {
+  border-top: 17px solid silver;
+}
+
+.b-solid-silver-17 {
+  border-bottom: 17px solid silver;
+}
+
+.radius-17 {
+  border-radius: 17px;
+}
+
+.solid-white-18 {
+  border: 18px solid #fff;
+}
+
+.solid-main-18 {
+  border: 18px solid #5882FA;
+}
+
+.solid-accent-18 {
+  border: 18px solid #FA5858;
+}
+
+.dashed-main-18 {
+  border: 18px dashed #5882FA;
+}
+
+.dashed-accent-18 {
+  border: 18px dashed #FA5858;
+}
+
+.t-dashed-silver-18 {
+  border-top: 18px dashed silver;
+}
+
+.b-dashed-silver-18 {
+  border-bottom: 18px dashed silver;
+}
+
+.t-solid-silver-18 {
+  border-top: 18px solid silver;
+}
+
+.b-solid-silver-18 {
+  border-bottom: 18px solid silver;
+}
+
+.radius-18 {
+  border-radius: 18px;
+}
+
+.solid-white-19 {
+  border: 19px solid #fff;
+}
+
+.solid-main-19 {
+  border: 19px solid #5882FA;
+}
+
+.solid-accent-19 {
+  border: 19px solid #FA5858;
+}
+
+.dashed-main-19 {
+  border: 19px dashed #5882FA;
+}
+
+.dashed-accent-19 {
+  border: 19px dashed #FA5858;
+}
+
+.t-dashed-silver-19 {
+  border-top: 19px dashed silver;
+}
+
+.b-dashed-silver-19 {
+  border-bottom: 19px dashed silver;
+}
+
+.t-solid-silver-19 {
+  border-top: 19px solid silver;
+}
+
+.b-solid-silver-19 {
+  border-bottom: 19px solid silver;
+}
+
+.radius-19 {
+  border-radius: 19px;
+}
+
+.solid-white-20 {
+  border: 20px solid #fff;
+}
+
+.solid-main-20 {
+  border: 20px solid #5882FA;
+}
+
+.solid-accent-20 {
+  border: 20px solid #FA5858;
+}
+
+.dashed-main-20 {
+  border: 20px dashed #5882FA;
+}
+
+.dashed-accent-20 {
+  border: 20px dashed #FA5858;
+}
+
+.t-dashed-silver-20 {
+  border-top: 20px dashed silver;
+}
+
+.b-dashed-silver-20 {
+  border-bottom: 20px dashed silver;
+}
+
+.t-solid-silver-20 {
+  border-top: 20px solid silver;
+}
+
+.b-solid-silver-20 {
+  border-bottom: 20px solid silver;
+}
+
+.radius-20 {
+  border-radius: 20px;
+}
+
+.solid-white-21 {
+  border: 21px solid #fff;
+}
+
+.solid-main-21 {
+  border: 21px solid #5882FA;
+}
+
+.solid-accent-21 {
+  border: 21px solid #FA5858;
+}
+
+.dashed-main-21 {
+  border: 21px dashed #5882FA;
+}
+
+.dashed-accent-21 {
+  border: 21px dashed #FA5858;
+}
+
+.t-dashed-silver-21 {
+  border-top: 21px dashed silver;
+}
+
+.b-dashed-silver-21 {
+  border-bottom: 21px dashed silver;
+}
+
+.t-solid-silver-21 {
+  border-top: 21px solid silver;
+}
+
+.b-solid-silver-21 {
+  border-bottom: 21px solid silver;
+}
+
+.radius-21 {
+  border-radius: 21px;
+}
+
+.solid-white-22 {
+  border: 22px solid #fff;
+}
+
+.solid-main-22 {
+  border: 22px solid #5882FA;
+}
+
+.solid-accent-22 {
+  border: 22px solid #FA5858;
+}
+
+.dashed-main-22 {
+  border: 22px dashed #5882FA;
+}
+
+.dashed-accent-22 {
+  border: 22px dashed #FA5858;
+}
+
+.t-dashed-silver-22 {
+  border-top: 22px dashed silver;
+}
+
+.b-dashed-silver-22 {
+  border-bottom: 22px dashed silver;
+}
+
+.t-solid-silver-22 {
+  border-top: 22px solid silver;
+}
+
+.b-solid-silver-22 {
+  border-bottom: 22px solid silver;
+}
+
+.radius-22 {
+  border-radius: 22px;
+}
+
+.solid-white-23 {
+  border: 23px solid #fff;
+}
+
+.solid-main-23 {
+  border: 23px solid #5882FA;
+}
+
+.solid-accent-23 {
+  border: 23px solid #FA5858;
+}
+
+.dashed-main-23 {
+  border: 23px dashed #5882FA;
+}
+
+.dashed-accent-23 {
+  border: 23px dashed #FA5858;
+}
+
+.t-dashed-silver-23 {
+  border-top: 23px dashed silver;
+}
+
+.b-dashed-silver-23 {
+  border-bottom: 23px dashed silver;
+}
+
+.t-solid-silver-23 {
+  border-top: 23px solid silver;
+}
+
+.b-solid-silver-23 {
+  border-bottom: 23px solid silver;
+}
+
+.radius-23 {
+  border-radius: 23px;
+}
+
+.solid-white-24 {
+  border: 24px solid #fff;
+}
+
+.solid-main-24 {
+  border: 24px solid #5882FA;
+}
+
+.solid-accent-24 {
+  border: 24px solid #FA5858;
+}
+
+.dashed-main-24 {
+  border: 24px dashed #5882FA;
+}
+
+.dashed-accent-24 {
+  border: 24px dashed #FA5858;
+}
+
+.t-dashed-silver-24 {
+  border-top: 24px dashed silver;
+}
+
+.b-dashed-silver-24 {
+  border-bottom: 24px dashed silver;
+}
+
+.t-solid-silver-24 {
+  border-top: 24px solid silver;
+}
+
+.b-solid-silver-24 {
+  border-bottom: 24px solid silver;
+}
+
+.radius-24 {
+  border-radius: 24px;
+}
+
+.solid-white-25 {
+  border: 25px solid #fff;
+}
+
+.solid-main-25 {
+  border: 25px solid #5882FA;
+}
+
+.solid-accent-25 {
+  border: 25px solid #FA5858;
+}
+
+.dashed-main-25 {
+  border: 25px dashed #5882FA;
+}
+
+.dashed-accent-25 {
+  border: 25px dashed #FA5858;
+}
+
+.t-dashed-silver-25 {
+  border-top: 25px dashed silver;
+}
+
+.b-dashed-silver-25 {
+  border-bottom: 25px dashed silver;
+}
+
+.t-solid-silver-25 {
+  border-top: 25px solid silver;
+}
+
+.b-solid-silver-25 {
+  border-bottom: 25px solid silver;
+}
+
+.radius-25 {
+  border-radius: 25px;
+}
+
+.solid-white-26 {
+  border: 26px solid #fff;
+}
+
+.solid-main-26 {
+  border: 26px solid #5882FA;
+}
+
+.solid-accent-26 {
+  border: 26px solid #FA5858;
+}
+
+.dashed-main-26 {
+  border: 26px dashed #5882FA;
+}
+
+.dashed-accent-26 {
+  border: 26px dashed #FA5858;
+}
+
+.t-dashed-silver-26 {
+  border-top: 26px dashed silver;
+}
+
+.b-dashed-silver-26 {
+  border-bottom: 26px dashed silver;
+}
+
+.t-solid-silver-26 {
+  border-top: 26px solid silver;
+}
+
+.b-solid-silver-26 {
+  border-bottom: 26px solid silver;
+}
+
+.radius-26 {
+  border-radius: 26px;
+}
+
+.solid-white-27 {
+  border: 27px solid #fff;
+}
+
+.solid-main-27 {
+  border: 27px solid #5882FA;
+}
+
+.solid-accent-27 {
+  border: 27px solid #FA5858;
+}
+
+.dashed-main-27 {
+  border: 27px dashed #5882FA;
+}
+
+.dashed-accent-27 {
+  border: 27px dashed #FA5858;
+}
+
+.t-dashed-silver-27 {
+  border-top: 27px dashed silver;
+}
+
+.b-dashed-silver-27 {
+  border-bottom: 27px dashed silver;
+}
+
+.t-solid-silver-27 {
+  border-top: 27px solid silver;
+}
+
+.b-solid-silver-27 {
+  border-bottom: 27px solid silver;
+}
+
+.radius-27 {
+  border-radius: 27px;
+}
+
+.solid-white-28 {
+  border: 28px solid #fff;
+}
+
+.solid-main-28 {
+  border: 28px solid #5882FA;
+}
+
+.solid-accent-28 {
+  border: 28px solid #FA5858;
+}
+
+.dashed-main-28 {
+  border: 28px dashed #5882FA;
+}
+
+.dashed-accent-28 {
+  border: 28px dashed #FA5858;
+}
+
+.t-dashed-silver-28 {
+  border-top: 28px dashed silver;
+}
+
+.b-dashed-silver-28 {
+  border-bottom: 28px dashed silver;
+}
+
+.t-solid-silver-28 {
+  border-top: 28px solid silver;
+}
+
+.b-solid-silver-28 {
+  border-bottom: 28px solid silver;
+}
+
+.radius-28 {
+  border-radius: 28px;
+}
+
+.solid-white-29 {
+  border: 29px solid #fff;
+}
+
+.solid-main-29 {
+  border: 29px solid #5882FA;
+}
+
+.solid-accent-29 {
+  border: 29px solid #FA5858;
+}
+
+.dashed-main-29 {
+  border: 29px dashed #5882FA;
+}
+
+.dashed-accent-29 {
+  border: 29px dashed #FA5858;
+}
+
+.t-dashed-silver-29 {
+  border-top: 29px dashed silver;
+}
+
+.b-dashed-silver-29 {
+  border-bottom: 29px dashed silver;
+}
+
+.t-solid-silver-29 {
+  border-top: 29px solid silver;
+}
+
+.b-solid-silver-29 {
+  border-bottom: 29px solid silver;
+}
+
+.radius-29 {
+  border-radius: 29px;
+}
+
+.solid-white-30 {
+  border: 30px solid #fff;
+}
+
+.solid-main-30 {
+  border: 30px solid #5882FA;
+}
+
+.solid-accent-30 {
+  border: 30px solid #FA5858;
+}
+
+.dashed-main-30 {
+  border: 30px dashed #5882FA;
+}
+
+.dashed-accent-30 {
+  border: 30px dashed #FA5858;
+}
+
+.t-dashed-silver-30 {
+  border-top: 30px dashed silver;
+}
+
+.b-dashed-silver-30 {
+  border-bottom: 30px dashed silver;
+}
+
+.t-solid-silver-30 {
+  border-top: 30px solid silver;
+}
+
+.b-solid-silver-30 {
+  border-bottom: 30px solid silver;
+}
+
+.radius-30 {
+  border-radius: 30px;
+}
+
+.solid-white-31 {
+  border: 31px solid #fff;
+}
+
+.solid-main-31 {
+  border: 31px solid #5882FA;
+}
+
+.solid-accent-31 {
+  border: 31px solid #FA5858;
+}
+
+.dashed-main-31 {
+  border: 31px dashed #5882FA;
+}
+
+.dashed-accent-31 {
+  border: 31px dashed #FA5858;
+}
+
+.t-dashed-silver-31 {
+  border-top: 31px dashed silver;
+}
+
+.b-dashed-silver-31 {
+  border-bottom: 31px dashed silver;
+}
+
+.t-solid-silver-31 {
+  border-top: 31px solid silver;
+}
+
+.b-solid-silver-31 {
+  border-bottom: 31px solid silver;
+}
+
+.radius-31 {
+  border-radius: 31px;
+}
+
+.solid-white-32 {
+  border: 32px solid #fff;
+}
+
+.solid-main-32 {
+  border: 32px solid #5882FA;
+}
+
+.solid-accent-32 {
+  border: 32px solid #FA5858;
+}
+
+.dashed-main-32 {
+  border: 32px dashed #5882FA;
+}
+
+.dashed-accent-32 {
+  border: 32px dashed #FA5858;
+}
+
+.t-dashed-silver-32 {
+  border-top: 32px dashed silver;
+}
+
+.b-dashed-silver-32 {
+  border-bottom: 32px dashed silver;
+}
+
+.t-solid-silver-32 {
+  border-top: 32px solid silver;
+}
+
+.b-solid-silver-32 {
+  border-bottom: 32px solid silver;
+}
+
+.radius-32 {
+  border-radius: 32px;
+}
+
+.solid-white-33 {
+  border: 33px solid #fff;
+}
+
+.solid-main-33 {
+  border: 33px solid #5882FA;
+}
+
+.solid-accent-33 {
+  border: 33px solid #FA5858;
+}
+
+.dashed-main-33 {
+  border: 33px dashed #5882FA;
+}
+
+.dashed-accent-33 {
+  border: 33px dashed #FA5858;
+}
+
+.t-dashed-silver-33 {
+  border-top: 33px dashed silver;
+}
+
+.b-dashed-silver-33 {
+  border-bottom: 33px dashed silver;
+}
+
+.t-solid-silver-33 {
+  border-top: 33px solid silver;
+}
+
+.b-solid-silver-33 {
+  border-bottom: 33px solid silver;
+}
+
+.radius-33 {
+  border-radius: 33px;
+}
+
+.solid-white-34 {
+  border: 34px solid #fff;
+}
+
+.solid-main-34 {
+  border: 34px solid #5882FA;
+}
+
+.solid-accent-34 {
+  border: 34px solid #FA5858;
+}
+
+.dashed-main-34 {
+  border: 34px dashed #5882FA;
+}
+
+.dashed-accent-34 {
+  border: 34px dashed #FA5858;
+}
+
+.t-dashed-silver-34 {
+  border-top: 34px dashed silver;
+}
+
+.b-dashed-silver-34 {
+  border-bottom: 34px dashed silver;
+}
+
+.t-solid-silver-34 {
+  border-top: 34px solid silver;
+}
+
+.b-solid-silver-34 {
+  border-bottom: 34px solid silver;
+}
+
+.radius-34 {
+  border-radius: 34px;
+}
+
+.solid-white-35 {
+  border: 35px solid #fff;
+}
+
+.solid-main-35 {
+  border: 35px solid #5882FA;
+}
+
+.solid-accent-35 {
+  border: 35px solid #FA5858;
+}
+
+.dashed-main-35 {
+  border: 35px dashed #5882FA;
+}
+
+.dashed-accent-35 {
+  border: 35px dashed #FA5858;
+}
+
+.t-dashed-silver-35 {
+  border-top: 35px dashed silver;
+}
+
+.b-dashed-silver-35 {
+  border-bottom: 35px dashed silver;
+}
+
+.t-solid-silver-35 {
+  border-top: 35px solid silver;
+}
+
+.b-solid-silver-35 {
+  border-bottom: 35px solid silver;
+}
+
+.radius-35 {
+  border-radius: 35px;
+}
+
+.solid-white-36 {
+  border: 36px solid #fff;
+}
+
+.solid-main-36 {
+  border: 36px solid #5882FA;
+}
+
+.solid-accent-36 {
+  border: 36px solid #FA5858;
+}
+
+.dashed-main-36 {
+  border: 36px dashed #5882FA;
+}
+
+.dashed-accent-36 {
+  border: 36px dashed #FA5858;
+}
+
+.t-dashed-silver-36 {
+  border-top: 36px dashed silver;
+}
+
+.b-dashed-silver-36 {
+  border-bottom: 36px dashed silver;
+}
+
+.t-solid-silver-36 {
+  border-top: 36px solid silver;
+}
+
+.b-solid-silver-36 {
+  border-bottom: 36px solid silver;
+}
+
+.radius-36 {
+  border-radius: 36px;
+}
+
+.solid-white-37 {
+  border: 37px solid #fff;
+}
+
+.solid-main-37 {
+  border: 37px solid #5882FA;
+}
+
+.solid-accent-37 {
+  border: 37px solid #FA5858;
+}
+
+.dashed-main-37 {
+  border: 37px dashed #5882FA;
+}
+
+.dashed-accent-37 {
+  border: 37px dashed #FA5858;
+}
+
+.t-dashed-silver-37 {
+  border-top: 37px dashed silver;
+}
+
+.b-dashed-silver-37 {
+  border-bottom: 37px dashed silver;
+}
+
+.t-solid-silver-37 {
+  border-top: 37px solid silver;
+}
+
+.b-solid-silver-37 {
+  border-bottom: 37px solid silver;
+}
+
+.radius-37 {
+  border-radius: 37px;
+}
+
+.solid-white-38 {
+  border: 38px solid #fff;
+}
+
+.solid-main-38 {
+  border: 38px solid #5882FA;
+}
+
+.solid-accent-38 {
+  border: 38px solid #FA5858;
+}
+
+.dashed-main-38 {
+  border: 38px dashed #5882FA;
+}
+
+.dashed-accent-38 {
+  border: 38px dashed #FA5858;
+}
+
+.t-dashed-silver-38 {
+  border-top: 38px dashed silver;
+}
+
+.b-dashed-silver-38 {
+  border-bottom: 38px dashed silver;
+}
+
+.t-solid-silver-38 {
+  border-top: 38px solid silver;
+}
+
+.b-solid-silver-38 {
+  border-bottom: 38px solid silver;
+}
+
+.radius-38 {
+  border-radius: 38px;
+}
+
+.solid-white-39 {
+  border: 39px solid #fff;
+}
+
+.solid-main-39 {
+  border: 39px solid #5882FA;
+}
+
+.solid-accent-39 {
+  border: 39px solid #FA5858;
+}
+
+.dashed-main-39 {
+  border: 39px dashed #5882FA;
+}
+
+.dashed-accent-39 {
+  border: 39px dashed #FA5858;
+}
+
+.t-dashed-silver-39 {
+  border-top: 39px dashed silver;
+}
+
+.b-dashed-silver-39 {
+  border-bottom: 39px dashed silver;
+}
+
+.t-solid-silver-39 {
+  border-top: 39px solid silver;
+}
+
+.b-solid-silver-39 {
+  border-bottom: 39px solid silver;
+}
+
+.radius-39 {
+  border-radius: 39px;
+}
+
+.solid-white-40 {
+  border: 40px solid #fff;
+}
+
+.solid-main-40 {
+  border: 40px solid #5882FA;
+}
+
+.solid-accent-40 {
+  border: 40px solid #FA5858;
+}
+
+.dashed-main-40 {
+  border: 40px dashed #5882FA;
+}
+
+.dashed-accent-40 {
+  border: 40px dashed #FA5858;
+}
+
+.t-dashed-silver-40 {
+  border-top: 40px dashed silver;
+}
+
+.b-dashed-silver-40 {
+  border-bottom: 40px dashed silver;
+}
+
+.t-solid-silver-40 {
+  border-top: 40px solid silver;
+}
+
+.b-solid-silver-40 {
+  border-bottom: 40px solid silver;
+}
+
+.radius-40 {
+  border-radius: 40px;
+}
+
+.solid-white-41 {
+  border: 41px solid #fff;
+}
+
+.solid-main-41 {
+  border: 41px solid #5882FA;
+}
+
+.solid-accent-41 {
+  border: 41px solid #FA5858;
+}
+
+.dashed-main-41 {
+  border: 41px dashed #5882FA;
+}
+
+.dashed-accent-41 {
+  border: 41px dashed #FA5858;
+}
+
+.t-dashed-silver-41 {
+  border-top: 41px dashed silver;
+}
+
+.b-dashed-silver-41 {
+  border-bottom: 41px dashed silver;
+}
+
+.t-solid-silver-41 {
+  border-top: 41px solid silver;
+}
+
+.b-solid-silver-41 {
+  border-bottom: 41px solid silver;
+}
+
+.radius-41 {
+  border-radius: 41px;
+}
+
+.solid-white-42 {
+  border: 42px solid #fff;
+}
+
+.solid-main-42 {
+  border: 42px solid #5882FA;
+}
+
+.solid-accent-42 {
+  border: 42px solid #FA5858;
+}
+
+.dashed-main-42 {
+  border: 42px dashed #5882FA;
+}
+
+.dashed-accent-42 {
+  border: 42px dashed #FA5858;
+}
+
+.t-dashed-silver-42 {
+  border-top: 42px dashed silver;
+}
+
+.b-dashed-silver-42 {
+  border-bottom: 42px dashed silver;
+}
+
+.t-solid-silver-42 {
+  border-top: 42px solid silver;
+}
+
+.b-solid-silver-42 {
+  border-bottom: 42px solid silver;
+}
+
+.radius-42 {
+  border-radius: 42px;
+}
+
+.solid-white-43 {
+  border: 43px solid #fff;
+}
+
+.solid-main-43 {
+  border: 43px solid #5882FA;
+}
+
+.solid-accent-43 {
+  border: 43px solid #FA5858;
+}
+
+.dashed-main-43 {
+  border: 43px dashed #5882FA;
+}
+
+.dashed-accent-43 {
+  border: 43px dashed #FA5858;
+}
+
+.t-dashed-silver-43 {
+  border-top: 43px dashed silver;
+}
+
+.b-dashed-silver-43 {
+  border-bottom: 43px dashed silver;
+}
+
+.t-solid-silver-43 {
+  border-top: 43px solid silver;
+}
+
+.b-solid-silver-43 {
+  border-bottom: 43px solid silver;
+}
+
+.radius-43 {
+  border-radius: 43px;
+}
+
+.solid-white-44 {
+  border: 44px solid #fff;
+}
+
+.solid-main-44 {
+  border: 44px solid #5882FA;
+}
+
+.solid-accent-44 {
+  border: 44px solid #FA5858;
+}
+
+.dashed-main-44 {
+  border: 44px dashed #5882FA;
+}
+
+.dashed-accent-44 {
+  border: 44px dashed #FA5858;
+}
+
+.t-dashed-silver-44 {
+  border-top: 44px dashed silver;
+}
+
+.b-dashed-silver-44 {
+  border-bottom: 44px dashed silver;
+}
+
+.t-solid-silver-44 {
+  border-top: 44px solid silver;
+}
+
+.b-solid-silver-44 {
+  border-bottom: 44px solid silver;
+}
+
+.radius-44 {
+  border-radius: 44px;
+}
+
+.solid-white-45 {
+  border: 45px solid #fff;
+}
+
+.solid-main-45 {
+  border: 45px solid #5882FA;
+}
+
+.solid-accent-45 {
+  border: 45px solid #FA5858;
+}
+
+.dashed-main-45 {
+  border: 45px dashed #5882FA;
+}
+
+.dashed-accent-45 {
+  border: 45px dashed #FA5858;
+}
+
+.t-dashed-silver-45 {
+  border-top: 45px dashed silver;
+}
+
+.b-dashed-silver-45 {
+  border-bottom: 45px dashed silver;
+}
+
+.t-solid-silver-45 {
+  border-top: 45px solid silver;
+}
+
+.b-solid-silver-45 {
+  border-bottom: 45px solid silver;
+}
+
+.radius-45 {
+  border-radius: 45px;
+}
+
+.solid-white-46 {
+  border: 46px solid #fff;
+}
+
+.solid-main-46 {
+  border: 46px solid #5882FA;
+}
+
+.solid-accent-46 {
+  border: 46px solid #FA5858;
+}
+
+.dashed-main-46 {
+  border: 46px dashed #5882FA;
+}
+
+.dashed-accent-46 {
+  border: 46px dashed #FA5858;
+}
+
+.t-dashed-silver-46 {
+  border-top: 46px dashed silver;
+}
+
+.b-dashed-silver-46 {
+  border-bottom: 46px dashed silver;
+}
+
+.t-solid-silver-46 {
+  border-top: 46px solid silver;
+}
+
+.b-solid-silver-46 {
+  border-bottom: 46px solid silver;
+}
+
+.radius-46 {
+  border-radius: 46px;
+}
+
+.solid-white-47 {
+  border: 47px solid #fff;
+}
+
+.solid-main-47 {
+  border: 47px solid #5882FA;
+}
+
+.solid-accent-47 {
+  border: 47px solid #FA5858;
+}
+
+.dashed-main-47 {
+  border: 47px dashed #5882FA;
+}
+
+.dashed-accent-47 {
+  border: 47px dashed #FA5858;
+}
+
+.t-dashed-silver-47 {
+  border-top: 47px dashed silver;
+}
+
+.b-dashed-silver-47 {
+  border-bottom: 47px dashed silver;
+}
+
+.t-solid-silver-47 {
+  border-top: 47px solid silver;
+}
+
+.b-solid-silver-47 {
+  border-bottom: 47px solid silver;
+}
+
+.radius-47 {
+  border-radius: 47px;
+}
+
+.solid-white-48 {
+  border: 48px solid #fff;
+}
+
+.solid-main-48 {
+  border: 48px solid #5882FA;
+}
+
+.solid-accent-48 {
+  border: 48px solid #FA5858;
+}
+
+.dashed-main-48 {
+  border: 48px dashed #5882FA;
+}
+
+.dashed-accent-48 {
+  border: 48px dashed #FA5858;
+}
+
+.t-dashed-silver-48 {
+  border-top: 48px dashed silver;
+}
+
+.b-dashed-silver-48 {
+  border-bottom: 48px dashed silver;
+}
+
+.t-solid-silver-48 {
+  border-top: 48px solid silver;
+}
+
+.b-solid-silver-48 {
+  border-bottom: 48px solid silver;
+}
+
+.radius-48 {
+  border-radius: 48px;
+}
+
+.solid-white-49 {
+  border: 49px solid #fff;
+}
+
+.solid-main-49 {
+  border: 49px solid #5882FA;
+}
+
+.solid-accent-49 {
+  border: 49px solid #FA5858;
+}
+
+.dashed-main-49 {
+  border: 49px dashed #5882FA;
+}
+
+.dashed-accent-49 {
+  border: 49px dashed #FA5858;
+}
+
+.t-dashed-silver-49 {
+  border-top: 49px dashed silver;
+}
+
+.b-dashed-silver-49 {
+  border-bottom: 49px dashed silver;
+}
+
+.t-solid-silver-49 {
+  border-top: 49px solid silver;
+}
+
+.b-solid-silver-49 {
+  border-bottom: 49px solid silver;
+}
+
+.radius-49 {
+  border-radius: 49px;
 }
 
 /*====================
@@ -13411,7 +15047,7 @@ border系
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .dot {

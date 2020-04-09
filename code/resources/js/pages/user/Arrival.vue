@@ -3,7 +3,7 @@
 
         <div class="row my-2">
             <FormRichButton
-                @trigger="modal_camera=!modal_camera"
+                @trigger="modal_camera=true"
                 button_name="カメラ起動" />
         </div>
 
@@ -27,6 +27,7 @@
 
         <ModalCamera
             v-if="modal_camera"
+            @trigger="modal_camera=false"
             @authTrigger="changeState"
             camera_type="capture" />
     </div>
