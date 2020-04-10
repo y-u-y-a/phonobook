@@ -29,9 +29,9 @@ export default {
 .rich-button {
     width: 150px;
     // margin: 0 auto;
-    padding: 1rem 0;
+    padding: 0.8rem 0;
     color: $white;
-    font-size: 18px;
+    font-size: 16px;
     text-decoration: none;
     border-radius: 25px;
     background-image: linear-gradient(#6795fd 0%, #67ceff 100%);

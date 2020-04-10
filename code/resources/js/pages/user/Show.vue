@@ -1,11 +1,14 @@
 <template>
     <BooksList
-        :page_title="`${login_user.name}さんが現在借りている本`"
+        :page_title="`${login_user.name}さんの履歴`"
         :books=borrowed_books >
-        <!-- slot -->
-        <div slot="user-show" slot-scope="{ book }" class="py-1 bg-white" >
+        <!-- slot-scopeで取得 -->
+        <div
+            slot="bottom-section"
+            slot-scope="slotPlops"
+            class="py-1 bg-white" >
             <FormButton
-                @trigger="returnBook(book)"
+                @trigger="returnBook(slotPlops.book)"
                 button_name="返却する" />
         </div>
     </BooksList>

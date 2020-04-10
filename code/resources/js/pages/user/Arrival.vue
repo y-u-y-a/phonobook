@@ -1,29 +1,38 @@
 <template>
-    <div class="wm-90 font-18">
-
-        <div class="row my-2">
+    <div class="row flex-x-center font-18">
+        <div class="col-md-10">
             <FormRichButton
                 @trigger="modal_camera=true"
-                button_name="カメラ起動" />
-        </div>
+                button_name="カメラ起動"
+                class="my-2" />
 
-        <table class="d-block bg-white text-center shadow">
-            <tr class="row py-1 b-solid-silver-1">
-                <th class="col-md-3 col-4 dot">社員番号</th>
-                <th class="col-md-3 col-4 dot">名前</th>
-                <th class="pc col-md-3 dot">出勤時間</th>
-                <th class="col-md-3 col-4 dot">出勤状況</th>
-            </tr>
-            <tr v-for="user in all_users"
-                :key="user.id"
-                :id="user.id"
-                class="row py-1 b-dashed-silver-1">
-                <td class="col-md-3 col-4 dot">{{ user.id }}</td>
-                <td class="col-md-3 col-4 dot">{{ user.name }}</td>
-                <td class="pc col-md-3 dot">{{ user.updated_at }}</td>
-                <td class="col-md-3 col-4 dot">{{ user.state }}</td>
-            </tr>
-        </table>
+            <table class="d-block bg-white text-center shadow">
+                <tr id="thead" class="row py-1 b-solid-silver-4 bg-white">
+                    <th class="col-md-3 col-4 dot">社員番号</th>
+                    <th class="col-md-3 col-4 dot">名前</th>
+                    <th class="pc col-md-3 dot">出勤時間</th>
+                    <th class="col-md-3 col-4 dot">出勤状況</th>
+                </tr>
+                <tr v-for="n in 50"
+                    :key="n"
+                    :id="n"
+                    class="row py-1 b-dashed-silver-1">
+                    <td class="col-md-3 col-4 dot">{{ n }}</td>
+                    <td class="col-md-3 col-4 dot">yuya</td>
+                    <td class="pc col-md-3 dot">2019-12-23</td>
+                    <td class="col-md-3 col-4 dot">○</td>
+                </tr>
+                <tr v-for="user in all_users"
+                    :key="user.name"
+                    :id="user.id"
+                    class="row py-1 b-dashed-silver-1">
+                    <td class="col-md-3 col-4 dot">{{ user.id }}</td>
+                    <td class="col-md-3 col-4 dot">{{ user.name }}</td>
+                    <td class="pc col-md-3 dot">{{ user.updated_at }}</td>
+                    <td class="col-md-3 col-4 dot">{{ user.state }}</td>
+                </tr>
+            </table>
+        </div>
 
         <ModalCamera
             v-if="modal_camera"
@@ -84,7 +93,7 @@ export default {
             })
 
             // モーダルを閉じる
-            this.modal_camera = !this.modal_camera
+            this.modal_camera = false
         }
     }
 }
@@ -95,8 +104,11 @@ export default {
 
 @import "../../../sass/app.scss";
 
-// PC
-@media screen and (min-width: 640px) {
+#thead{
+    z-index: 999;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
 }
 .switch-alert{
     background: $main-half;

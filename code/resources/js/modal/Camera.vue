@@ -1,12 +1,12 @@
 <template>
-    <div @click="issueTrigger" class="modal-default text-center">
+    <div @click="issueTrigger" id="modal-camera" class="modal-default text-center">
         <!-- カメラによる動画の挿入 -->
         <video
             ref="video"
             width="100%"
             height="60%"
             class="mb-4"
-            autoplay >
+            autoplay muted >
         </video>
         <!-- 切り取った画像を描画 -->
         <canvas ref="canvas" class="d-none"></canvas>
@@ -70,7 +70,7 @@ export default {
             navigator.mediaDevices.getUserMedia(camera_config)
             .then((stream) => {
                 this.video.srcObject = stream
-                this.video.onloadedmetadata = e => {
+                this.video.onloadedmetadata = (e) => {
                     this.video.play()
                 }
             })
@@ -123,3 +123,10 @@ export default {
     }
 }
 </script>
+
+
+<style lang="scss" scoped>
+#modal-camera{
+    z-index: 9999;
+}
+</style>

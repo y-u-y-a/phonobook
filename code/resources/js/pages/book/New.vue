@@ -1,55 +1,75 @@
 <template>
-    <div class="wm-90">
-        <div class="row flex-justify-between p-2 bg-white">
-            <!-- 左側 -->
-            <div class="col-md-5">
-                <FormInput
-                    v-model="book.title"
-                    label="タイトル"
-                    placeholder="8文字以上" />
-                <FormInput
-                    v-model="book.author"
-                    label="著者"
-                    placeholder="8文字以上" />
-                <FormInput
-                    v-model="book.volume"
-                    label="巻"
-                    placeholder="8文字以上" />
-                <FormInput
-                    v-model="book.series"
-                    label="シリーズ"
-                    placeholder="8文字以上" />
-                <FormInput
-                    v-model="book.publisher"
-                    label="出版"
-                    placeholder="8文字以上" />
-                <FormInput
-                    v-model="book.pubdate"
-                    label="出版日"
-                    placeholder="8文字以上" />
-                <FormTextarea
-                    v-model="book.detail"
-                    label="詳細" />
-            </div>
-            <!-- 右側 -->
-            <div class="col-md-5 text-center">
-                <img
-                    :src="book.cover"
-                    :alt="book.title"
-                    height="450px"
-                    width="100%"
-                    class="d-block">
-                <div class="flex-justify-between mt-2">
-                    <FormRichButton
-                        @trigger="modal_camera=true"
-                        button_name="カメラ起動" />
-                    <CodeReader @trigger="getBookFromOpenBD" />
-                    <FormRichButton
-                        @trigger="registerBook(book)"
-                        button_name="登録する" />
+    <div class="row flex-x-center">
+        <div class="col-md-10">
+
+            <header class="pc row my-2">
+                <FormRichButton
+                    @trigger="modal_camera=true"
+                    button_name="カメラ起動"
+                    class="mr-2" />
+                <FormRichButton
+                    @trigger="registerBook(book)"
+                    button_name="登録する" />
+            </header>
+
+            <div class="row flex-justify-between px-2 py-1 bg-white">
+                <!-- 左側 -->
+                <div class="col-md-5">
+                    <FormInput
+                        v-model="book.title"
+                        label="タイトル"
+                        placeholder="" />
+                    <FormInput
+                        v-model="book.author"
+                        label="著者"
+                        placeholder="" />
+                    <div class="row flex-justify-between">
+                        <FormInput
+                            v-model="book.series"
+                            label="シリーズ"
+                            placeholder=""
+                            class="col-8" />
+                        <FormInput
+                            v-model="book.volume"
+                            label="巻"
+                            placeholder=""
+                            class="col-3" />
+                    </div>
+                    <FormInput
+                        v-model="book.publisher"
+                        label="出版"
+                        placeholder="" />
+                    <FormInput
+                        v-model="book.pubdate"
+                        label="出版日"
+                        placeholder="" />
+                    <FormTextarea
+                        v-model="book.detail"
+                        label="詳細" />
+                </div>
+                <!-- 右側 -->
+                <div class="col-md-5 flex-x-center flex-y-center">
+                    <img
+                        :src="book.cover"
+                        :alt="book.title"
+                        height="450px"
+                        width="100%" >
                 </div>
             </div>
+
+            <!-- button -->
+            <div class="sp fixed-bottom text-center">
+                <ul class="row c-white bg-main">
+                    <li
+                        @click="modal_camera=true"
+                        class="col-6 py-1" style="border-right: 1px solid white;">カメラ起動</li>
+                    <li
+                        @click="registerBook(book)" class="col-6 py-1">登録する</li>
+                </ul>
+            </div>
         </div>
+
+        <CodeReader @trigger="getBookFromOpenBD" />
 
         <ModalCamera
             v-if="modal_camera"

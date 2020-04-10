@@ -1,6 +1,6 @@
 <template>
-    <div class="flex-x-center">
-        <div class="col-md-8 bg-white">
+    <div class="row flex-x-center">
+        <div class="col-md-8 bg-white shadow">
             <header class="p-2 font-24 b-solid-silver-1">ログインする</header>
             <div class="p-2">
                 <FormInput

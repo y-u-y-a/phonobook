@@ -11082,10 +11082,6 @@ button:focus {
   background: #F8E0E0 !important;
 }
 
-/*====================
-レスポンシブ表示系
-=====================*/
-
 /* PC */
 
 @media screen and (min-width: 640px) {
@@ -11236,6 +11232,11 @@ width系
 
 [class*="wm-"] {
   margin: 0 auto !important;
+}
+
+.w-0,
+.wm-0 {
+  width: 0% !important;
 }
 
 .w-1,
@@ -11785,6 +11786,30 @@ padding系
   padding-bottom: 0.5rem !important;
 }
 
+.p-0 {
+  padding: 0rem !important;
+}
+
+.pl-0,
+.px-0 {
+  padding-left: 0rem !important;
+}
+
+.pr-0,
+.px-0 {
+  padding-right: 0rem !important;
+}
+
+.pt-0,
+.py-0 {
+  padding-top: 0rem !important;
+}
+
+.pb-0,
+.py-0 {
+  padding-bottom: 0rem !important;
+}
+
 .p-1 {
   padding: 1rem !important;
 }
@@ -12053,6 +12078,30 @@ margin系
   margin-bottom: 0.5rem !important;
 }
 
+.m-0 {
+  margin: 0rem !important;
+}
+
+.ml-0,
+.mx-0 {
+  margin-left: 0rem !important;
+}
+
+.mr-0,
+.mx-0 {
+  margin-right: 0rem !important;
+}
+
+.mt-0,
+.my-0 {
+  margin-top: 0rem !important;
+}
+
+.mb-0,
+.my-0 {
+  margin-bottom: 0rem !important;
+}
+
 .m-1 {
   margin: 1rem !important;
 }
@@ -12275,6 +12324,14 @@ font系
 
 [class*="b-font"] {
   font-weight: bold !important;
+}
+
+[class*="font-0"] {
+  font-size: 0px !important;
+}
+
+.letter-0 {
+  letter-spacing: 0px !important;
 }
 
 [class*="font-1"] {
@@ -13072,6 +13129,46 @@ font系
 /*====================
 border系
 =====================*/
+
+.solid-white-0 {
+  border: 0px solid #fff;
+}
+
+.solid-main-0 {
+  border: 0px solid #5882FA;
+}
+
+.solid-accent-0 {
+  border: 0px solid #FA5858;
+}
+
+.dashed-main-0 {
+  border: 0px dashed #5882FA;
+}
+
+.dashed-accent-0 {
+  border: 0px dashed #FA5858;
+}
+
+.t-dashed-silver-0 {
+  border-top: 0px dashed silver;
+}
+
+.b-dashed-silver-0 {
+  border-bottom: 0px dashed silver;
+}
+
+.t-solid-silver-0 {
+  border-top: 0px solid silver;
+}
+
+.b-solid-silver-0 {
+  border-bottom: 0px solid silver;
+}
+
+.radius-0 {
+  border-radius: 0px;
+}
 
 .solid-white-1 {
   border: 1px solid #fff;

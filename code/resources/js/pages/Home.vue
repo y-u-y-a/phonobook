@@ -1,23 +1,22 @@
 <template>
-    <div class="row flex-x-center mt-6 flex-y-center">
-        <div class="d-inline-block flex-column col-md-4 col-12">
+    <div id="home" class="row flex-x-center flex-y-center">
+        <div class="flex-column col-md-4">
             <!-- 全てのユーザー -->
             <TopButton
-                id="top-button"
                 v-for="button in user_button_list"
                 :key="button.name"
                 :button_name="button.name"
                 :path="button.path"
-                class="top-button mx-2 c-main bg-white solid-main-1 radius-4 shadow" />
+                class="mx-2 my-2 c-main solid-main-1" />
         </div>
         <!-- 管理ユーザーのみ -->
-        <div v-if="is_admin" class="flex-column col-md-4 col-12">
+        <div v-if="is_admin" class="flex-column col-md-4">
             <TopButton
                 v-for="button in admin_button_list"
                 :key="button.name"
                 :button_name="button.name"
                 :path="button.path"
-                class="admin-button mx-2 c-accent bg-white solid-accent-1 radius-4 shadow" />
+                class="mx-2 my-2 c-accent solid-accent-1" />
         </div>
     </div>
 </template>
@@ -65,13 +64,8 @@ export default {
 
 @import "../../sass/app.scss";
 
-.top-button:hover{
-    color: $white;
-    background: $main;
-}
-.admin-button:hover{
-    color: $white;
-    background: $accent;
+#home{
+    height: calc(100vh - 66px);
 }
 
 </style>

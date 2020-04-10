@@ -1,7 +1,9 @@
 <template>
-    <div class="flex-x-center">
-        <div class="col-md-8 bg-white">
-            <header class="p-2 font-24 b-solid-silver-1">ユーザーを登録する</header>
+    <div class="row flex-x-center">
+        <div class="col-md-8 bg-white shadow">
+            <header class="p-2 font-24 b-solid-silver-1">
+                ユーザーを登録する
+            </header>
             <div class="p-2">
                 <FormSelect
                     label="部署"

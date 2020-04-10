@@ -1,15 +1,15 @@
 <template>
-    <header class="bg-black c-white font-16">
-        <div class="row wm-90 flex-justify-between flex-y-center py-1">
+    <header class="row flex-x-center bg-black c-white">
+        <div class="col-md-10 row flex-justify-between flex-y-center py-1">
             <!-- ロゴ -->
             <RouterLink
                 tag="h1"
                 to="/"
-                class="b-font-32 letter-5 pointer">
+                class="b-font-28 letter-4 pointer">
                 {{ APP_NAME }}
             </RouterLink>
             <!-- ナビゲーションバー -->
-            <nav class="row">
+            <nav class="row font-16">
                 <RouterLink
                     v-if="login_user"
                     tag="div"

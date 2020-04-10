@@ -1,6 +1,4 @@
-/*====================
-レスポンシブ表示系
-=====================*/
+
 /* PC */
 @media screen and (min-width: 640px){
     .sp{ display: none !important; }
@@ -63,7 +61,7 @@ width系
 =====================*/
 [class*="wm-"]{ margin: 0 auto !important; }
 
-@for $i from 1 to 100 {
+@for $i from 0 to 100 {
     .w-#{$i},
     .wm-#{$i} { width: $i * 1% !important; }
 }
@@ -93,7 +91,7 @@ padding系
 .pb-05,
 .py-05{ padding-bottom: 0.5rem !important; }
 
-@for $i from 1 to 10 {
+@for $i from 0 to 10 {
 
     .p-#{$i} { padding: $i * 1rem !important; }
     .pl-#{$i},
@@ -131,7 +129,7 @@ margin系
 .mb-05,
 .my-05{ margin-bottom: 0.5rem !important; }
 
-@for $i from 1 to 10 {
+@for $i from 0 to 10 {
 
     .m-#{$i} { margin: $i * 1rem !important; }
     .ml-#{$i},
@@ -148,7 +146,7 @@ font系
 =====================*/
 [class*="b-font"]{ font-weight: bold !important; }
 
-@for $i from 1 to 100 {
+@for $i from 0 to 100 {
 
     [class*="font-#{$i}"] { font-size: $i * 1px !important; }
     .letter-#{$i} { letter-spacing: $i * 1px !important; }
@@ -156,7 +154,7 @@ font系
 /*====================
 border系
 =====================*/
-@for $i from 1 to 50 {
+@for $i from 0 to 50 {
 
     .solid-white-#{$i}{ border: $i * 1px solid $white; }
     .solid-main-#{$i}{ border: $i * 1px solid $main; }

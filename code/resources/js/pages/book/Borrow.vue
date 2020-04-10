@@ -1,42 +1,62 @@
 <template>
-    <div>
-        <div class="flex-column mt-3 py-2 bg-white text-center">
-            <!-- borrower -->
-            <div class="flex-x-center b-font">
-                <span v-if="!auth_user" class="disable">
-                    貸出し不可：カメラ撮影が必要です
-                </span>
-                <span v-else-if="auth_user" class="able">
-                    貸出し可能：{{auth_user.name}}
-                </span>
-            </div>
-            <!-- book-image -->
-            <div class="book-image mt-1 mb-2 b-font-16">
-                <img
-                    v-if="book.title"
-                    :src="book.cover"
-                    :alt="book.title"
-                    class="able shadow" />
-                <img
-                    v-else-if="!book.title"
-                    :src="book.cover"
-                    alt="No Image"
-                    class="disable shadow" />
-            </div>
-            <div class="flex-x-center">
+    <div class="row flex-x-center">
+
+        <div class="col-md-10">
+            <header class="row">
                 <FormRichButton
                     @trigger="modal_camera=true"
-                    button_name="カメラ起動" />
-                <CodeReader @trigger="getBookFromOpenBD" />
+                    button_name="カメラ起動"
+                    class="pc my-2 mr-2" />
                 <FormRichButton
                     button_name="この本を借りる"
                     @trigger="borrowBook({
                         isbn: book.isbn,
                         auth_user: auth_user,
                         dest: '/book/Borrow'
-                    })" />
+                    })" class="pc my-2" />
+            </header>
+
+            <div class="flex-column py-2 bg-white text-center shadow">
+                <!-- borrower -->
+                <div class="flex-x-center b-font-20">
+                    <span v-if="!auth_user" class="disable">
+                        貸出し不可：カメラ撮影が必要です
+                    </span>
+                    <span v-else-if="auth_user" class="able">
+                        貸出し可能：{{auth_user.name}}
+                    </span>
+                </div>
+                <!-- book-image -->
+                <div class="book-image my-2 b-font-16">
+                    <img
+                        v-if="book.title"
+                        :src="book.cover"
+                        :alt="book.title"
+                        class="able shadow" />
+                    <img
+                        v-else-if="!book.title"
+                        :src="book.cover"
+                        alt="No Image"
+                        class="disable shadow" />
+                </div>
+                <!-- button -->
+                <div class="sp fixed-bottom">
+                    <ul class="row c-white bg-main">
+                        <li
+                            @click="modal_camera=true"
+                            class="col-6 py-1" style="border-right: 1px solid white;">カメラ起動</li>
+                        <li
+                            @click="borrowBook({
+                                isbn: book.isbn,
+                                auth_user: auth_user,
+                                dest: '/book/Borrow'
+                            })" class="col-6 py-1">この本を借りる</li>
+                    </ul>
+                </div>
             </div>
         </div>
+
+        <CodeReader @trigger="getBookFromOpenBD" />
 
         <ModalCamera
             v-if="modal_camera"
