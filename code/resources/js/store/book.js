@@ -66,16 +66,14 @@ const actions = {
 
         await axios.post("/api/books", params)
         .then((response) => {
-            // const err = response.data
+            const err = response.data.errors
 
-            // if(err){
-            //     alert(err.isbn)
-            // }
-            return
-        })
-        .catch((e) => {
-            alert("エラーが発生しました。")
-            console.log(e)
+            if(err){
+                console.log(err)
+                alert("予期せぬエラーが発生しました。")
+                return
+            }
+            location.href = "/book/New"
         })
     },
 

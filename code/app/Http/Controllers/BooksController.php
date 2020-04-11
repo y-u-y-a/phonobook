@@ -90,11 +90,14 @@ class BooksController extends Controller
             $book->detail = $request->detail;
             $book->state = 0;
             $book->save();
+            return;
         }
 
         // 失敗した場合
-        return json_encode($validation_result->messages());
-        // return response()->json($validation_result->messages());
+        // return json_encode($validation_result->messages());
+        return response()->json([
+            "errors" => $validation_result->messages()
+        ]);
     }
 
 
