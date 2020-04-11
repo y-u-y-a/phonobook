@@ -76,6 +76,17 @@ export default {
             })
         },
 
+        stopCamera(){
+
+            const stream = this.video.srcObject
+            const tracks = stream.getTracks()
+
+            tracks.forEach((track) => {
+                track.stop()
+            })
+            stream = null;
+        },
+
         // face_image取得・canvas描画
         takeFace() {
             // 動画から2Dを取得(drawImage()を使えるようにする)
@@ -118,6 +129,8 @@ export default {
 
                 // 取得したユーザーを使った処理を親側で実行
                 this.$emit("authTrigger", this.user)
+                // カメラ停止
+                this.stopCamera()
             })
         }
     }
