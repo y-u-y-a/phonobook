@@ -164,8 +164,8 @@ export default {
 .book-image{
     img {
         display: block;
-        height: 375px;
         width: 280px;
+        height: 375px;
         margin: 0 auto;
     }
     .disable {

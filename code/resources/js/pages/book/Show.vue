@@ -1,11 +1,11 @@
 <template>
-    <div class="font-18">
-        <div class="wm-90">
+    <div class="row flex-x-center font-20">
+        <div class="col-md-10">
 
-            <header class="py-4 b-font-24">{{ book.title }}</header>
+            <header class="my-4 b-font-24">{{ book.title }}</header>
 
-            <div class="row">
-                <ul class="col-md-7 wm-90">
+            <div class="row py-2 bg-white">
+                <ul class="col-md-7 px-2">
                     <li
                         v-if="book.author!=undefined"
                         class="mb-2">
@@ -44,8 +44,8 @@
                 <div class="col-md-5 text-center">
                     <img
                         :src="book.cover"
-                        alt="No Image"
-                        width="60%"
+                        :alt="book.title"
+                        width="250px"
                         height="375px"
                         class="shadow" />
                     <!-- <FormRichButton button_name="レビューする" /> -->

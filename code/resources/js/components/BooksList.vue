@@ -4,22 +4,24 @@
             <header class="my-2 b-font-24">
                 {{ page_title }}
             </header>
-            <ul class="row flex-justify-around flex-wrap">
+            <ul id="book-list" class="row flex-wrap">
                 <li
                     v-for="book in books"
                     :key="book.id"
-                    class="row flex-column mb-2 text-center shadow">
+                    class="row flex-column mb-2 text-center">
 
-                    <router-link
-                        tag="img"
-                        :to="'/book/Show/' + book.id"
-                        :src="book.cover"
-                        :alt="book.title"
-                        width="230"
-                        height="300"
-                        class="pointer" />
-                    <!-- bindで親に変数を渡す -->
-                    <slot name="bottom-section" :book="book"></slot>
+                    <div class="pr-1">
+                        <router-link
+                            tag="img"
+                            :to="'/book/Show/' + book.id"
+                            :src="book.cover"
+                            :alt="book.title"
+                            width="230"
+                            height="300"
+                            class="pointer" />
+                        <!-- bindで親に変数を渡す -->
+                        <slot name="bottom-section" :book="book"></slot>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -47,6 +49,13 @@ export default {
         a:hover {
             opacity: 0.7;
         }
+    }
+}
+
+// スマホ
+@media screen and (max-width: 640px) {
+    #book-list{
+        justify-content: center !important;
     }
 }
 </style>
