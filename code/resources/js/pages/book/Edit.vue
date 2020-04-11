@@ -6,14 +6,14 @@
                 <li
                     v-for="book in all_books"
                     :key="book.title"
-                    class="row flex-justify-around py-2 mb-2 bg-white">
+                    class="row flex-justify-around pt-2 pb-1 mb-2 bg-white">
                     <div class="">
                         <img
                             :src="book.cover"
                             :alt="book.title"
-                            width="250"
-                            height="350"
-                            class="d-block">
+                            width="300px"
+                            height="450px"
+                            class="d-block shadow">
                         <div class="row flex-justify-around my-3">
                             <FormButton
                                 button_name="更新する"

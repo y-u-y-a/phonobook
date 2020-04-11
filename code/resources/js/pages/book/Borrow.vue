@@ -16,7 +16,7 @@
                     })" class="pc my-2" />
             </header>
 
-            <div class="flex-column py-2 bg-white text-center shadow">
+            <div class="flex-column pt-2 bg-white text-center shadow">
                 <!-- borrower -->
                 <div class="flex-x-center b-font-20">
                     <span v-if="!auth_user" class="disable">
@@ -27,16 +27,20 @@
                     </span>
                 </div>
                 <!-- book-image -->
-                <div class="book-image my-2 b-font-16">
+                <div class="book-image text-center my-2 b-font-16">
                     <img
                         v-if="book.title"
                         :src="book.cover"
                         :alt="book.title"
+                        width="300px"
+                        height="450px"
                         class="able shadow" />
                     <img
                         v-else-if="!book.title"
                         :src="book.cover"
                         alt="No Image"
+                        width="300px"
+                        height="450px"
                         class="disable shadow" />
                 </div>
                 <!-- button -->
@@ -162,12 +166,6 @@ export default {
     color: $green;
 }
 .book-image{
-    img {
-        display: block;
-        width: 280px;
-        height: 375px;
-        margin: 0 auto;
-    }
     .disable {
         border: 5px solid $red;
     }

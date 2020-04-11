@@ -53,7 +53,8 @@
                         :src="book.cover"
                         :alt="book.title"
                         height="450px"
-                        width="100%" >
+                        width="300px"
+                        class="shadow" >
                 </div>
             </div>
 

@@ -13,15 +13,6 @@
                     <th class="pc col-md-3 dot">出勤時間</th>
                     <th class="col-md-3 col-4 dot">出勤状況</th>
                 </tr>
-                <tr v-for="n in 50"
-                    :key="n"
-                    :id="n"
-                    class="row py-1 b-dashed-silver-1">
-                    <td class="col-md-3 col-4 dot">{{ n }}</td>
-                    <td class="col-md-3 col-4 dot">yuya</td>
-                    <td class="pc col-md-3 dot">2019-12-23</td>
-                    <td class="col-md-3 col-4 dot">○</td>
-                </tr>
                 <tr v-for="user in all_users"
                     :key="user.name"
                     :id="user.id"

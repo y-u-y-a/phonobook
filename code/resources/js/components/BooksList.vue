@@ -10,7 +10,7 @@
                     :key="book.id"
                     class="row flex-column mb-2 text-center">
 
-                    <div class="mr-1 shadow">
+                    <div class="mx-2 shadow">
                         <router-link
                             tag="img"
                             :to="'/book/Show/' + book.id"
