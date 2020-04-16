@@ -11005,7 +11005,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: '';
+  content: "";
   content: none;
 }
 
@@ -11035,51 +11035,51 @@ button:focus {
 }
 
 .c-black {
-  color: #2E2E2E !important;
+  color: #2e2e2e !important;
 }
 
 .bg-black {
-  background: #2E2E2E !important;
+  background: #2e2e2e !important;
 }
 
 .c-base {
-  color: #F2F2F2 !important;
+  color: #f2f2f2 !important;
 }
 
 .bg-base {
-  background: #F2F2F2 !important;
+  background: #f2f2f2 !important;
 }
 
 .c-main {
-  color: #5882FA !important;
+  color: #5882fa !important;
 }
 
 .bg-main {
-  background: #5882FA !important;
+  background: #5882fa !important;
 }
 
 .c-main-half {
-  color: #CEE3F6 !important;
+  color: #cee3f6 !important;
 }
 
 .bg-main-half {
-  background: #CEE3F6 !important;
+  background: #cee3f6 !important;
 }
 
 .c-accent {
-  color: #FA5858 !important;
+  color: #fa5858 !important;
 }
 
 .bg-accent {
-  background: #FA5858 !important;
+  background: #fa5858 !important;
 }
 
 .c-accent-half {
-  color: #F8E0E0 !important;
+  color: #f8e0e0 !important;
 }
 
 .bg-accent-half {
-  background: #F8E0E0 !important;
+  background: #f8e0e0 !important;
 }
 
 /* PC */
@@ -13135,19 +13135,19 @@ border系
 }
 
 .solid-main-0 {
-  border: 0px solid #5882FA;
+  border: 0px solid #5882fa;
 }
 
 .solid-accent-0 {
-  border: 0px solid #FA5858;
+  border: 0px solid #fa5858;
 }
 
 .dashed-main-0 {
-  border: 0px dashed #5882FA;
+  border: 0px dashed #5882fa;
 }
 
 .dashed-accent-0 {
-  border: 0px dashed #FA5858;
+  border: 0px dashed #fa5858;
 }
 
 .t-dashed-silver-0 {
@@ -13175,19 +13175,19 @@ border系
 }
 
 .solid-main-1 {
-  border: 1px solid #5882FA;
+  border: 1px solid #5882fa;
 }
 
 .solid-accent-1 {
-  border: 1px solid #FA5858;
+  border: 1px solid #fa5858;
 }
 
 .dashed-main-1 {
-  border: 1px dashed #5882FA;
+  border: 1px dashed #5882fa;
 }
 
 .dashed-accent-1 {
-  border: 1px dashed #FA5858;
+  border: 1px dashed #fa5858;
 }
 
 .t-dashed-silver-1 {
@@ -13215,19 +13215,19 @@ border系
 }
 
 .solid-main-2 {
-  border: 2px solid #5882FA;
+  border: 2px solid #5882fa;
 }
 
 .solid-accent-2 {
-  border: 2px solid #FA5858;
+  border: 2px solid #fa5858;
 }
 
 .dashed-main-2 {
-  border: 2px dashed #5882FA;
+  border: 2px dashed #5882fa;
 }
 
 .dashed-accent-2 {
-  border: 2px dashed #FA5858;
+  border: 2px dashed #fa5858;
 }
 
 .t-dashed-silver-2 {
@@ -13255,19 +13255,19 @@ border系
 }
 
 .solid-main-3 {
-  border: 3px solid #5882FA;
+  border: 3px solid #5882fa;
 }
 
 .solid-accent-3 {
-  border: 3px solid #FA5858;
+  border: 3px solid #fa5858;
 }
 
 .dashed-main-3 {
-  border: 3px dashed #5882FA;
+  border: 3px dashed #5882fa;
 }
 
 .dashed-accent-3 {
-  border: 3px dashed #FA5858;
+  border: 3px dashed #fa5858;
 }
 
 .t-dashed-silver-3 {
@@ -13295,19 +13295,19 @@ border系
 }
 
 .solid-main-4 {
-  border: 4px solid #5882FA;
+  border: 4px solid #5882fa;
 }
 
 .solid-accent-4 {
-  border: 4px solid #FA5858;
+  border: 4px solid #fa5858;
 }
 
 .dashed-main-4 {
-  border: 4px dashed #5882FA;
+  border: 4px dashed #5882fa;
 }
 
 .dashed-accent-4 {
-  border: 4px dashed #FA5858;
+  border: 4px dashed #fa5858;
 }
 
 .t-dashed-silver-4 {
@@ -13335,19 +13335,19 @@ border系
 }
 
 .solid-main-5 {
-  border: 5px solid #5882FA;
+  border: 5px solid #5882fa;
 }
 
 .solid-accent-5 {
-  border: 5px solid #FA5858;
+  border: 5px solid #fa5858;
 }
 
 .dashed-main-5 {
-  border: 5px dashed #5882FA;
+  border: 5px dashed #5882fa;
 }
 
 .dashed-accent-5 {
-  border: 5px dashed #FA5858;
+  border: 5px dashed #fa5858;
 }
 
 .t-dashed-silver-5 {
@@ -13375,19 +13375,19 @@ border系
 }
 
 .solid-main-6 {
-  border: 6px solid #5882FA;
+  border: 6px solid #5882fa;
 }
 
 .solid-accent-6 {
-  border: 6px solid #FA5858;
+  border: 6px solid #fa5858;
 }
 
 .dashed-main-6 {
-  border: 6px dashed #5882FA;
+  border: 6px dashed #5882fa;
 }
 
 .dashed-accent-6 {
-  border: 6px dashed #FA5858;
+  border: 6px dashed #fa5858;
 }
 
 .t-dashed-silver-6 {
@@ -13415,19 +13415,19 @@ border系
 }
 
 .solid-main-7 {
-  border: 7px solid #5882FA;
+  border: 7px solid #5882fa;
 }
 
 .solid-accent-7 {
-  border: 7px solid #FA5858;
+  border: 7px solid #fa5858;
 }
 
 .dashed-main-7 {
-  border: 7px dashed #5882FA;
+  border: 7px dashed #5882fa;
 }
 
 .dashed-accent-7 {
-  border: 7px dashed #FA5858;
+  border: 7px dashed #fa5858;
 }
 
 .t-dashed-silver-7 {
@@ -13455,19 +13455,19 @@ border系
 }
 
 .solid-main-8 {
-  border: 8px solid #5882FA;
+  border: 8px solid #5882fa;
 }
 
 .solid-accent-8 {
-  border: 8px solid #FA5858;
+  border: 8px solid #fa5858;
 }
 
 .dashed-main-8 {
-  border: 8px dashed #5882FA;
+  border: 8px dashed #5882fa;
 }
 
 .dashed-accent-8 {
-  border: 8px dashed #FA5858;
+  border: 8px dashed #fa5858;
 }
 
 .t-dashed-silver-8 {
@@ -13495,19 +13495,19 @@ border系
 }
 
 .solid-main-9 {
-  border: 9px solid #5882FA;
+  border: 9px solid #5882fa;
 }
 
 .solid-accent-9 {
-  border: 9px solid #FA5858;
+  border: 9px solid #fa5858;
 }
 
 .dashed-main-9 {
-  border: 9px dashed #5882FA;
+  border: 9px dashed #5882fa;
 }
 
 .dashed-accent-9 {
-  border: 9px dashed #FA5858;
+  border: 9px dashed #fa5858;
 }
 
 .t-dashed-silver-9 {
@@ -13535,19 +13535,19 @@ border系
 }
 
 .solid-main-10 {
-  border: 10px solid #5882FA;
+  border: 10px solid #5882fa;
 }
 
 .solid-accent-10 {
-  border: 10px solid #FA5858;
+  border: 10px solid #fa5858;
 }
 
 .dashed-main-10 {
-  border: 10px dashed #5882FA;
+  border: 10px dashed #5882fa;
 }
 
 .dashed-accent-10 {
-  border: 10px dashed #FA5858;
+  border: 10px dashed #fa5858;
 }
 
 .t-dashed-silver-10 {
@@ -13575,19 +13575,19 @@ border系
 }
 
 .solid-main-11 {
-  border: 11px solid #5882FA;
+  border: 11px solid #5882fa;
 }
 
 .solid-accent-11 {
-  border: 11px solid #FA5858;
+  border: 11px solid #fa5858;
 }
 
 .dashed-main-11 {
-  border: 11px dashed #5882FA;
+  border: 11px dashed #5882fa;
 }
 
 .dashed-accent-11 {
-  border: 11px dashed #FA5858;
+  border: 11px dashed #fa5858;
 }
 
 .t-dashed-silver-11 {
@@ -13615,19 +13615,19 @@ border系
 }
 
 .solid-main-12 {
-  border: 12px solid #5882FA;
+  border: 12px solid #5882fa;
 }
 
 .solid-accent-12 {
-  border: 12px solid #FA5858;
+  border: 12px solid #fa5858;
 }
 
 .dashed-main-12 {
-  border: 12px dashed #5882FA;
+  border: 12px dashed #5882fa;
 }
 
 .dashed-accent-12 {
-  border: 12px dashed #FA5858;
+  border: 12px dashed #fa5858;
 }
 
 .t-dashed-silver-12 {
@@ -13655,19 +13655,19 @@ border系
 }
 
 .solid-main-13 {
-  border: 13px solid #5882FA;
+  border: 13px solid #5882fa;
 }
 
 .solid-accent-13 {
-  border: 13px solid #FA5858;
+  border: 13px solid #fa5858;
 }
 
 .dashed-main-13 {
-  border: 13px dashed #5882FA;
+  border: 13px dashed #5882fa;
 }
 
 .dashed-accent-13 {
-  border: 13px dashed #FA5858;
+  border: 13px dashed #fa5858;
 }
 
 .t-dashed-silver-13 {
@@ -13695,19 +13695,19 @@ border系
 }
 
 .solid-main-14 {
-  border: 14px solid #5882FA;
+  border: 14px solid #5882fa;
 }
 
 .solid-accent-14 {
-  border: 14px solid #FA5858;
+  border: 14px solid #fa5858;
 }
 
 .dashed-main-14 {
-  border: 14px dashed #5882FA;
+  border: 14px dashed #5882fa;
 }
 
 .dashed-accent-14 {
-  border: 14px dashed #FA5858;
+  border: 14px dashed #fa5858;
 }
 
 .t-dashed-silver-14 {
@@ -13735,19 +13735,19 @@ border系
 }
 
 .solid-main-15 {
-  border: 15px solid #5882FA;
+  border: 15px solid #5882fa;
 }
 
 .solid-accent-15 {
-  border: 15px solid #FA5858;
+  border: 15px solid #fa5858;
 }
 
 .dashed-main-15 {
-  border: 15px dashed #5882FA;
+  border: 15px dashed #5882fa;
 }
 
 .dashed-accent-15 {
-  border: 15px dashed #FA5858;
+  border: 15px dashed #fa5858;
 }
 
 .t-dashed-silver-15 {
@@ -13775,19 +13775,19 @@ border系
 }
 
 .solid-main-16 {
-  border: 16px solid #5882FA;
+  border: 16px solid #5882fa;
 }
 
 .solid-accent-16 {
-  border: 16px solid #FA5858;
+  border: 16px solid #fa5858;
 }
 
 .dashed-main-16 {
-  border: 16px dashed #5882FA;
+  border: 16px dashed #5882fa;
 }
 
 .dashed-accent-16 {
-  border: 16px dashed #FA5858;
+  border: 16px dashed #fa5858;
 }
 
 .t-dashed-silver-16 {
@@ -13815,19 +13815,19 @@ border系
 }
 
 .solid-main-17 {
-  border: 17px solid #5882FA;
+  border: 17px solid #5882fa;
 }
 
 .solid-accent-17 {
-  border: 17px solid #FA5858;
+  border: 17px solid #fa5858;
 }
 
 .dashed-main-17 {
-  border: 17px dashed #5882FA;
+  border: 17px dashed #5882fa;
 }
 
 .dashed-accent-17 {
-  border: 17px dashed #FA5858;
+  border: 17px dashed #fa5858;
 }
 
 .t-dashed-silver-17 {
@@ -13855,19 +13855,19 @@ border系
 }
 
 .solid-main-18 {
-  border: 18px solid #5882FA;
+  border: 18px solid #5882fa;
 }
 
 .solid-accent-18 {
-  border: 18px solid #FA5858;
+  border: 18px solid #fa5858;
 }
 
 .dashed-main-18 {
-  border: 18px dashed #5882FA;
+  border: 18px dashed #5882fa;
 }
 
 .dashed-accent-18 {
-  border: 18px dashed #FA5858;
+  border: 18px dashed #fa5858;
 }
 
 .t-dashed-silver-18 {
@@ -13895,19 +13895,19 @@ border系
 }
 
 .solid-main-19 {
-  border: 19px solid #5882FA;
+  border: 19px solid #5882fa;
 }
 
 .solid-accent-19 {
-  border: 19px solid #FA5858;
+  border: 19px solid #fa5858;
 }
 
 .dashed-main-19 {
-  border: 19px dashed #5882FA;
+  border: 19px dashed #5882fa;
 }
 
 .dashed-accent-19 {
-  border: 19px dashed #FA5858;
+  border: 19px dashed #fa5858;
 }
 
 .t-dashed-silver-19 {
@@ -13935,19 +13935,19 @@ border系
 }
 
 .solid-main-20 {
-  border: 20px solid #5882FA;
+  border: 20px solid #5882fa;
 }
 
 .solid-accent-20 {
-  border: 20px solid #FA5858;
+  border: 20px solid #fa5858;
 }
 
 .dashed-main-20 {
-  border: 20px dashed #5882FA;
+  border: 20px dashed #5882fa;
 }
 
 .dashed-accent-20 {
-  border: 20px dashed #FA5858;
+  border: 20px dashed #fa5858;
 }
 
 .t-dashed-silver-20 {
@@ -13975,19 +13975,19 @@ border系
 }
 
 .solid-main-21 {
-  border: 21px solid #5882FA;
+  border: 21px solid #5882fa;
 }
 
 .solid-accent-21 {
-  border: 21px solid #FA5858;
+  border: 21px solid #fa5858;
 }
 
 .dashed-main-21 {
-  border: 21px dashed #5882FA;
+  border: 21px dashed #5882fa;
 }
 
 .dashed-accent-21 {
-  border: 21px dashed #FA5858;
+  border: 21px dashed #fa5858;
 }
 
 .t-dashed-silver-21 {
@@ -14015,19 +14015,19 @@ border系
 }
 
 .solid-main-22 {
-  border: 22px solid #5882FA;
+  border: 22px solid #5882fa;
 }
 
 .solid-accent-22 {
-  border: 22px solid #FA5858;
+  border: 22px solid #fa5858;
 }
 
 .dashed-main-22 {
-  border: 22px dashed #5882FA;
+  border: 22px dashed #5882fa;
 }
 
 .dashed-accent-22 {
-  border: 22px dashed #FA5858;
+  border: 22px dashed #fa5858;
 }
 
 .t-dashed-silver-22 {
@@ -14055,19 +14055,19 @@ border系
 }
 
 .solid-main-23 {
-  border: 23px solid #5882FA;
+  border: 23px solid #5882fa;
 }
 
 .solid-accent-23 {
-  border: 23px solid #FA5858;
+  border: 23px solid #fa5858;
 }
 
 .dashed-main-23 {
-  border: 23px dashed #5882FA;
+  border: 23px dashed #5882fa;
 }
 
 .dashed-accent-23 {
-  border: 23px dashed #FA5858;
+  border: 23px dashed #fa5858;
 }
 
 .t-dashed-silver-23 {
@@ -14095,19 +14095,19 @@ border系
 }
 
 .solid-main-24 {
-  border: 24px solid #5882FA;
+  border: 24px solid #5882fa;
 }
 
 .solid-accent-24 {
-  border: 24px solid #FA5858;
+  border: 24px solid #fa5858;
 }
 
 .dashed-main-24 {
-  border: 24px dashed #5882FA;
+  border: 24px dashed #5882fa;
 }
 
 .dashed-accent-24 {
-  border: 24px dashed #FA5858;
+  border: 24px dashed #fa5858;
 }
 
 .t-dashed-silver-24 {
@@ -14135,19 +14135,19 @@ border系
 }
 
 .solid-main-25 {
-  border: 25px solid #5882FA;
+  border: 25px solid #5882fa;
 }
 
 .solid-accent-25 {
-  border: 25px solid #FA5858;
+  border: 25px solid #fa5858;
 }
 
 .dashed-main-25 {
-  border: 25px dashed #5882FA;
+  border: 25px dashed #5882fa;
 }
 
 .dashed-accent-25 {
-  border: 25px dashed #FA5858;
+  border: 25px dashed #fa5858;
 }
 
 .t-dashed-silver-25 {
@@ -14175,19 +14175,19 @@ border系
 }
 
 .solid-main-26 {
-  border: 26px solid #5882FA;
+  border: 26px solid #5882fa;
 }
 
 .solid-accent-26 {
-  border: 26px solid #FA5858;
+  border: 26px solid #fa5858;
 }
 
 .dashed-main-26 {
-  border: 26px dashed #5882FA;
+  border: 26px dashed #5882fa;
 }
 
 .dashed-accent-26 {
-  border: 26px dashed #FA5858;
+  border: 26px dashed #fa5858;
 }
 
 .t-dashed-silver-26 {
@@ -14215,19 +14215,19 @@ border系
 }
 
 .solid-main-27 {
-  border: 27px solid #5882FA;
+  border: 27px solid #5882fa;
 }
 
 .solid-accent-27 {
-  border: 27px solid #FA5858;
+  border: 27px solid #fa5858;
 }
 
 .dashed-main-27 {
-  border: 27px dashed #5882FA;
+  border: 27px dashed #5882fa;
 }
 
 .dashed-accent-27 {
-  border: 27px dashed #FA5858;
+  border: 27px dashed #fa5858;
 }
 
 .t-dashed-silver-27 {
@@ -14255,19 +14255,19 @@ border系
 }
 
 .solid-main-28 {
-  border: 28px solid #5882FA;
+  border: 28px solid #5882fa;
 }
 
 .solid-accent-28 {
-  border: 28px solid #FA5858;
+  border: 28px solid #fa5858;
 }
 
 .dashed-main-28 {
-  border: 28px dashed #5882FA;
+  border: 28px dashed #5882fa;
 }
 
 .dashed-accent-28 {
-  border: 28px dashed #FA5858;
+  border: 28px dashed #fa5858;
 }
 
 .t-dashed-silver-28 {
@@ -14295,19 +14295,19 @@ border系
 }
 
 .solid-main-29 {
-  border: 29px solid #5882FA;
+  border: 29px solid #5882fa;
 }
 
 .solid-accent-29 {
-  border: 29px solid #FA5858;
+  border: 29px solid #fa5858;
 }
 
 .dashed-main-29 {
-  border: 29px dashed #5882FA;
+  border: 29px dashed #5882fa;
 }
 
 .dashed-accent-29 {
-  border: 29px dashed #FA5858;
+  border: 29px dashed #fa5858;
 }
 
 .t-dashed-silver-29 {
@@ -14335,19 +14335,19 @@ border系
 }
 
 .solid-main-30 {
-  border: 30px solid #5882FA;
+  border: 30px solid #5882fa;
 }
 
 .solid-accent-30 {
-  border: 30px solid #FA5858;
+  border: 30px solid #fa5858;
 }
 
 .dashed-main-30 {
-  border: 30px dashed #5882FA;
+  border: 30px dashed #5882fa;
 }
 
 .dashed-accent-30 {
-  border: 30px dashed #FA5858;
+  border: 30px dashed #fa5858;
 }
 
 .t-dashed-silver-30 {
@@ -14375,19 +14375,19 @@ border系
 }
 
 .solid-main-31 {
-  border: 31px solid #5882FA;
+  border: 31px solid #5882fa;
 }
 
 .solid-accent-31 {
-  border: 31px solid #FA5858;
+  border: 31px solid #fa5858;
 }
 
 .dashed-main-31 {
-  border: 31px dashed #5882FA;
+  border: 31px dashed #5882fa;
 }
 
 .dashed-accent-31 {
-  border: 31px dashed #FA5858;
+  border: 31px dashed #fa5858;
 }
 
 .t-dashed-silver-31 {
@@ -14415,19 +14415,19 @@ border系
 }
 
 .solid-main-32 {
-  border: 32px solid #5882FA;
+  border: 32px solid #5882fa;
 }
 
 .solid-accent-32 {
-  border: 32px solid #FA5858;
+  border: 32px solid #fa5858;
 }
 
 .dashed-main-32 {
-  border: 32px dashed #5882FA;
+  border: 32px dashed #5882fa;
 }
 
 .dashed-accent-32 {
-  border: 32px dashed #FA5858;
+  border: 32px dashed #fa5858;
 }
 
 .t-dashed-silver-32 {
@@ -14455,19 +14455,19 @@ border系
 }
 
 .solid-main-33 {
-  border: 33px solid #5882FA;
+  border: 33px solid #5882fa;
 }
 
 .solid-accent-33 {
-  border: 33px solid #FA5858;
+  border: 33px solid #fa5858;
 }
 
 .dashed-main-33 {
-  border: 33px dashed #5882FA;
+  border: 33px dashed #5882fa;
 }
 
 .dashed-accent-33 {
-  border: 33px dashed #FA5858;
+  border: 33px dashed #fa5858;
 }
 
 .t-dashed-silver-33 {
@@ -14495,19 +14495,19 @@ border系
 }
 
 .solid-main-34 {
-  border: 34px solid #5882FA;
+  border: 34px solid #5882fa;
 }
 
 .solid-accent-34 {
-  border: 34px solid #FA5858;
+  border: 34px solid #fa5858;
 }
 
 .dashed-main-34 {
-  border: 34px dashed #5882FA;
+  border: 34px dashed #5882fa;
 }
 
 .dashed-accent-34 {
-  border: 34px dashed #FA5858;
+  border: 34px dashed #fa5858;
 }
 
 .t-dashed-silver-34 {
@@ -14535,19 +14535,19 @@ border系
 }
 
 .solid-main-35 {
-  border: 35px solid #5882FA;
+  border: 35px solid #5882fa;
 }
 
 .solid-accent-35 {
-  border: 35px solid #FA5858;
+  border: 35px solid #fa5858;
 }
 
 .dashed-main-35 {
-  border: 35px dashed #5882FA;
+  border: 35px dashed #5882fa;
 }
 
 .dashed-accent-35 {
-  border: 35px dashed #FA5858;
+  border: 35px dashed #fa5858;
 }
 
 .t-dashed-silver-35 {
@@ -14575,19 +14575,19 @@ border系
 }
 
 .solid-main-36 {
-  border: 36px solid #5882FA;
+  border: 36px solid #5882fa;
 }
 
 .solid-accent-36 {
-  border: 36px solid #FA5858;
+  border: 36px solid #fa5858;
 }
 
 .dashed-main-36 {
-  border: 36px dashed #5882FA;
+  border: 36px dashed #5882fa;
 }
 
 .dashed-accent-36 {
-  border: 36px dashed #FA5858;
+  border: 36px dashed #fa5858;
 }
 
 .t-dashed-silver-36 {
@@ -14615,19 +14615,19 @@ border系
 }
 
 .solid-main-37 {
-  border: 37px solid #5882FA;
+  border: 37px solid #5882fa;
 }
 
 .solid-accent-37 {
-  border: 37px solid #FA5858;
+  border: 37px solid #fa5858;
 }
 
 .dashed-main-37 {
-  border: 37px dashed #5882FA;
+  border: 37px dashed #5882fa;
 }
 
 .dashed-accent-37 {
-  border: 37px dashed #FA5858;
+  border: 37px dashed #fa5858;
 }
 
 .t-dashed-silver-37 {
@@ -14655,19 +14655,19 @@ border系
 }
 
 .solid-main-38 {
-  border: 38px solid #5882FA;
+  border: 38px solid #5882fa;
 }
 
 .solid-accent-38 {
-  border: 38px solid #FA5858;
+  border: 38px solid #fa5858;
 }
 
 .dashed-main-38 {
-  border: 38px dashed #5882FA;
+  border: 38px dashed #5882fa;
 }
 
 .dashed-accent-38 {
-  border: 38px dashed #FA5858;
+  border: 38px dashed #fa5858;
 }
 
 .t-dashed-silver-38 {
@@ -14695,19 +14695,19 @@ border系
 }
 
 .solid-main-39 {
-  border: 39px solid #5882FA;
+  border: 39px solid #5882fa;
 }
 
 .solid-accent-39 {
-  border: 39px solid #FA5858;
+  border: 39px solid #fa5858;
 }
 
 .dashed-main-39 {
-  border: 39px dashed #5882FA;
+  border: 39px dashed #5882fa;
 }
 
 .dashed-accent-39 {
-  border: 39px dashed #FA5858;
+  border: 39px dashed #fa5858;
 }
 
 .t-dashed-silver-39 {
@@ -14735,19 +14735,19 @@ border系
 }
 
 .solid-main-40 {
-  border: 40px solid #5882FA;
+  border: 40px solid #5882fa;
 }
 
 .solid-accent-40 {
-  border: 40px solid #FA5858;
+  border: 40px solid #fa5858;
 }
 
 .dashed-main-40 {
-  border: 40px dashed #5882FA;
+  border: 40px dashed #5882fa;
 }
 
 .dashed-accent-40 {
-  border: 40px dashed #FA5858;
+  border: 40px dashed #fa5858;
 }
 
 .t-dashed-silver-40 {
@@ -14775,19 +14775,19 @@ border系
 }
 
 .solid-main-41 {
-  border: 41px solid #5882FA;
+  border: 41px solid #5882fa;
 }
 
 .solid-accent-41 {
-  border: 41px solid #FA5858;
+  border: 41px solid #fa5858;
 }
 
 .dashed-main-41 {
-  border: 41px dashed #5882FA;
+  border: 41px dashed #5882fa;
 }
 
 .dashed-accent-41 {
-  border: 41px dashed #FA5858;
+  border: 41px dashed #fa5858;
 }
 
 .t-dashed-silver-41 {
@@ -14815,19 +14815,19 @@ border系
 }
 
 .solid-main-42 {
-  border: 42px solid #5882FA;
+  border: 42px solid #5882fa;
 }
 
 .solid-accent-42 {
-  border: 42px solid #FA5858;
+  border: 42px solid #fa5858;
 }
 
 .dashed-main-42 {
-  border: 42px dashed #5882FA;
+  border: 42px dashed #5882fa;
 }
 
 .dashed-accent-42 {
-  border: 42px dashed #FA5858;
+  border: 42px dashed #fa5858;
 }
 
 .t-dashed-silver-42 {
@@ -14855,19 +14855,19 @@ border系
 }
 
 .solid-main-43 {
-  border: 43px solid #5882FA;
+  border: 43px solid #5882fa;
 }
 
 .solid-accent-43 {
-  border: 43px solid #FA5858;
+  border: 43px solid #fa5858;
 }
 
 .dashed-main-43 {
-  border: 43px dashed #5882FA;
+  border: 43px dashed #5882fa;
 }
 
 .dashed-accent-43 {
-  border: 43px dashed #FA5858;
+  border: 43px dashed #fa5858;
 }
 
 .t-dashed-silver-43 {
@@ -14895,19 +14895,19 @@ border系
 }
 
 .solid-main-44 {
-  border: 44px solid #5882FA;
+  border: 44px solid #5882fa;
 }
 
 .solid-accent-44 {
-  border: 44px solid #FA5858;
+  border: 44px solid #fa5858;
 }
 
 .dashed-main-44 {
-  border: 44px dashed #5882FA;
+  border: 44px dashed #5882fa;
 }
 
 .dashed-accent-44 {
-  border: 44px dashed #FA5858;
+  border: 44px dashed #fa5858;
 }
 
 .t-dashed-silver-44 {
@@ -14935,19 +14935,19 @@ border系
 }
 
 .solid-main-45 {
-  border: 45px solid #5882FA;
+  border: 45px solid #5882fa;
 }
 
 .solid-accent-45 {
-  border: 45px solid #FA5858;
+  border: 45px solid #fa5858;
 }
 
 .dashed-main-45 {
-  border: 45px dashed #5882FA;
+  border: 45px dashed #5882fa;
 }
 
 .dashed-accent-45 {
-  border: 45px dashed #FA5858;
+  border: 45px dashed #fa5858;
 }
 
 .t-dashed-silver-45 {
@@ -14975,19 +14975,19 @@ border系
 }
 
 .solid-main-46 {
-  border: 46px solid #5882FA;
+  border: 46px solid #5882fa;
 }
 
 .solid-accent-46 {
-  border: 46px solid #FA5858;
+  border: 46px solid #fa5858;
 }
 
 .dashed-main-46 {
-  border: 46px dashed #5882FA;
+  border: 46px dashed #5882fa;
 }
 
 .dashed-accent-46 {
-  border: 46px dashed #FA5858;
+  border: 46px dashed #fa5858;
 }
 
 .t-dashed-silver-46 {
@@ -15015,19 +15015,19 @@ border系
 }
 
 .solid-main-47 {
-  border: 47px solid #5882FA;
+  border: 47px solid #5882fa;
 }
 
 .solid-accent-47 {
-  border: 47px solid #FA5858;
+  border: 47px solid #fa5858;
 }
 
 .dashed-main-47 {
-  border: 47px dashed #5882FA;
+  border: 47px dashed #5882fa;
 }
 
 .dashed-accent-47 {
-  border: 47px dashed #FA5858;
+  border: 47px dashed #fa5858;
 }
 
 .t-dashed-silver-47 {
@@ -15055,19 +15055,19 @@ border系
 }
 
 .solid-main-48 {
-  border: 48px solid #5882FA;
+  border: 48px solid #5882fa;
 }
 
 .solid-accent-48 {
-  border: 48px solid #FA5858;
+  border: 48px solid #fa5858;
 }
 
 .dashed-main-48 {
-  border: 48px dashed #5882FA;
+  border: 48px dashed #5882fa;
 }
 
 .dashed-accent-48 {
-  border: 48px dashed #FA5858;
+  border: 48px dashed #fa5858;
 }
 
 .t-dashed-silver-48 {
@@ -15095,19 +15095,19 @@ border系
 }
 
 .solid-main-49 {
-  border: 49px solid #5882FA;
+  border: 49px solid #5882fa;
 }
 
 .solid-accent-49 {
-  border: 49px solid #FA5858;
+  border: 49px solid #fa5858;
 }
 
 .dashed-main-49 {
-  border: 49px dashed #5882FA;
+  border: 49px dashed #5882fa;
 }
 
 .dashed-accent-49 {
-  border: 49px dashed #FA5858;
+  border: 49px dashed #fa5858;
 }
 
 .t-dashed-silver-49 {
@@ -15159,6 +15159,6 @@ html {
 }
 
 body {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }
 

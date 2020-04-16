@@ -84,7 +84,7 @@ class APIController extends Controller
         $get_user = User::whereName($get_name)->get();
 
         // DBに存在かつスコアが0.85以上で取得
-        if($get_num_of_users != 0 && $get_score >= 0){
+        if($get_num_of_users != 0 && $get_score >= 0.85){
 
             return $get_user[0];
         }else{

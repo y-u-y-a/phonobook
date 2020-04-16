@@ -1,31 +1,31 @@
 
 /* PC */
 @media screen and (min-width: 640px){
-    .sp{ display: none !important; }
-    [class*="sp-"]{ display: none !important; }
+  .sp{ display: none !important; }
+  [class*="sp-"]{ display: none !important; }
 }
 /* スマホ */
 @media screen and (max-width: 640px){
-    .pc{ display: none !important; }
-    [class*="pc-"]{ display: none !important; }
+  .pc{ display: none !important; }
+  [class*="pc-"]{ display: none !important; }
 }
 /*====================
 グリッド系
 =====================*/
 .container-fluid {
-    width: 100%;
-    padding: 0 ;
-    margin-right: auto;
-    margin-left: auto;
+  width: 100%;
+  padding: 0;
+  margin-right: auto;
+  margin-left: auto;
 }
 .row {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 !important;
-    [class*="col-"] {
-        padding-left: 0;
-        padding-right: 0;
-    }
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 !important;
+  [class*="col-"] {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 /*====================
 flex系
@@ -62,8 +62,8 @@ width系
 [class*="wm-"]{ margin: 0 auto !important; }
 
 @for $i from 0 to 100 {
-    .w-#{$i},
-    .wm-#{$i} { width: $i * 1% !important; }
+  .w-#{$i},
+  .wm-#{$i} { width: $i * 1% !important; }
 }
 /*====================
 padding系
@@ -93,15 +93,15 @@ padding系
 
 @for $i from 0 to 10 {
 
-    .p-#{$i} { padding: $i * 1rem !important; }
-    .pl-#{$i},
-    .px-#{$i} { padding-left: $i * 1rem !important; }
-    .pr-#{$i},
-    .px-#{$i} { padding-right: $i * 1rem !important; }
-    .pt-#{$i},
-    .py-#{$i} { padding-top: $i * 1rem !important; }
-    .pb-#{$i},
-    .py-#{$i} { padding-bottom: $i * 1rem !important; }
+  .p-#{$i} { padding: $i * 1rem !important; }
+  .pl-#{$i},
+  .px-#{$i} { padding-left: $i * 1rem !important; }
+  .pr-#{$i},
+  .px-#{$i} { padding-right: $i * 1rem !important; }
+  .pt-#{$i},
+  .py-#{$i} { padding-top: $i * 1rem !important; }
+  .pb-#{$i},
+  .py-#{$i} { padding-bottom: $i * 1rem !important; }
 }
 /*====================
 margin系
@@ -131,15 +131,15 @@ margin系
 
 @for $i from 0 to 10 {
 
-    .m-#{$i} { margin: $i * 1rem !important; }
-    .ml-#{$i},
-    .mx-#{$i} { margin-left: $i * 1rem !important; }
-    .mr-#{$i},
-    .mx-#{$i} { margin-right: $i * 1rem !important; }
-    .mt-#{$i},
-    .my-#{$i} { margin-top: $i * 1rem !important; }
-    .mb-#{$i},
-    .my-#{$i} { margin-bottom: $i * 1rem !important; }
+  .m-#{$i} { margin: $i * 1rem !important; }
+  .ml-#{$i},
+  .mx-#{$i} { margin-left: $i * 1rem !important; }
+  .mr-#{$i},
+  .mx-#{$i} { margin-right: $i * 1rem !important; }
+  .mt-#{$i},
+  .my-#{$i} { margin-top: $i * 1rem !important; }
+  .mb-#{$i},
+  .my-#{$i} { margin-bottom: $i * 1rem !important; }
 }
 /*====================
 font系
@@ -148,26 +148,26 @@ font系
 
 @for $i from 0 to 100 {
 
-    [class*="font-#{$i}"] { font-size: $i * 1px !important; }
-    .letter-#{$i} { letter-spacing: $i * 1px !important; }
+  [class*="font-#{$i}"] { font-size: $i * 1px !important; }
+  .letter-#{$i} { letter-spacing: $i * 1px !important; }
 }
 /*====================
 border系
 =====================*/
 @for $i from 0 to 50 {
 
-    .solid-white-#{$i}{ border: $i * 1px solid $white; }
-    .solid-main-#{$i}{ border: $i * 1px solid $main; }
-    .solid-accent-#{$i}{ border: $i * 1px solid $accent; }
-    .dashed-main-#{$i}{ border: $i * 1px dashed $main; }
-    .dashed-accent-#{$i}{ border: $i * 1px dashed $accent; }
+  .solid-white-#{$i}{ border: $i * 1px solid $white; }
+  .solid-main-#{$i}{ border: $i * 1px solid $main; }
+  .solid-accent-#{$i}{ border: $i * 1px solid $accent; }
+  .dashed-main-#{$i}{ border: $i * 1px dashed $main; }
+  .dashed-accent-#{$i}{ border: $i * 1px dashed $accent; }
 
-    .t-dashed-silver-#{$i}{ border-top: $i * 1px dashed $silver; }
-    .b-dashed-silver-#{$i}{ border-bottom: $i * 1px dashed $silver; }
-    .t-solid-silver-#{$i}{ border-top: $i * 1px solid $silver; }
-    .b-solid-silver-#{$i}{ border-bottom: $i * 1px solid $silver; }
+  .t-dashed-silver-#{$i}{ border-top: $i * 1px dashed $silver; }
+  .b-dashed-silver-#{$i}{ border-bottom: $i * 1px dashed $silver; }
+  .t-solid-silver-#{$i}{ border-top: $i * 1px solid $silver; }
+  .b-solid-silver-#{$i}{ border-bottom: $i * 1px solid $silver; }
 
-    .radius-#{$i}{ border-radius: $i * 1px; }
+  .radius-#{$i}{ border-radius: $i * 1px; }
 }
 // スクロール系
 // shadow系
@@ -190,7 +190,7 @@ border系
 
 // 文字を...に変換
 .dot{
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

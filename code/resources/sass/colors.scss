@@ -1,39 +1,65 @@
+$gray: gray;
+$silver: silver;
+$light-silver: #f2f2f2;
+$green: #04b431;
+$red: #fe2e64;
+$link-blue: #5882fa;
+$link-red: #fa5858;
+$light-red: #f8e0e0;
+$light-blue: #292f35;
 
-$gray        :gray;
-$silver      :silver;
-$light-silver:#F2F2F2;
-$green       :#04B431;
-$red         :#FE2E64;
-$link-blue   :#5882FA;
-$link-red    :#FA5858;
-$light-red   :#F8E0E0;
-$light-blue  :#CEE3F6;
+$white: #fff;
+.c-white {
+  color: $white !important;
+}
+.bg-white {
+  background: $white !important;
+}
 
+$black: #2e2e2e;
+.c-black {
+  color: $black !important;
+}
+.bg-black {
+  background: $black !important;
+}
 
-$white:#fff;
-.c-white{ color: $white !important; }
-.bg-white{ background: $white !important; }
+$base: #f2f2f2;
+.c-base {
+  color: $base !important;
+}
+.bg-base {
+  background: $base !important;
+}
 
-$black:#2E2E2E;
-.c-black{ color: $black !important; }
-.bg-black{ background: $black !important; }
+$main: #5882fa;
+.c-main {
+  color: $main !important;
+}
+.bg-main {
+  background: $main !important;
+}
 
-$base: #F2F2F2;
-.c-base{ color: $base !important; }
-.bg-base{ background: $base !important; }
+$main-half: #cee3f6;
+.c-main-half {
+  color: $main-half !important;
+}
+.bg-main-half {
+  background: $main-half !important;
+}
 
-$main: #5882FA;
-.c-main{ color: $main !important; }
-.bg-main{ background: $main !important; }
+$accent: #fa5858;
+.c-accent {
+  color: $accent !important;
+}
+.bg-accent {
+  background: $accent !important;
+}
 
-$main-half: #CEE3F6;
-.c-main-half{ color: $main-half !important; }
-.bg-main-half{ background: $main-half !important; }
-
-$accent: #FA5858;
-.c-accent{ color: $accent !important; }
-.bg-accent{ background: $accent !important; }
-
-$accent-half: #F8E0E0;
-.c-accent-half{ color: $accent-half !important; }
-.bg-accent-half{ background: $accent-half !important; }
+$accent-half: #f8e0e0;
+.c-accent-half {
+  color: $accent-half !important;
+}
+.bg-accent-half {
+  background: $accent-half !important;
+}

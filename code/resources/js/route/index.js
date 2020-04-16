@@ -22,23 +22,23 @@ Vue.use(VueRouter)
 
 // ページ遷移URL一覧
 const routes = [
-    { path: "/", component: Home },
+  { path: "/", component: Home },
 
-    // user関連
-    { path: "/user/Register", component: UserRegister },
-    { path: "/user/Login", component: UserLogin },
-    { path: "/user/Show/:id", component: UserShow },
-    { path: "/user/Arrival", component: UserArrival },
+  // user関連
+  { path: "/user/Register", component: UserRegister },
+  { path: "/user/Login", component: UserLogin },
+  { path: "/user/Show/:id", component: UserShow },
+  { path: "/user/Arrival", component: UserArrival },
 
-    // book関連
-    { path: "/book/New", component: BookNew },
-    { path: "/book/Edit", component: BookEdit },
-    { path: "/book/Index", component: BookIndex },
-    { path: "/book/Borrow", component: BookBorrow },
-    { path: "/book/Show/:id", component: BookShow },
+  // book関連
+  { path: "/book/New", component: BookNew },
+  { path: "/book/Edit", component: BookEdit },
+  { path: "/book/Index", component: BookIndex },
+  { path: "/book/Borrow", component: BookBorrow },
+  { path: "/book/Show/:id", component: BookShow },
 ]
 
 export default new VueRouter({
-    mode: "history", //パスに#が付かなくなる
-    routes
+  mode: "history", //パスに#が付かなくなる
+  routes
 })
