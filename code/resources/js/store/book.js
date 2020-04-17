@@ -26,22 +26,22 @@ const mutations = {
 // dispatch("モジュール名/呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期/非同期)
 const actions = {
 
-  async getAllBooks(context) {
+  async getAllBooks({commit}) {
 
     await axios.get("/api/books/all") // 戻り値をJSONで取得
       .then((response) => {
-        context.commit("setAllBooks", response.data)
+        commit("setAllBooks", response.data)
       })
   },
 
-  getBookById(context, book_id) {
+  getBookById({state, commit}, book_id) {
 
-    const books = context.state.all_books
+    const books = state.all_books
 
     books.forEach((book) => {
 
       if (book.id == book_id) {
-        context.commit("setBook", book)
+        commit("setBook", book)
         return
       }
     })
@@ -152,10 +152,6 @@ const actions = {
 
         location.reload()
         return
-      })
-      .catch((error) => {
-        alert("エラーが発生しました。")
-        console.log(error.name + ": " + error.message)
       })
   }
 }

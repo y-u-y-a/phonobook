@@ -3,13 +3,13 @@
     <div class="col-md-8 bg-white shadow">
       <header class="p-2 font-24 b-solid-silver-1">ログインする</header>
       <div class="p-2">
-        <FormInput v-model="email" label="メールアドレス" placeholder />
-        <FormInput v-model="password" label="パスワード" placeholder />
+        <FormInput v-model="email" label="メールアドレス" placeholder="" />
+        <FormInput v-model="password" label="パスワード" placeholder="" />
         <FormButton
           @trigger="login({
-                        email: email,
-                        password: password,
-                    })"
+            email: email,
+            password: password,
+          })"
           button_name="ログイン"
         />
       </div>

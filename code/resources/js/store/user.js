@@ -5,11 +5,10 @@ const state = {
   all_users: []
 }
 
-// stateの直接参照は非推奨なのでgettersに定義してコール
 const getters = {
 }
 
-// commit("呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期のみ)
+// データを操作する関数を管理(同期のみ)
 const mutations = {
 
   setAllUsers(state, users) {
@@ -29,16 +28,16 @@ const mutations = {
   }
 }
 
-// dispatch("モジュール名/呼出す関数名", 引数1, ...)：データを操作する関数を管理(同期/非同期)
+// データを操作する関数を管理(同期/非同期)
 const actions = {
 
-  async getAllUsers(context) {
+  async getAllUsers({commit}) {
 
     await axios.get("/api/users/all")
       .then((response) => {
         // 出勤状態を記号に変換
         var users = response.data
-        // 表示には◯×を使用
+
         users.forEach((user) => {
 
           if (user.state == 0) {
@@ -47,11 +46,11 @@ const actions = {
             user.state = "◯"
           }
         })
-        context.commit("setAllUsers", users)
+        commit("setAllUsers", users)
       })
   },
 
-  async getLoginUser(context) {
+  async getLoginUser({commit}) {
 
     await axios.get("/api/users/logined")
       .then((response) => {
@@ -59,7 +58,7 @@ const actions = {
         const get_user = response.data
 
         if (get_user) {
-          context.commit("setLoginUser", get_user)
+          commit("setLoginUser", get_user)
         }
       })
   },
@@ -80,7 +79,7 @@ const actions = {
       })
   },
 
-  async login(context, { email, password }) {
+  async login({commit}, { email, password }) {
 
     var params = {
       email: email,
@@ -89,15 +88,15 @@ const actions = {
 
     await axios.post("/api/login", params)
       .then((response) => {
-        context.commit("setLoginUser", response.data)
+        commit("setLoginUser", response.data)
         location.href = "/"
       })
   },
 
-  async logout(context) {
+  async logout({commit}) {
     await axios.post("/api/logout")
       .then(() => {
-        context.commit("unsetLoginUser")
+        commit("unsetLoginUser")
         location.href = "/"
       })
   }
@@ -105,8 +104,8 @@ const actions = {
 
 export default {
   namespaced: true,
-  state,
-  getters,
-  mutations,
-  actions
+  state: state,
+  getters: getters,
+  mutations: mutations,
+  actions: actions
 }

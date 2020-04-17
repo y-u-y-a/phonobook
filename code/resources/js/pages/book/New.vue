@@ -63,8 +63,9 @@
           <li
             @click="modal_camera=true"
             class="col-6 py-1"
-            style="border-right: 1px solid white;"
-          >カメラ起動</li>
+            style="border-right: 1px solid white;">
+            カメラ起動
+          </li>
           <li @click="registerBook(book)" class="col-6 py-1">登録する</li>
         </ul>
       </div>
@@ -73,7 +74,9 @@
     <CodeReader @trigger="getBookFromOpenBD" />
 
     <ModalCamera v-if="modal_camera" @trigger="modal_camera=false" camera_type="reader">
-      <div slot="operate-message" class="c-white b-font-28">本のバーコードをかざしてください。</div>
+      <div slot="operate-message" class="c-white b-font-28">
+        本のバーコードをかざしてください。
+      </div>
     </ModalCamera>
   </div>
 </template>

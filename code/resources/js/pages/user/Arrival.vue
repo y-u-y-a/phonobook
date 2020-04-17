@@ -1,7 +1,10 @@
 <template>
   <div class="row flex-x-center font-18">
     <div class="col-md-10">
-      <FormRichButton @trigger="modal_camera=true" button_name="カメラ起動" class="my-2" />
+      <FormRichButton
+        @trigger="modal_camera=true"
+        button_name="カメラ起動"
+        class="my-2" />
 
       <table class="d-block bg-white text-center shadow">
         <tr id="thead" class="row py-1 b-solid-silver-4 bg-white">
@@ -28,8 +31,7 @@
       v-if="modal_camera"
       @trigger="modal_camera=false"
       @authTrigger="changeState"
-      camera_type="capture"
-    />
+      camera_type="capture" />
   </div>
 </template>
 
@@ -68,13 +70,14 @@ export default {
         user_id: user.id
       };
       // state切替
-      await axios.post("/api/users/state", params).then(response => {
+      await axios.post("/api/users/state", params)
+      .then(response => {
         // 表示内容の切替のため
         this.getAllUsers();
       });
       // ハイライト
       var el = document.getElementById(user.id);
-      el.classList.add("switch-alert");
+      el.classList.add("bg-main-half");
       el.scrollIntoView({
         behavor: "smooth"
       });
@@ -95,8 +98,5 @@ export default {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-}
-.switch-alert {
-  background: $main-half;
 }
 </style>

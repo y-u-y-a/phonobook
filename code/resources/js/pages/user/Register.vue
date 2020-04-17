@@ -6,25 +6,23 @@
         <FormSelect
           label="部署"
           :options="[
-                        {name: '営業部', value: ''},
-                        {name: 'システム部', value: ''},
-                        {name: '経理部', value: ''}
-                    ]"
-        />
-        <FormInput v-model="name" label="名前" placeholder />
-        <FormInput v-model="email" label="メールアドレス" placeholder />
-        <FormInput v-model="password" label="パスワード" placeholder />
-        <FormInput v-model="password_confirmation" label="パスワード確認" placeholder />
+            {name: '営業部', value: ''},
+            {name: 'システム部', value: ''},
+            {name: '経理部', value: ''}
+          ]" />
+        <FormInput v-model="name" label="名前" placeholder="" />
+        <FormInput v-model="email" label="メールアドレス" placeholder="" />
+        <FormInput v-model="password" label="パスワード" placeholder="" />
+        <FormInput v-model="password_confirmation" label="パスワード確認" placeholder="" />
 
         <FormButton
           @trigger="register({
-                        name: name,
-                        email: email,
-                        password: password,
-                        password_confirmation: password_confirmation
-                    })"
-          button_name="新規登録"
-        />
+            name: name,
+            email: email,
+            password: password,
+            password_confirmation: password_confirmation
+          })"
+          button_name="新規登録" />
       </div>
     </div>
   </div>
