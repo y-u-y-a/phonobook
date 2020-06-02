@@ -76,28 +76,26 @@ class BooksController extends Controller
         $book = new Book;
         $validation_result = $book->validate($request->all());
 
-        // 成功した場合
-        if($validation_result->passes()){
-
-            $book->isbn = $request->isbn;
-            $book->title = $request->title;
-            $book->volume = $request->volume;
-            $book->series = $request->series;
-            $book->publisher = $request->publisher;
-            $book->pubdate = $request->pubdate;
-            $book->cover = $request->cover;
-            $book->author = $request->author;
-            $book->detail = $request->detail;
-            $book->state = 0;
-            $book->save();
-            return;
+        // 失敗(成功はpasses関数)
+        if($validation_result->fails()){
+            // return json_encode($validation_result->messages());
+            return response()->json([
+                "errors" => $validation_result->messages()
+            ]);
         }
 
-        // 失敗した場合
-        // return json_encode($validation_result->messages());
-        return response()->json([
-            "errors" => $validation_result->messages()
-        ]);
+        $book->isbn = $request->isbn;
+        $book->title = $request->title;
+        $book->volume = $request->volume;
+        $book->series = $request->series;
+        $book->publisher = $request->publisher;
+        $book->pubdate = $request->pubdate;
+        $book->cover = $request->cover;
+        $book->author = $request->author;
+        $book->detail = $request->detail;
+        $book->state = 0;
+        $book->save();
+        return;
     }
 
 

@@ -14,7 +14,6 @@ class Book extends Model
         return $this->belongsTo('App\User');
     }
 
-    // バリデーション結果を生成
     public function validate($input) {
 
         $rules = [
@@ -23,7 +22,7 @@ class Book extends Model
         $customMessages = [
             'isbn.unique' => 'すでに登録されています。',
         ];
-
+        // バリデーション処理の実行とエラーメッセージの返却
         return Validator::make($input, $rules, $customMessages);
     }
 
