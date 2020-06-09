@@ -14,8 +14,8 @@
 
 
 <script>
-import BooksList from "../../components/BooksList.vue";
-import FormButton from "../../components/form/Button.vue";
+import BooksList from "@/components/BooksList.vue";
+import FormButton from "@/components/form/Button.vue";
 
 import { mapState, mapGetters, mapActions } from "vuex";
 

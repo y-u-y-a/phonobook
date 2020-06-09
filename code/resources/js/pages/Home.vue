@@ -25,7 +25,7 @@
 
 
 <script>
-import TopButton from "../components/top/Button";
+import TopButton from "@/components/top/Button";
 
 import { mapState, mapGetters, mapActions } from "vuex";
 
@@ -61,8 +61,6 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../../sass/app.scss";
-
 #home {
   height: calc(100vh - 66px);
 }

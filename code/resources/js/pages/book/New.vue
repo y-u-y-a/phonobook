@@ -82,11 +82,11 @@
 </template>
 
 <script>
-import ModalCamera from "../../modal/Camera.vue";
-import CodeReader from "../../components/CodeReader.vue";
-import FormInput from "../../components/form/Input.vue";
-import FormTextarea from "../../components/form/Textarea.vue";
-import FormRichButton from "../../components/form/RichButton.vue";
+import ModalCamera from "@/modal/Camera.vue";
+import CodeReader from "@/components/CodeReader.vue";
+import FormInput from "@/components/form/Input.vue";
+import FormTextarea from "@/components/form/Textarea.vue";
+import FormRichButton from "@/components/form/RichButton.vue";
 
 import { mapActions } from "vuex";
 

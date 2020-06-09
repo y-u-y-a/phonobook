@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import ModalCamera from "../../modal/Camera.vue";
-import FormRichButton from "../../components/form/RichButton.vue";
+import ModalCamera from "@/modal/Camera.vue";
+import FormRichButton from "@/components/form/RichButton.vue";
 
 import { mapState, mapGetters, mapActions } from "vuex";
 
@@ -91,8 +91,6 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../../../sass/app.scss";
-
 #thead {
   z-index: 999;
   position: -webkit-sticky;

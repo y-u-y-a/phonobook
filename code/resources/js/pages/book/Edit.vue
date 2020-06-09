@@ -37,9 +37,9 @@
 
 
 <script>
-import FormInput from "../../components/form/Input.vue";
-import FormTextarea from "../../components/form/Textarea.vue";
-import FormButton from "../../components/form/Button.vue";
+import FormInput from "@/components/form/Input.vue";
+import FormTextarea from "@/components/form/Textarea.vue";
+import FormButton from "@/components/form/Button.vue";
 
 import { mapState, mapGetters, mapActions } from "vuex";
 

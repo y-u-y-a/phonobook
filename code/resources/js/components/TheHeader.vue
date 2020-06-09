@@ -2,40 +2,31 @@
   <header class="row flex-x-center bg-black c-white">
     <div class="col-md-10 row flex-justify-between flex-y-center py-1">
       <!-- ロゴ -->
-      <RouterLink
-        tag="h1"
-        to="/"
-        class="b-font-28 letter-4 pointer">
-        {{ APP_NAME }}
-      </RouterLink>
+      <RouterLink tag="h1" to="/" class="b-font-28 letter-4 pointer">{{ APP_NAME }}</RouterLink>
       <!-- ナビゲーションバー -->
       <nav class="row font-16">
         <RouterLink
           v-if="login_user"
           tag="div"
           :to="`/user/Show/${login_user.id}`"
-          class="pc nav-link ml-1 px-2 py-05 radius-25 solid-white-1 pointer">
-          マイページ
-        </RouterLink>
+          class="pc nav-link ml-1 px-2 py-05 radius-25 solid-white-1 pointer"
+        >マイページ</RouterLink>
         <RouterLink
           v-if="!login_user"
           tag="div"
           to="/user/Login"
-          class="pc nav-link ml-1 px-2 py-05 radius-25 solid-white-1 pointer">
-          ログイン
-        </RouterLink>
+          class="pc nav-link ml-1 px-2 py-05 radius-25 solid-white-1 pointer"
+        >ログイン</RouterLink>
         <RouterLink
           tag="div"
           to="/"
-          class="pc nav-link ml-1 px-2 py-05 radius-25 solid-white-1 pointer">
-          トップへ
-        </RouterLink>
+          class="pc nav-link ml-1 px-2 py-05 radius-25 solid-white-1 pointer"
+        >トップへ</RouterLink>
         <div
           v-if="login_user"
           @click="logout"
-          class="pc nav-link ml-1 px-2 py-05 radius-25 solid-white-1 pointer">
-          ログアウト
-        </div>
+          class="pc nav-link ml-1 px-2 py-05 radius-25 solid-white-1 pointer"
+        >ログアウト</div>
       </nav>
     </div>
   </header>
@@ -65,7 +56,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../../sass/app.scss";
+@import "colors";
 
 .nav-link:hover {
   color: $black;

@@ -17,7 +17,7 @@
 
 
 <script>
-import FormRichButton from "../components/form/RichButton.vue";
+import FormRichButton from "@/components/form/RichButton.vue";
 
 export default {
   components: {

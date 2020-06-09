@@ -13,7 +13,7 @@
 
 
 <script>
-import BooksList from "../../components/BooksList.vue";
+import BooksList from "@/components/BooksList.vue";
 
 import { mapState, mapGetters, mapActions } from "vuex";
 
@@ -38,8 +38,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../../../sass/app.scss";
-
+@import "colors";
 .ok {
   color: $green;
 }

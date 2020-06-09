@@ -35,8 +35,6 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../../sass/app.scss";
-
 // PC
 @media screen and (min-width: 640px) {
   li {

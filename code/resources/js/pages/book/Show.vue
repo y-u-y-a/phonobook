@@ -40,7 +40,7 @@
 
 
 <script>
-import FormRichButton from "../../components/form/RichButton.vue";
+import FormRichButton from "@/components/form/RichButton.vue";
 import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {

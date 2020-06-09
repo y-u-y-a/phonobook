@@ -4,17 +4,17 @@
 const mix = require("laravel-mix");
 
 mix.js("resources/js/main.js", "public/js")
-  .sass("resources/sass/app.scss", "public/css")
-  .webpackConfig({
-    node: {
-      fs: "empty"
-    },
-    // パスに"@"を使えるようにする
-    // resolve: {
-    //     extensions: ['.js', '.vue', '.json'],
-    //     alias: {
-    //         'vue$': 'vue/dist/vue.esm.js',
-    //         '@': __dirname + '/resources/assets/js'
-    //     }
-    // },
-  });
+    .sass("resources/sass/app.scss", "public/css")
+    .webpackConfig({
+        // エイリアス設定
+        resolve: {
+            extensions: ['.js', '.vue', '.json'],
+            alias: {
+                'colors': __dirname + '/resources/sass/colors.scss',
+                '@': __dirname + '/resources/js'
+            }
+        },
+        node: {
+            fs: "empty"
+        }
+    });

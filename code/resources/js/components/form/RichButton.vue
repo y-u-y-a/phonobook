@@ -21,7 +21,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../../../sass/app.scss";
+@import "colors";
 
 .rich-button {
   width: 150px;
