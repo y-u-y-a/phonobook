@@ -3136,7 +3136,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 result = _context.sent;
 
                 if (!result) {
-                  _this.error = "入力内容を確認してください。";
+                  _this.error = "入力内容を確認してください！";
                 }
 
               case 4:

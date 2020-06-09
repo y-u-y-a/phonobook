@@ -42,7 +42,7 @@ export default {
         let result = await this.login({email: this.email, password: this.password});
 
         if(!result) {
-            this.error = "入力内容を確認してください。";
+            this.error = "入力内容を確認してください！";
         }
     }
   }
