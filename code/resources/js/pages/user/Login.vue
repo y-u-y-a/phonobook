@@ -11,6 +11,26 @@
           button_name="ログイン"
         />
       </div>
+      <div class="px-1">
+        <div class="mb-1 text-center">以下のアカウントを参考にしてください！</div>
+        <table class="table">
+            <tr class="bg-black-half">
+                <th>登録ユーザー</th>
+                <th>メールアドレス</th>
+                <th>パスワード</th>
+            </tr>
+            <tr>
+                <td>西野七瀬</td>
+                <td>nishino@gmail.com</td>
+                <td>nishinonishino</td>
+            </tr>
+            <tr>
+                <td>窪田正孝</td>
+                <td>kubota@gmail.com</td>
+                <td>kubotakubota</td>
+            </tr>
+        </table>
+      </div>
     </div>
   </div>
 </template>

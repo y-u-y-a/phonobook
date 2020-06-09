@@ -8,58 +8,35 @@ $link-red: #fa5858;
 $light-red: #f8e0e0;
 $light-blue: #292f35;
 
-$white: #fff;
-.c-white {
-  color: $white !important;
-}
-.bg-white {
-  background: $white !important;
-}
-
-$black: #2e2e2e;
-.c-black {
-  color: $black !important;
-}
-.bg-black {
-  background: $black !important;
-}
-
 $base: #f2f2f2;
-.c-base {
-  color: $base !important;
-}
-.bg-base {
-  background: $base !important;
-}
-
 $main: #5882fa;
-.c-main {
-  color: $main !important;
-}
-.bg-main {
-  background: $main !important;
-}
-
 $main-half: #cee3f6;
-.c-main-half {
-  color: $main-half !important;
-}
-.bg-main-half {
-  background: $main-half !important;
-}
-
 $accent: #fa5858;
-.c-accent {
-  color: $accent !important;
-}
-.bg-accent {
-  background: $accent !important;
-}
-
 $accent-half: #f8e0e0;
-.c-accent-half {
-  color: $accent-half !important;
-}
-.bg-accent-half {
-  background: $accent-half !important;
-}
+$white: #fff;
+$black: #2e2e2e;
+$black-half: silver;
+
+.c-white { color: $white; }
+.bg-white { background: $white; }
+
+.c-black { color: $black; }
+.bg-black { background: $black; }
+
+.c-black-half { color: $black-half; }
+.bg-black-half { background: $black-half; }
+
+.c-base { color: $base; }
+.bg-base { background: $base; }
+
+.c-main { color: $main; }
+.bg-main { background: $main; }
+
+.c-main-half { color: $main-half; }
+.bg-main-half { background: $main-half; }
+
+.c-accent { color: $accent; }
+.bg-accent { background: $accent; }
+
+.c-accent-half { color: $accent-half; }
+.bg-accent-half { background: $accent-half; }

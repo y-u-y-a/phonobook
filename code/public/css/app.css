@@ -11027,59 +11027,67 @@ button:focus {
 }
 
 .c-white {
-  color: #fff !important;
+  color: #fff;
 }
 
 .bg-white {
-  background: #fff !important;
+  background: #fff;
 }
 
 .c-black {
-  color: #2e2e2e !important;
+  color: #2e2e2e;
 }
 
 .bg-black {
-  background: #2e2e2e !important;
+  background: #2e2e2e;
+}
+
+.c-black-half {
+  color: silver;
+}
+
+.bg-black-half {
+  background: silver;
 }
 
 .c-base {
-  color: #f2f2f2 !important;
+  color: #f2f2f2;
 }
 
 .bg-base {
-  background: #f2f2f2 !important;
+  background: #f2f2f2;
 }
 
 .c-main {
-  color: #5882fa !important;
+  color: #5882fa;
 }
 
 .bg-main {
-  background: #5882fa !important;
+  background: #5882fa;
 }
 
 .c-main-half {
-  color: #cee3f6 !important;
+  color: #cee3f6;
 }
 
 .bg-main-half {
-  background: #cee3f6 !important;
+  background: #cee3f6;
 }
 
 .c-accent {
-  color: #fa5858 !important;
+  color: #fa5858;
 }
 
 .bg-accent {
-  background: #fa5858 !important;
+  background: #fa5858;
 }
 
 .c-accent-half {
-  color: #f8e0e0 !important;
+  color: #f8e0e0;
 }
 
 .bg-accent-half {
-  background: #f8e0e0 !important;
+  background: #f8e0e0;
 }
 
 /* PC */
