@@ -2,7 +2,11 @@
 const state = {
   is_admin: true,
   login_user: null,
-  all_users: []
+  all_users: [],
+//   error: {
+//     email: "入力内容を確認してください。",
+//     password: "入力内容を確認してください。"
+//   }
 }
 
 const getters = {
@@ -36,7 +40,7 @@ const actions = {
     await axios.get("/api/users/all")
       .then((response) => {
         // 出勤状態を記号に変換
-        var users = response.data
+        let users = response.data
 
         users.forEach((user) => {
 
@@ -55,7 +59,7 @@ const actions = {
     await axios.get("/api/users/logined")
       .then((response) => {
 
-        const get_user = response.data
+        let get_user = response.data
 
         if (get_user) {
           commit("setLoginUser", get_user)
@@ -65,7 +69,7 @@ const actions = {
 
   async register(context, { name, email, password, password_confirmation }) {
 
-    var params = {
+    let params = {
       name: name,
       email: email,
       password: password,
@@ -81,16 +85,32 @@ const actions = {
 
   async login({commit}, { email, password }) {
 
-    var params = {
+    let params = {
       email: email,
       password: password
-    }
+    };
 
     await axios.post("/api/login", params)
-      .then((response) => {
-        commit("setLoginUser", response.data)
-        location.href = "/"
-      })
+    .then((res) => {
+        commit("setLoginUser", res.data);
+        location.href = "/";
+    })
+    .catch((err) => {
+        console.log(err);
+        return false;
+    })
+    // // エラー処理
+    // if(result.errors) {
+
+    //     let get_err = res.errors;
+    //     if(get_err.email) {
+    //         this.error.email = get_err.email[0];
+    //     }
+    //     if(get_err.password) {
+    //         this.error.password = get_err.password[0];
+    //     }
+    //     return;
+    // }
   },
 
   async logout({commit}) {

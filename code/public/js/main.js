@@ -3067,9 +3067,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/components/form/Input.vue */ "./resources/js/components/form/Input.vue");
-/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/form/Button.vue */ "./resources/js/components/form/Button.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/form/Input.vue */ "./resources/js/components/form/Input.vue");
+/* harmony import */ var _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/components/form/Button.vue */ "./resources/js/components/form/Button.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3093,23 +3101,53 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    FormInput: _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    FormInput: _components_form_Input_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    FormButton: _components_form_Button_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   data: function data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      error: ""
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])("User", ["login"]))
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapActions"])("User", ["login"]), {
+    auth: function auth() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var result;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _this.login({
+                  email: _this.email,
+                  password: _this.password
+                });
+
+              case 2:
+                result = _context.sent;
+
+                if (!result) {
+                  _this.error = "入力内容を確認してください。";
+                }
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
+  })
 });
 
 /***/ }),
@@ -41767,8 +41805,17 @@ var render = function() {
         "div",
         { staticClass: "p-2" },
         [
+          _vm.error
+            ? _c("div", { staticClass: "p-05 mb-1 font-18 bg-accent-half" }, [
+                _vm._v(_vm._s(_vm.error))
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c("FormInput", {
-            attrs: { label: "メールアドレス", placeholder: "" },
+            attrs: {
+              label: "メールアドレス",
+              placeholder: "例：xxxxx@gmail.com"
+            },
             model: {
               value: _vm.email,
               callback: function($$v) {
@@ -41779,7 +41826,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("FormInput", {
-            attrs: { label: "パスワード", placeholder: "" },
+            attrs: { label: "パスワード", placeholder: "8ケタ以上" },
             model: {
               value: _vm.password,
               callback: function($$v) {
@@ -41793,10 +41840,7 @@ var render = function() {
             attrs: { button_name: "ログイン" },
             on: {
               trigger: function($event) {
-                return _vm.login({
-                  email: _vm.email,
-                  password: _vm.password
-                })
+                return _vm.auth()
               }
             }
           })
@@ -60318,7 +60362,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var state = {
   is_admin: true,
   login_user: null,
-  all_users: []
+  all_users: [] //   error: {
+  //     email: "入力内容を確認してください。",
+  //     password: "入力内容を確認してください。"
+  //   }
+
 };
 var getters = {}; // データを操作する関数を管理(同期のみ)
 
@@ -60435,9 +60483,12 @@ var actions = {
                 password: password
               };
               _context4.next = 5;
-              return axios.post("/api/login", params).then(function (response) {
-                commit("setLoginUser", response.data);
+              return axios.post("/api/login", params).then(function (res) {
+                commit("setLoginUser", res.data);
                 location.href = "/";
+              })["catch"](function (err) {
+                console.log(err);
+                return false;
               });
 
             case 5:
