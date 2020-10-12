@@ -21,19 +21,3 @@ const createApp = async function () {
   })
 }
 createApp()
-
-
-// new Vue({
-//   Router,
-//   Store,
-//   el: "#app",
-//   components: { App }, // コンポーネントを登録
-//   template: "<App />" // 呼び出し用のテンプレートを登録
-// })
-
-// render: function(createElement) {
-//   return createElement(App)
-// }
-// render: function(h) {
-//   return h(App)
-// }
