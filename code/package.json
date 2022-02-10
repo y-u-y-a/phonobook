@@ -18,7 +18,7 @@
         "fs": "0.0.1-security",
         "jquery": "^3.4.1",
         "laravel-mix": "^4.1.4",
-        "node-sass": "^4.13.1",
+        "node-sass": "^7.0.0",
         "popper.js": "^1.16.1",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.26.2",
